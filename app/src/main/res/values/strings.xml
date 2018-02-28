@@ -5,4 +5,9 @@
     <string name="forgot">Forgot Password</string>
     <string name="emailHint">Email</string>
     <string name="passHint">Password</string>
+    <string name="passConfirmation">Confirm Password</string>
+    <string name="register2">Create</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="title">Title</string>
 </resources>
