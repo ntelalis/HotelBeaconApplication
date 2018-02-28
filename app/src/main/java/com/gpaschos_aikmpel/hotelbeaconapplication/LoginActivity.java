@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
 
-        StringRequest stringRequest = ServerFunctions.loginFunction(this,email,pass);
+        StringRequest stringRequest = ServerFunctions.getLoginRequest(this,email,pass);
         RequestQueueVolley.getInstance(this).add(stringRequest);
 
     }

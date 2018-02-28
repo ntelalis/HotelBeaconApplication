@@ -3,7 +3,9 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,16 +23,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreateAccount extends AppCompatActivity {
-
+    Spinner spinner;
+    String title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+        spinner = findViewById(R.id.spTitle);
+        loadSpinnerData(GlobalVars.titlesUrl);
+        setSpinnerListener();
 
     }
 
+    private void setSpinnerListener(){
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                title = spinner.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void loadSpinnerData(String url){
+        StringRequest stringRequest = ServerFunctions.getSpinnerDataRequest(this,url,spinner);
+        RequestQueueVolley.getInstance(this).add(stringRequest);
+    }
+
     public void register(View view){
-        EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        EditText etEmail = (EditText) findViewById(R.id.etEmailReg);
         EditText etPass = (EditText) findViewById(R.id.etPassReg);
         EditText etPassConf = (EditText) findViewById(R.id.etPassRegConf);
         EditText etFirstName= (EditText) findViewById(R.id.etFirstName);
@@ -40,6 +65,7 @@ public class CreateAccount extends AppCompatActivity {
         final String passConf = etPassConf.getText().toString().trim();
         final String firstName = etFirstName.getText().toString().trim();
         final String lastName = etLastName.getText().toString().trim();
+        final String title = this.title;
 
         //check if any of the fields is left empty
         if(email.isEmpty()||pass.isEmpty()||passConf.isEmpty()||firstName.isEmpty()||lastName.isEmpty()){
@@ -52,7 +78,11 @@ public class CreateAccount extends AppCompatActivity {
         //TODO:make sure the password is of certain 'type'(for a stronger password)
 
         else{
-            String url = "http://192.168.1.101/dbConnection.php";
+            StringRequest stringRequest = ServerFunctions.getRegisterRequest(this, email, pass
+            , firstName, lastName, title);
+
+            RequestQueueVolley.getInstance(this).add(stringRequest);
+            /*String url = "http://192.168.1.101/dbConnection.php";
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -77,7 +107,7 @@ public class CreateAccount extends AppCompatActivity {
                 }
             };
 
-            requestQueue.add(stringRequest);
+            requestQueue.add(stringRequest);*/
         }
     }
 }
