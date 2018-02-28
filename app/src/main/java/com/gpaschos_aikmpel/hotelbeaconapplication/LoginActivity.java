@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,8 +23,6 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    String url = "http://192.168.1.101/dbConnection.php";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,49 +31,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        EditText etEmail = (EditText) findViewById(R.id.etEmail);
-        EditText etPass = (EditText) findViewById(R.id.etPass);
-        final String email = etEmail.getText().toString().trim();
-        final String pass = etPass.getText().toString().trim();
+        EditText etEmail = (EditText) findViewById(R.id.etEmailLogin);
+        EditText etPass = (EditText) findViewById(R.id.etPassLogin);
+        String email = etEmail.getText().toString().trim();
+        String pass = etPass.getText().toString().trim();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        StringRequest stringRequest = ServerFunctions.loginFunction(this,email,pass);
+        RequestQueueVolley.getInstance(this).add(stringRequest);
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    int name = jsonObject.getInt("successful");
-                    if (name == 1) {
-                        int customerId = jsonObject.getInt("customerID");
-                        Toast.makeText(LoginActivity.this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_SHORT).show();
-                    }
-                    else if(name==0){
-                        Toast.makeText(LoginActivity.this, String.valueOf(name), Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", email);
-                params.put("pass", pass);
-                return params;
-            }
-        };
-
-        requestQueue.add(stringRequest);
     }
+
+    public void forgot(View view){
+        Intent intent = new Intent(this,ForgotActivity.class);
+        startActivity(intent);
+    }
+
 }
