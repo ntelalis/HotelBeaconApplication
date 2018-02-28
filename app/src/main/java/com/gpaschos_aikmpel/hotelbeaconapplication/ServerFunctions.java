@@ -64,9 +64,6 @@ public class ServerFunctions {
         };
 
     }
-    //TODO: build and return the StringRequest for the forgotPass()
-   /* public StringRequest getforgotPassRequest() {
-    }*/
 
     // build and return the StringRequest for register()
     public static StringRequest getRegisterRequest(final Context context, final String email, final String pass,
@@ -122,7 +119,8 @@ public class ServerFunctions {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        });
+        });}
+
     public StringRequest forgotPassRequest(final Context context, final String email) {
         return new StringRequest(Request.Method.POST, GlobalVars.forgotUrl, new Response.Listener<String>() {
             @Override
