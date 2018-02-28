@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ForgotActivity" android:parentActivityName=".LoginActivity">
         </activity>
+        <activity android:name=".CreateAccountActivity" android:parentActivityName=".LoginActivity">
+        </activity>
     </application>
 
 </manifest>

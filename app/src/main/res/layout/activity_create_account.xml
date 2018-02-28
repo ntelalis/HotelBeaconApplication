@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.CreateAccount">
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.CreateAccountActivity">
 
 
     <EditText
@@ -90,4 +90,3 @@
         app:layout_constraintTop_toTopOf="@+id/etFirstName" />
 
 </android.support.constraint.ConstraintLayout>
-    <?xml version="1.0" encoding="utf-8"?>

@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateAccount extends AppCompatActivity {
+public class CreateAccountActivity extends AppCompatActivity {
     Spinner spinner;
     String title;
     @Override
@@ -68,7 +68,7 @@ public class CreateAccount extends AppCompatActivity {
         final String title = this.title;
 
         //check if any of the fields is left empty
-        if(email.isEmpty()||pass.isEmpty()||passConf.isEmpty()||firstName.isEmpty()||lastName.isEmpty()){
+        if(email.isEmpty()||pass.isEmpty()||passConf.isEmpty()||firstName.isEmpty()||lastName.isEmpty()||title.isEmpty()){
             Toast.makeText(this, "Please fill in the fields", Toast.LENGTH_SHORT).show();
         }
         //check if the password in both fields matches
