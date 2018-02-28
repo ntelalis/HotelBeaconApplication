@@ -75,13 +75,12 @@ public class ServerFunctions {
         return new StringRequest(Request.Method.POST, GlobalVars.registerUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context,"your account is created successfully. Please check your" +
-                        "email", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, response, Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show();
             }
         }) {
             @Override

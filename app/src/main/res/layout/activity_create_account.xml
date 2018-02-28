@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadeScrollbars="false"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.CreateAccountActivity">
 
 
@@ -15,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/firstName"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +28,7 @@
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="@string/lastName"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         app:layout_constraintStart_toStartOf="@+id/etFirstName"
         app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
 
@@ -85,6 +86,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:animateLayoutChanges="false"
+        android:focusableInTouchMode="false"
         app:layout_constraintBottom_toBottomOf="@+id/etFirstName"
         app:layout_constraintStart_toEndOf="@+id/etFirstName"
         app:layout_constraintTop_toTopOf="@+id/etFirstName" />
