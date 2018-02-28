@@ -11,7 +11,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -29,18 +28,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //Test Comment for Github
-
 
     }
 
     public void login(View view) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        EditText ETemail = (EditText) findViewById(R.id.editText);
-        EditText ETpass = (EditText) findViewById(R.id.editText2);
-        final String email = ETemail.getText().toString().trim();
-        final String pass = ETpass.getText().toString().trim();
+        EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        EditText etPass = (EditText) findViewById(R.id.etPass);
+        final String email = etEmail.getText().toString().trim();
+        final String pass = etPass.getText().toString().trim();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
