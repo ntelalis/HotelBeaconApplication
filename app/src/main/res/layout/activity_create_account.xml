@@ -92,4 +92,16 @@
         app:layout_constraintStart_toEndOf="@+id/etFirstName"
         app:layout_constraintTop_toTopOf="@+id/etFirstName" />
 
+    <TextView
+        android:id="@+id/tvErrorMessages"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/etPassRegConf"
+        app:layout_constraintTop_toBottomOf="@+id/btnCreate"
+        tools:text="error Messages" />
+
 </android.support.constraint.ConstraintLayout>

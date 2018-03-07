@@ -73,7 +73,21 @@ public class ServerFunctions {
         return new StringRequest(Request.Method.POST, GlobalVars.registerUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int successful = jsonObject.getInt("successful");
+                    if (successful == 1) {
+                        Toast.makeText(context, "Account Created Successfully", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
+                    }
+                    else if (successful == 0) {
+                        Toast.makeText(context, "There was a problem", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -122,6 +136,7 @@ public class ServerFunctions {
                 error.printStackTrace();
             }
         });}
+
 
     public StringRequest forgotPassRequest(final Context context, final String email) {
         return new StringRequest(Request.Method.POST, GlobalVars.forgotUrl, new Response.Listener<String>() {
