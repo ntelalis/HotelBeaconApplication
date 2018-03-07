@@ -36,12 +36,12 @@ public class ServerFunctions {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    int name = jsonObject.getInt("successful");
-                    if (name == 1) {
+                    int success = jsonObject.getInt("success");
+                    if (success == 1) {
                         int customerId = jsonObject.getInt("customerID");
                         Toast.makeText(context, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_SHORT).show();
-                    } else if (name == 0) {
-                        Toast.makeText(context, String.valueOf(name), Toast.LENGTH_SHORT).show();
+                    } else if (success == 0) {
+                        Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
@@ -75,13 +75,13 @@ public class ServerFunctions {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    int successful = jsonObject.getInt("successful");
-                    if (successful == 1) {
+                    int success = jsonObject.getInt("success");
+                    if (success == 1) {
                         Toast.makeText(context, "Account Created Successfully", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(context, LoginActivity.class);
                         context.startActivity(intent);
                     }
-                    else if (successful == 0) {
+                    else if (success == 0) {
                         Toast.makeText(context, "There was a problem", Toast.LENGTH_SHORT).show();
                     }
 
@@ -116,7 +116,7 @@ public class ServerFunctions {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getInt("successful") == 1) {
+                    if (jsonObject.getInt("success") == 1) {
                         JSONArray jsonArray = jsonObject.getJSONArray("titleList");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             //JSONObject jsonObject1 = jsonArray.getJSONObject(i);
@@ -178,7 +178,7 @@ public class ServerFunctions {
                 Log.d("aa",response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    int success = jsonObject.getInt("successful");
+                    int success = jsonObject.getInt("success");
                     if (success == 1) {
                         Intent intent = new Intent(context,ForgotVerifyActivity.class);
                         intent.putExtra("email",email);
@@ -219,7 +219,7 @@ public class ServerFunctions {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    int success = jsonObject.getInt("successful");
+                    int success = jsonObject.getInt("success");
                     if (success == 1) {
                         Intent intent = new Intent(context,ForgotNewPassActivity.class);
                         intent.putExtra("email",email);
@@ -259,7 +259,7 @@ public class ServerFunctions {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    int success = jsonObject.getInt("successful");
+                    int success = jsonObject.getInt("success");
                     if (success == 1) {
                         Intent intent = new Intent(context,LoginActivity.class);
                         context.startActivity(intent);
