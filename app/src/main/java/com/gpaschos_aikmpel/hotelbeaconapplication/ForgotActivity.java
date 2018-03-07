@@ -15,13 +15,17 @@ public class ForgotActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
+
     }
 
     public void reset(View view){
         EditText etEmail = (EditText)findViewById(R.id.etEmailForgot);
         String email = etEmail.getText().toString().trim();
 
-        Intent intent = new Intent(this,ForgotVerifyActivity.class);
-        startActivity(intent);
+        StringRequest forgotRequest = ServerFunctions.getForgotRequest(this,email);
+        RequestQueueVolley.getInstance(this).add(forgotRequest);
     }
+
+
+
 }
