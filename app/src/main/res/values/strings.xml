@@ -15,4 +15,5 @@
     <string name="forgotConfirmBtn">Enter</string>
     <string name="forgotNewPassBtn">Update</string>
     <string name="passwordInstructions">The Password must have:\n-a length greater than 8 characters and lower than 15\n-at least One Number and one special character from (!@#$%^&amp;*-=+?.)\n-at least One lower case and one upper case letter\nand can't be a substring of the email </string>
+    <string name="reservationButton">Reservations</string>
 </resources>

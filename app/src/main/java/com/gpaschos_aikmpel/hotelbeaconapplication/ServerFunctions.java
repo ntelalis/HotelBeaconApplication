@@ -40,6 +40,8 @@ public class ServerFunctions {
                     if (success == 1) {
                         int customerId = jsonObject.getInt("customerID");
                         Toast.makeText(context, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context,HomeScreenActivity.class);
+                        intent.putExtra("customerid",customerId);
                     } else if (success == 0) {
                         Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
