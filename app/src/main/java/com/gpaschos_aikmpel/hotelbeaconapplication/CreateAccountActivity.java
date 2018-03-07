@@ -46,7 +46,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         etPassConf = (EditText) findViewById(R.id.etPassRegConf);
         etFirstName = (EditText) findViewById(R.id.etFirstName);
         etLastName = (EditText) findViewById(R.id.etLastName);
-        tvErrorMessages = (TextView) findViewById(R.id.tvErrorMessages);
+        tvErrorMessages = (TextView) findViewById(R.id.tvPassExplanation);
         //tvErrorMessages.setVisibility(View.INVISIBLE);
         spinner = findViewById(R.id.spTitle);
         loadSpinnerData(GlobalVars.titlesUrl);
