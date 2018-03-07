@@ -1,12 +1,14 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.content.Intent;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -151,6 +153,128 @@ public class ServerFunctions {
                 return params;
             }
         };
+    }
+
+    // build and return the StringRequest for the forgot()
+    public static StringRequest getForgotRequest(final Context context, final String email) {
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVars.forgotUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("aa",response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int success = jsonObject.getInt("successful");
+                    if (success == 1) {
+                        Intent intent = new Intent(context,ForgotVerifyActivity.class);
+                        intent.putExtra("email",email);
+                        context.startActivity(intent);
+                    } else if (success == 0) {
+                        Toast.makeText(context, "Email not found", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                return params;
+            }
+        };
+         //Policy for timeout
+        request.setRetryPolicy(new DefaultRetryPolicy(10000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        return request;
+    }
+
+    public static StringRequest getForgotVerifyRequest(final Context context,final String email, final String code) {
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVars.forgotVerifyUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int success = jsonObject.getInt("successful");
+                    if (success == 1) {
+                        Intent intent = new Intent(context,ForgotNewPassActivity.class);
+                        intent.putExtra("email",email);
+                        intent.putExtra("code",code);
+                        context.startActivity(intent);
+                    } else if (success == 0) {
+                        Toast.makeText(context, "Wrong Verification", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                params.put("verification", code);
+                return params;
+            }
+        };
+        return request;
+    }
+
+    public static StringRequest getForgotNewPassRequest(final Context context, final String pass, final String email, final String code) {
+        StringRequest request = new StringRequest(Request.Method.POST, GlobalVars.forgotNewPassUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    int success = jsonObject.getInt("successful");
+                    if (success == 1) {
+                        Intent intent = new Intent(context,LoginActivity.class);
+                        context.startActivity(intent);
+                    } else if (success == 0) {
+                        Toast.makeText(context, "Something Gone Wrong", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("pass", pass);
+                params.put("email",email);
+                params.put("code",code);
+                return params;
+            }
+        };
+        return request;
     }
 
 }
