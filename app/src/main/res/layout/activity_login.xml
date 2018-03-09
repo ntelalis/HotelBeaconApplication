@@ -7,19 +7,34 @@
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.LoginActivity">
 
     <EditText
-        android:id="@+id/etPassLogin"
+        android:id="@+id/etLoginEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/passHint"
-        android:inputType="textPassword"
-        android:text="0011katerina"
+        android:hint="@string/etEmailHint"
+        android:inputType="textEmailAddress"
+        android:text="kate@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmailLogin" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etLoginPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/etPasswordHint"
+        android:inputType="textPassword"
+        android:text="asdF12!@"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLoginEmail" />
 
     <Button
         android:id="@+id/btnLoginLogin"
@@ -29,50 +44,35 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="login"
-        android:text="@string/login"
+        android:text="@string/btnLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/etLoginPassword" />
 
     <Button
-        android:id="@+id/btnRegisterLogin"
+        android:id="@+id/btnLoginRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="registerA"
-        android:text="@string/register"
+        android:text="@string/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLoginLogin" />
 
     <Button
-        android:id="@+id/btnForgotLogin"
+        android:id="@+id/btnLoginForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="forgot"
-        android:text="@string/forgot"
+        android:text="@string/btnForgot"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegisterLogin" />
-
-    <EditText
-        android:id="@+id/etEmailLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/emailHint"
-        android:inputType="textEmailAddress"
-        android:text="cathm247@yahoo.com"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnLoginRegister" />
 
 </android.support.constraint.ConstraintLayout>

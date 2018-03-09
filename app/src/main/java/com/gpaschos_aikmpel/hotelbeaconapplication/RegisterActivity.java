@@ -4,29 +4,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class CreateAccountActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
     Spinner spinner;
     String title;
     EditText etEmail;
@@ -39,16 +25,16 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        setContentView(R.layout.activity_register);
 
-        etEmail = (EditText) findViewById(R.id.etEmailReg);
-        etPass = (EditText) findViewById(R.id.etPassReg);
-        etPassConf = (EditText) findViewById(R.id.etPassRegConf);
-        etFirstName = (EditText) findViewById(R.id.etFirstName);
-        etLastName = (EditText) findViewById(R.id.etLastName);
-        tvErrorMessages = (TextView) findViewById(R.id.tvPassExplanation);
+        etEmail = (EditText) findViewById(R.id.etRegisterEmail);
+        etPass = (EditText) findViewById(R.id.etRegisterPassword);
+        etPassConf = (EditText) findViewById(R.id.etRegisterPasswordConfirm);
+        etFirstName = (EditText) findViewById(R.id.etRegisterFirstName);
+        etLastName = (EditText) findViewById(R.id.etRegisterLastName);
+        tvErrorMessages = (TextView) findViewById(R.id.tvRegisterErrorMessage);
         //tvErrorMessages.setVisibility(View.INVISIBLE);
-        spinner = findViewById(R.id.spTitle);
+        spinner = findViewById(R.id.spRegisterTitle);
         loadSpinnerData(GlobalVars.titlesUrl);
         setSpinnerListener();
         setEtListener(etPass);

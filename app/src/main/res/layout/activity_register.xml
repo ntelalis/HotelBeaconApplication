@@ -5,82 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadeScrollbars="false"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.CreateAccountActivity">
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.RegisterActivity">
 
 
     <EditText
-        android:id="@+id/etFirstName"
+        android:id="@+id/etRegisterFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="@string/firstName"
+        android:hint="@string/etFirstNameHint"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <EditText
-        android:id="@+id/etLastName"
+        android:id="@+id/etRegisterLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="@string/lastName"
+        android:hint="@string/etLastNameHint"
         android:inputType="text"
-        app:layout_constraintStart_toStartOf="@+id/etFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterFirstName" />
 
     <EditText
-        android:id="@+id/etEmailReg"
+        android:id="@+id/etRegisterEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/emailHint"
+        android:hint="@string/etEmailHint"
         android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/etFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etLastName" />
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterLastName" />
 
     <EditText
-        android:id="@+id/etPassReg"
+        android:id="@+id/etRegisterPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/passHint"
+        android:hint="@string/etPasswordHint"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/etFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etEmailReg" />
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
 
     <EditText
-        android:id="@+id/etPassRegConf"
+        android:id="@+id/etRegisterPasswordConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/passConfirmation"
+        android:hint="@string/etPasswordConfirmHint"
         android:inputType="textPassword"
-        app:layout_constraintStart_toStartOf="@+id/etFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etPassReg" />
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword" />
 
 
     <Button
-        android:id="@+id/btnCreate"
+        android:id="@+id/btnRegisterCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:onClick="register"
-        android:text="@string/register2"
-        app:layout_constraintEnd_toEndOf="@+id/etPassRegConf"
-        app:layout_constraintStart_toStartOf="@+id/etPassRegConf"
-        app:layout_constraintTop_toBottomOf="@+id/etPassRegConf" />
+        android:text="@string/btnCreate"
+        app:layout_constraintEnd_toEndOf="@+id/etRegisterPasswordConfirm"
+        app:layout_constraintStart_toStartOf="@+id/etRegisterPasswordConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterPasswordConfirm" />
 
     <Spinner
-        android:id="@+id/spTitle"
+        android:id="@+id/spRegisterTitle"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -88,20 +88,20 @@
         android:layout_marginTop="8dp"
         android:animateLayoutChanges="false"
         android:focusableInTouchMode="false"
-        app:layout_constraintBottom_toBottomOf="@+id/etFirstName"
-        app:layout_constraintStart_toEndOf="@+id/etFirstName"
-        app:layout_constraintTop_toTopOf="@+id/etFirstName" />
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="@+id/etRegisterFirstName"
+        app:layout_constraintStart_toEndOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toTopOf="@+id/etRegisterFirstName" />
 
     <TextView
-        android:id="@+id/tvPassExplanation"
+        android:id="@+id/tvRegisterErrorMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginTop="16dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/etPassRegConf"
-        app:layout_constraintTop_toBottomOf="@+id/btnCreate"
-        tools:text="error Messages" />
+        app:layout_constraintStart_toStartOf="@+id/etRegisterPasswordConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegisterCreate" />
 
 </android.support.constraint.ConstraintLayout>

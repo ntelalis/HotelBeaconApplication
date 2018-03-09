@@ -22,8 +22,8 @@ public class ForgotNewPassActivity extends AppCompatActivity {
     }
 
     public void update(View view){
-        EditText etPass = (EditText) findViewById(R.id.etPassNewPass);
-        EditText etPassVerify = (EditText) findViewById(R.id.etVerifyNewPass);
+        EditText etPass = (EditText) findViewById(R.id.etNewPassPassword);
+        EditText etPassVerify = (EditText) findViewById(R.id.etNewPassConfirm);
 
         String pass = etPass.getText().toString();
         String passVerify = etPassVerify.getText().toString();

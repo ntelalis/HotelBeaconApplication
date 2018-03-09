@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 public class LoginActivity extends AppCompatActivity {
@@ -22,8 +19,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        EditText etEmail = (EditText) findViewById(R.id.etEmailLogin);
-        EditText etPass = (EditText) findViewById(R.id.etPassLogin);
+        EditText etEmail = (EditText) findViewById(R.id.etLoginEmail);
+        EditText etPass = (EditText) findViewById(R.id.etLoginPassword);
         String email = etEmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
 
@@ -38,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void registerA(View view) {
-        Intent intent = new Intent(this, CreateAccountActivity.class);
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }

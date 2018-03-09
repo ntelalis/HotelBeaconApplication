@@ -7,21 +7,21 @@
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.ForgotNewPassActivity">
 
     <EditText
-        android:id="@+id/etPassNewPass"
+        android:id="@+id/etNewPassPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="@string/passHint"
+        android:hint="@string/etPasswordHint"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/etVerifyNewPass"
+        android:id="@+id/etNewPassConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -32,10 +32,10 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassNewPass" />
+        app:layout_constraintTop_toBottomOf="@+id/etNewPassPassword" />
 
     <Button
-        android:id="@+id/btnUpdateNewPass"
+        android:id="@+id/btnNewPassConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -45,5 +45,5 @@
         android:text="@string/forgotNewPassBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etVerifyNewPass" />
+        app:layout_constraintTop_toBottomOf="@+id/etNewPassConfirm" />
 </android.support.constraint.ConstraintLayout>

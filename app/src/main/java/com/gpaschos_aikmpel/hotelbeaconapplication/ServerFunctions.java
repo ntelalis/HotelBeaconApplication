@@ -40,8 +40,9 @@ public class ServerFunctions {
                     if (success == 1) {
                         int customerId = jsonObject.getInt("customerID");
                         Toast.makeText(context, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context,HomeScreenActivity.class);
+                        Intent intent = new Intent(context,HomeActivity.class);
                         intent.putExtra("customerid",customerId);
+                        context.startActivity(intent);
                     } else if (success == 0) {
                         Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show();
                     }
@@ -138,6 +139,33 @@ public class ServerFunctions {
                 error.printStackTrace();
             }
         });}
+
+        //StringRequest for PersonsPerRoom Spinner
+        public static StringRequest getPersonsSpinnerDataRequest(final Context context, String url, final Spinner spinner) {
+            return new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getInt("success") == 1) {
+                            ArrayList<Integer> personsList = new ArrayList<>();
+                            //JSONArray jsonArray = jsonObject.getJSONArray("personsPerRoomList");
+                            int maxCapacity = jsonObject.getInt("capacity");
+                            for (int i = 1; i <= maxCapacity; i++) {
+                                personsList.add(i);
+                            }
+                            spinner.setAdapter(new ArrayAdapter<Integer>(context, android.R.layout.simple_spinner_dropdown_item, personsList));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });}
 
 
     public StringRequest forgotPassRequest(final Context context, final String email) {

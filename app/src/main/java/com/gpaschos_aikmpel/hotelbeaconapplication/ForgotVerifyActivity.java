@@ -1,6 +1,5 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +19,7 @@ public class ForgotVerifyActivity extends AppCompatActivity {
     }
 
     public void verify(View view){
-        EditText etVerify = (EditText)findViewById(R.id.etConfirmVerify);
+        EditText etVerify = (EditText)findViewById(R.id.etVerifyCode);
         String verification = etVerify.getText().toString().trim();
 
         StringRequest forgotverifyRequest = ServerFunctions.getForgotVerifyRequest(this,email,verification);

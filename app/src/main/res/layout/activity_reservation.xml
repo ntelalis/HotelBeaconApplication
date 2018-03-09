@@ -6,4 +6,106 @@
     android:layout_height="match_parent"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.ReservationActivity">
 
+    <EditText
+        android:id="@+id/etReservationArrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="Arrival Date"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@+id/glReservation"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etReservationDeparture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:focusable="false"
+        android:hint="Departure Date"
+        android:inputType="date"
+        app:layout_constraintStart_toStartOf="@+id/glReservation"
+        app:layout_constraintTop_toBottomOf="@+id/etReservationArrival" />
+
+    <TextView
+        android:id="@+id/tvReservationArrival"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tvArrivalDate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etReservationArrival"
+        app:layout_constraintEnd_toStartOf="@+id/glReservation" />
+
+    <TextView
+        android:id="@+id/tvReservationDeparture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tvDepartureDate"
+        app:layout_constraintBaseline_toBaselineOf="@+id/etReservationDeparture"
+        app:layout_constraintEnd_toStartOf="@+id/glReservation" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="76dp" />
+
+    <TextView
+        android:id="@+id/tvReservationPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/etReservationPeople"
+        app:layout_constraintBottom_toBottomOf="@+id/spReservationPeople"
+        app:layout_constraintTop_toTopOf="@+id/spReservationPeople"
+        tools:layout_editor_absoluteX="25dp" />
+
+    <Spinner
+        android:id="@+id/spReservationPeople"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/glReservation"
+        app:layout_constraintTop_toBottomOf="@+id/etReservationDeparture" />
+
+    <Button
+        android:id="@+id/btnReservationSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/btnReservationSearch"
+        app:layout_constraintStart_toStartOf="@+id/glReservation"
+        app:layout_constraintTop_toBottomOf="@+id/spReservationPeople" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnReservationSearch">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvReservationRooms"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

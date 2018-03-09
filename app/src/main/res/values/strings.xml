@@ -1,19 +1,29 @@
 <resources>
     <string name="app_name">HotelBeaconApplication</string>
-    <string name="login">Sign in</string>
-    <string name="register">Sign up</string>
-    <string name="forgot">Forgot Password</string>
-    <string name="emailHint">Email</string>
-    <string name="passHint">Password</string>
-    <string name="forgotConfirm">Reset</string>
-    <string name="passConfirmation">Confirm Password</string>
-    <string name="register2">Create</string>
-    <string name="firstName">First Name</string>
-    <string name="lastName">Last Name</string>
+
+    <string name="btnLogin">Sign in</string>
+    <string name="btnRegister">Sign up</string>
+    <string name="btnForgot">Forgot Password</string>
+
+    <string name="etFirstNameHint">First Name</string>
+    <string name="etLastNameHint">Last Name</string>
+    <string name="etEmailHint">Email</string>
+    <string name="etPasswordHint">Password</string>
+    <string name="etPasswordConfirmHint">Confirm Password</string>
+    <string name="btnCreate">Create</string>
+
+    <string name="btnForgotConfirm">Reset</string>
     <string name="title">Title</string>
     <string name="forgotConfirmHint">Verify</string>
     <string name="forgotConfirmBtn">Enter</string>
     <string name="forgotNewPassBtn">Update</string>
     <string name="passwordInstructions">The Password must have:\n-a length greater than 8 characters and lower than 15\n-at least One Number and one special character from (!@#$%^&amp;*-=+?.)\n-at least One lower case and one upper case letter\nand can't be a substring of the email </string>
     <string name="reservationButton">Reservations</string>
+    <string name="datePickerButton">Pick Date</string>
+    <string name="fragmentDoneBtn">Done</string>
+    <string name="reservationPickButton">Pick</string>
+    <string name="tvArrivalDate">Arrival</string>
+    <string name="tvDepartureDate">Departure</string>
+    <string name="etReservationPeople">People</string>
+    <string name="btnReservationSearch">Search</string>
 </resources>

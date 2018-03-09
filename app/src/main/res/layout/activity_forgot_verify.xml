@@ -7,7 +7,7 @@
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.ForgotVerifyActivity">
 
     <EditText
-        android:id="@+id/etConfirmVerify"
+        android:id="@+id/etVerifyCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnConfirmVerify"
+        android:id="@+id/btnVerifyConfirm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -31,5 +31,5 @@
         android:text="@string/forgotConfirmBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etConfirmVerify" />
+        app:layout_constraintTop_toBottomOf="@+id/etVerifyCode" />
 </android.support.constraint.ConstraintLayout>
