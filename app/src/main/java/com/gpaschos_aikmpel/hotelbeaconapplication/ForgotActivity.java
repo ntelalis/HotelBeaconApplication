@@ -17,11 +17,11 @@ public class ForgotActivity extends AppCompatActivity {
     }
 
     public void reset(View view){
-        EditText etEmail = (EditText)findViewById(R.id.etForgotEmail);
+        EditText etEmail = findViewById(R.id.etForgotEmail);
         String email = etEmail.getText().toString().trim();
 
         StringRequest forgotRequest = ServerFunctions.getForgotRequest(this,email);
-        RequestQueueVolley.getInstance(this).add(forgotRequest);
+        Response.getInstance(this).add(forgotRequest);
     }
 
 
