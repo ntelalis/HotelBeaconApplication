@@ -32,7 +32,7 @@ public class ForgotNewPassActivity extends AppCompatActivity {
             //TODO check for password validity
             if(true){
                 StringRequest forgotNewPassRequest = ServerFunctions.getForgotNewPassRequest(this,pass,email,code);
-                RequestQueueVolley.getInstance(this).add(forgotNewPassRequest);
+                //Response.getInstance(this).add(forgotNewPassRequest);
             }
         }
         else{

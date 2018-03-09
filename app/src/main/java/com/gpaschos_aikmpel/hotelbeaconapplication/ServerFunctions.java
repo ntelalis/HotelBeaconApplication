@@ -23,10 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by gpaschos on 28/02/18.
- */
-
 public class ServerFunctions {
     // build and return the StringRequest for the login()
     public static StringRequest getLoginRequest(final Context context, final String email, final String pass) {
@@ -116,6 +112,7 @@ public class ServerFunctions {
         return new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getInt("success") == 1) {

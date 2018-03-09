@@ -4,27 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CreateAccountActivity extends AppCompatActivity {
     Spinner spinner;
@@ -98,7 +84,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     //fill the spinner with the Titles data.
     private void loadSpinnerData(String url) {
         StringRequest stringRequest = ServerFunctions.getSpinnerDataRequest(this, url, spinner);
-        RequestQueueVolley.getInstance(this).add(stringRequest);
+        //Response.getInstance(this).add(stringRequest);
     }
 
     public void register(View view) {
@@ -113,7 +99,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         if (register) {
             StringRequest stringRequest = ServerFunctions.getRegisterRequest(this, email, pass
                     , firstName, lastName, title);
-            RequestQueueVolley.getInstance(this).add(stringRequest);
+            //Response.getInstance(this).add(stringRequest);
         }
     }
 
