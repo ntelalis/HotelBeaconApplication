@@ -19,11 +19,11 @@ public class ForgotVerifyActivity extends AppCompatActivity {
     }
 
     public void verify(View view){
-        EditText etVerify = (EditText)findViewById(R.id.etVerifyCode);
+        EditText etVerify = findViewById(R.id.etVerifyCode);
         String verification = etVerify.getText().toString().trim();
 
         StringRequest forgotverifyRequest = ServerFunctions.getForgotVerifyRequest(this,email,verification);
-        RequestQueueVolley.getInstance(this).add(forgotverifyRequest);
+        //RequestQueueVolley.getInstance(this).add(forgotverifyRequest);
 
     }
 }
