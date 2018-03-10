@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import com.gpaschos_aikmpel.hotelbeaconapplication.Database.Dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.Database.Entity.Customer;
 
-@Database(entities={Customer.class},version = 1)
+@Database(entities={Customer.class},version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase{
     public abstract CustomerDao customerDao();
 }

@@ -21,7 +21,7 @@ public class ForgotActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
 
         StringRequest forgotRequest = ServerFunctions.getForgotRequest(this,email);
-        Response.getInstance(this).add(forgotRequest);
+        //Response.getInstance(this).add(forgotRequest);
     }
 
 

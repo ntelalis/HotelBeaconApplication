@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.StringRequest;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity{
     Spinner spinner;
     String title;
     EditText etEmail;
@@ -27,12 +27,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etEmail = (EditText) findViewById(R.id.etRegisterEmail);
-        etPass = (EditText) findViewById(R.id.etRegisterPassword);
-        etPassConf = (EditText) findViewById(R.id.etRegisterPasswordConfirm);
-        etFirstName = (EditText) findViewById(R.id.etRegisterFirstName);
-        etLastName = (EditText) findViewById(R.id.etRegisterLastName);
-        tvErrorMessages = (TextView) findViewById(R.id.tvRegisterErrorMessage);
+        etEmail = findViewById(R.id.etRegisterEmail);
+        etPass = findViewById(R.id.etRegisterPassword);
+        etPassConf = findViewById(R.id.etRegisterPasswordConfirm);
+        etFirstName = findViewById(R.id.etRegisterFirstName);
+        etLastName = findViewById(R.id.etRegisterLastName);
+        tvErrorMessages = findViewById(R.id.tvRegisterErrorMessage);
         //tvErrorMessages.setVisibility(View.INVISIBLE);
         spinner = findViewById(R.id.spRegisterTitle);
         loadSpinnerData(GlobalVars.titlesUrl);
@@ -98,8 +98,8 @@ public class RegisterActivity extends AppCompatActivity {
         boolean register = checkInputFields(pass, email, passConf, firstName, lastName, title);
         if (register) {
             StringRequest stringRequest = ServerFunctions.getRegisterRequest(this, email, pass
-                    , firstName, lastName, title);
-            RequestQueueVolley.getInstance(this).add(stringRequest);
+            , firstName, lastName, title);
+            //Response.getInstance(this).add(stringRequest);
         }
     }
 

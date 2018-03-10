@@ -13,6 +13,9 @@ import java.util.List;
 public interface CustomerDao {
 
     @Query("SELECT * FROM Customer LIMIT 1")
-    Customer getAll();
+    Customer getCustomer();
+
+    @Insert
+    void insert(Customer customer);
 
 }
