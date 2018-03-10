@@ -1,12 +1,18 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -14,7 +20,9 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class ReservationActivity extends AppCompatActivity implements DatePickerFragment.DateSelected {
@@ -24,12 +32,31 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     private SimpleDateFormat simpleDateFormat;
     private Spinner spinner;
     private int persons;
+    private ListView lvRooms;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager layoutManager;
+    private RecyclerView.Adapter adapter;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
 
+        recyclerView = findViewById(R.id.rvReservationRecycler);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        List<MyRoomsAdapter.ModelRoomView> list = new ArrayList<>();
+        Bitmap icon = BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_launcher_background);
+        MyRoomsAdapter.ModelRoomView ha = new MyRoomsAdapter.ModelRoomView("Exei polla (kai kala)","Laxative Room",1000, icon);
+        list.add(ha);
+        Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_launcher_background);
+        ha = new MyRoomsAdapter.ModelRoomView("Exei liga (kai kaka)","Non Laxative Room",10,icon2);
+        list.add(ha);
+        Bitmap icon3 = BitmapFactory.decodeResource(this.getResources(),R.drawable.ic_launcher_background);
+        ha = new MyRoomsAdapter.ModelRoomView("xaliaaa makriaaa","Dungeon Room",2, icon3);
+        list.add(ha);
+        adapter = new MyRoomsAdapter(list);
+        recyclerView.setAdapter(adapter);
         simpleDateFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
 
         etArrivalDate = findViewById(R.id.etReservationArrival);

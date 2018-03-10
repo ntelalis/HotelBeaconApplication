@@ -26,4 +26,5 @@
     <string name="tvDepartureDate">Departure</string>
     <string name="etReservationPeople">People</string>
     <string name="btnReservationSearch">Search</string>
+    <string name="btnRoomBook">Book This</string>
 </resources>

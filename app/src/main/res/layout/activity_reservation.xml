@@ -61,10 +61,11 @@
         android:id="@+id/tvReservationPeople"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="@string/etReservationPeople"
         app:layout_constraintBottom_toBottomOf="@+id/spReservationPeople"
-        app:layout_constraintTop_toTopOf="@+id/spReservationPeople"
-        tools:layout_editor_absoluteX="25dp" />
+        app:layout_constraintEnd_toStartOf="@+id/glReservation"
+        app:layout_constraintTop_toTopOf="@+id/spReservationPeople" />
 
     <Spinner
         android:id="@+id/spReservationPeople"
@@ -79,14 +80,13 @@
         android:id="@+id/btnReservationSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/btnReservationSearch"
-        app:layout_constraintStart_toStartOf="@+id/glReservation"
-        app:layout_constraintTop_toBottomOf="@+id/spReservationPeople" />
+        app:layout_constraintEnd_toEndOf="@+id/etReservationDeparture"
+        app:layout_constraintTop_toBottomOf="@+id/etReservationDeparture" />
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvReservationRecycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -96,16 +96,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReservationSearch">
+        app:layout_constraintTop_toBottomOf="@+id/btnReservationSearch" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvReservationRooms"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
