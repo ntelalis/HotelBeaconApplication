@@ -2,16 +2,15 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +40,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
     public void onBindViewHolder(MyViewHolder holder, int position) {
         //holder.tvRoomDescription.setText(arrayString[position]);
         holder.bind(position);
-
     }
 
     @Override
@@ -49,12 +47,13 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         return listItems.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivRoomImage;
         TextView tvRoomTitle;
         TextView tvRoomDescription;
         TextView tvRoomPrice;
         Button btnRoomBook;
+        ClickCallbacks clickCallbacks;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -63,7 +62,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomPrice = itemView.findViewById(R.id.tvRoomPrice);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
-
         }
 
         public void bind(int position){
@@ -72,6 +70,19 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             ivRoomImage.setImageBitmap(listItems.get(position).imgBitmap);
             tvRoomPrice.setText(String.valueOf(listItems.get(position).price));
         }
+
+        @Override
+        public void onClick(View view) {
+            if(view instanceof ImageView){
+                clickCallbacks.imgClick(getAdapterPosition());
+            }
+        }
+
+
+    }
+
+    public interface ClickCallbacks{
+        void imgClick(int position);
     }
 
     public static class ModelRoomView {
@@ -85,6 +96,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             this.price=price;
             this.title=title;
             this.imgBitmap=imgBitmap;
+
         }
 
     }

@@ -19,6 +19,7 @@ public class GlobalVars {
     private static final String forgotVerifyPage = "forgotverify.php";
     private static final String forgotNewPassPage = "forgotnewpass.php";
     private static final String personsPage = "persons.php";
+    private static final String availabilityPage = "availability.php";
 
 
     public static final String loginUrl = serverAddress + loginPage;
@@ -28,4 +29,5 @@ public class GlobalVars {
     public static final String forgotVerifyUrl = serverAddress + forgotVerifyPage;
     public static final String forgotNewPassUrl = serverAddress + forgotNewPassPage;
     public static final String personsUrl = serverAddress + personsPage;
+    public static final String availabilityUrl = serverAddress + availabilityPage;
 }
