@@ -196,7 +196,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     }
 
     public void fillRecyclerView(List<MyRoomsAdapter.ModelRoomView> list) {
-        adapter = new MyRoomsAdapter(list);
+        adapter = new MyRoomsAdapter(this,list);
         recyclerView.setAdapter(adapter);
     }
 
@@ -237,17 +237,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         }
     }
 
+    //TODO Change this to more efficient design by not passing the bitmap around
     @Override
-    public void imgClick(int position) {
-        Log.d("M","Meow");
-        Bundle bundle = new Bundle();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        MyRoomsAdapter.MyViewHolder viewHolder = (MyRoomsAdapter.MyViewHolder) recyclerView.findViewHolderForAdapterPosition(position);
-        //bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-        bundle.putByteArray("img",stream.toByteArray());
-
-        //ImageViewFragment fragment = ImageViewFragment.newInstance(Bitmap bitmap);
-        //imageViewFragment.setArguments(bundle);
-        //fragment.show(getFragmentManager(),"Image");
+    public void imgClick(Bitmap bitmap) {
+        ImageViewFragment fragment = ImageViewFragment.newInstance(bitmap);
+        fragment.show(getFragmentManager(),"Image");
     }
 }

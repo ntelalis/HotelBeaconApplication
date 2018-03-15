@@ -3,7 +3,9 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,11 @@ import java.util.List;
 
 public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHolder> {
     private List<ModelRoomView> listItems;
+    private ClickCallbacks clickCallbacks;
 
-    public MyRoomsAdapter(List<ModelRoomView> mhtsos){
+    public MyRoomsAdapter(ClickCallbacks clickCallbacks, List<ModelRoomView> mhtsos){
         listItems = mhtsos;
+        this.clickCallbacks = clickCallbacks;
     }
 
     @Override
@@ -38,7 +42,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        //holder.tvRoomDescription.setText(arrayString[position]);
         holder.bind(position);
     }
 
@@ -53,7 +56,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         TextView tvRoomDescription;
         TextView tvRoomPrice;
         Button btnRoomBook;
-        ClickCallbacks clickCallbacks;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -62,6 +64,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomPrice = itemView.findViewById(R.id.tvRoomPrice);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
+            ivRoomImage.setOnClickListener(this);
         }
 
         public void bind(int position){
@@ -74,7 +77,8 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         @Override
         public void onClick(View view) {
             if(view instanceof ImageView){
-                clickCallbacks.imgClick(getAdapterPosition());
+                BitmapDrawable drawable = (BitmapDrawable) ((ImageView) view).getDrawable();
+                clickCallbacks.imgClick(drawable.getBitmap());
             }
         }
 
@@ -82,7 +86,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
     }
 
     public interface ClickCallbacks{
-        void imgClick(int position);
+        void imgClick(Bitmap bitmap);
     }
 
     public static class ModelRoomView {
