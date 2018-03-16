@@ -12,7 +12,7 @@ public class BookActivity extends AppCompatActivity {
     public static final String ARRIVAL = "arrival";
     public static final String DEPARTURE = "departure";
     public static final String PERSONS = "persons";
-    private TextView     
+    //private TextView
 
 
     @Override

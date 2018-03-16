@@ -110,13 +110,14 @@
         android:checked="false"
         android:text="@string/cbTerms"
         app:layout_constraintBottom_toTopOf="@+id/btnBookConfirm"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnBookConfirm"
-        style="@android:style/Widget.Material.Button.Colored"
         android:layout_width="385dp"
         android:layout_height="51dp"
+        android:elevation="0dp"
         android:text="@string/btnBookConfirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
