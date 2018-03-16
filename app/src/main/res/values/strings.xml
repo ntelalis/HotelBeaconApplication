@@ -32,6 +32,7 @@
     <string name="tvCheckOutLabel">Check-out</string>
     <string name="cbTerms"><![CDATA[I agree with the terms & conditions by making this booking.]]></string>
     <string name="btnBookConfirm"><![CDATA[Confirm & Book]]></string>
+    <string name="currency">EUR</string>
     <string name="reserveSuccess">Your reservation is complete!</string>
     <string name="reservationIDLabel">Reservation Number</string>
     <string name="btnHome">Home</string>

@@ -44,7 +44,6 @@ public class ImageViewFragment extends DialogFragment{
         Bundle args = new Bundle();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
-        Log.d("aa",bitmap.getByteCount()+"");
         args.putByteArray("img",stream.toByteArray());
         fragment.setArguments(args);
         return fragment;

@@ -46,15 +46,15 @@
         tools:text="3" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivBookRoomImage"
         android:layout_width="181dp"
         android:layout_height="104dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="@+id/tvBookRoomTitle"
         app:layout_constraintStart_toStartOf="@+id/tvBookRoomTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookRoomTitle"
-        app:srcCompat="@color/colorAccent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBookRoomTitle" />
 
     <TextView
         android:id="@+id/tvBookCheckOut"
@@ -72,7 +72,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/tvPersonsLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/ivBookRoomImage" />
 
     <TextView
         android:id="@+id/tvBookCheckIn"
@@ -87,9 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:text="@string/currency"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPrice"
-        app:layout_constraintEnd_toStartOf="@+id/tvBookPrice"
-        tools:text="EUR" />
+        app:layout_constraintEnd_toStartOf="@+id/tvBookPrice" />
 
     <TextView
         android:id="@+id/tvBookPrice"
@@ -97,7 +97,7 @@
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         app:layout_constraintBottom_toTopOf="@+id/cbBookTerms"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="200" />
@@ -115,9 +115,9 @@
 
     <Button
         android:id="@+id/btnBookConfirm"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="385dp"
         android:layout_height="51dp"
-        android:elevation="0dp"
         android:text="@string/btnBookConfirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
