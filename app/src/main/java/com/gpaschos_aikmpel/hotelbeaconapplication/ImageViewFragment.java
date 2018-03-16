@@ -65,5 +65,6 @@ public class ImageViewFragment extends DialogFragment{
         Bitmap imgBitmap = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
         ImageView ivPreview = view.findViewById(R.id.ivPreview);
         ivPreview.setImageBitmap(imgBitmap);
+
     }
 }
