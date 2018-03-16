@@ -65,6 +65,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
             ivRoomImage.setOnClickListener(this);
+            btnRoomBook.setOnClickListener(this);
         }
 
         public void bind(int position){
@@ -76,17 +77,19 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
         @Override
         public void onClick(View view) {
-            if(view instanceof ImageView){
+            if (view instanceof ImageView) {
                 BitmapDrawable drawable = (BitmapDrawable) ((ImageView) view).getDrawable();
                 clickCallbacks.imgClick(drawable.getBitmap());
+            } else if (view.getId() == btnRoomBook.getId()) {
+                int positionInList = getAdapterPosition();
+                clickCallbacks.book(listItems.get(positionInList));
             }
         }
-
-
     }
 
     public interface ClickCallbacks{
         void imgClick(Bitmap bitmap);
+        void book(ModelRoomView obj);
     }
 
     public static class ModelRoomView {

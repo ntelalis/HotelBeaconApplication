@@ -27,4 +27,9 @@
     <string name="etReservationPeople">People</string>
     <string name="btnReservationSearch">Search</string>
     <string name="btnRoomBook">Book This</string>
+    <string name="tvPersonsLabel">Persons</string>
+    <string name="tvCheckInLabel">Check-in</string>
+    <string name="tvCheckOutLabel">Check-out</string>
+    <string name="cbTerms"><![CDATA[I agree with the terms & conditions by making this booking.]]></string>
+    <string name="btnBookConfirm"><![CDATA[Confirm & Book]]></string>
 </resources>
