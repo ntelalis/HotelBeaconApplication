@@ -255,13 +255,17 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         int roomPrice = obj.price;
         Bitmap roomImage = obj.imgBitmap;
 
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        roomImage.compress(Bitmap.CompressFormat.PNG,100,stream);
+
         String arrivalDate = etArrivalDate.getText().toString();
         String departureDate = etDepartureDate.getText().toString();
         int personZ = Integer.parseInt(spinner.getSelectedItem().toString());
 
+
         Intent bookIntent = new Intent(this, BookActivity.class);
         bookIntent.putExtra(BookActivity.ROOMTITLE,roomTitle);
-        //bookIntent.putExtra(BookActivity.ROOMIMAGE,roomImage);
+        bookIntent.putExtra(BookActivity.ROOMIMAGE,stream.toByteArray());
         bookIntent.putExtra(BookActivity.ROOMPRICE,roomPrice);
 
         bookIntent.putExtra(BookActivity.ARRIVAL, arrivalDate);
