@@ -6,4 +6,121 @@
     android:layout_height="match_parent"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.BookActivity">
 
+    <TextView
+        android:id="@+id/tvBookCheckInLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/tvCheckInLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvBookPersonsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookPersonsLabel" />
+
+    <TextView
+        android:id="@+id/tvBookRoomTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Standard Double Room" />
+
+    <TextView
+        android:id="@+id/tvBookCheckOutLabel"
+        android:layout_width="75dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tvCheckOutLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvBookPersonsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookCheckInLabel" />
+
+    <TextView
+        android:id="@+id/tvBookPersons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPersonsLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvBookPersonsLabel"
+        tools:text="3" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="181dp"
+        android:layout_height="104dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvBookRoomTitle"
+        app:layout_constraintStart_toStartOf="@+id/tvBookRoomTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookRoomTitle"
+        app:srcCompat="@color/colorAccent" />
+
+    <TextView
+        android:id="@+id/tvBookCheckOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckOutLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvBookPersons"
+        tools:text="2018-03-28" />
+
+    <TextView
+        android:id="@+id/tvBookPersonsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tvPersonsLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/tvBookCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckInLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvBookPersons"
+        tools:text="2018-03-21" />
+
+    <TextView
+        android:id="@+id/tvBookCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPrice"
+        app:layout_constraintEnd_toStartOf="@+id/tvBookPrice"
+        tools:text="EUR" />
+
+    <TextView
+        android:id="@+id/tvBookPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+        app:layout_constraintBottom_toTopOf="@+id/cbBookTerms"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="200" />
+
+    <CheckBox
+        android:id="@+id/cbBookTerms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:checked="false"
+        android:text="@string/cbTerms"
+        app:layout_constraintBottom_toTopOf="@+id/btnBookConfirm"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btnBookConfirm"
+        style="@android:style/Widget.Material.Button.Colored"
+        android:layout_width="385dp"
+        android:layout_height="51dp"
+        android:text="@string/btnBookConfirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

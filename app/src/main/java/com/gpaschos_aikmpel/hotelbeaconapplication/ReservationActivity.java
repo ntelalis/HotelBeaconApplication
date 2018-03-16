@@ -91,6 +91,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 persons = spinner.getItemAtPosition(i).toString();
+                if(recyclerView.getAdapter()!=null){
+                    fillRecyclerView(new ArrayList<MyRoomsAdapter.ModelRoomView>());
+                }
+
             }
 
             @Override
@@ -129,11 +133,6 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         progressBar.setVisibility(View.VISIBLE);
     }
 
-    public void book(View view) {
-        String arrivalDate = etArrivalDate.getText().toString();
-        String departureDate = etDepartureDate.getText().toString();
-        int personZ = Integer.parseInt(spinner.getSelectedItem().toString());
-    }
 
     public void pick(View view) {
         DialogFragment dialogFragment = new DatePickerFragment();
@@ -177,6 +176,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         calendar.set(year, month, day);
         String date = simpleDateFormat.format(calendar.getTime());
 
+        if(recyclerView.getAdapter()!=null){
+            fillRecyclerView(new ArrayList<MyRoomsAdapter.ModelRoomView>());
+        }
+
         if (type == DatePickerFragment.etArrival) {
             etArrivalDate.setText(date);
             try {
@@ -193,12 +196,14 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             }
         } else
             etDepartureDate.setText(date);
+
     }
 
     public void fillRecyclerView(List<MyRoomsAdapter.ModelRoomView> list) {
         adapter = new MyRoomsAdapter(this,list);
         recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
@@ -242,5 +247,26 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     public void imgClick(Bitmap bitmap) {
         ImageViewFragment fragment = ImageViewFragment.newInstance(bitmap);
         fragment.show(getFragmentManager(),"Image");
+    }
+
+    @Override
+    public void book(MyRoomsAdapter.ModelRoomView obj) {
+        String roomTitle = obj.title;
+        int roomPrice = obj.price;
+        Bitmap roomImage = obj.imgBitmap;
+
+        String arrivalDate = etArrivalDate.getText().toString();
+        String departureDate = etDepartureDate.getText().toString();
+        int personZ = Integer.parseInt(spinner.getSelectedItem().toString());
+
+        Intent bookIntent = new Intent(this, BookActivity.class);
+        bookIntent.putExtra(BookActivity.ROOMTITLE,roomTitle);
+        //bookIntent.putExtra(BookActivity.ROOMIMAGE,roomImage);
+        bookIntent.putExtra(BookActivity.ROOMPRICE,roomPrice);
+
+        bookIntent.putExtra(BookActivity.ARRIVAL, arrivalDate);
+        bookIntent.putExtra(BookActivity.DEPARTURE, departureDate);
+        bookIntent.putExtra(BookActivity.PERSONS, personZ);
+        startActivity(bookIntent);
     }
 }
