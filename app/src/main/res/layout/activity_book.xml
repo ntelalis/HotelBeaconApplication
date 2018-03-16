@@ -118,6 +118,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="385dp"
         android:layout_height="51dp"
+        android:onClick="confirmAndBook"
         android:text="@string/btnBookConfirm"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
