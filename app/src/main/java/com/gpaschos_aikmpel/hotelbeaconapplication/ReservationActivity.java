@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -264,13 +262,13 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
 
         Intent bookIntent = new Intent(this, BookActivity.class);
-        bookIntent.putExtra(BookActivity.ROOMTITLE,roomTitle);
-        bookIntent.putExtra(BookActivity.ROOMIMAGE,stream.toByteArray());
-        bookIntent.putExtra(BookActivity.ROOMPRICE,roomPrice);
+        bookIntent.putExtra(BookActivity.ROOMTITLE_KEY,roomTitle);
+        bookIntent.putExtra(BookActivity.ROOMIMAGE_KEY,stream.toByteArray());
+        bookIntent.putExtra(BookActivity.ROOMPRICE_KEY,roomPrice);
 
-        bookIntent.putExtra(BookActivity.ARRIVAL, arrivalDate);
-        bookIntent.putExtra(BookActivity.DEPARTURE, departureDate);
-        bookIntent.putExtra(BookActivity.PERSONS, personZ);
+        bookIntent.putExtra(BookActivity.ARRIVAL_KEY, arrivalDate);
+        bookIntent.putExtra(BookActivity.DEPARTURE_KEY, departureDate);
+        bookIntent.putExtra(BookActivity.PERSONS_KEY, personZ);
         startActivity(bookIntent);
     }
 }

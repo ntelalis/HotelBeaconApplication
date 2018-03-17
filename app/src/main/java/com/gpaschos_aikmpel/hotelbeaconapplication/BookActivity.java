@@ -11,25 +11,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.RequestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.RequestVolley.VolleyQueue;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BookActivity extends AppCompatActivity implements JsonListener{
-    public static final String ROOMTITLE = "lala";
-    public static final String ROOMPRICE = "leprice";
-    public static final String ROOMIMAGE = "image";
-    public static final String ARRIVAL = "arrival";
-    public static final String DEPARTURE = "departure";
-    public static final String PERSONS = "persons";
+    public static final String ROOMTITLE_KEY = "roomTitle";
+    public static final String ROOMPRICE_KEY = "price";
+    public static final String ROOMIMAGE_KEY = "image";
+    public static final String ARRIVAL_KEY = "arrival";
+    public static final String DEPARTURE_KEY = "departure";
+    public static final String PERSONS_KEY = "persons";
     private TextView tvCheckIn;
     private TextView tvCheckOut;
     private TextView tvRoomTitle;
     private TextView tvPrice;
     private TextView tvPersons;
     private ImageView ivRoomImage;
+    private String roomTitle;
+    private String arrival;
+    private String departure;
+    private int persons;
 
-
+    //TODO Change reservation to hold available room types instead of specific room in order to assign a room at check in process
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +53,16 @@ public class BookActivity extends AppCompatActivity implements JsonListener{
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            tvRoomTitle.setText(extras.getString(ROOMTITLE));
-            tvPrice.setText(String.valueOf(extras.getInt(ROOMPRICE)));
-            tvCheckIn.setText(extras.getString(ARRIVAL));
-            tvCheckOut.setText(extras.getString(DEPARTURE));
-            tvPersons.setText(String.valueOf(extras.getInt(PERSONS)));
-            byte[] imgBytes = extras.getByteArray(ROOMIMAGE);
+            roomTitle = extras.getString(ROOMTITLE_KEY);
+            tvRoomTitle.setText(roomTitle);
+            tvPrice.setText(String.valueOf(extras.getInt(ROOMPRICE_KEY)));
+            arrival = extras.getString(ARRIVAL_KEY);
+            tvCheckIn.setText(arrival);
+            departure = extras.getString(DEPARTURE_KEY);
+            tvCheckOut.setText(departure);
+            persons = extras.getInt(PERSONS_KEY);
+            tvPersons.setText(String.valueOf(persons));
+            byte[] imgBytes = extras.getByteArray(ROOMIMAGE_KEY);
             Bitmap roomImage = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
             ivRoomImage.setImageBitmap(roomImage);
 
@@ -60,7 +72,18 @@ public class BookActivity extends AppCompatActivity implements JsonListener{
 
     }
 
+    // TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
+    // in order to not let 2 users make a reservation for one last room)
     public void confirmAndBook(View view){
+        Map<String,String> values = new HashMap<>();
+        values.put(ROOMTITLE_KEY,roomTitle);
+        values.put(ARRIVAL_KEY,arrival);
+        values.put(DEPARTURE_KEY,departure);
+        values.put(PERSONS_KEY,(String.valueOf(persons)));
+        values.put("CustomerID","25");
+
+        VolleyQueue.getInstance(this).jsonRequest(this,GlobalVars.bookUrl,values);
+
 
     }
 
@@ -74,6 +97,6 @@ public class BookActivity extends AppCompatActivity implements JsonListener{
 
     @Override
     public void getErrorResult(String url, String error) {
-
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 }

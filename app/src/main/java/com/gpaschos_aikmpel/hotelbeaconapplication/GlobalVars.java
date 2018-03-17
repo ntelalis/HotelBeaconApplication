@@ -7,9 +7,10 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 public class GlobalVars {
 
     private static final String serverProtocol = "http";
+    //private static final String serverHost = "ntelalis.dyndns-home.com";
     private static final String serverHost = "192.168.1.101";
+    //private static final String serverPort = "8642";
     private static final String serverPort = "80";
-
     private static final String serverAddress = serverProtocol +"://"+ serverHost +":"+ serverPort+"/";
 
     private static final String loginPage = "login.php";
@@ -20,6 +21,7 @@ public class GlobalVars {
     private static final String forgotNewPassPage = "forgotnewpass.php";
     private static final String personsPage = "persons.php";
     private static final String availabilityPage = "availability.php";
+    private static final String bookPage = "book.php";
 
 
     public static final String loginUrl = serverAddress + loginPage;
@@ -30,4 +32,5 @@ public class GlobalVars {
     public static final String forgotNewPassUrl = serverAddress + forgotNewPassPage;
     public static final String personsUrl = serverAddress + personsPage;
     public static final String availabilityUrl = serverAddress + availabilityPage;
+    public static final String bookUrl = serverAddress + bookPage;
 }
