@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.Database.Entity;
+package com.gpaschos_aikmpel.hotelbeaconapplication.database.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

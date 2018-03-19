@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.ReservationActivity">
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.ReservationActivity">
 
     <EditText
         android:id="@+id/etReservationArrival"
@@ -14,7 +14,7 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:focusable="false"
-        android:hint="Arrival Date"
+        android:hint="@string/etArrivalDateHint"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="@+id/glReservation"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:focusable="false"
-        android:hint="Departure Date"
+        android:hint="@string/etDepartureDateHint"
         android:inputType="date"
         app:layout_constraintStart_toStartOf="@+id/glReservation"
         app:layout_constraintTop_toBottomOf="@+id/etReservationArrival" />
@@ -81,13 +81,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:onClick="availability"
+        android:onClick="roomAvailability"
         android:text="@string/btnReservationSearch"
         app:layout_constraintEnd_toEndOf="@+id/etReservationDeparture"
         app:layout_constraintTop_toBottomOf="@+id/etReservationDeparture" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/pbAvailability"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

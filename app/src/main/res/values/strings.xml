@@ -36,4 +36,6 @@
     <string name="reserveSuccess">Your reservation is complete!</string>
     <string name="reservationIDLabel">Reservation Number</string>
     <string name="btnHome">Home</string>
+    <string name="etArrivalDateHint">Arrival Date</string>
+    <string name="etDepartureDateHint">Departure Date</string>
 </resources>

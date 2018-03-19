@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadeScrollbars="false"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.RegisterActivity">
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.RegisterActivity">
 
 
     <EditText

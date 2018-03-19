@@ -1,13 +1,10 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.Database.Dao;
+package com.gpaschos_aikmpel.hotelbeaconapplication.database.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.Database.Entity.Customer;
-
-import java.util.List;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 
 @Dao
 public interface CustomerDao {

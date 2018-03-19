@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.BookActivity">
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.BookActivity">
 
     <TextView
         android:id="@+id/tvBookCheckInLabel"
@@ -118,6 +118,7 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="385dp"
         android:layout_height="51dp"
+        android:enabled="false"
         android:onClick="confirmAndBook"
         android:text="@string/btnBookConfirm"
         app:layout_constraintBottom_toBottomOf="parent"

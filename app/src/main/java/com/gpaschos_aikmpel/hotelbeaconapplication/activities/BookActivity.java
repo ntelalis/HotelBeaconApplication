@@ -1,0 +1,146 @@
+package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+public class BookActivity extends AppCompatActivity implements JsonListener {
+
+    //KEYS
+    public static final String ROOM_TITLE_KEY = "room_KEY";
+    public static final String ROOM_PRICE_KEY = "price_KEY";
+    public static final String ROOM_IMAGE_KEY = "image_KEY";
+    public static final String ARRIVAL_KEY = "arrival_KEY";
+    public static final String DEPARTURE_KEY = "departure_KEY";
+    public static final String PERSONS_KEY = "persons_KEY";
+
+    private Button btnBook;
+
+    private String roomTitle;
+
+    private String arrivalSQLString;
+    private String departureSQLString;
+    private int persons;
+
+    //TODO Change reservation to hold available room types instead of specific room in order to assign a room at check in process
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_book);
+
+        SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyy-MM-dd", Locale.US);
+
+        TextView tvCheckIn = findViewById(R.id.tvBookCheckIn);
+        TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
+        TextView tvRoomTitle = findViewById(R.id.tvBookRoomTitle);
+        TextView tvPersons = findViewById(R.id.tvBookPersons);
+        TextView tvPrice = findViewById(R.id.tvBookCurrency);
+        ImageView ivRoomImage = findViewById(R.id.ivBookRoomImage);
+
+        btnBook = findViewById(R.id.btnBookConfirm);
+
+        CheckBox cbTerms = findViewById(R.id.cbBookTerms);
+        cbTerms.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    btnBook.setEnabled(true);
+                } else {
+                    btnBook.setEnabled(false);
+                }
+            }
+        });
+
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+
+            roomTitle = extras.getString(ROOM_TITLE_KEY);
+            tvRoomTitle.setText(roomTitle);
+            tvPrice.setText(String.valueOf(extras.getInt(ROOM_PRICE_KEY)));
+            arrivalSQLString = extras.getString(ARRIVAL_KEY);
+            departureSQLString = extras.getString(DEPARTURE_KEY);
+
+            try {
+                Calendar c = Calendar.getInstance();
+                c.setTime(sqlFormat.parse(arrivalSQLString));
+                String arrivalLocalString = localizedFormat.format(c.getTime());
+                c.setTime(sqlFormat.parse(departureSQLString));
+                String departureLocalString = localizedFormat.format(c.getTime());
+                tvCheckIn.setText(arrivalLocalString);
+                tvCheckOut.setText(departureLocalString);
+            } catch (ParseException e) {
+                Log.e(getLocalClassName(), e.getLocalizedMessage());
+            }
+
+            persons = extras.getInt(PERSONS_KEY);
+            tvPersons.setText(String.valueOf(persons));
+
+            byte[] imgBytes = extras.getByteArray(ROOM_IMAGE_KEY);
+            Bitmap roomImage = null;
+            if (imgBytes != null) {
+                roomImage = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
+            }
+            ivRoomImage.setImageBitmap(roomImage);
+        }
+
+
+    }
+
+    // TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
+    // in order to not let 2 users make a reservation for one last room)
+    public void confirmAndBook(View view) {
+
+        Map<String, String> values = new HashMap<>();
+
+        values.put(POST.bookRoomTitle, roomTitle);
+        values.put(POST.bookRoomArrival, arrivalSQLString);
+        values.put(POST.bookRoomDeparture, departureSQLString);
+        values.put(POST.bookRoomPeople, (String.valueOf(persons)));
+        values.put(POST.bookRoomCustomerID, "23");
+
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.bookUrl, values);
+    }
+
+    @Override
+    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+        int resID = json.getInt(POST.bookRoomReservationID);
+        Intent intent = new Intent(this, BookConfirmationActivity.class);
+        intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
+        startActivity(intent);
+    }
+
+    @Override
+    public void getErrorResult(String url, String error) {
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+    }
+}

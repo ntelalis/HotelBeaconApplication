@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,17 +19,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
-            android:parentActivityName=".LoginActivity" />
+            android:name=".activities.RegisterActivity"
+            android:parentActivityName=".activities.LoginActivity" />
         <activity
-            android:name=".ForgotActivity"
-            android:parentActivityName=".LoginActivity" />
-        <activity android:name=".ForgotVerifyActivity" />
-        <activity android:name=".ForgotNewPassActivity" />
-        <activity android:name=".ReservationActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".BookActivity" />
-        <activity android:name=".BookConfirmation"></activity>
+            android:name=".activities.ForgotActivity"
+            android:parentActivityName=".activities.LoginActivity" />
+        <activity android:name=".activities.ForgotVerifyActivity" />
+        <activity android:name=".activities.ForgotNewPassActivity" />
+        <activity android:name=".activities.ReservationActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.BookActivity" />
+        <activity android:name=".activities.BookConfirmationActivity" />
+        <activity android:name=".activities.ViewReservationsActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.RequestVolley;
+package com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -12,29 +12,23 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-/**
- * Created by gpaschos on 09/03/18.
- */
-
-public class CustomRequest extends Request<JSONObject> {
+class CustomRequest extends Request<JSONObject> {
 
     private Response.Listener<JSONObject> listener;
-    private Map<String,String> params;
+    private Map<String, String> params;
 
-    public CustomRequest(String url, Map<String,String> params, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener){
-        super(Method.POST,url,errorListener);
+    CustomRequest(String url, Map<String, String> params, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+        super(Method.POST, url, errorListener);
         this.params = params;
         this.listener = listener;
     }
 
     @Override
     protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-        try{
+        try {
             String jsonString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new JSONObject(jsonString),HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
-            return Response.error(new ParseError(e));
-        } catch (JSONException e) {
+            return Response.success(new JSONObject(jsonString), HttpHeaderParser.parseCacheHeaders(response));
+        } catch (UnsupportedEncodingException | JSONException e) {
             return Response.error(new ParseError(e));
         }
     }

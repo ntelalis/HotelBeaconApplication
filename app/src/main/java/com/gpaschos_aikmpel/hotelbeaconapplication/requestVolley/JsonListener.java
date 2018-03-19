@@ -1,6 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.RequestVolley;
-
-import com.android.volley.VolleyError;
+package com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
