@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -48,12 +50,16 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     private String departureSQLString;
     private int persons;
 
+    private SharedPreferences sharedPreferences;
+
     //TODO Change reservation to hold available room types instead of specific room in order to assign a room at check in process
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+
+        sharedPreferences = getSharedPreferences(getString(R.string.spfile),Context.MODE_PRIVATE);
 
         SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyy-MM-dd", Locale.US);
@@ -126,7 +132,12 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));
-        values.put(POST.bookRoomCustomerID, "23");
+        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId),-1);
+        if(customerID==-1){
+            Toast.makeText(this, "There was an error reading data", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        values.put(POST.bookRoomCustomerID, String.valueOf(customerID));
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.bookUrl, values);
     }

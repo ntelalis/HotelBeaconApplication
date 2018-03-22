@@ -19,4 +19,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ReservationActivity.class);
         startActivity(intent);
     }
+
+    public void viewReservations(View view){
+        Intent intent = new Intent(this, ViewReservationsActivity.class);
+        startActivity(intent);
+    }
 }

@@ -21,6 +21,9 @@ public class ImageViewFragment extends DialogFragment {
     public static final String TAG = "imageViewFragment";
     private static final String image_KEY = "img";
 
+    public ImageViewFragment(){
+    }
+
     @Override
     public void onStart() {
         super.onStart();
