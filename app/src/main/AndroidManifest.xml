@@ -31,7 +31,7 @@
         <activity android:name=".activities.BookActivity" />
         <activity android:name=".activities.BookConfirmationActivity" />
         <activity android:name=".activities.ViewReservationsActivity" />
-        <activity android:name=".activities.RoomServiceActivity"></activity>
+        <activity android:name=".activities.RoomServiceActivity" />
     </application>
 
 </manifest>

@@ -6,24 +6,28 @@
     android:layout_height="match_parent"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.ViewReservationsActivity">
 
-<android.support.design.widget.AppBarLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tbViewReserves"
-        app:elevation="10dp"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        app:tabSelectedTextColor="@color/colorWhite"
-        android:background="@color/colorPrimary"
-        app:tabTextColor="@color/colorWhite"
-        app:tabIndicatorColor="@color/colorWhite"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabMode="fixed"/>
+        android:layout_height="wrap_content">
 
-</android.support.design.widget.AppBarLayout>
+        <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/textColorPrimary"/>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tbViewReserves"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabIndicatorColor="@color/textColorPrimary"
+            app:tabSelectedTextColor="@color/textColorPrimary"
+            app:tabTextColor="@color/textColorPrimary"
+            app:tabMode="fixed"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vpViewReservations"
