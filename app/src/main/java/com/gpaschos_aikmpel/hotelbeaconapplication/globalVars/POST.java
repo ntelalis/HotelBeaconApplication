@@ -38,21 +38,44 @@ public class POST {
 
     //RCV
     public static String availabilityResultsArray = "results";
-    public static String availabilityRoomDescription = "description";
+    public static String availabilityRoomTypeID = "roomTypeID";
     public static String availabilityRoomTitle = "title";
+    public static String availabilityRoomDescription = "description";
     public static String availabilityRoomPrice = "price";
     public static String availabilityRoomImage = "img";
 
     //persons.php
     public static String personsMaxCapacity = "capacity";
 
-    //book.php
-    public static String bookRoomTitle = "room";
+    //~~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~~~~~
+
+    //SND
+    public static String bookRoomTypeID = "roomTypeID";
     public static String bookRoomArrival = "arrival";
     public static String bookRoomDeparture = "departure";
     public static String bookRoomPeople = "persons";
     public static String bookRoomCustomerID = "customerID";
+
+    //RCV
     public static String bookRoomReservationID = "reservationID";
+
+
+    //~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~~
+
+    //SND
+    public static String roomServiceTimeType = "timeType";
+
+    //RCV
+    public static String roomServiceCategoriesID = "id";
+    public static String roomServiceCategoriesName = "name";
+    public static String roomServiceCategoriesFrom = "from";
+    public static String roomServiceCategoriesTo = "to";
+    public static String roomServiceTimeCategory = "timeCategory";
+    public static String roomServiceTypeCategory = "typeCategory";
+    public static String roomServiceFoodID = "id";
+    public static String roomServiceFoodName = "name";
+    public static String roomServiceFoodDesc = "desc";
+    public static String roomServiceFoodPrice = "price";
 
 
 }

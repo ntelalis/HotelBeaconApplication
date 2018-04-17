@@ -1,7 +1,6 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.NoActionBar">
-
     </style>
 
     <!-- Base application theme. -->
@@ -11,6 +10,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
     </style>
 
 </resources>

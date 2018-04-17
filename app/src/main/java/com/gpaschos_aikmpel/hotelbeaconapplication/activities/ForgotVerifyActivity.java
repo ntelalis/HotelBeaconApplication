@@ -50,7 +50,7 @@ public class ForgotVerifyActivity extends AppCompatActivity implements JsonListe
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         Intent intent = new Intent(this, ForgotNewPassActivity.class);
         intent.putExtra(ForgotNewPassActivity.email_KEY, email);
         intent.putExtra(ForgotNewPassActivity.code_KEY, code);
