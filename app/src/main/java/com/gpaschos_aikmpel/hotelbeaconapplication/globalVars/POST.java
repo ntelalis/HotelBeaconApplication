@@ -46,13 +46,25 @@ public class POST {
     //persons.php
     public static String personsMaxCapacity = "capacity";
 
-    //book.php
+    //~~~~~~~~book.php~~~~~~~~
+    //SND
     public static String bookRoomTitle = "room";
     public static String bookRoomArrival = "arrival";
     public static String bookRoomDeparture = "departure";
     public static String bookRoomPeople = "persons";
     public static String bookRoomCustomerID = "customerID";
+    //RCV
     public static String bookRoomReservationID = "reservationID";
 
 
+    //~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~
+    //SND
+    public static final String upcomingreservationsCustomerID= "customerID";
+    //RCV
+    public static final String upcomingreservationsResponseArray= "reservations";
+    public static final String upcomingreservationsReservationID= "reservationID";
+    public static final String upcomingreservationsAdults= "adults";
+    public static final String upcomingreservationsArrival= "arrivalDate";
+    public static final String upcomingreservationsDeparture= "departureDate";
+    public static final String upcomingreservationsRoomTitle= "roomType";
 }

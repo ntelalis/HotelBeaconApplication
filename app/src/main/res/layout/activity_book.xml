@@ -116,7 +116,7 @@
     <Button
         android:id="@+id/btnBookConfirm"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="385dp"
+        android:layout_width="0dp"
         android:layout_height="51dp"
         android:enabled="false"
         android:onClick="confirmAndBook"

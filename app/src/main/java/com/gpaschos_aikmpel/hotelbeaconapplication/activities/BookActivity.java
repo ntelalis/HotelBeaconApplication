@@ -52,8 +52,6 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
     private SharedPreferences sharedPreferences;
 
-    //TODO Change reservation to hold available room types instead of specific room in order to assign a room at check in process
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +60,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         sharedPreferences = getSharedPreferences(getString(R.string.spfile),Context.MODE_PRIVATE);
 
         SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
-        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyy-MM-dd", Locale.US);
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         TextView tvCheckIn = findViewById(R.id.tvBookCheckIn);
         TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
@@ -111,7 +109,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             persons = extras.getInt(PERSONS_KEY);
             tvPersons.setText(String.valueOf(persons));
 
-            byte[] imgBytes = extras.getByteArray(ROOM_IMAGE_KEY);
+            byte[] imgBytes =null;//= extras.getByteArray(ROOM_IMAGE_KEY);
             Bitmap roomImage = null;
             if (imgBytes != null) {
                 roomImage = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
@@ -121,6 +119,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
 
     }
+    //TODO 1:include option to use "Use my Rewards Points" checkbox, then "Check Availability" btn
+    //TODO 2:that opens a new Activity that displays the points needed per night. maybe use cash+
+    // TODO and points if available
+
 
     // TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
     // in order to not let 2 users make a reservation for one last room)

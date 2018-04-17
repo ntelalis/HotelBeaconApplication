@@ -303,7 +303,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         Intent intent = new Intent(this, BookActivity.class);
         intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
-        intent.putExtra(BookActivity.ROOM_IMAGE_KEY, stream.toByteArray());
+        //intent.putExtra(BookActivity.ROOM_IMAGE_KEY, stream.toByteArray());
         intent.putExtra(BookActivity.ROOM_PRICE_KEY, roomPrice);
         intent.putExtra(BookActivity.ARRIVAL_KEY, arrivalDateSQL);
         intent.putExtra(BookActivity.DEPARTURE_KEY, departureDateSQL);

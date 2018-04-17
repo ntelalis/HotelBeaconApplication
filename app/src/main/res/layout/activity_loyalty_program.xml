@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.LoyaltyProgramActivity">
+
+    <TextView
+        android:id="@+id/tvLoyaltyMemberName"
+        android:layout_width="0dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Cake Walker" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyCustomerIDLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tv_loyalty_accountnumber"
+        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyCustomerID"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyCustomerID"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyCustomerIDLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="123156484" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyPointsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/tv_loyalty_total_points"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyMemberName"
+        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPoints"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyMemberName" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyRewardsMemberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/tvLoyalty_rewardsmember_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyRewardsMember"
+        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyRewardsMember" />
+
+    <TextView
+        android:id="@+id/tvLoyaltyRewardsMember"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="@+id/tvLoyaltyMemberName"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyMemberName"
+        tools:text="REWARDS" />
+
+    <Button
+        android:id="@+id/btnLoyaltyRewardsSystem"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:onClick="rewards"
+        android:text="@string/btnLoyaltyRewardsSystem"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivLoyaltyborder"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoyaltyRewardsSystem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:color/darker_gray" />
+
+    <ImageView
+        android:id="@+id/ivLoyaltyborder2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@android:color/darker_gray" />
+
+</android.support.constraint.ConstraintLayout>

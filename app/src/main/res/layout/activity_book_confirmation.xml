@@ -48,7 +48,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:onClick="reservations"
-        android:text="@string/reservationButton"
+        android:text="@string/btn_view_reservations"
         app:layout_constraintBottom_toTopOf="@+id/btnBookConfirmHome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
