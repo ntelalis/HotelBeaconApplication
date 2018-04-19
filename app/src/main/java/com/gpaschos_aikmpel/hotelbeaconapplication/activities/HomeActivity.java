@@ -22,7 +22,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void viewReservations(View view){
-        Intent intent = new Intent(this, ViewReservationsActivity.class);
+        Intent intent = new Intent(this, UpcomingReservationActivity.class);
+        startActivity(intent);
+    }
+
+    public void loyalty(View view){
+        Intent intent = new Intent(this, LoyaltyProgramActivity.class);
         startActivity(intent);
     }
 

@@ -77,5 +77,15 @@ public class POST {
     public static String roomServiceFoodDesc = "desc";
     public static String roomServiceFoodPrice = "price";
 
+    //~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~
+    //SND
+    public static final String upcomingreservationsCustomerID = "customerID";
+    //RCV
+    public static final String upcomingreservationsResponseArray = "reservations";
+    public static final String upcomingreservationsReservationID = "reservationID";
+    public static final String upcomingreservationsAdults = "adults";
+    public static final String upcomingreservationsArrival = "arrivalDate";
+    public static final String upcomingreservationsDeparture = "departureDate";
+    public static final String upcomingreservationsRoomTitle = "roomType";
 
 }

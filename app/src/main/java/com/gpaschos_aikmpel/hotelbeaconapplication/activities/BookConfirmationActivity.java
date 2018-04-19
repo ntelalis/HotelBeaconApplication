@@ -29,7 +29,7 @@ public class BookConfirmationActivity extends AppCompatActivity {
     }
 
     public void reservations(View view) {
-        Intent intent = new Intent(this, ReservationActivity.class);
+        Intent intent = new Intent(this, UpcomingReservationActivity.class);
         startActivity(intent);
     }
 

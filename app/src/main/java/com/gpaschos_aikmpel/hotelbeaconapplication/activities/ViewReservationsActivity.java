@@ -30,6 +30,8 @@ public class ViewReservationsActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tbViewReserves);
         tabLayout.setupWithViewPager(viewPager);
 
+
+
     }
 
 
@@ -41,7 +43,8 @@ public class ViewReservationsActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return CurrentReservationFragment.newInstance(position);
+            CurrentReservationFragment currentReservationFragment = CurrentReservationFragment.newInstance(5);
+            return currentReservationFragment;
         }
 
         @Override
