@@ -36,8 +36,8 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void notificationWelcome(View view){
-        Notifications.welcomeNotify(this);
-    }
+    //public void notificationWelcome(View view){
+    //    Notifications.welcomeNotify(this);
+    //}
 
 }
