@@ -31,6 +31,9 @@ public class POST {
 
     //availability.php
 
+    //checkin.php
+    private static final String reservationID = "reservationID";
+
     //SND
     public static String availabilityArrivalDate = "arrivalDate";
     public static String availabilityDepartureDate = "departureDate";

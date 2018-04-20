@@ -51,13 +51,15 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         return reservationsList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvReservationID;
         private TextView tvRoomTitle;
         private TextView tvArrival;
         private TextView tvDeparture;
         private TextView tvAdults;
+        private Button btnCheckIn;
+
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +68,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
+            btnCheckIn = itemView.findViewById(R.id.btnUpcomingReservationsCheckin);
             //ivRoomImage.setOnClickListener(this);
         }
 
@@ -77,22 +80,18 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
         }
 
-        /*@Override
+        @Override
           public void onClick(View view) {
-
-            if (view.getId() == ivRoomImage.getId()) {
-                BitmapDrawable drawable = (BitmapDrawable) ((ImageView) view).getDrawable();
-                clickCallbacks.imgClicked(drawable.getBitmap());
-            } else if (view.getId() == btnRoomBook.getId()) {
+            if (view.getId() == btnCheckIn.getId()) {
                 int positionInList = getAdapterPosition();
-                clickCallbacks.bookRoom(reservationsList.get(positionInList));
+                clickCallbacks.checkIn(reservationsList.get(positionInList));
             }
-        }*/
+        }
     }
 
     public interface ClickCallbacks {
 
-        //void bookRoom(ReservationModel obj);
+        void checkIn(ReservationModel obj);
     }
 
     public static class ReservationModel {

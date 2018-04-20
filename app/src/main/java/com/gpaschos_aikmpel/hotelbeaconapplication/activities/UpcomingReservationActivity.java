@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -25,10 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UpcomingReservationActivity extends AppCompatActivity implements JsonListener {
+public class UpcomingReservationActivity extends AppCompatActivity implements JsonListener,
+        MyReservationsAdapter.ClickCallbacks {
 
     private RecyclerView recyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,12 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
     }
 
     public void fillRecyclerView(List<MyReservationsAdapter.ReservationModel> list) {
-        RecyclerView.Adapter adapter = new MyReservationsAdapter(list);
+        RecyclerView.Adapter adapter = new MyReservationsAdapter(this, list);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void checkIn(MyReservationsAdapter.ReservationModel obj){
+        int reservationID = obj.reservationID;
     }
 
     @Override
