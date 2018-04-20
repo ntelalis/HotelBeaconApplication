@@ -59,10 +59,11 @@
     <string name="tvUpcomingReservationsAdults">Adults</string>
     <string name="tvUpcomingReservationsArrival">Arrival Date</string>
     <string name="tvUpcomingReservationsDeparture">Departure Date</string>
-    <string name="tvUpcomingReservationsRoomTitle">Room Title</string>
+    <string name="tvUpcomingReservationsRoomTitle">Room Type</string>
     <string name="btn_view_reservations">My Reservations</string>
     <string name="tv_loyalty_accountnumber">Account Number</string>
     <string name="tv_loyalty_total_points">Total Points</string>
     <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
+    <string name="btnUpcomingReservationsCheckin">Check In</string>
 </resources>
