@@ -29,7 +29,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
-        int layoutId = R.layout.viewholder_reservationroom;
+        int layoutId = R.layout.viewholder_room_choose;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(layoutId, parent, false);
@@ -94,15 +94,17 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
 
     public static class ModelRoomView {
 
-        String description;
+        public int roomTypeID;
         public String title;
+        public String description;
         public int price;
         public Bitmap imgBitmap;
 
-        public ModelRoomView(String description, String title, int price, Bitmap imgBitmap) {
+        public ModelRoomView(int roomTypeID, String title, String description, int price, Bitmap imgBitmap) {
+            this.roomTypeID = roomTypeID;
+            this.title = title;
             this.description = description;
             this.price = price;
-            this.title = title;
             this.imgBitmap = imgBitmap;
         }
     }

@@ -35,6 +35,7 @@ import java.util.Map;
 public class BookActivity extends AppCompatActivity implements JsonListener {
 
     //KEYS
+    public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
     public static final String ROOM_TITLE_KEY = "room_KEY";
     public static final String ROOM_PRICE_KEY = "price_KEY";
     public static final String ROOM_IMAGE_KEY = "image_KEY";
@@ -44,6 +45,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
     private Button btnBook;
 
+    private int roomTypeID;
     private String roomTitle;
 
     private String arrivalSQLString;
@@ -87,7 +89,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-
+            roomTypeID = extras.getInt(ROOM_TYPE_ID_KEY);
             roomTitle = extras.getString(ROOM_TITLE_KEY);
             tvRoomTitle.setText(roomTitle);
             tvPrice.setText(String.valueOf(extras.getInt(ROOM_PRICE_KEY)));
@@ -130,7 +132,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
         Map<String, String> values = new HashMap<>();
 
-        values.put(POST.bookRoomTitle, roomTitle);
+        values.put(POST.bookRoomTypeID, String.valueOf(roomTypeID));
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));

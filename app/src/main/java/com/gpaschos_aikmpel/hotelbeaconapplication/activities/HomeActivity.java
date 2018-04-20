@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.Notifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -29,4 +30,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoyaltyProgramActivity.class);
         startActivity(intent);
     }
+
+    public void roomService(View view){
+        Intent intent = new Intent(this, RoomServiceActivity.class);
+        startActivity(intent);
+    }
+
+    public void notificationWelcome(View view){
+        Notifications.welcomeNotify(this);
+    }
+
 }

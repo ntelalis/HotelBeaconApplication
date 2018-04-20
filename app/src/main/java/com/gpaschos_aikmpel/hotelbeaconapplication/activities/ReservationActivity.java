@@ -223,9 +223,12 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                 JSONArray availabilityResults = json.getJSONArray(POST.availabilityResultsArray);
                 for (int i = 0; i < availabilityResults.length(); i++) {
                     JSONObject room = availabilityResults.getJSONObject(i);
+
+                    int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
                     String description = room.getString(POST.availabilityRoomDescription);
                     String title = room.getString(POST.availabilityRoomTitle);
                     int price = room.getInt(POST.availabilityRoomPrice);
+
 
                     String imageBase64 = room.getString(POST.availabilityRoomImage);
                     //decode the base64 string to convert it to byte array
@@ -234,7 +237,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(description, title, price, imageBitmap);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, imageBitmap);
 
                     roomList.add(roomType);
                 }
@@ -275,6 +278,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     @Override
     public void bookRoom(MyRoomsAdapter.ModelRoomView room) {
 
+        int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
         int roomPrice = room.price;
         Bitmap roomImage = room.imgBitmap;
@@ -302,6 +306,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         }
 
         Intent intent = new Intent(this, BookActivity.class);
+        intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
         intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
         //intent.putExtra(BookActivity.ROOM_IMAGE_KEY, stream.toByteArray());
         intent.putExtra(BookActivity.ROOM_PRICE_KEY, roomPrice);

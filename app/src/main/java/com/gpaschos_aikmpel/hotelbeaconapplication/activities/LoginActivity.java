@@ -93,4 +93,5 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
     public void getErrorResult(String url, String error) {
         Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
     }
+
 }

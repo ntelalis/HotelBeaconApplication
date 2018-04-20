@@ -61,7 +61,6 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         List<MyReservationsAdapter.ReservationModel> reservations= new ArrayList<>();
 
         for(int i=0;i<response.length();i++){
-//            JSONObject obj = response.getJSONObject(i);
             int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
             int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
             String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
