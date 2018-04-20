@@ -40,5 +40,5 @@ public class URL {
     public static final String roomServiceTimeCategoriesUrl = serverAddress + roomServiceCategoriesPage;
     public static final String roomServiceFoodUrl = serverAddress + roomServiceFoodPage;
     public static final String upcomingreservationsUrl = serverAddress + upcomingreservationsPage;
-    public static final String getCheckinUrl = serverAddress + checkinPage;
+    public static final String checkinUrl = serverAddress + checkinPage;
 }

@@ -6,13 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -42,11 +39,11 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         recyclerView.setLayoutManager(layoutManager);
 
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
-        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId),0);
+        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), 0);
 
-        Map<String,String> params = new HashMap<>();
-        params.put(POST.upcomingreservationsCustomerID,String.valueOf(customerID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.upcomingreservationsUrl,params);
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.upcomingreservationsCustomerID, String.valueOf(customerID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.upcomingreservationsUrl, params);
 
     }
 
@@ -55,32 +52,42 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         recyclerView.setAdapter(adapter);
     }
 
-    public void checkIn(MyReservationsAdapter.ReservationModel obj){
+    public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
+
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.reservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
     }
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
+        switch (url) {
+            case URL.upcomingreservationsUrl:
+                JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
 
-        JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
+                List<MyReservationsAdapter.ReservationModel> reservations = new ArrayList<>();
 
-        List<MyReservationsAdapter.ReservationModel> reservations= new ArrayList<>();
+                for (int i = 0; i < response.length(); i++) {
+                    int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
+                    int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
+                    String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
+                    String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
+                    String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
 
-        for(int i=0;i<response.length();i++){
-            int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
-            int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
-            String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
-            String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
-            String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
+                    reservations.add(new MyReservationsAdapter.ReservationModel(adults, roomTitle, reservationID,
+                            arrival, departure));
+                }
+                fillRecyclerView(reservations);
+                break;
+            case URL.checkinUrl:
 
-            reservations.add(new MyReservationsAdapter.ReservationModel(adults,roomTitle,reservationID,
-                    arrival,departure));
+                break;
         }
-        fillRecyclerView(reservations);
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url+": "+error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
     }
 }
