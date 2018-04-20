@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,8 +57,10 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         int reservationID = obj.reservationID;
 
         Map<String, String> params = new HashMap<>();
-        params.put(POST.reservationID, String.valueOf(reservationID));
+        params.put(POST.checkinReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
+
+
     }
 
     @Override
@@ -81,7 +84,10 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
                 fillRecyclerView(reservations);
                 break;
             case URL.checkinUrl:
-
+                String room = json.getString(POST.checkinRoom);
+                Intent intent = new Intent(this, CheckedInActivity.class);
+                intent.putExtra(CheckedInActivity.ROOM, room);
+                startActivity(intent);
                 break;
         }
     }

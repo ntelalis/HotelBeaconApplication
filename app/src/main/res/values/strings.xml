@@ -66,4 +66,7 @@
     <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
     <string name="btnUpcomingReservationsCheckin">Check In</string>
+    <string name="tvUpcomingreservationsCheckedin">Checked in</string>
+    <string name="tvcheckedinmsg">You have succesfully checked-in!</string>
+    <string name="tvcheckedinmsg2">Your room number is</string>
 </resources>

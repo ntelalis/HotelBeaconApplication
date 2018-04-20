@@ -29,11 +29,14 @@ public class POST {
     public static String forgotNewPassPassword = "pass";
     public static String forgotNewPassVerification = "code";
 
-    //availability.php
-
     //checkin.php
-    public static final String reservationID = "reservationID";
+    //SND
+    public static final String checkinReservationID = "reservationID";
+    //RCV
+    public static final String checkinRoom = "room";
 
+
+    //availability.php
     //SND
     public static String availabilityArrivalDate = "arrivalDate";
     public static String availabilityDepartureDate = "departureDate";

@@ -59,6 +59,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         private TextView tvDeparture;
         private TextView tvAdults;
         private Button btnCheckIn;
+        private TextView tvCheckedin;
 
 
         MyViewHolder(View itemView) {
@@ -69,6 +70,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
             btnCheckIn = itemView.findViewById(R.id.btnUpcomingReservationsCheckin);
+            tvCheckedin = itemView.findViewById(R.id.tvUpcomingreservationsCheckedin);
             //ivRoomImage.setOnClickListener(this);
         }
 
@@ -78,6 +80,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvArrival.setText(reservationsList.get(position).arrival);
             tvDeparture.setText(reservationsList.get(position).departure);
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
+            tvCheckedin.setVisibility(View.GONE);
         }
 
         @Override
@@ -85,6 +88,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             if (view.getId() == btnCheckIn.getId()) {
                 int positionInList = getAdapterPosition();
                 clickCallbacks.checkIn(reservationsList.get(positionInList));
+                btnCheckIn.setVisibility(View.GONE);
+                tvCheckedin.setVisibility(View.VISIBLE);
             }
         }
     }
