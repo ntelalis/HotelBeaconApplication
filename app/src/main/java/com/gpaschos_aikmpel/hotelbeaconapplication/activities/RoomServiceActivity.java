@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -15,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +58,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
     //Views
     private TextView orderTotalCount, orderTotalPrice;
+    private EditText etComments;
 
     //RecyclerView
     private RecyclerView recyclerView;
@@ -70,6 +75,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
         View bottomSheet = findViewById(R.id.roomServiceBottomSheet);
         orderTotalCount = bottomSheet.findViewById(R.id.tvBottomSheetCount);
         orderTotalPrice = bottomSheet.findViewById(R.id.tvBottomSheetTotalPrice);
+        etComments = bottomSheet.findViewById(R.id.etBottomSheetComments);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
 
@@ -91,15 +97,37 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
         VolleyQueue.getInstance(this).jsonRequest(this, URL.roomServiceFoodUrl, params);
     }
 
-    public void makeOrder(View view){
-        if(recyclerAdapter.getItemCount()>0){
+    public void makeOrder(View view) {
+        if (recyclerAdapter.getItemCount() > 0) {
             List<FoodAdapter.FoodOrderView> foodList = recyclerAdapter.getFoodList();
-            for(FoodAdapter.FoodOrderView foodOrderView: foodList){
+            JSONObject json = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            for (FoodAdapter.FoodOrderView foodOrderView : foodList) {
+                JSONObject obj = new JSONObject();
+                try {
+                    obj.put(POST.roomServiceOrderID, String.valueOf(foodOrderView.id));
+                    obj.put(POST.roomServiceOrderPrice, String.valueOf(foodOrderView.price));
+                    obj.put(POST.roomServiceOrderQuantity, String.valueOf(foodOrderView.quantity));
+                    jsonArray.put(obj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
+            try {
+                json.put(POST.roomServiceOrderArray,jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-        }
-        else{
+            Map<String,String> params = new HashMap<>();
+            //TODO reservationID how to get it
+            int resID = 90;
+            params.put(POST.roomServiceOrderReservationID,String.valueOf(resID));
+            params.put(POST.roomServiceOrderJson,json.toString());
+            params.put(POST.roomServiceOrderComments,etComments.getText().toString());
+            VolleyQueue.getInstance(this).jsonRequest(this,URL.orderUrl,params);
+        } else {
             Toast.makeText(this, "Please select some items first!", Toast.LENGTH_SHORT).show();
         }
     }
@@ -107,6 +135,10 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
+            case URL.orderUrl:
+                Intent intent = new Intent(this,RoomServiceConfirmationActivity.class);
+                startActivity(intent);
+                break;
             case URL.roomServiceTimeCategoriesUrl:
                 JSONArray jsonArray = json.getJSONArray(POST.roomServiceTimeCategory);
                 categoriesList = new ArrayList<>();
@@ -119,8 +151,33 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                     categoriesList.add(new Categories(id, name, from, to));
                 }
                 ////TODO Change this to pick optimal meal for now
-                getFood(categoriesList.get(1).getName());
-                ////
+                //getFood(categoriesList.get(1).getName());
+                Calendar now = Calendar.getInstance();
+
+                now.set(Calendar.HOUR_OF_DAY,Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                now.set(Calendar.MINUTE,Calendar.getInstance().get(Calendar.MINUTE));
+                now.set(Calendar.SECOND,Calendar.getInstance().get(Calendar.SECOND));
+                boolean flag = true;
+                for (Categories cat:categoriesList) {
+                    String[] timefrom = cat.from.split(":");
+                    Calendar from = Calendar.getInstance();
+                    from.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timefrom[0]));
+                    from.set(Calendar.MINUTE,Integer.parseInt(timefrom[1]));
+                    from.set(Calendar.SECOND,Integer.parseInt(timefrom[2]));
+
+                    String[] timeto = cat.to.split(":");
+                    Calendar to = Calendar.getInstance();
+                    to.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timeto[0]));
+                    to.set(Calendar.MINUTE,Integer.parseInt(timeto[1]));
+                    to.set(Calendar.SECOND,Integer.parseInt(timeto[2]));
+                    if(now.after(from) && now.before(to)){
+                        getFood(cat.getName());
+                        flag = false;
+                    }
+                }
+                if(flag){
+                    Toast.makeText(this, "Sorry! Nothing is served this hour!", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case URL.roomServiceFoodUrl:
                 JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceTypeCategory);
@@ -160,7 +217,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -172,10 +229,10 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
     @Override
     public void receiveFoodQuantity(RoomServiceModel.FoodModel foodModel, int quantity) {
 
-        recyclerAdapter.addFood(new FoodAdapter.FoodOrderView(foodModel.getName(), quantity, foodModel.getPrice()));
+        recyclerAdapter.addFood(new FoodAdapter.FoodOrderView(foodModel.getId(), foodModel.getName(), quantity, foodModel.getPrice()));
         int i = Integer.parseInt(orderTotalCount.getText().toString()) + 1;
         orderTotalCount.setText(String.valueOf(i));
-        Log.d("aaa",String.valueOf(recyclerAdapter.totalCost()));
+        Log.d("aaa", String.valueOf(recyclerAdapter.totalCost()));
         orderTotalPrice.setText(String.valueOf(recyclerAdapter.totalCost()));
 
     }

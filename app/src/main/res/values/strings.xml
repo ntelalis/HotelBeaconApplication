@@ -65,4 +65,6 @@
     <string name="tv_loyalty_total_points">Total Points</string>
     <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
+    <string name="title_activity_cccccccccccccccccc">cccccccccccccccccc</string>
+    <string name="roomServiceConfirmationOrder">Your order is sent!</string>
 </resources>
