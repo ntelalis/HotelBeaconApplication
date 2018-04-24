@@ -53,6 +53,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         recyclerView.setAdapter(adapter);
     }
 
+    //sends the reservationID to the server
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
 

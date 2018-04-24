@@ -69,4 +69,6 @@
     <string name="tvUpcomingreservationsCheckedin">Checked in</string>
     <string name="tvcheckedinmsg">You have succesfully checked-in!</string>
     <string name="tvcheckedinmsg2">Your room number is</string>
+
+
 </resources>
