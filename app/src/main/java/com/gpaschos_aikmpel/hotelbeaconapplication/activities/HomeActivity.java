@@ -40,4 +40,9 @@ public class HomeActivity extends AppCompatActivity {
         Notifications.welcomeNotify(this);
     }
 
+    public void review(View view){
+        Intent intent = new Intent(this, ReviewActivity.class);
+        startActivity(intent);
+    }
+
 }

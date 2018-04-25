@@ -86,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
             Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

@@ -99,4 +99,19 @@ public class POST {
     public static final String roomServiceOrderComments = "comment";
 
     //RCV
+
+    //~~~~~~~~~rating.php~~~~~~~~~~~~`
+    //SND
+    public static final String reviewRating = "rating";
+    public static final String reviewRatingComments = "comments";
+    public static final String reviewReservationID = "reservationID";
+
+
+    //~~~~~~checkrating.php~~~~~~~~~~
+    //SND
+    public static final String reviewCheckReservationID = "reservationID";
+    //RCV
+    public static final String reviewCheckExists = "exists";
+    public static final String reviewCheckRating = "rating";
+    public static final String reviewCheckComments = "comments";
 }
