@@ -138,6 +138,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
             case URL.orderUrl:
                 Intent intent = new Intent(this,RoomServiceConfirmationActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case URL.roomServiceTimeCategoriesUrl:
                 JSONArray jsonArray = json.getJSONArray(POST.roomServiceTimeCategory);
