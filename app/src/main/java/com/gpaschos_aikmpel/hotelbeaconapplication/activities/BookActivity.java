@@ -152,6 +152,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);
+        finish();
     }
 
     @Override

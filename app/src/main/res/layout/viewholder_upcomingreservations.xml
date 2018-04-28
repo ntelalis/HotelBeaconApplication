@@ -17,7 +17,7 @@
     <TextView
         android:id="@+id/tvUpcomingReservationsReservationIDLabel"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/upcomingReservationsReservationID"
@@ -109,36 +109,49 @@
         app:srcCompat="@android:color/black" />
 
     <Button
-        android:id="@+id/btnUpcomingReservationsCheckin"
+        android:id="@+id/btnUpcomingReservationsCheckinCheckOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:onClick="checkIn"
-        android:text="@string/btnUpcomingReservationsCheckin"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btnUpcomingReservationsCheckout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsDeparture"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsReservationIDLabel"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationIDLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvViewHmyReservationsRoomNoLabel" />
 
     <TextView
-        android:id="@+id/tvUpcomingreservationsCheckedin"
+        android:id="@+id/tvViewHmyReservationsRoomNoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvviewHUpcomingreservationsRoomlbl"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintEnd_toStartOf="@+id/tvViewHUpcomingReservationsRoomNo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsArrival"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsReservationIDLabel" />
+
+    <TextView
+        android:id="@+id/tvViewHUpcomingReservationsRoomNo"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvViewHmyReservationsRoomNoLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="102" />
+
+    <TextView
+        android:id="@+id/tvUpcomingReservationsInstructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/tvUpcomingreservationsCheckedin"
+        android:text="@string/tvUpcomingReservationsInstructionsCheckOut"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsDeparture"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsReservationIDLabel"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintEnd_toEndOf="@+id/btnUpcomingReservationsCheckinCheckOut"
+        app:layout_constraintStart_toStartOf="@+id/btnUpcomingReservationsCheckinCheckOut"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpcomingReservationsCheckinCheckOut" />
 </android.support.constraint.ConstraintLayout>

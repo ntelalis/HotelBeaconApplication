@@ -69,6 +69,15 @@
     <string name="tvUpcomingreservationsCheckedin">Checked in</string>
     <string name="tvcheckedinmsg">You have succesfully checked-in!</string>
     <string name="tvcheckedinmsg2">Your room number is</string>
+    <string name="tvViewHmyReservationsCheckInInstructionsTRUE">You can check in now!</string>
+    <string name="tvViewHmyReservationsCheckInInstructionsFALSE">You can\'t Check in yet.</string>
+    <string name="tvviewHUpcomingreservationsRoomlbl">Room number</string>
+    <string name="btnUpcomingReservationsCheckout">Check out</string>
+    <string name="tvUpcomingReservationsInstructionsCheckIn">You can\'t check in yet</string>
+    <string name="tvUpcomingReservationsInstructionsCheckOut">You can\'t check out yet</string>
+    <string name="tvviewHmyReservationsCheckOutInstructionsTRUE">You can check out now</string>
+    <string name="tvviewHmyReservationsCheckOutInstructionsFALSE">You can\'t check out yet</string>
+    <string name="btnUpcomingReservationsCheckedOut">Checked out</string>
 
 
 </resources>

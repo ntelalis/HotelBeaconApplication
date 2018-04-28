@@ -93,5 +93,7 @@ public class POST {
     public static final String upcomingreservationsArrival = "arrivalDate";
     public static final String upcomingreservationsDeparture = "departureDate";
     public static final String upcomingreservationsRoomTitle = "roomType";
+    public static final String upcomingreservationsEligibleForCheckinCheckout= "statusCode";
+    public static final String upcomingreservationsCheckedinRoom= "roomNumber";
 
 }

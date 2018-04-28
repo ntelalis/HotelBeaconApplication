@@ -1,18 +1,17 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAdapter.MyViewHolder> {
@@ -58,8 +57,10 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         private TextView tvArrival;
         private TextView tvDeparture;
         private TextView tvAdults;
-        private Button btnCheckIn;
-        private TextView tvCheckedin;
+        private Button btnCheckInCheckOut;
+        private TextView tvCheckedinRoomLabel;
+        private TextView tvCheckedinRoom;
+        private TextView tvCheckinCheckoutInstructions;
 
 
         MyViewHolder(View itemView) {
@@ -69,8 +70,12 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
-            btnCheckIn = itemView.findViewById(R.id.btnUpcomingReservationsCheckin);
-            tvCheckedin = itemView.findViewById(R.id.tvUpcomingreservationsCheckedin);
+            btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckin);
+            tvCheckinCheckoutInstructions = itemView.findViewById(R.id.tvUpcomingReservationsInstructions);
+            tvCheckedinRoomLabel = itemView.findViewById(R.id.tvViewHmyReservationsRoomNoLabel);
+            tvCheckedinRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
+            btnCheckInCheckOut.setOnClickListener(this);
+
             //ivRoomImage.setOnClickListener(this);
         }
 
@@ -80,16 +85,58 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvArrival.setText(reservationsList.get(position).arrival);
             tvDeparture.setText(reservationsList.get(position).departure);
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
-            tvCheckedin.setVisibility(View.GONE);
+
+            buttonAndTextViewsHandler(reservationsList.get(position).checkincheckoutbtn,
+                    reservationsList.get(position).room);
         }
 
         @Override
-          public void onClick(View view) {
-            if (view.getId() == btnCheckIn.getId()) {
-                int positionInList = getAdapterPosition();
-                clickCallbacks.checkIn(reservationsList.get(positionInList));
-                btnCheckIn.setVisibility(View.GONE);
-                tvCheckedin.setVisibility(View.VISIBLE);
+        public void onClick(View view) {
+            if (view.getId() == btnCheckInCheckOut.getId()) {
+                clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
+            }
+        }
+
+        public void buttonAndTextViewsHandler(int checkincheckoutbtn, String room){
+            switch(checkincheckoutbtn){
+                case Params.NOTeligibleForCheckin:
+                    btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
+                    btnCheckInCheckOut.setEnabled(false);
+                    tvCheckedinRoom.setVisibility(View.INVISIBLE);
+                    tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
+                    tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
+                    break;
+                case Params.eligibleForCheckin:
+                    btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
+                    btnCheckInCheckOut.setEnabled(true);
+                    tvCheckedinRoom.setVisibility(View.INVISIBLE);
+                    tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
+                    tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
+                    break;
+                case Params.NOTeligibleForCheckout:
+                    btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
+                    btnCheckInCheckOut.setEnabled(false);
+                    tvCheckedinRoom.setText(room);
+                    tvCheckedinRoom.setVisibility(View.VISIBLE);
+                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
+                    break;
+                case Params.eligibleForCheckout:
+                    btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
+                    btnCheckInCheckOut.setEnabled(true);
+                    tvCheckedinRoom.setText(room);
+                    tvCheckedinRoom.setVisibility(View.VISIBLE);
+                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
+                    break;
+                case Params.CheckedOut:
+                    btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
+                    btnCheckInCheckOut.setEnabled(false);
+                    tvCheckedinRoom.setText(room);
+                    tvCheckedinRoom.setVisibility(View.VISIBLE);
+                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckinCheckoutInstructions.setVisibility(View.INVISIBLE);
+
             }
         }
     }
@@ -105,14 +152,20 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         public int reservationID;
         public String arrival;
         public String departure;
+        public String room;
+        public int checkincheckoutbtn;
 
         public ReservationModel(int adults, String roomTitle, int reservationID, String arrival,
-                                String departure) {
+                                String departure, int checkinCheckoutbtn, String room) {
             this.adults = adults;
             this.roomTitle = roomTitle;
             this.reservationID = reservationID;
             this.arrival = arrival;
             this.departure = departure;
+            this.checkincheckoutbtn = checkinCheckoutbtn;
+            this.room = room;
         }
     }
+
+
 }

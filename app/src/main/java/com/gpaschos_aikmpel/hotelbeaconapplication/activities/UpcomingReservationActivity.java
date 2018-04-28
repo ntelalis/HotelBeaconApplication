@@ -29,6 +29,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         MyReservationsAdapter.ClickCallbacks {
 
     private RecyclerView recyclerView;
+    MyReservationsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +40,28 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        myReservations();
+    }
+
+    //query to the server about my reservation list
+    public void myReservations() {
         SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
         int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), 0);
 
         Map<String, String> params = new HashMap<>();
         params.put(POST.upcomingreservationsCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.upcomingreservationsUrl, params);
-
     }
 
     public void fillRecyclerView(List<MyReservationsAdapter.ReservationModel> list) {
-        RecyclerView.Adapter adapter = new MyReservationsAdapter(this, list);
+        adapter = new MyReservationsAdapter(this, list);
         recyclerView.setAdapter(adapter);
     }
 
     //sends the reservationID to the server
+    @Override
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
-
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkinReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
@@ -78,9 +83,11 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
                     String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
                     String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
                     String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
+                    String room = response.getJSONObject(i).getString(POST.upcomingreservationsCheckedinRoom);
+                    int statusCode = response.getJSONObject(i).getInt(POST.upcomingreservationsEligibleForCheckinCheckout);
 
                     reservations.add(new MyReservationsAdapter.ReservationModel(adults, roomTitle, reservationID,
-                            arrival, departure));
+                            arrival, departure, statusCode, room));
                 }
                 fillRecyclerView(reservations);
                 break;
