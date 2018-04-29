@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.Volley;
@@ -26,6 +27,7 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
 
     private SharedPreferences sharedPref;
 
+    private int customerID;
     private int points;
     private String tierName;
     private int tierPoints;
@@ -33,10 +35,17 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
     private int nextTierPoints;
     private ArrayList<String> tierBenefits;
 
+    private TextView tvCustomerID,tvPoints,tvRewardsMember;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loyalty_program);
+
+        tvCustomerID = findViewById(R.id.tvLoyaltyCustomerID);
+        tvRewardsMember= findViewById(R.id.tvLoyaltyRewardsMember);
+        tvPoints = findViewById(R.id.tvLoyaltyPoints);
+
 
         getLoyalty();
     }
@@ -48,13 +57,15 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
     public void getLoyalty(){
         Map<String,String> params = new HashMap<>();
         sharedPref = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
-        int customerID = sharedPref.getInt(getString(R.string.saved_customerId), 0);
+        customerID = sharedPref.getInt(getString(R.string.saved_customerId), 0);
         params.put(POST.loyaltyPointsCustomerID,String.valueOf(customerID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loyaltyPointsURL,params);
     }
 
     private void updateUI(){
-
+        tvCustomerID.setText(String.valueOf(customerID));
+        tvRewardsMember.setText(tierName);
+        tvPoints.setText(String.valueOf(tierPoints));
     }
 
     @Override
