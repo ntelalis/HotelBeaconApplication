@@ -78,11 +78,12 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
                     charges.add(new MyCheckoutAdapter.ChargeModel(service, price));
                 }
                 fillRecyclerVandTextV(charges,totalPrice);
+                break;
         }
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_LONG).show();
     }
 }
