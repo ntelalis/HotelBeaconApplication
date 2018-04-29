@@ -30,11 +30,13 @@ public class BookConfirmationActivity extends AppCompatActivity {
 
     public void reservations(View view) {
         Intent intent = new Intent(this, UpcomingReservationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
     public void home(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

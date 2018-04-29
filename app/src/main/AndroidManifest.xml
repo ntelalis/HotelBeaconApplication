@@ -37,6 +37,10 @@
         <activity android:name=".activities.LoyaltyProgramActivity" />
         <activity android:name=".activities.ReviewActivity" />
         <activity android:name=".activities.RoomServiceConfirmationActivity"></activity>
+        <activity
+            android:name=".activities.CheckedInActivity"
+            android:parentActivityName=".activities.UpcomingReservationActivity" />
+        <activity android:name=".activities.CheckOutActivity"></activity>
     </application>
 
 </manifest>

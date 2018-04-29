@@ -9,45 +9,48 @@
         android:id="@+id/tvUpcomingReservationsReservationID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingReservationsReservationIDLabel"
-        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsReservationIDLabel"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="35" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsReservationIDLabel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/upcomingReservationsReservationID"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvUpcomingReservationsReservationID"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsAdults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingReservationsAdultsLabel"
-        app:layout_constraintEnd_toEndOf="@+id/tvUpcomingReservationsRoomTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsAdultsLabel"
         tools:text="3" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsAdultsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tvUpcomingReservationsAdults"
-        app:layout_constraintEnd_toStartOf="@+id/tvUpcomingReservationsAdults"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsRoomTitle" />
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsRoomTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsDepartureLabel" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsArrival"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingReservationsArrivalLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationID"
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsDeparture"
         tools:text="12-9-1985" />
 
     <TextView
@@ -56,15 +59,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/tvUpcomingReservationsArrival"
-        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationIDLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsReservationIDLabel" />
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsRoomTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsRoomTitleLabel" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsDeparture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingReservationsDepartureLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationID"
+        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsDepartureLabel"
         tools:text="15-09-1986" />
 
     <TextView
@@ -73,29 +77,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/tvUpcomingReservationsDeparture"
-        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationIDLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsRoomTitleLabel"
         app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsArrivalLabel" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsRoomTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUpcomingReservationsRoomTitleLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsRoomTitleLabel"
         tools:text="Standard" />
 
     <TextView
         android:id="@+id/tvUpcomingReservationsRoomTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/tvUpcomingReservationsRoomTitle"
-        app:layout_constraintEnd_toStartOf="@+id/tvUpcomingReservationsRoomTitle"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsReservationID"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -106,4 +107,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:color/black" />
+
+    <Button
+        android:id="@+id/btnUpcomingReservationsCheckinCheckOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/btnUpcomingReservationsCheckout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationIDLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvViewHmyReservationsRoomNoLabel" />
+
+    <TextView
+        android:id="@+id/tvViewHmyReservationsRoomNoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvviewHUpcomingreservationsRoomlbl"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintEnd_toStartOf="@+id/tvViewHUpcomingReservationsRoomNo"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvUpcomingReservationsArrival"
+        app:layout_constraintTop_toBottomOf="@+id/tvUpcomingReservationsReservationIDLabel" />
+
+    <TextView
+        android:id="@+id/tvViewHUpcomingReservationsRoomNo"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvViewHmyReservationsRoomNoLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="102" />
+
+    <TextView
+        android:id="@+id/tvUpcomingReservationsInstructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/tvUpcomingReservationsInstructionsCheckOut"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnUpcomingReservationsCheckinCheckOut"
+        app:layout_constraintStart_toStartOf="@+id/btnUpcomingReservationsCheckinCheckOut"
+        app:layout_constraintTop_toBottomOf="@+id/btnUpcomingReservationsCheckinCheckOut" />
 </android.support.constraint.ConstraintLayout>
