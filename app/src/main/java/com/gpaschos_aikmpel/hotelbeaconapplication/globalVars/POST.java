@@ -114,4 +114,9 @@ public class POST {
     public static final String reviewCheckExists = "exists";
     public static final String reviewCheckRating = "rating";
     public static final String reviewCheckComments = "comments";
+
+
+    //~~~~~~loyaltypoints.php~~~~~~~`
+    //SND
+    public static final String loyaltyPointsCustomerID = "customerID";
 }

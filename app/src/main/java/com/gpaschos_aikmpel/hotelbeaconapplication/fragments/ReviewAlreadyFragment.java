@@ -52,6 +52,7 @@ public class ReviewAlreadyFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_review_already, container, false);
         rbRating = view.findViewById(R.id.rbReviewAlreadyRating);
         rbRating.setRating((float) rating);
+        rbRating.setIsIndicator(true);
         tvRating = view.findViewById(R.id.tvReviewAlreadyRating);
         tvRating.setText(ReviewWriteFragment.reviewString((float) rating));
         etComments = view.findViewById(R.id.etReviewAlreadyComments);
