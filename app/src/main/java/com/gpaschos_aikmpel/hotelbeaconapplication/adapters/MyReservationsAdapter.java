@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 
 import java.util.Calendar;
 import java.util.List;
@@ -61,6 +62,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         private TextView tvCheckedinRoomLabel;
         private TextView tvCheckedinRoom;
         private TextView tvCheckinCheckoutInstructions;
+        private String roomNo;
 
 
         MyViewHolder(View itemView) {
@@ -70,7 +72,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
-            btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckin);
+            btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckinCheckOut);
             tvCheckinCheckoutInstructions = itemView.findViewById(R.id.tvUpcomingReservationsInstructions);
             tvCheckedinRoomLabel = itemView.findViewById(R.id.tvViewHmyReservationsRoomNoLabel);
             tvCheckedinRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
@@ -88,12 +90,19 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
 
             buttonAndTextViewsHandler(reservationsList.get(position).checkincheckoutbtn,
                     reservationsList.get(position).room);
+
+            roomNo=reservationsList.get(position).room;
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == btnCheckInCheckOut.getId()) {
-                clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
+                if(roomNo==null) {
+                    clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
+                }
+                else{
+                    clickCallbacks.checkOut(reservationsList.get(getAdapterPosition()));
+                }
             }
         }
 
@@ -142,7 +151,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
     }
 
     public interface ClickCallbacks {
-
+        void checkOut(ReservationModel obj);
         void checkIn(ReservationModel obj);
     }
 

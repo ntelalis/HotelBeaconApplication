@@ -40,6 +40,12 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+        //myReservations();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         myReservations();
     }
 
@@ -58,7 +64,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         recyclerView.setAdapter(adapter);
     }
 
-    //sends the reservationID to the server
+    //sends the reservationID to the server in order to check in
     @Override
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
@@ -66,6 +72,18 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
         params.put(POST.checkinReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
 
+    }
+
+    @Override
+    public void checkOut(MyReservationsAdapter.ReservationModel obj) {
+        Intent intent = new Intent(this, CheckOutActivity.class);
+       // intent.putExtra(CheckedInActivity.ROOM, room);
+        startActivity(intent);
+
+        int reservationID = obj.reservationID;
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.checkinReservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this,URL.checkoutUrl, params);
 
     }
 

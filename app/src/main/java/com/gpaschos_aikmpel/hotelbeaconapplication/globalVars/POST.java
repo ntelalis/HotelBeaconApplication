@@ -2,7 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.globalVars;
 
 public class POST {
 
-    //register.php
+    //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~~~~
     public static final String registerTitle = "title";
     public static final String registerFirstName = "firstName";
     public static final String registerLastName = "lastName";
@@ -12,12 +12,12 @@ public class POST {
     //titles.php
     public static final String titlesTitleList = "titleList";
 
-    //login.php
+    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";
     public static final String loginCustomerID = "customerID";
 
-    //forgot.php
+    //~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~
     public static final String forgotEmail = "email";
 
     //forgotverify.php
@@ -29,14 +29,21 @@ public class POST {
     public static String forgotNewPassPassword = "pass";
     public static String forgotNewPassVerification = "code";
 
-    //checkin.php
+
+    //~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkinReservationID = "reservationID";
     //RCV
     public static final String checkinRoom = "room";
 
 
-    //availability.php
+    //~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String checkoutReservationID = "reservationID";
+
+
+
+    //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~
     //SND
     public static String availabilityArrivalDate = "arrivalDate";
     public static String availabilityDepartureDate = "departureDate";
@@ -54,7 +61,6 @@ public class POST {
     public static String personsMaxCapacity = "capacity";
 
     //~~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~~~~~
-
     //SND
     public static String bookRoomTypeID = "roomTypeID";
     public static String bookRoomArrival = "arrival";

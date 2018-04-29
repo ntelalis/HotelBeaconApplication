@@ -38,6 +38,7 @@
         <activity
             android:name=".activities.CheckedInActivity"
             android:parentActivityName=".activities.UpcomingReservationActivity" />
+        <activity android:name=".activities.CheckOutActivity"></activity>
     </application>
 
 </manifest>

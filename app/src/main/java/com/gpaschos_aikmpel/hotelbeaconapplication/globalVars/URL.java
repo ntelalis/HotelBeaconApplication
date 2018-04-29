@@ -25,6 +25,7 @@ public class URL {
     private static final String roomServiceFoodPage = "roomservicefood.php";
     private static final String upcomingreservationsPage = "upcomingreservations.php";
     private static final String checkinPage = "checkin.php";
+    private static final String checkoutPage = "checkout.php";
 
 
 
@@ -41,4 +42,5 @@ public class URL {
     public static final String roomServiceFoodUrl = serverAddress + roomServiceFoodPage;
     public static final String upcomingreservationsUrl = serverAddress + upcomingreservationsPage;
     public static final String checkinUrl = serverAddress + checkinPage;
+    public static final String checkoutUrl = serverAddress + checkoutPage;
 }
