@@ -15,15 +15,6 @@ import android.view.Gravity;
 import android.view.View;
 
 
-/**
- * HoloCircularProgressBar custom view.
- *
- * https://github.com/passsy/android-HoloCircularProgressBar
- *
- * @author Pascal.Welsch
- * @version 1.3 (03.10.2014)
- * @since 05.03.2013
- */
 public class HoloCircularProgressBar extends View {
 
     /**
