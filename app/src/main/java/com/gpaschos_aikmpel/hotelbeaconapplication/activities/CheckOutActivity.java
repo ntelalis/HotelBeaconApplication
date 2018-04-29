@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -29,6 +30,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
 
     private RecyclerView recyclerView;
     private MyCheckoutAdapter adapter;
+    private TextView totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,13 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
 
         int reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
 
-
+        totalPrice = findViewById(R.id.tvCheckoutTotalPrice);
         recyclerView = findViewById(R.id.rvCheckout);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         getCharges(reservationID);
+
     }
 
     public void getCharges(int reservationID){
@@ -52,9 +55,10 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkoutUrl, params);
     }
 
-    public void fillRecyclerView(List<MyCheckoutAdapter.ChargeModel> list) {
+    public void fillRecyclerVandTextV(List<MyCheckoutAdapter.ChargeModel> list, double totalprice) {
         adapter = new MyCheckoutAdapter(list);
         recyclerView.setAdapter(adapter);
+        totalPrice.setText(String.valueOf(totalprice));
     }
 
     @Override
@@ -73,7 +77,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
 
                     charges.add(new MyCheckoutAdapter.ChargeModel(service, price));
                 }
-                fillRecyclerView(charges);
+                fillRecyclerVandTextV(charges,totalPrice);
         }
     }
 
