@@ -65,4 +65,15 @@
     <string name="tv_loyalty_total_points">Total Points</string>
     <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
+    <string name="title_activity_cccccccccccccccccc">cccccccccccccccccc</string>
+    <string name="roomServiceConfirmationOrder">Your order is sent!</string>
+    <string name="reviewRating">We hope you enjoyed your stay!</string>
+    <string name="reviewRatingPrompt">Please spare a moment to rate our services</string>
+    <string name="btnReviewSubmit">Submit</string>
+    <string name="tvReviewComments">Comments (Optional)</string>
+    <string name="ratingConfirmation">Thank you for sharing your experience with us!</string>
+    <string name="reviewAlreadyMessage">You have already left feedback for you stay!</string>
+    <string name="reviewCheckErrorMessage">Sorry something went wrong please try again later</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

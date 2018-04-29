@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.Notifications;
@@ -38,6 +39,11 @@ public class HomeActivity extends AppCompatActivity {
 
     public void notificationWelcome(View view){
         Notifications.welcomeNotify(this);
+    }
+
+    public void review(View view){
+        Intent intent = new Intent(this, ReviewActivity.class);
+        startActivity(intent);
     }
 
 }

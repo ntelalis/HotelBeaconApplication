@@ -34,7 +34,9 @@
         <activity android:name=".activities.RoomServiceActivity" />
         <activity android:name=".activities.UpcomingReservationActivity" />
         <activity android:name=".activities.LoadingScreenActivity" />
-        <activity android:name=".activities.LoyaltyProgramActivity"></activity>
+        <activity android:name=".activities.LoyaltyProgramActivity" />
+        <activity android:name=".activities.ReviewActivity" />
+        <activity android:name=".activities.RoomServiceConfirmationActivity"></activity>
     </application>
 
 </manifest>

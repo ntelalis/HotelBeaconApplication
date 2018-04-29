@@ -88,4 +88,35 @@ public class POST {
     public static final String upcomingreservationsDeparture = "departureDate";
     public static final String upcomingreservationsRoomTitle = "roomType";
 
+    //~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~
+    //SND
+    public static final String roomServiceOrderReservationID = "reservationID";
+    public static final String roomServiceOrderArray = "order";
+    public static final String roomServiceOrderID = "id";
+    public static final String roomServiceOrderPrice = "price";
+    public static final String roomServiceOrderQuantity = "quantity";
+    public static final String roomServiceOrderJson = "order";
+    public static final String roomServiceOrderComments = "comment";
+
+    //RCV
+
+    //~~~~~~~~~rating.php~~~~~~~~~~~~`
+    //SND
+    public static final String reviewRating = "rating";
+    public static final String reviewRatingComments = "comments";
+    public static final String reviewReservationID = "reservationID";
+
+
+    //~~~~~~checkrating.php~~~~~~~~~~
+    //SND
+    public static final String reviewCheckReservationID = "reservationID";
+    //RCV
+    public static final String reviewCheckExists = "exists";
+    public static final String reviewCheckRating = "rating";
+    public static final String reviewCheckComments = "comments";
+
+
+    //~~~~~~loyaltypoints.php~~~~~~~`
+    //SND
+    public static final String loyaltyPointsCustomerID = "customerID";
 }

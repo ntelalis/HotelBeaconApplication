@@ -111,11 +111,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     public static class FoodOrderView {
 
+        public int id;
         public String title;
         public int quantity;
         public double price;
 
-        public FoodOrderView(String title, int quantity, double price) {
+        public FoodOrderView(int id,String title, int quantity, double price) {
+            this.id = id;
             this.title = title;
             this.quantity = quantity;
             this.price = price;
