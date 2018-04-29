@@ -130,7 +130,14 @@ public class POST {
     public static final String reviewCheckComments = "comments";
 
 
-    //~~~~~~loyaltypoints.php~~~~~~~`
+    //~~~~~~loyaltypoints.php~~~~~~~
     //SND
     public static final String loyaltyPointsCustomerID = "customerID";
+    //RCV
+    public static final String loyaltyProgramPoints = "points";
+    public static final String loyaltyProgramTierName = "tierName";
+    public static final String loyaltyProgramTierPoints = "tierPoints";
+    public static final String loyaltyProgramNextTierName = "nextTierName";
+    public static final String loyaltyProgramNextTierPoints = "nextTierPoints";
+    public static final String loyaltyProgramBenefits = "benefits";
 }
