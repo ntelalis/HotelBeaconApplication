@@ -134,10 +134,12 @@ public class POST {
     //SND
     public static final String loyaltyPointsCustomerID = "customerID";
     //RCV
+    public static final String loyaltyProgramFirstName = "firstName";
+    public static final String loyaltyProgramLastName = "lastName";
     public static final String loyaltyProgramPoints = "points";
     public static final String loyaltyProgramTierName = "tierName";
     public static final String loyaltyProgramTierPoints = "tierPoints";
     public static final String loyaltyProgramNextTierName = "nextTierName";
     public static final String loyaltyProgramNextTierPoints = "nextTierPoints";
-    public static final String loyaltyProgramBenefits = "benefits";
+    public static final String loyaltyProgramBenefits = "tierBenefits";
 }
