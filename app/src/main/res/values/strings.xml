@@ -89,6 +89,9 @@
     <string name="tvviewHmyReservationsCheckOutInstructionsTRUE">You can check out now</string>
     <string name="tvviewHmyReservationsCheckOutInstructionsFALSE">You can\'t check out yet</string>
     <string name="btnUpcomingReservationsCheckedOut">Checked out</string>
+    <string name="tvViewHCheckoutCurrency">€</string>
+    <string name="tvCheckoutTotalPriceLabel">Total price</string>
+    <string name="btnCheckoutConfirm">Confirm and Checkout</string>
 
 
 </resources>

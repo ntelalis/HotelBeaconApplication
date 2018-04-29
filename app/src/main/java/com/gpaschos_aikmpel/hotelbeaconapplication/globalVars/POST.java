@@ -37,10 +37,14 @@ public class POST {
     public static final String checkinRoom = "room";
 
 
-    //~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkoutReservationID = "reservationID";
-
+    //RCV
+    public static final String checkoutTotalPrice= "totalPrice";
+    public static final String checkoutChargeDetails= "chargeDetails";
+    public static final String checkoutService= "service";
+    public static final String checkoutServicePrice= "price";
 
 
     //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~

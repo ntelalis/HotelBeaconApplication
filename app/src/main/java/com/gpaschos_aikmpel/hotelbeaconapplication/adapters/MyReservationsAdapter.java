@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAdapter.MyViewHolder> {
