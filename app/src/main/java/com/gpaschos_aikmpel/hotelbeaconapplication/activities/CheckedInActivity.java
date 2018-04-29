@@ -9,6 +9,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 public class CheckedInActivity extends AppCompatActivity {
 
     public static final String ROOM = "roomID";
+
     private TextView tvroom;
 
     @Override

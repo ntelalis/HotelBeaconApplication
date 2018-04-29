@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -77,13 +78,8 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
     @Override
     public void checkOut(MyReservationsAdapter.ReservationModel obj) {
         Intent intent = new Intent(this, CheckOutActivity.class);
-       // intent.putExtra(CheckedInActivity.ROOM, room);
+        intent.putExtra(CheckOutActivity.RESERVATION_ID, obj.reservationID);
         startActivity(intent);
-
-        int reservationID = obj.reservationID;
-        Map<String, String> params = new HashMap<>();
-        params.put(POST.checkinReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this,URL.checkoutUrl, params);
 
     }
 
@@ -115,6 +111,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
                 intent.putExtra(CheckedInActivity.ROOM, room);
                 startActivity(intent);
                 break;
+
         }
     }
 

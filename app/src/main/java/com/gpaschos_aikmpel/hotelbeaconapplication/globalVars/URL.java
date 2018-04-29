@@ -30,6 +30,7 @@ public class URL {
     private static final String loyaltyPointsPage = "loyaltypoints.php";
     private static final String checkinPage = "checkin.php";
     private static final String checkoutPage = "checkout.php";
+    private static final String checkoutConfirmationPage = "checkoutConfirm.php";
 
 
 
@@ -51,4 +52,5 @@ public class URL {
     public static final String loyaltyPointsURL = serverAddress + loyaltyPointsPage;
     public static final String checkinUrl = serverAddress + checkinPage;
     public static final String checkoutUrl = serverAddress + checkoutPage;
+    public static final String checkoutConfirmationUrl = serverAddress + checkoutConfirmationPage;
 }
