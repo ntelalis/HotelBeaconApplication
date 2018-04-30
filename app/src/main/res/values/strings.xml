@@ -92,6 +92,7 @@
     <string name="tvViewHCheckoutCurrency">€</string>
     <string name="tvCheckoutTotalPriceLabel">Total price</string>
     <string name="btnCheckoutConfirm">Confirm and Checkout</string>
+    <string name="tvcheckedoutmsg">You have succesfully Checked out!</string>
     <string name="LoyaltyPointsLabel">Points</string>
     <string name="tvLoyaltyPointsNextTierPointsLabel">Unlock</string>
     <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>

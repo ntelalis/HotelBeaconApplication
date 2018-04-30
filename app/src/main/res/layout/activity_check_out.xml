@@ -25,6 +25,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
+        android:onClick="confirmCheckout"
         android:text="@string/btnCheckoutConfirm"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toBottomOf="parent"

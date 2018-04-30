@@ -24,23 +24,37 @@
         <activity
             android:name=".activities.ForgotActivity"
             android:parentActivityName=".activities.LoginActivity" />
-        <activity android:name=".activities.ForgotVerifyActivity" />
-        <activity android:name=".activities.ForgotNewPassActivity" />
-        <activity android:name=".activities.ReservationActivity" />
+        <activity android:name=".activities.ForgotVerifyActivity"
+            android:parentActivityName=".activities.ForgotActivity"/>
+        <activity android:name=".activities.ForgotNewPassActivity"
+            android:parentActivityName=".activities.LoginActivity"/>
+        <activity android:name=".activities.ReservationActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity android:name=".activities.HomeActivity" />
-        <activity android:name=".activities.BookActivity" />
-        <activity android:name=".activities.BookConfirmationActivity" />
         <activity android:name=".activities.ViewPagerTestActivity" />
-        <activity android:name=".activities.RoomServiceActivity" />
-        <activity android:name=".activities.UpcomingReservationActivity" />
+        <activity android:name=".activities.BookActivity"
+            android:parentActivityName=".activities.ReservationActivity"/>
+        <activity android:name=".activities.BookConfirmationActivity"
+            android:parentActivityName=".activities.ReservationActivity"/>
+        <activity android:name=".activities.RoomServiceActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
+        <activity android:name=".activities.UpcomingReservationActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity android:name=".activities.LoadingScreenActivity" />
-        <activity android:name=".activities.LoyaltyProgramActivity" />
-        <activity android:name=".activities.ReviewActivity" />
-        <activity android:name=".activities.RoomServiceConfirmationActivity"></activity>
+        <activity android:name=".activities.LoyaltyProgramActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
+        <activity android:name=".activities.ReviewActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
+        <!--TODO:alter these activities' parent activity(back to room's features)   -->
+        <activity android:name=".activities.RoomServiceConfirmationActivity"
+            android:parentActivityName=".activities.HomeActivity"/>
         <activity
             android:name=".activities.CheckedInActivity"
             android:parentActivityName=".activities.UpcomingReservationActivity" />
-        <activity android:name=".activities.CheckOutActivity"></activity>
+        <activity android:name=".activities.CheckOutActivity"
+            android:parentActivityName=".activities.UpcomingReservationActivity"/>
+        <activity android:name=".activities.CheckedOutActivity"
+            android:parentActivityName=".activities.UpcomingReservationActivity"/>
     </application>
 
 </manifest>

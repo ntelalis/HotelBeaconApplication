@@ -95,7 +95,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         @Override
         public void onClick(View view) {
             if (view.getId() == btnCheckInCheckOut.getId()) {
-                if(roomNo==null) {
+                if(roomNo.equals("null")) {
                     clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
                 }
                 else{
