@@ -36,11 +36,12 @@
         <activity android:name=".activities.LoadingScreenActivity" />
         <activity android:name=".activities.LoyaltyProgramActivity" />
         <activity android:name=".activities.ReviewActivity" />
-        <activity android:name=".activities.RoomServiceConfirmationActivity"></activity>
+        <activity android:name=".activities.RoomServiceConfirmationActivity" />
         <activity
             android:name=".activities.CheckedInActivity"
             android:parentActivityName=".activities.UpcomingReservationActivity" />
-        <activity android:name=".activities.CheckOutActivity"></activity>
+        <activity android:name=".activities.CheckOutActivity" />
+        <activity android:name=".activities.CheckedOutActivity"></activity>
     </application>
 
 </manifest>

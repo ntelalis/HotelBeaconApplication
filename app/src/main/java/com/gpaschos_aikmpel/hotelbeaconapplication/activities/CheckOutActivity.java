@@ -1,9 +1,12 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +34,17 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
     private RecyclerView recyclerView;
     private MyCheckoutAdapter adapter;
     private TextView totalPrice;
+    private Button confirmCheckout;
+    private int reservationID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
-        int reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
+        reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
 
+        confirmCheckout = findViewById(R.id.btnCheckoutConfirm);
         totalPrice = findViewById(R.id.tvCheckoutTotalPrice);
         recyclerView = findViewById(R.id.rvCheckout);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -48,17 +54,24 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
 
     }
 
-    public void getCharges(int reservationID){
+    private void getCharges(int reservationID){
 
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkoutReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkoutUrl, params);
     }
 
-    public void fillRecyclerVandTextV(List<MyCheckoutAdapter.ChargeModel> list, double totalprice) {
+    private void fillRecyclerVandTextV(List<MyCheckoutAdapter.ChargeModel> list, double totalprice) {
         adapter = new MyCheckoutAdapter(list);
         recyclerView.setAdapter(adapter);
         totalPrice.setText(String.valueOf(totalprice));
+    }
+
+    private void ConfirmCheckout (View view){
+
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.checkoutReservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkoutConfirmationUrl, params);
     }
 
     @Override
@@ -79,6 +92,10 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
                 }
                 fillRecyclerVandTextV(charges,totalPrice);
                 break;
+            case URL.checkoutConfirmationUrl:
+                Intent intent = new Intent(this, CheckedOutActivity.class);
+                startActivity(intent);
+                finish();
         }
     }
 
