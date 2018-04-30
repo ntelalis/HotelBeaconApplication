@@ -46,4 +46,9 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void notify(View view){
+        Notifications.createChannel(this,"testChannel","defaultChannel" );
+        Notifications.notifyMe(this,"testChannel",UpcomingReservationActivity.class ,"Test",
+                "My new Notification",R.drawable.ic_food);
+    }
 }
