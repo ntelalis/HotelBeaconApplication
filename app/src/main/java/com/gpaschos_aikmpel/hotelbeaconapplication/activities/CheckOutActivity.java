@@ -67,7 +67,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         totalPrice.setText(String.valueOf(totalprice));
     }
 
-    private void ConfirmCheckout (View view){
+    public void confirmCheckout (View view){
 
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkoutReservationID, String.valueOf(reservationID));
