@@ -62,7 +62,7 @@
     <string name="tvUpcomingReservationsRoomTitle">Room Type</string>
     <string name="btn_view_reservations">My Reservations</string>
     <string name="tv_loyalty_accountnumber">Account Number</string>
-    <string name="tv_loyalty_total_points">Total Points</string>
+    <string name="tv_loyalty_total_points">Points</string>
     <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
     <string name="title_activity_cccccccccccccccccc">cccccccccccccccccc</string>
@@ -92,6 +92,10 @@
     <string name="tvViewHCheckoutCurrency">€</string>
     <string name="tvCheckoutTotalPriceLabel">Total price</string>
     <string name="btnCheckoutConfirm">Confirm and Checkout</string>
+    <string name="LoyaltyPointsLabel">Points</string>
+    <string name="tvLoyaltyPointsNextTierPointsLabel">Unlock</string>
+    <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>
+    <string name="tvLoyaltyRewardsMemberDefault">REWARDS</string>
 
 
 </resources>
