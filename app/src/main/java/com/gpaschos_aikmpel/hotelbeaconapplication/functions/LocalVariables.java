@@ -23,6 +23,13 @@ public class LocalVariables {
         editor.apply();
     }
 
+    public static void storeBoolean(Context context, int key, boolean value) {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(context.getString(key), value);
+        editor.apply();
+    }
+
     public static String readString(Context context, int key) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
         return sharedPref.getString(context.getString(key), null);
@@ -33,4 +40,11 @@ public class LocalVariables {
         return sharedPref.getInt(context.getString(key), 0);
 
     }
+
+    public static boolean readBoolean(Context context, int key) {
+        SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
+        return sharedPref.getBoolean(context.getString(key), false);
+
+    }
+
 }

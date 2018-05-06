@@ -44,6 +44,10 @@
     <string name="saved_firstName" translatable="false">firstName_KEY</string>
     <string name="saved_lastName" translatable="false">lastName_KEY</string>
     <string name="saved_title" translatable="false">title_KEY</string>
+    <string name="is_checked_in" translatable="false">checkedIn_KEY</string>
+    <string name="is_checked_out" translatable="false">checkedOut_KEY</string>
+    <string name="is_notified_Welcome" translatable="false">notifiedWelcome_KEY</string>
+    <string name="is_notified_Farewell" translatable="false">notifiedFarewell_KEY</string>
     <string name="spfile">sharedpreferenceKEY</string>
 
     <string name="roomServiceBtn">Room Service</string>

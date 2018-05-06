@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.UpdateStoredVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class CheckedInActivity extends AppCompatActivity {
@@ -19,5 +20,7 @@ public class CheckedInActivity extends AppCompatActivity {
         String room = getIntent().getStringExtra(ROOM);
         tvroom = findViewById(R.id.tvcheckedinRoom);
         tvroom.setText(room);
+
+        UpdateStoredVariables.checkedIn(this);
     }
 }

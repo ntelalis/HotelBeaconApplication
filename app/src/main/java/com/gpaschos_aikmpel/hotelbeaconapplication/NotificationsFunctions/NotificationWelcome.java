@@ -29,14 +29,17 @@ public class NotificationWelcome implements JsonListener {
         VolleyQueue.getInstance(context).jsonRequest(this, URL.welcomeNotificationUrl, params);
     }
 
+    //method to be called from outside class
     public void notifyWelcome(Context context, int customerID) {
 
-        lastName = LocalVariables.readString(context, R.string.saved_lastName);
-        title = LocalVariables.readString(context, R.string.saved_title);
+        if(!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
+            lastName = LocalVariables.readString(context, R.string.saved_lastName);
+            title = LocalVariables.readString(context, R.string.saved_title);
 
-        contexT=context;
+            contexT = context;
 
-        hasCustomerStayedBefore(context, customerID);
+            hasCustomerStayedBefore(context, customerID);
+        }
     }
 
     //create notification
@@ -53,6 +56,9 @@ public class NotificationWelcome implements JsonListener {
             }
             NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
                     , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
+
+            //update the variable for welcome notification
+            UpdateStoredVariables.welcomeNotified(context);
 
     }
 

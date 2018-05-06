@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -27,6 +28,8 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_notifications);
+
+
 
         notifyWelcome(LocalVariables.readInt(this,R.string.saved_customerId));
     }

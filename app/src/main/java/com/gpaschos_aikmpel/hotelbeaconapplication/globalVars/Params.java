@@ -39,9 +39,8 @@ public class Params {
     //farewell messages
     public static final int notificationFarewellID = 4;
     public static final String notificationFarewellTitle = "Goodbye";
-    public static final String notificationFarewellGreeting = "Dear";
-    public static final String notificationFarewellGreeting1 = " We thank you for your stay and hope " +
-            "that you had an enjoyable experience";
+    public static final String notificationFarewellGreeting1 = "We thank you for your stay and hope " +
+            "that you had an enjoyable experience.";
 
     //checkin messages
     public static final int notificationCheckinID = 2;
