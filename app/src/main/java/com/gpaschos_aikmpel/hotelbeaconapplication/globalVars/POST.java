@@ -13,9 +13,16 @@ public class POST {
     public static final String titlesTitleList = "titleList";
 
     //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
+    //SND
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";
+    //RCV
     public static final String loginCustomerID = "customerID";
+    public static final String loginFirstName= "firstName";
+    public static final String loginLastName= "lastName";
+    public static final String loginTitle= "title";
+
+
 
     //~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~
     public static final String forgotEmail = "email";
@@ -146,4 +153,13 @@ public class POST {
     public static final String loyaltyProgramNextTierName = "nextTierName";
     public static final String loyaltyProgramNextTierPoints = "nextTierPoints";
     public static final String loyaltyProgramBenefits = "tierBenefits";
+
+
+    //~~~~~~~~~Welcome.php~~~~~~~~~~~
+    //SND
+    public static final String welcomeNotificationCustomerID = "customerID";
+    //RCV
+    public static final String welcomeNotificationHasStayed= "hasStayed";
+
+
 }

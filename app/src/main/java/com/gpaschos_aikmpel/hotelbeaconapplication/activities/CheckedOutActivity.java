@@ -8,13 +8,13 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class CheckedOutActivity extends AppCompatActivity {
 
-    private TextView checkoutMsg;
+    //private TextView checkoutMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checked_out);
 
-        checkoutMsg = findViewById(R.id.tvcheckedoutmsg);
+        //checkoutMsg = findViewById(R.id.tvcheckedoutmsg);
     }
 }
