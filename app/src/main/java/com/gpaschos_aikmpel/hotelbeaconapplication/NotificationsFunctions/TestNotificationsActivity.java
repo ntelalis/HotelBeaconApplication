@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
@@ -68,7 +69,9 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
                 , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
     }
 
-
+    public void farewell(View view){
+        NotificationsFarewell.notifyFarewell(this);
+    }
 
 
     @Override
