@@ -70,6 +70,7 @@
         <activity
             android:name=".activities.CheckedOutActivity"
             android:parentActivityName=".activities.UpcomingReservationActivity" />
+        <activity android:name=".NotificationsFunctions.TestNotificationsActivity" />
         <activity android:name=".activities.MonitoringActivity"/>
     </application>
 

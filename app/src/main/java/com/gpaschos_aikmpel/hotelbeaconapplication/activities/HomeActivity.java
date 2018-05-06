@@ -3,10 +3,10 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.Notifications;
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.TestNotificationsActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //public void notificationWelcome(View view){
-    //    Notifications.welcomeNotify(this);
+    //    NotificationCreation.welcomeNotify(this);
     //}
 
     public void review(View view){
@@ -47,9 +47,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void notify(View view){
-        Notifications.createChannel(this,"testChannel","defaultChannel" );
-        Notifications.notifyMe(this,"testChannel",UpcomingReservationActivity.class ,"Test",
-                "My new Notification",R.drawable.ic_food);
+      //  NotificationCreation.channel(this,"testChannel","defaultChannel" );
+      //  NotificationCreation.notification(this,"testChannel","Test",
+          //      21,"My new Notification",R.drawable.ic_food,UpcomingReservationActivity.class);
+        Intent intent = new Intent(this, TestNotificationsActivity.class);
+        startActivity(intent);
+
     }
 
     public void beacon(View view){

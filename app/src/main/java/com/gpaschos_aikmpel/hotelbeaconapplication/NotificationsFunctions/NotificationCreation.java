@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication;
+package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -6,6 +6,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -14,10 +16,10 @@ import android.support.v4.app.TaskStackBuilder;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 
-public class Notifications {
+public class NotificationCreation {
 
     //creates a notification channel
-    public static void createChannel(Context context,String channelID, String channelName) {
+    public static void channel(Context context, String channelID, String channelName) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             //NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
@@ -27,9 +29,9 @@ public class Notifications {
         }
     }
 
-    //creates a notification
-    public static void notifyMe(Context context, String channelID,  Class activity,
-                              String notificationTitle, String notificationContent, int smallIcon){
+    //creates a notification that opens an Activity
+    public static void notification(Context context, String channelID, int notificationID
+            , String notificationTitle, String notificationContent, int smallIcon, Class activity){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
 
@@ -62,12 +64,34 @@ public class Notifications {
         //Oreo Notification Code
         /*NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
             notificationManager.createNotificationChannel(channel);
         }*/
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         //notification id is a unique int for each notification
-        notificationManagerCompat.notify(1,notification);
+        notificationManagerCompat.notify(notificationID,notification);
     }
+
+
+    //creates a notification
+    public static void notification(Context context, String channelID, int notificationID
+            , String notificationTitle, String notificationContent, int smallIcon, String bigText){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
+
+        //builder.setSmallIcon(smallIcon);
+        Resources res = context.getResources();
+        BitmapFactory.decodeResource(res,smallIcon);
+        builder.setContentTitle(notificationTitle);
+        builder.setContentText(notificationContent);
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
+        builder.setAutoCancel(true);
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+        //notification id is a unique int for each notification
+        notificationManagerCompat.notify(notificationID,builder.build());
+    }
+
 }
