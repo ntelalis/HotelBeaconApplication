@@ -54,4 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void beacon(View view){
+        Intent intent = new Intent(this, MonitoringActivity.class);
+        startActivity(intent);
+    }
 }

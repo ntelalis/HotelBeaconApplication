@@ -3,8 +3,11 @@
     package="com.gpaschos_aikmpel.hotelbeaconapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
+        android:launchMode="singleInstance"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -67,7 +70,9 @@
         <activity
             android:name=".activities.CheckedOutActivity"
             android:parentActivityName=".activities.UpcomingReservationActivity" />
-        <activity android:name=".NotificationsFunctions.TestNotificationsActivity"></activity>
+        <activity android:name=".NotificationsFunctions.TestNotificationsActivity" />
+        <activity android:name=".activities.MonitoringActivity"/>
     </application>
+
 
 </manifest>

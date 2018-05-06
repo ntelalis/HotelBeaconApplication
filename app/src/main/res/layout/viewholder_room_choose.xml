@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         android:onClick="bookRoom"
         android:text="@string/btnRoomBook"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/tvRoomTotalPrice" />
 
     <TextView
         android:id="@+id/tvRoomTitle"
@@ -37,12 +36,42 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+        app:layout_constraintEnd_toStartOf="@+id/btnRoomBook"
+        app:layout_constraintStart_toEndOf="@+id/ivRoomImage"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoomTitle"
+        tools:text="Night Price 40€" />
+
+    <TextView
+        android:id="@+id/tvRoomTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="bottom|center"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
-        app:layout_constraintEnd_toEndOf="@+id/btnRoomBook"
+        app:layout_constraintEnd_toStartOf="@+id/tvRoomPriceCurrency"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/tvRoomTitle"
         app:layout_constraintStart_toStartOf="@+id/btnRoomBook"
         app:layout_constraintTop_toTopOf="@id/ivRoomLine"
-        tools:text="128€" />
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/tvRoomPriceCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="bottom|center"
+        android:text="@string/tvRoomPriceCurrency"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionMode.Title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvRoomTotalPrice"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvRoomShortDescription"
@@ -53,7 +82,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/btnRoomBook"
         app:layout_constraintStart_toEndOf="@+id/ivRoomImage"
-        app:layout_constraintTop_toBottomOf="@+id/tvRoomTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoomPrice"
         tools:text="Rate includes Buffet Breakfast, and variety of extra services" />
 
     <ImageView
