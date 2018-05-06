@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
@@ -34,7 +35,7 @@ public class NotificationWelcome implements JsonListener {
         lastName = LocalVariables.readString(context, R.string.saved_lastName);
         title = LocalVariables.readString(context, R.string.saved_title);
 
-        contexT=context;
+        contexT = context;
 
         hasCustomerStayedBefore(context, customerID);
     }
@@ -42,17 +43,24 @@ public class NotificationWelcome implements JsonListener {
     //create notification
     public void notifyCustomer(boolean hasStayedBefore, Context context) {
 
-            String notificationContent =Params.notificationWelcomeGreeting + title +". "+ lastName
-                    + Params.notificationWelcomeGreeting3;
-            String notificationTitle;
-            if (!hasStayedBefore) {
-                notificationTitle = Params.getNotificationWelcomeTitle + Params.HotelName;
+        String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
+                + Params.notificationWelcomeGreeting3;
+        String notificationTitle;
+        if (!hasStayedBefore) {
+            notificationTitle = Params.getNotificationWelcomeTitle + Params.HotelName;
 
-            } else {
-                notificationTitle = Params.getNotificationWelcomeTitle1 + Params.HotelName;
-            }
-            NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
-                    , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
+        } else {
+            notificationTitle = Params.getNotificationWelcomeTitle1 + Params.HotelName;
+        }
+        int icon;
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            icon = R.drawable.ic_welcome;
+
+        } else {
+            icon = R.drawable.ic_welcome_png;
+        }
+        NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
+                , notificationTitle, notificationContent, icon, notificationContent);
 
     }
 

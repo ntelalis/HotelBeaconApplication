@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Icon;
 import android.os.Build;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -80,9 +82,7 @@ public class NotificationCreation {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
 
-        //builder.setSmallIcon(smallIcon);
-        Resources res = context.getResources();
-        BitmapFactory.decodeResource(res,smallIcon);
+        builder.setSmallIcon(smallIcon);
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationContent);
         builder.setDefaults(Notification.DEFAULT_SOUND);
