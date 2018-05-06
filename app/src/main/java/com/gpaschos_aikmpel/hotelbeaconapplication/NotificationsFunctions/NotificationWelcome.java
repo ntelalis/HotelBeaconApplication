@@ -65,8 +65,8 @@ public class NotificationWelcome implements JsonListener {
         NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
                 , notificationTitle, notificationContent, icon, notificationContent);
 
-            //update the variable for welcome notification
-            UpdateStoredVariables.welcomeNotified(context);
+        //update the variable for welcome notification
+        UpdateStoredVariables.welcomeNotified(context);
 
     }
 
