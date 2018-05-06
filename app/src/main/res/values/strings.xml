@@ -97,6 +97,7 @@
     <string name="tvLoyaltyPointsNextTierPointsLabel">Unlock</string>
     <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>
     <string name="tvLoyaltyRewardsMemberDefault">REWARDS</string>
+    <string name="tvRoomPriceCurrency">€</string>
 
 
 </resources>

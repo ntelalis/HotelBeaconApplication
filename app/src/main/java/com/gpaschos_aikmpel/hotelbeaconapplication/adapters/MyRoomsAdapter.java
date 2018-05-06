@@ -59,7 +59,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             super(itemView);
             btnRoomBook = itemView.findViewById(R.id.btnRoomBook);
             tvRoomDescription = itemView.findViewById(R.id.tvRoomShortDescription);
-            tvRoomPrice = itemView.findViewById(R.id.tvRoomPrice);
+            tvRoomPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
             ivRoomImage.setOnClickListener(this);

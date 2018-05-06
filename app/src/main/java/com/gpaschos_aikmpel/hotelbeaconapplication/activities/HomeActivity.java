@@ -51,4 +51,9 @@ public class HomeActivity extends AppCompatActivity {
         Notifications.notifyMe(this,"testChannel",UpcomingReservationActivity.class ,"Test",
                 "My new Notification",R.drawable.ic_food);
     }
+
+    public void beacon(View view){
+        Intent intent = new Intent(this, MonitoringActivity.class);
+        startActivity(intent);
+    }
 }
