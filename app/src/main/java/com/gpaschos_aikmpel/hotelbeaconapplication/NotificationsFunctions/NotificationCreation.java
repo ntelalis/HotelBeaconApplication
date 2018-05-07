@@ -58,7 +58,8 @@ public class NotificationCreation {
 
     public static void notifyFarewell(Context context) {
 
-        if(!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)) {
+        if(!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
+                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 

@@ -22,6 +22,8 @@ public class POST {
     public static final String loginLastName= "lastName";
     public static final String loginTitle= "title";
     public static final String loginIsOldCustomer= "isOldCustomer";
+    public static final String loginIsCheckedIn= "isCheckedIn";
+    public static final String loginIsCheckedOut= "isCheckedOut";
 
 
 
@@ -162,10 +164,5 @@ public class POST {
     //RCV
     public static final String welcomeNotificationHasStayed= "hasStayed";
 
-    //~~~~~~~~~.php~~~~~~~~~~~
-    //SND
-    public static final String  = "customerID";
-    //RCV
-    public static final String = "hasCheckedOut";
 
 }
