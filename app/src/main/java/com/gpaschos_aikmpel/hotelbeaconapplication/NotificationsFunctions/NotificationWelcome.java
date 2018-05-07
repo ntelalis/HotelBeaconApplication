@@ -19,29 +19,41 @@ import java.util.Map;
 
 public class NotificationWelcome implements JsonListener {
 
+    private static NotificationWelcome instance = null;
+
     private String lastName;
     private String title;
-    private Context contexT;
+    private Context context;
+
+    private NotificationWelcome(Context context){
+        this.context = context;
+    }
+
+    public static NotificationWelcome getInstance(Context context){
+        if(instance==null){
+            instance = new NotificationWelcome(context);
+        }
+        return instance;
+
+    }
 
     //ask the server whether the customer has stayed at the hotel before
-    public void hasCustomerStayedBefore(Context context, int customerID) {
+    private void hasCustomerStayedBefore(Context context, int customerID) {
         Map<String, String> params = new HashMap<>();
         params.put(POST.welcomeNotificationCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(context).jsonRequest(this, URL.welcomeNotificationUrl, params);
     }
 
-    public void notifyWelcome(Context context, int customerID) {
-
+    public void notifyWelcome() {
+        int customerID = LocalVariables.readInt(context,R.string.saved_customerId);
         lastName = LocalVariables.readString(context, R.string.saved_lastName);
         title = LocalVariables.readString(context, R.string.saved_title);
-
-        contexT = context;
 
         hasCustomerStayedBefore(context, customerID);
     }
 
     //create notification
-    public void notifyCustomer(boolean hasStayedBefore, Context context) {
+    private void notifyCustomer(boolean hasStayedBefore, Context context) {
 
         String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
                 + Params.notificationWelcomeGreeting3;
@@ -68,7 +80,7 @@ public class NotificationWelcome implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.welcomeNotificationUrl)) {
             boolean hasStayedBefore = json.getBoolean(POST.welcomeNotificationHasStayed);
-            notifyCustomer(hasStayedBefore, contexT);
+            notifyCustomer(hasStayedBefore, context);
         }
 
     }
