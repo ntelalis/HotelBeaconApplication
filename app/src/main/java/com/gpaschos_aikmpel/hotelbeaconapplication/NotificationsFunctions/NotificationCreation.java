@@ -6,19 +6,87 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.os.Build;
-import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 public class NotificationCreation {
+
+    private static String lastName;
+    private static String title;
+
+
+
+    public static void notifyWelcome(Context context) {
+
+        if(shouldNotifyWelcome(context)) {
+            lastName = LocalVariables.readString(context, R.string.saved_lastName);
+            title = LocalVariables.readString(context, R.string.saved_title);
+
+
+            String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
+                    + Params.notificationWelcomeGreeting3;
+            String notificationTitle;
+            if (!LocalVariables.readBoolean(context,R.string.is_old_customer)) {
+                notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
+
+            } else {
+                notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
+            }
+            int icon;
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                icon = R.drawable.ic_welcome;
+
+            } else {
+                icon = R.drawable.ic_welcome_png;
+            }
+            notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
+                    , notificationTitle, notificationContent, icon, notificationContent);
+
+            //update the variable for welcome notification
+            UpdateStoredVariables.welcomeNotified(context);
+        }
+
+    }
+
+
+    public static void notifyFarewell(Context context) {
+
+        if(!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)) {
+            lastName = LocalVariables.readString(context, R.string.saved_lastName);
+            title = LocalVariables.readString(context, R.string.saved_title);
+
+            String notificationTitle = Params.notificationFarewellTitle + " "+title+ " "+ lastName;
+            notification(context, Params.NOTIFICATION_CHANNEL_ID
+                    ,Params.notificationFarewellID, notificationTitle
+                    ,Params.notificationFarewellGreeting1, R.drawable.ic_welcome
+                    ,Params.notificationFarewellGreeting1);
+
+            UpdateStoredVariables.farewellNotified(context);
+        }
+    }
+
+
+    //Check if a welcomeNotification has been received, and in case of a previous
+    // farewellNotification reception check if 5 hours have past ever since.
+    private static boolean shouldNotifyWelcome(Context context) {
+
+        long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
+        long currentTime = System.currentTimeMillis();
+
+        if(!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)){
+            if(farewellTime==0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000){
+                return true;
+            }
+        }
+        return false;
+    }
 
     //creates a notification channel
     public static void channel(Context context, String channelID, String channelName) {
@@ -32,8 +100,9 @@ public class NotificationCreation {
     }
 
     //creates a notification that opens an Activity
-    public static void notification(Context context, String channelID, int notificationID
-            , String notificationTitle, String notificationContent, int smallIcon, Class activity){
+    private static void notification(Context context, String channelID, int notificationID
+            ,String notificationTitle, String notificationContent, int smallIcon, String bigText
+            ,Class activity){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
 
@@ -41,6 +110,7 @@ public class NotificationCreation {
         builder.setContentTitle(notificationTitle);
         builder.setContentText(notificationContent);
         builder.setDefaults(Notification.DEFAULT_SOUND);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
         Intent intent = new Intent(context, UpcomingReservationActivity.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
@@ -77,7 +147,7 @@ public class NotificationCreation {
 
 
     //creates a notification
-    public static void notification(Context context, String channelID, int notificationID
+    private static void notification(Context context, String channelID, int notificationID
             , String notificationTitle, String notificationContent, int smallIcon, String bigText){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);

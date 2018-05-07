@@ -37,8 +37,6 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         //create a notification channel
         NotificationCreation.channel(this, "basic_channel","default channel" );
 
-        //store notification variables and set them to false
-        UpdateStoredVariables.setDefaults(this);
 
         String storedEmail = LocalVariables.readString(this, R.string.saved_email);
         String storedPass = LocalVariables.readString(this, R.string.saved_password);
@@ -50,13 +48,17 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         etEmail = findViewById(R.id.etLoginEmail);
         etPass = findViewById(R.id.etLoginPassword);
 
+
     }
 
-    public void login(View view) {
+    public void loginBtn(View view) {
         String email = etEmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
 
         loginRequest(email,pass);
+
+        //store notification variables and set them to false
+        UpdateStoredVariables.setDefaults(this);
     }
 
     private void loginRequest(String email, String pass) {
@@ -85,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
             String firstName = json.getString(POST.loginFirstName);
             String title = json.getString(POST.loginTitle);
             String lastName = json.getString(POST.loginLastName);
+            int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
 
 
             //TODO Implement OAUTH2 Token
@@ -94,6 +97,12 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
             LocalVariables.storeString(this, R.string.saved_firstName,firstName);
             LocalVariables.storeString(this, R.string.saved_lastName,lastName);
             LocalVariables.storeString(this, R.string.saved_title,title);
+            if(isOldCustomer>0){
+                LocalVariables.storeBoolean(this,R.string.is_old_customer,true);
+            }
+            else{
+                LocalVariables.storeBoolean(this,R.string.is_old_customer,false);
+            }
 
             Toast.makeText(this, "Login Successful! CustomerID: " + customerId
                     +"firstName: "+ title+ firstName, Toast.LENGTH_SHORT).show();

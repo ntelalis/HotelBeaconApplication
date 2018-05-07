@@ -48,6 +48,7 @@
     <string name="is_checked_out" translatable="false">checkedOut_KEY</string>
     <string name="is_notified_Welcome" translatable="false">notifiedWelcome_KEY</string>
     <string name="is_notified_Farewell" translatable="false">notifiedFarewell_KEY</string>
+    <string name="is_old_customer" translatable="false">oldCustomer_KEY</string>
     <string name="spfile">sharedpreferenceKEY</string>
 
     <string name="roomServiceBtn">Room Service</string>
@@ -105,6 +106,7 @@
     <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>
     <string name="tvLoyaltyRewardsMemberDefault">REWARDS</string>
     <string name="tvRoomPriceCurrency">€</string>
+    <string name="saved_farewell_time">farewellTime</string>
 
 
 </resources>

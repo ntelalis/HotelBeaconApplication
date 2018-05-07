@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -60,10 +59,10 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
                 + Params.notificationWelcomeGreeting3;
         String notificationTitle;
         if (!hasStayedBefore) {
-            notificationTitle = Params.getNotificationWelcomeTitle + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
 
         } else {
-            notificationTitle = Params.getNotificationWelcomeTitle1 + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
         }
         NotificationCreation.notification(this, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
                 , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);

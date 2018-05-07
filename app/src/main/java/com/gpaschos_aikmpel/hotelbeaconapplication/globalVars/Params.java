@@ -27,8 +27,8 @@ public class Params {
 
     //welcoming messages
     public static final int notificationWelcomeID = 1;
-    public static final String getNotificationWelcomeTitle = "Welcome to ";
-    public static final String getNotificationWelcomeTitle1 = "Welcome back to ";
+    public static final String notificationWelcomeTitle = "Welcome to ";
+    public static final String notificationWelcomeBackTitle = "Welcome back to ";
     //public static final String getNotificationWelcomeTitle2 = " to";
     public static final String notificationWelcomeGreeting = "Dear ";
     //public static final String notificationWelcomeGreeting1 = ", welcome ";

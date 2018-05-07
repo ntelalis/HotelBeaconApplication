@@ -12,7 +12,7 @@ public class POST {
     //titles.php
     public static final String titlesTitleList = "titleList";
 
-    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~loginBtn.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";
@@ -21,6 +21,7 @@ public class POST {
     public static final String loginFirstName= "firstName";
     public static final String loginLastName= "lastName";
     public static final String loginTitle= "title";
+    public static final String loginIsOldCustomer= "isOldCustomer";
 
 
 
@@ -161,10 +162,10 @@ public class POST {
     //RCV
     public static final String welcomeNotificationHasStayed= "hasStayed";
 
-    //~~~~~~~~~Farewell.php~~~~~~~~~~~
+    //~~~~~~~~~.php~~~~~~~~~~~
     //SND
-    public static final String farewellNotificationCustomerID = "customerID";
+    public static final String  = "customerID";
     //RCV
-    public static final String farewellNotificationHasCheckedOut= "hasCheckedOut";
+    public static final String = "hasCheckedOut";
 
 }

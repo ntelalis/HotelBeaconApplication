@@ -33,7 +33,7 @@ public class NotificationWelcome implements JsonListener {
     //method to be called from outside class
     public void notifyWelcome(Context context, int customerID) {
 
-        if(!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
+        if(UpdateStoredVariables.shouldNotifyWelcome(context)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
@@ -50,10 +50,10 @@ public class NotificationWelcome implements JsonListener {
                 + Params.notificationWelcomeGreeting3;
         String notificationTitle;
         if (!hasStayedBefore) {
-            notificationTitle = Params.getNotificationWelcomeTitle + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
 
         } else {
-            notificationTitle = Params.getNotificationWelcomeTitle1 + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
         }
         int icon;
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
