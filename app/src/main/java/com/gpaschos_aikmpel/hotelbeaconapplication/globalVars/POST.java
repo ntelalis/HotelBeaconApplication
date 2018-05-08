@@ -12,7 +12,7 @@ public class POST {
     //titles.php
     public static final String titlesTitleList = "titleList";
 
-    //~~~~~~~~~~~~~~~~~~loginBtn.php~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";

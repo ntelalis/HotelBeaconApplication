@@ -32,15 +32,15 @@ public class NotificationWelcome implements JsonListener {
 
     //method to be called from outside class
     public void notifyWelcome(Context context, int customerID) {
-
-        if(UpdateStoredVariables.shouldNotifyWelcome(context)) {
+/*
+        if(NotificationCreation.(context);) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
             contexT = context;
 
             hasCustomerStayedBefore(context, customerID);
-        }
+        }*/
     }
 
     //create notification
@@ -62,8 +62,8 @@ public class NotificationWelcome implements JsonListener {
         } else {
             icon = R.drawable.ic_welcome_png;
         }
-        NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
-                , notificationTitle, notificationContent, icon, notificationContent);
+        //NotificationCreation.notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
+          //      , notificationTitle, notificationContent, icon, notificationContent);
 
         //update the variable for welcome notification
         UpdateStoredVariables.welcomeNotified(context);
