@@ -30,6 +30,7 @@ public class UpdateStoredVariables {
 
     public static void farewellNotified(Context context) {
         LocalVariables.storeBoolean(context, R.string.is_checked_in, false);
+        LocalVariables.storeBoolean(context, R.string.is_checked_out, false);
         LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
         LocalVariables.storeBoolean(context, R.string.is_notified_Farewell, true);
         LocalVariables.storeLong(context, R.string.saved_farewell_time, System.currentTimeMillis());
