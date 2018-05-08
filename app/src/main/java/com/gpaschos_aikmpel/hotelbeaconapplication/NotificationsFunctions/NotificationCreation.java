@@ -74,7 +74,8 @@ public class NotificationCreation implements JsonListener {
 
     public static void notifyFarewell(Context context) {
 
-        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
+                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
@@ -91,7 +92,7 @@ public class NotificationCreation implements JsonListener {
 
     //Check if a welcomeNotification has been received, and in case of a previous
     // farewellNotification reception check if 5 hours have past ever since.
-    private static boolean shouldNotifyWelcome(Context context) {
+    static boolean shouldNotifyWelcome(Context context) {
 
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();

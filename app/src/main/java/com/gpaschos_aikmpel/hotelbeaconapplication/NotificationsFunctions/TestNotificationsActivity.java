@@ -64,12 +64,12 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
         } else {
             notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
         }
-        /*NotificationCreation.notification(this, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
-                , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);*/
+      //  NotificationCreation.notification(this, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
+           //     , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
     }
 
     /*public void farewell(View view){
-        NotificationsFarewell.notifyFarewell(this);
+        //NotificationsFarewell.notifyFarewell(this);
     }*/
 
 

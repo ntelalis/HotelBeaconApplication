@@ -22,6 +22,8 @@ public class POST {
     public static final String loginLastName= "lastName";
     public static final String loginTitle= "title";
     public static final String loginIsOldCustomer= "isOldCustomer";
+    public static final String loginIsCheckedIn= "isCheckedIn";
+    public static final String loginIsCheckedOut= "isCheckedOut";
 
 
 

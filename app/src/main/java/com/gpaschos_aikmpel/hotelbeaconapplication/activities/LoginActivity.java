@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.PointerIcon;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -88,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
             String title = json.getString(POST.loginTitle);
             String lastName = json.getString(POST.loginLastName);
             int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
+            boolean isCheckedIn = json.getBoolean(POST.loginIsCheckedIn);
+            boolean isCheckedOut = json.getBoolean(POST.loginIsCheckedOut);
 
 
             //TODO Implement OAUTH2 Token
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
             }
 
             Toast.makeText(this, "Login Successful! CustomerID: " + customerId
-                    +"firstName: "+ title+ firstName, Toast.LENGTH_SHORT).show();
+                    +"isCheckedIn: "+isCheckedIn + " " + isCheckedOut , Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
