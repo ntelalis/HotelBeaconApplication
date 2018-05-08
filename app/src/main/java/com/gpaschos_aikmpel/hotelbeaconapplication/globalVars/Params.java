@@ -27,8 +27,8 @@ public class Params {
 
     //welcoming messages
     public static final int notificationWelcomeID = 1;
-    public static final String getNotificationWelcomeTitle = "Welcome to ";
-    public static final String getNotificationWelcomeTitle1 = "Welcome back to ";
+    public static final String notificationWelcomeTitle = "Welcome to ";
+    public static final String notificationWelcomeBackTitle = "Welcome back to ";
     //public static final String getNotificationWelcomeTitle2 = " to";
     public static final String notificationWelcomeGreeting = "Dear ";
     //public static final String notificationWelcomeGreeting1 = ", welcome ";
@@ -40,9 +40,8 @@ public class Params {
     //farewell messages
     public static final int notificationFarewellID = 4;
     public static final String notificationFarewellTitle = "Goodbye";
-    public static final String notificationFarewellGreeting = "Dear";
-    public static final String notificationFarewellGreeting1 = " We thank you for your stay and hope " +
-            "that you had an enjoyable experience";
+    public static final String notificationFarewellGreeting1 = "We thank you for your stay and hope " +
+            "that you had an enjoyable experience.";
 
     //checkin messages
     public static final int notificationCheckinID = 2;

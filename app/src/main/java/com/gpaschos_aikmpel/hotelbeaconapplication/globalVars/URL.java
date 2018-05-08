@@ -12,7 +12,7 @@ public class URL {
 
     private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/";
 
-    private static final String loginPage = "login.php";
+    private static final String loginPage = "loginBtn.php";
     private static final String forgotPage = "forgot.php";
     private static final String registerPage = "register.php";
     private static final String titlesPage = "titles.php";
@@ -32,6 +32,7 @@ public class URL {
     private static final String checkoutPage = "checkout.php";
     private static final String checkoutConfirmationPage = "checkoutConfirm.php";
     private static final String welcomeNotificationPage = "welcomenotification.php";
+    private static final String checkinNotificationPage = "checkinnotification.php";
 
 
 
@@ -55,4 +56,5 @@ public class URL {
     public static final String checkoutUrl = serverAddress + checkoutPage;
     public static final String checkoutConfirmationUrl = serverAddress + checkoutConfirmationPage;
     public static final String welcomeNotificationUrl = serverAddress + welcomeNotificationPage;
+    public static final String checkinNotificationUrl = serverAddress + checkinNotificationPage;
 }

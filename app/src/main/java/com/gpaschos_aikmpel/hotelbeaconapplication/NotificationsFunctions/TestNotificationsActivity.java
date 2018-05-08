@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
@@ -27,6 +28,8 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_notifications);
+
+
 
         notifyWelcome(LocalVariables.readInt(this,R.string.saved_customerId));
     }
@@ -56,16 +59,18 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
                 + Params.notificationWelcomeGreeting3;
         String notificationTitle;
         if (!hasStayedBefore) {
-            notificationTitle = Params.getNotificationWelcomeTitle + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
 
         } else {
-            notificationTitle = Params.getNotificationWelcomeTitle1 + Params.HotelName;
+            notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
         }
         NotificationCreation.notification(this, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
                 , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
     }
 
-
+    public void farewell(View view){
+        NotificationsFarewell.notifyFarewell(this);
+    }
 
 
     @Override
