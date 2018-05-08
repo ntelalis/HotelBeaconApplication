@@ -12,7 +12,7 @@ public class POST {
     //titles.php
     public static final String titlesTitleList = "titleList";
 
-    //~~~~~~~~~~~~~~~~~~loginBtn.php~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";
@@ -164,8 +164,8 @@ public class POST {
 
     //~~~~~~~~~.php~~~~~~~~~~~
     //SND
-    public static final String  = "customerID";
+    public static final String temp  = "customerID";
     //RCV
-    public static final String = "hasCheckedOut";
+    public static final String temp2 = "hasCheckedOut";
 
 }

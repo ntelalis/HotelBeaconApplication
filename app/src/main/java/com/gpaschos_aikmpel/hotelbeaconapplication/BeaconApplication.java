@@ -3,7 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 import android.app.Application;
 import android.util.Log;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationWelcome;
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 import org.altbeacon.beacon.BeaconManager;
@@ -43,7 +43,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier 
     public void didEnterRegion(Region region) {
         Log.d("BeaconApplication", "Region: " + region.getUniqueId() + " found");
         if (region.getUniqueId().equals("welcomeBeacon")) {
-            NotificationWelcome.getInstance(this).notifyWelcome();
+            NotificationCreation.notifyWelcome(this);
         }
     }
 

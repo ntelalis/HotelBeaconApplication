@@ -12,7 +12,7 @@ public class URL {
 
     private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/";
 
-    private static final String loginPage = "loginBtn.php";
+    private static final String loginPage = "login.php";
     private static final String forgotPage = "forgot.php";
     private static final String registerPage = "register.php";
     private static final String titlesPage = "titles.php";

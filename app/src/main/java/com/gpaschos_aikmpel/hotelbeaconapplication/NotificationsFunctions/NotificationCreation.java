@@ -15,17 +15,33 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 
-public class NotificationCreation {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class NotificationCreation implements JsonListener {
+
+
+    private static NotificationCreation instance = null;
 
     private static String lastName;
     private static String title;
 
+    private NotificationCreation() {
+    }
 
+    public static NotificationCreation getInstance() {
+        if (instance == null) {
+            instance = new NotificationCreation();
+        }
+        return instance;
+
+    }
 
     public static void notifyWelcome(Context context) {
 
-        if(shouldNotifyWelcome(context)) {
+        if (shouldNotifyWelcome(context)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
@@ -33,7 +49,7 @@ public class NotificationCreation {
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
                     + Params.notificationWelcomeGreeting3;
             String notificationTitle;
-            if (!LocalVariables.readBoolean(context,R.string.is_old_customer)) {
+            if (!LocalVariables.readBoolean(context, R.string.is_old_customer)) {
                 notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
 
             } else {
@@ -58,15 +74,15 @@ public class NotificationCreation {
 
     public static void notifyFarewell(Context context) {
 
-        if(!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
-            String notificationTitle = Params.notificationFarewellTitle + " "+title+ " "+ lastName;
+            String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
             notification(context, Params.NOTIFICATION_CHANNEL_ID
-                    ,Params.notificationFarewellID, notificationTitle
-                    ,Params.notificationFarewellGreeting1, R.drawable.ic_welcome
-                    ,Params.notificationFarewellGreeting1);
+                    , Params.notificationFarewellID, notificationTitle
+                    , Params.notificationFarewellGreeting1, R.drawable.ic_welcome
+                    , Params.notificationFarewellGreeting1);
 
             UpdateStoredVariables.farewellNotified(context);
         }
@@ -80,8 +96,8 @@ public class NotificationCreation {
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
 
-        if(!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)){
-            if(farewellTime==0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000){
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
+            if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
                 return true;
             }
         }
@@ -101,10 +117,10 @@ public class NotificationCreation {
 
     //creates a notification that opens an Activity
     private static void notification(Context context, String channelID, int notificationID
-            ,String notificationTitle, String notificationContent, int smallIcon, String bigText
-            ,Class activity){
+            , String notificationTitle, String notificationContent, int smallIcon, String bigText
+            , Class activity) {
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
 
         builder.setSmallIcon(smallIcon);
         builder.setContentTitle(notificationTitle);
@@ -118,7 +134,7 @@ public class NotificationCreation {
         //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
-       // Get the PendingIntent containing the entire back stack
+        // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         //If necessary, you can add arguments to Intent objects in the stack by calling
         // TaskStackBuilder.editIntentAt().
@@ -142,15 +158,15 @@ public class NotificationCreation {
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         //notification id is a unique int for each notification
-        notificationManagerCompat.notify(notificationID,notification);
+        notificationManagerCompat.notify(notificationID, notification);
     }
 
 
     //creates a notification
     private static void notification(Context context, String channelID, int notificationID
-            , String notificationTitle, String notificationContent, int smallIcon, String bigText){
+            , String notificationTitle, String notificationContent, int smallIcon, String bigText) {
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,channelID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
 
         builder.setSmallIcon(smallIcon);
         builder.setContentTitle(notificationTitle);
@@ -161,7 +177,16 @@ public class NotificationCreation {
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         //notification id is a unique int for each notification
-        notificationManagerCompat.notify(notificationID,builder.build());
+        notificationManagerCompat.notify(notificationID, builder.build());
     }
 
+    @Override
+    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+
+    }
+
+    @Override
+    public void getErrorResult(String url, String error) {
+
+    }
 }
