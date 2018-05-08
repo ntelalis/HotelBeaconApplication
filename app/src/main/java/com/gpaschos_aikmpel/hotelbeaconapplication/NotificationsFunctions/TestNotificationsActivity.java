@@ -68,9 +68,9 @@ public class TestNotificationsActivity extends AppCompatActivity implements Json
            //     , notificationTitle, notificationContent, R.drawable.ic_welcome, notificationContent);
     }
 
-    public void farewell(View view){
+    /*public void farewell(View view){
         //NotificationsFarewell.notifyFarewell(this);
-    }
+    }*/
 
 
     @Override

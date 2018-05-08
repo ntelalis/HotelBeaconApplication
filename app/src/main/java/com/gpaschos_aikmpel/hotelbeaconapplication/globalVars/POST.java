@@ -164,5 +164,10 @@ public class POST {
     //RCV
     public static final String welcomeNotificationHasStayed= "hasStayed";
 
+    //~~~~~~~~~.php~~~~~~~~~~~
+    //SND
+    public static final String temp  = "customerID";
+    //RCV
+    public static final String temp2 = "hasCheckedOut";
 
 }

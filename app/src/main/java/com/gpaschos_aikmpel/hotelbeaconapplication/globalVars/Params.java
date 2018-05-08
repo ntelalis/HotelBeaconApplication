@@ -56,4 +56,5 @@ public class Params {
     public static final String notificationCheckoutReminder = "You can check out anytime after ";
     public static final String notificationCheckoutReminder2 = "on the ";
     public static final String notificationCheckout = "Check-out is available now";
+
 }
