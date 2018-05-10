@@ -107,6 +107,9 @@
     <string name="tvLoyaltyRewardsMemberDefault">REWARDS</string>
     <string name="tvRoomPriceCurrency">€</string>
     <string name="saved_farewell_time">farewellTime</string>
+    <string name="tvRoomMultiply">x</string>
+    <string name="tvRoomEquals">=</string>
+    <string name="btnRoomDetails">Details</string>
 
 
 </resources>

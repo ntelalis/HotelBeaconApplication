@@ -40,4 +40,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvViewHCheckoutPrice"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
