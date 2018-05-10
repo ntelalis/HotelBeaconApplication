@@ -106,6 +106,7 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
+                
             }
 
             @Override

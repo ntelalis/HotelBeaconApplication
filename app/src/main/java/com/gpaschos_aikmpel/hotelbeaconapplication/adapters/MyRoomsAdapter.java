@@ -47,30 +47,41 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         return roomList.size();
     }
 
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivRoomImage;
         private TextView tvRoomTitle;
         private TextView tvRoomDescription;
-        private TextView tvRoomPrice;
+        private TextView tvRoomTotalPrice;
+        private TextView tvRoomPricePerNight;
+        private TextView tvRoomDays;
         private Button btnRoomBook;
+        private Button btnRoomDetails;
 
         MyViewHolder(View itemView) {
             super(itemView);
             btnRoomBook = itemView.findViewById(R.id.btnRoomBook);
+            btnRoomDetails = itemView.findViewById(R.id.btnRoomDetails);
             tvRoomDescription = itemView.findViewById(R.id.tvRoomShortDescription);
-            tvRoomPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
+            tvRoomTotalPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
+            tvRoomPricePerNight = itemView.findViewById(R.id.tvRoomPrice);
+            tvRoomDays = itemView.findViewById(R.id.tvRoomDays);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
             ivRoomImage.setOnClickListener(this);
             btnRoomBook.setOnClickListener(this);
+            btnRoomDetails.setOnClickListener(this);
         }
 
         void bind(int position) {
             tvRoomDescription.setText(roomList.get(position).description);
             tvRoomTitle.setText(roomList.get(position).title);
             ivRoomImage.setImageBitmap(roomList.get(position).imgBitmap);
-            tvRoomPrice.setText(String.valueOf(roomList.get(position).price));
+            tvRoomTotalPrice.setText(String.valueOf(roomList.get(position).price*roomList.get(position).days));
+            tvRoomPricePerNight.setText(String.valueOf(roomList.get(position).price));
+            tvRoomDays.setText(String.valueOf(roomList.get(position).days));
         }
 
         @Override
@@ -99,13 +110,15 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public String description;
         public int price;
         public Bitmap imgBitmap;
+        public int days;
 
-        public ModelRoomView(int roomTypeID, String title, String description, int price, Bitmap imgBitmap) {
+        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap imgBitmap) {
             this.roomTypeID = roomTypeID;
             this.title = title;
             this.description = description;
             this.price = price;
             this.imgBitmap = imgBitmap;
+            this.days = days;
         }
     }
 }

@@ -53,6 +53,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     private RecyclerView recyclerView;
     private ProgressBar pbLoading;
 
+    private int reservationDays;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation);
@@ -92,19 +94,23 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     }
 
     public void roomAvailability(View view) throws ParseException {
+        recyclerView.setAdapter(null);
         String arrivalDateLocal = etArrivalDate.getText().toString();
         String departureDateLocal = etDepartureDate.getText().toString();
         String persons = spPeople.getSelectedItem().toString();
 
         if (!arrivalDateLocal.isEmpty() && !departureDateLocal.isEmpty() && !persons.isEmpty()) {
 
-            Calendar calendar = Calendar.getInstance();
+            Calendar calendarArrival = Calendar.getInstance();
+            calendarArrival.setTime(localizedFormat.parse(arrivalDateLocal));
+            String arrivalDateSQLString = mySQLFormat.format(calendarArrival.getTime());
 
-            calendar.setTime(localizedFormat.parse(arrivalDateLocal));
-            String arrivalDateSQLString = mySQLFormat.format(calendar.getTime());
+            Calendar calendarDeparture = Calendar.getInstance();
+            calendarDeparture.setTime(localizedFormat.parse(departureDateLocal));
+            String departureDateSQLString = mySQLFormat.format(calendarDeparture.getTime());
 
-            calendar.setTime(localizedFormat.parse(departureDateLocal));
-            String departureDateSQLString = mySQLFormat.format(calendar.getTime());
+            long reservationDaysInMillis = calendarDeparture.getTimeInMillis() - calendarArrival.getTimeInMillis();
+            reservationDays = (int) (reservationDaysInMillis / 1000 / 60 / 60 / 24);
 
             Map<String, String> params = new HashMap<>();
 
@@ -129,11 +135,14 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.YEAR, Params.maxReservationDateInYears);
-        long maxTimeForReservation = calendar.getTimeInMillis();
+        long maxTimeForReservationArrival = calendar.getTimeInMillis();
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        long maxTimeForReservationDeparture = calendar.getTimeInMillis();
+
 
         if (view == etArrivalDate) {
             bundle.putLong(DatePickerFragment.minimumDate_KEY, Calendar.getInstance().getTimeInMillis());
-            bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservation);
+            bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservationArrival);
             bundle.putInt(DatePickerFragment.EditTextType, DatePickerFragment.etArrival);
 
         } else if (view == etDepartureDate) {
@@ -151,7 +160,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     calendar.setTime(localizedFormat.parse(arrivalDateLocal));
                     calendar.add(Calendar.DAY_OF_MONTH, 1);
                     bundle.putLong(DatePickerFragment.minimumDate_KEY, calendar.getTimeInMillis());
-                    bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservation);
+                    bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservationDeparture);
 
                 } catch (ParseException e) {
                     Log.e(getLocalClassName(), e.getLocalizedMessage());
@@ -237,13 +246,14 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, imageBitmap);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, imageBitmap);
 
                     roomList.add(roomType);
                 }
 
                 fillRecyclerView(roomList);
-
+                recyclerView.getAdapter().notifyDataSetChanged();
+                recyclerView.scheduleLayoutAnimation();
                 break;
             case URL.personsUrl:
 
@@ -280,7 +290,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
-        int roomPrice = room.price;
+        int roomPrice = room.days*room.price;
         Bitmap roomImage = room.imgBitmap;
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
