@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -20,8 +21,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.FoodAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.FoodChooseFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.FoodFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OnClickAddToBasket;
@@ -115,18 +118,18 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
             }
             try {
-                json.put(POST.roomServiceOrderArray,jsonArray);
+                json.put(POST.roomServiceOrderArray, jsonArray);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            Map<String,String> params = new HashMap<>();
+            Map<String, String> params = new HashMap<>();
             //TODO reservationID how to get it
             int resID = 101;
-            params.put(POST.roomServiceOrderReservationID,String.valueOf(resID));
-            params.put(POST.roomServiceOrderJson,json.toString());
-            params.put(POST.roomServiceOrderComments,etComments.getText().toString());
-            VolleyQueue.getInstance(this).jsonRequest(this,URL.orderUrl,params);
+            params.put(POST.roomServiceOrderReservationID, String.valueOf(resID));
+            params.put(POST.roomServiceOrderJson, json.toString());
+            params.put(POST.roomServiceOrderComments, etComments.getText().toString());
+            VolleyQueue.getInstance(this).jsonRequest(this, URL.orderUrl, params);
         } else {
             Toast.makeText(this, "Please select some items first!", Toast.LENGTH_SHORT).show();
         }
@@ -136,7 +139,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
             case URL.orderUrl:
-                Intent intent = new Intent(this,RoomServiceConfirmationActivity.class);
+                Intent intent = new Intent(this, RoomServiceConfirmationActivity.class);
                 startActivity(intent);
                 finish();
                 break;
@@ -155,30 +158,35 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 //getFood(categoriesList.get(1).getName());
                 Calendar now = Calendar.getInstance();
 
-                now.set(Calendar.HOUR_OF_DAY,Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
-                now.set(Calendar.MINUTE,Calendar.getInstance().get(Calendar.MINUTE));
-                now.set(Calendar.SECOND,Calendar.getInstance().get(Calendar.SECOND));
+                now.set(Calendar.HOUR_OF_DAY, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
+                now.set(Calendar.MINUTE, Calendar.getInstance().get(Calendar.MINUTE));
+                now.set(Calendar.SECOND, Calendar.getInstance().get(Calendar.SECOND));
                 boolean flag = true;
-                for (Categories cat:categoriesList) {
+                for (Categories cat : categoriesList) {
                     String[] timefrom = cat.from.split(":");
                     Calendar from = Calendar.getInstance();
-                    from.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timefrom[0]));
-                    from.set(Calendar.MINUTE,Integer.parseInt(timefrom[1]));
-                    from.set(Calendar.SECOND,Integer.parseInt(timefrom[2]));
+                    from.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timefrom[0]));
+                    from.set(Calendar.MINUTE, Integer.parseInt(timefrom[1]));
+                    from.set(Calendar.SECOND, Integer.parseInt(timefrom[2]));
 
                     String[] timeto = cat.to.split(":");
                     Calendar to = Calendar.getInstance();
-                    to.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timeto[0]));
-                    to.set(Calendar.MINUTE,Integer.parseInt(timeto[1]));
-                    to.set(Calendar.SECOND,Integer.parseInt(timeto[2]));
-                    if(now.after(from) && now.before(to)){
+                    to.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeto[0]));
+                    to.set(Calendar.MINUTE, Integer.parseInt(timeto[1]));
+                    to.set(Calendar.SECOND, Integer.parseInt(timeto[2]));
+                    if (now.after(from) && now.before(to)) {
                         getFood(cat.getName());
                         flag = false;
                     }
                 }
-                if(flag){
+                if (flag) {
                     Toast.makeText(this, "Sorry! Nothing is served this hour!", Toast.LENGTH_SHORT).show();
                 }
+
+                Reservation r = ((BeaconApplication) getApplication()).database.reservationDao().getUpcomingReservation();
+                Toast.makeText(RoomServiceActivity.this, r.getId()+" meow", Toast.LENGTH_SHORT).show();
+
+
                 break;
             case URL.roomServiceFoodUrl:
                 JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceTypeCategory);

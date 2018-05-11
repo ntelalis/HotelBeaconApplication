@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -28,6 +30,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -50,6 +53,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
     private String arrivalSQLString;
     private String departureSQLString;
+    private Date arrivalDate, departureDate;
     private int persons;
 
     private SharedPreferences sharedPreferences;
@@ -59,7 +63,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
-        sharedPreferences = getSharedPreferences(getString(R.string.spfile),Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
 
         SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -99,9 +103,11 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             try {
                 Calendar c = Calendar.getInstance();
                 c.setTime(sqlFormat.parse(arrivalSQLString));
-                String arrivalLocalString = localizedFormat.format(c.getTime());
+                arrivalDate = c.getTime();
+                String arrivalLocalString = localizedFormat.format(arrivalDate);
                 c.setTime(sqlFormat.parse(departureSQLString));
-                String departureLocalString = localizedFormat.format(c.getTime());
+                departureDate = c.getTime();
+                String departureLocalString = localizedFormat.format(departureDate);
                 tvCheckIn.setText(arrivalLocalString);
                 tvCheckOut.setText(departureLocalString);
             } catch (ParseException e) {
@@ -111,7 +117,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             persons = extras.getInt(PERSONS_KEY);
             tvPersons.setText(String.valueOf(persons));
 
-            byte[] imgBytes =null;//= extras.getByteArray(ROOM_IMAGE_KEY);
+            byte[] imgBytes = null;//= extras.getByteArray(ROOM_IMAGE_KEY);
             Bitmap roomImage = null;
             if (imgBytes != null) {
                 roomImage = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
@@ -136,8 +142,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));
-        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId),-1);
-        if(customerID==-1){
+        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), -1);
+        if (customerID == -1) {
             Toast.makeText(this, "There was an error reading data", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -149,6 +155,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         int resID = json.getInt(POST.bookRoomReservationID);
+        long g = ((BeaconApplication) getApplication()).database.reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalDate, departureDate));
+        Toast.makeText(this, g+" a", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);

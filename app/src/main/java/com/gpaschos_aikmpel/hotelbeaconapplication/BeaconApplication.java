@@ -1,9 +1,11 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.util.Log;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 import org.altbeacon.beacon.BeaconManager;
@@ -20,9 +22,16 @@ public class BeaconApplication extends Application implements BootstrapNotifier 
     private BackgroundPowerSaver backgroundPowerSaver;
     private BeaconManager beaconManager;
 
+    public RoomDB database;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+
+        //TODO FIX THIS MAIN THREAD SHIT
+        //ROOM INIT
+        database = Room.databaseBuilder(getApplicationContext(), RoomDB.class, "Database").allowMainThreadQueries().build();
 
         //BeaconManager and BackgroundPowerSaver init
         beaconManager = BeaconManager.getInstanceForApplication(this);

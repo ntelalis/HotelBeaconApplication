@@ -92,7 +92,7 @@ public class NotificationCreation implements JsonListener {
 
     //Check if a welcomeNotification has been received, and in case of a previous
     // farewellNotification reception check if 5 hours have past ever since.
-    static boolean shouldNotifyWelcome(Context context) {
+    private static boolean shouldNotifyWelcome(Context context) {
 
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
