@@ -11,14 +11,18 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Calendar;
 
 public class NotificationCreation implements JsonListener {
 
@@ -67,6 +71,8 @@ public class NotificationCreation implements JsonListener {
 
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
+
+            if()
         }
 
     }
@@ -75,6 +81,23 @@ public class NotificationCreation implements JsonListener {
     public static void notifyFarewell(Context context) {
 
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
+                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
+            lastName = LocalVariables.readString(context, R.string.saved_lastName);
+            title = LocalVariables.readString(context, R.string.saved_title);
+
+            String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
+            notification(context, Params.NOTIFICATION_CHANNEL_ID
+                    , Params.notificationFarewellID, notificationTitle
+                    , Params.notificationFarewellGreeting1, R.drawable.ic_welcome
+                    , Params.notificationFarewellGreeting1);
+
+            UpdateStoredVariables.farewellNotified(context);
+        }
+    }
+
+    public static void notifyCheckin(Context context) {
+
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)
                 &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
@@ -104,6 +127,22 @@ public class NotificationCreation implements JsonListener {
         }
         return false;
     }
+
+    //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
+    //then notifyCheckin
+    private static boolean shouldNotifyCheckin(Context context) {
+
+        Reservation r = ((BeaconApplication) context.getApplicationContext()).database.reservationDao().getUpcomingReservation();
+        long reservationStartDate = r.getStartDate().getTime();
+        long currentTime = Calendar.getInstance().getTime().getTime();
+
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(reservationStartDate<=currentTime)
+                &&(reservationStartDate.)) {
+            return true;
+        }
+        return false;
+    }
+
 
     //creates a notification channel
     public static void channel(Context context, String channelID, String channelName) {
