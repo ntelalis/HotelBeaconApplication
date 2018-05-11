@@ -28,11 +28,6 @@ public class BeaconApplication extends Application implements BootstrapNotifier 
     public void onCreate() {
         super.onCreate();
 
-
-        //TODO FIX THIS MAIN THREAD SHIT
-        //ROOM INIT
-        database = Room.databaseBuilder(getApplicationContext(), RoomDB.class, "Database").allowMainThreadQueries().build();
-
         //BeaconManager and BackgroundPowerSaver init
         beaconManager = BeaconManager.getInstanceForApplication(this);
         backgroundPowerSaver = new BackgroundPowerSaver(this);

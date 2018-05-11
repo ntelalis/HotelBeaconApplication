@@ -14,9 +14,10 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation")
     List<Reservation> getAllReservations();
 
-    //@Query("SELECT * FROM Reservation r1 WHERE r1.StartDate = (SELECT MIN(r.StartDate) FROM Reservation r WHERE date(r.StartDate) >= date('now'))")
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate = (SELECT MIN(r.StartDate) FROM Reservation r WHERE r.StartDate >= date('now'))")
+    //@Query("SELECT * FROM Reservation r WHERE r.StartDate >= date('now') LIMIT 1")
     //@Query("SELECT * FROM Reservation ORDER BY date(startDate) ASC")
-    @Query("SELECT * FROM Reservation ORDER BY date(startDate) ASC")
+    //@Query("SELECT * FROM Reservation Limit 1")
     Reservation getUpcomingReservation();
 
     @Insert

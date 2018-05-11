@@ -12,12 +12,12 @@ public class Reservation {
     private int id;
     private int roomTypeID;
     private int adults;
-    @TypeConverters(DateConverter.class)
-    private Date startDate;
-    @TypeConverters(DateConverter.class)
-    private Date endDate;
+    //@TypeConverters(DateConverter.class)
+    private String startDate;
+    //@TypeConverters(DateConverter.class)
+    private String endDate;
 
-    public Reservation(int id, int roomTypeID, int adults, Date startDate, Date endDate) {
+    public Reservation(int id, int roomTypeID, int adults, String startDate, String endDate) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -41,12 +41,12 @@ public class Reservation {
     }
 
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 }

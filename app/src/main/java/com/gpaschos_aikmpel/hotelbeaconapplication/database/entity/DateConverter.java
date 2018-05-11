@@ -5,13 +5,13 @@ import android.arch.persistence.room.TypeConverter;
 import java.util.Date;
 
 public class DateConverter {
-    @TypeConverter
-    public static Date toDate(Long dateLong) {
-        return new Date(dateLong);
+    /*@TypeConverter
+    public static Date toDate(String dateString) {
+
     }
 
     @TypeConverter
-    public static Long toLong(Date date) {
+    public static String toString(Date date) {
         return date.getTime();
-    }
+    }*/
 }
