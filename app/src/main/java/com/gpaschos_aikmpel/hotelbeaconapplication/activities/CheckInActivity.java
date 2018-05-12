@@ -29,7 +29,7 @@ public class CheckInActivity extends AppCompatActivity {
         tvDepartureDate = findViewById(R.id.tvCheckInReservationDeparture);
         tvReservationNo = findViewById(R.id.tvCheckInReservationNo);
 
-        Reservation r = RoomDB.getInstance(this).reservationDao().getUpcomingReservation();
+        Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
         String reservationStartDate = r.getStartDate();
         String reservationEndDate = r.getEndDate();
         reservationID = r.getId();

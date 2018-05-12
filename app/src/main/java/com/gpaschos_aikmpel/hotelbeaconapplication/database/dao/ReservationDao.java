@@ -13,16 +13,20 @@ import java.util.List;
 @Dao
 public interface ReservationDao {
 
+
     @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate = (SELECT MIN(r.StartDate) FROM Reservation r WHERE r.StartDate >= date('now'))")
     Reservation getUpcomingReservation();
 
     @Query("SELECT * FROM Reservation r WHERE r.startDate >= date('now')")
     List<Reservation> getAllUpcomingReservations();
 
-    @Query("")
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now') AND r1.endDate >= date('now')")
     Reservation getCurrentReservation();
 
-    @Insert
+    @Query("SELECT * FROM Reservation r1 WHERE r1.id=:id")
+    Reservation getReservationByID(int id);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Reservation reservation);
 
     @Update

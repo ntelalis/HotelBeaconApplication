@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -138,9 +139,10 @@ public class NotificationCreation implements JsonListener {
 
         Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        Date formattedStartDate = null;
 
         String reservationStartDate = r.getStartDate();
+
+        Date formattedStartDate = null;
         try {
             formattedStartDate = mySQLFormat.parse(reservationStartDate);
         } catch (ParseException e) {
@@ -151,7 +153,7 @@ public class NotificationCreation implements JsonListener {
         long currentTime = Calendar.getInstance().getTime().getTime();
 
         if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(lFormattedStartDate<=currentTime)
-                &&(reservationStartDate!=null)) {
+                &&(r!=null)) {
             return true;
         }
         return false;

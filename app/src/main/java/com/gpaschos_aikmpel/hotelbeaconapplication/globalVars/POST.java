@@ -45,6 +45,14 @@ public class POST {
     public static final String checkinReservationID = "reservationID";
     //RCV
     public static final String checkinRoom = "room";
+    public static final String checkinDate = "date";
+    public static final String checkinRoomFloor = "floor";
+    public static final String checkinRoomPassword = "roomPassword";
+    public static final String checkinBeaconID = "beaconID";
+    public static final String checkinBeaconUUID = "beaconUUID";
+    public static final String checkinBeaconMajor = "beaconMajor";
+    public static final String checkinBeaconMinor = "beaconMinor";
+
 
 
     //~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~~~~~~~
