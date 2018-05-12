@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 public class LocalVariables {
 
     //public static final String  = "";
@@ -30,7 +34,7 @@ public class LocalVariables {
         editor.apply();
     }
 
-    public static void storeLong(Context context,int key,long value){
+    public static void storeLong(Context context, int key, long value) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong(context.getString(key), value);
@@ -56,7 +60,35 @@ public class LocalVariables {
 
     public static long readLong(Context context, int key) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
-        return sharedPref.getLong(context.getString(key), (long)0);
+        return sharedPref.getLong(context.getString(key), (long) 0);
+
+    }
+
+    public static void storeFile(Context context, String filename, byte[] data) {
+        FileOutputStream fileOutputStream;
+        try {
+            fileOutputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+            fileOutputStream.write(data);
+            fileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] readFile(Context context, String filename) {
+        FileInputStream fileInputStream;
+        byte[] buffer = null;
+        try {
+            fileInputStream = context.openFileInput(filename);
+            buffer = new byte[(int) fileInputStream.getChannel().size()];
+            int bytesRead = fileInputStream.read(buffer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return buffer;
+    }
+
+    public static void storePng(Context context){
 
     }
 

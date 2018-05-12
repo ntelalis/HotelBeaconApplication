@@ -84,6 +84,7 @@ public class POST {
 
     //RCV
     public static String bookRoomReservationID = "reservationID";
+    public static String bookRoomBookedDate = "bookedDate";
 
 
     //~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~~
@@ -169,5 +170,6 @@ public class POST {
     public static final String temp  = "customerID";
     //RCV
     public static final String temp2 = "hasCheckedOut";
+
 
 }

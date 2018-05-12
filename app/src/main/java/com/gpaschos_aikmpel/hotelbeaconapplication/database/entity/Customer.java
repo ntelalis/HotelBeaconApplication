@@ -7,10 +7,37 @@ import android.arch.persistence.room.PrimaryKey;
 public class Customer {
     @PrimaryKey
     private int customerId;
+    private String title;
     private String firstName;
     private String lastName;
+    private String birthDate;
+    private String country;
     private String email;
     private String password;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public int getCustomerId() {
         return customerId;
