@@ -12,9 +12,7 @@ public class Reservation {
     private int id;
     private int roomTypeID;
     private int adults;
-    //@TypeConverters(DateConverter.class)
     private String startDate;
-    //@TypeConverters(DateConverter.class)
     private String endDate;
 
     public Reservation(int id, int roomTypeID, int adults, String startDate, String endDate) {

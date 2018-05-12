@@ -14,6 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -22,7 +23,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NotificationCreation implements JsonListener {
 
@@ -72,7 +77,7 @@ public class NotificationCreation implements JsonListener {
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
 
-            if()
+
         }
 
     }
@@ -132,12 +137,22 @@ public class NotificationCreation implements JsonListener {
     //then notifyCheckin
     private static boolean shouldNotifyCheckin(Context context) {
 
-        Reservation r = ((BeaconApplication) context.getApplicationContext()).database.reservationDao().getUpcomingReservation();
-        long reservationStartDate = r.getStartDate().getTime();
+        Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
+        SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Date startDate = null;
+
+        String reservationDate = r.getStartDate();
+        try {
+            startDate = mySQLFormat.parse(reservationDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long reservationStartDate = startDate.getTime();
         long currentTime = Calendar.getInstance().getTime().getTime();
 
         if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(reservationStartDate<=currentTime)
-                &&(reservationStartDate.)) {
+                &&(reservationDate!=null)) {
             return true;
         }
         return false;

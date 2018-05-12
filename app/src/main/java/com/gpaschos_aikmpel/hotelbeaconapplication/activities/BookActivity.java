@@ -165,8 +165,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
                 return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
-        long g = RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalSQLString, departureSQLString));
-        Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
+        RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalSQLString, departureSQLString));
+       // Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);

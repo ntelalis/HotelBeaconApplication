@@ -9,7 +9,6 @@ import android.content.Context;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.ReservationDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.DateConverter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 
 @Database(entities = {Customer.class, Reservation.class}, version = 1, exportSchema = false)
