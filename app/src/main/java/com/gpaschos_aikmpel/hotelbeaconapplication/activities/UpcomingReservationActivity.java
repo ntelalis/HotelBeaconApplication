@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
@@ -69,10 +70,12 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
     @Override
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
-        Map<String, String> params = new HashMap<>();
+        ((BeaconApplication)getApplication()).checkin(reservationID);
+
+        /*Map<String, String> params = new HashMap<>();
         params.put(POST.checkinReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
-
+        */
     }
 
     @Override
@@ -85,33 +88,24 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        switch (url) {
-            case URL.upcomingreservationsUrl:
-                JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
+        if(url.equals(URL.upcomingreservationsUrl)) {
+            JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
 
-                List<MyReservationsAdapter.ReservationModel> reservations = new ArrayList<>();
+            List<MyReservationsAdapter.ReservationModel> reservations = new ArrayList<>();
 
-                for (int i = 0; i < response.length(); i++) {
-                    int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
-                    int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
-                    String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
-                    String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
-                    String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
-                    String room = response.getJSONObject(i).getString(POST.upcomingreservationsCheckedinRoom);
-                    int statusCode = response.getJSONObject(i).getInt(POST.upcomingreservationsEligibleForCheckinCheckout);
+            for (int i = 0; i < response.length(); i++) {
+                int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
+                int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
+                String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
+                String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
+                String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
+                String room = response.getJSONObject(i).getString(POST.upcomingreservationsCheckedinRoom);
+                int statusCode = response.getJSONObject(i).getInt(POST.upcomingreservationsEligibleForCheckinCheckout);
 
-                    reservations.add(new MyReservationsAdapter.ReservationModel(adults, roomTitle, reservationID,
-                            arrival, departure, statusCode, room));
-                }
-                fillRecyclerView(reservations);
-                break;
-            case URL.checkinUrl:
-                String room = json.getString(POST.checkinRoom);
-                Intent intent = new Intent(this, CheckedInActivity.class);
-                intent.putExtra(CheckedInActivity.ROOM, room);
-                startActivity(intent);
-                break;
-
+                reservations.add(new MyReservationsAdapter.ReservationModel(adults, roomTitle, reservationID,
+                        arrival, departure, statusCode, room));
+            }
+            fillRecyclerView(reservations);
         }
     }
 

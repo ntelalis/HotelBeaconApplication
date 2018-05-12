@@ -76,6 +76,7 @@ public class NotificationCreation implements JsonListener {
 
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
+            notifyCheckin(context);
 
 
         }
@@ -102,18 +103,16 @@ public class NotificationCreation implements JsonListener {
 
     public static void notifyCheckin(Context context) {
 
-        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)
-                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
-            lastName = LocalVariables.readString(context, R.string.saved_lastName);
-            title = LocalVariables.readString(context, R.string.saved_title);
+        if (shouldNotifyCheckin(context)) {
 
-            String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
+            String notificationTitle = Params.notificationCheckinTitle;
+
             notification(context, Params.NOTIFICATION_CHANNEL_ID
-                    , Params.notificationFarewellID, notificationTitle
-                    , Params.notificationFarewellGreeting1, R.drawable.ic_welcome
-                    , Params.notificationFarewellGreeting1);
+                    , Params.notificationCheckinID, notificationTitle
+                    ,Params.notificationCheckinMsg, R.drawable.ic_welcome
+                    , Params.notificationCheckinMsg);
 
-            UpdateStoredVariables.farewellNotified(context);
+
         }
     }
 
@@ -139,20 +138,20 @@ public class NotificationCreation implements JsonListener {
 
         Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        Date startDate = null;
+        Date formattedStartDate = null;
 
-        String reservationDate = r.getStartDate();
+        String reservationStartDate = r.getStartDate();
         try {
-            startDate = mySQLFormat.parse(reservationDate);
+            formattedStartDate = mySQLFormat.parse(reservationStartDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        long reservationStartDate = startDate.getTime();
+        long lFormattedStartDate = formattedStartDate.getTime();
         long currentTime = Calendar.getInstance().getTime().getTime();
 
-        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(reservationStartDate<=currentTime)
-                &&(reservationDate!=null)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(lFormattedStartDate<=currentTime)
+                &&(reservationStartDate!=null)) {
             return true;
         }
         return false;

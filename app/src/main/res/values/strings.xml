@@ -110,6 +110,12 @@
     <string name="tvRoomMultiply">x</string>
     <string name="tvRoomEquals">=</string>
     <string name="btnRoomDetails">Details</string>
+    <string name="btnCheckInCheckin">Check-in!</string>
+    <string name="tvCheckInRoomLabel">Room Number</string>
+    <string name="tvCheckInInform">You have succesfully checked-in!</string>
+    <string name="tvCheckInReservationNoLabel">Reservation Number</string>
+    <string name="tvCheckInReservationArrivalLabel">Arrival Date</string>
+    <string name="tvCheckInReservationDepartureLabel">Departure Date</string>
 
 
 </resources>

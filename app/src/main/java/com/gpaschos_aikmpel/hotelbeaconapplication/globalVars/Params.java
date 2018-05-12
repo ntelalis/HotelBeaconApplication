@@ -45,10 +45,12 @@ public class Params {
 
     //checkin messages
     public static final int notificationCheckinID = 2;
-    public static final String notificationCheckinTitle = "Reminder";
-    public static final String notificationCheckinReminder = "You can check in anytime after ";
-    public static final String notificationCheckinReminder2 = "on the ";
-    public static final String notificationCheckin = "Check-in is now open!";
+    public static final String notificationCheckinReminderTitle = "Check-in for reservation ";
+    public static final String notificationCheckinReminderTitle2 = " is now open!";
+    public static final String notificationCheckinTitle = "Check-in";
+    public static final String notificationCheckinReminderMsg = "You can check in whenever you are ready";
+    public static final String notificationCheckinMsg = "You can check-in using your smartphone to get" +
+            " your room number and key";
 
     //checkout messages
     public static final int notificationCheckoutID = 3;
