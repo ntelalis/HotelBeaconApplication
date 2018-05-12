@@ -158,6 +158,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         int resID = json.getInt(POST.bookRoomReservationID);
+        String bookedDate = json.getString(POST.bookRoomBookedDate);
         /*new AsyncTask<Void,Void,Void>(){
 
             @Override
@@ -165,8 +166,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
                 return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
-        RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalSQLString, departureSQLString));
-       // Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
+        RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons,bookedDate, arrivalSQLString, departureSQLString));
+        Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);
