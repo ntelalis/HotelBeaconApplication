@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.FoodAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.FoodChooseFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.FoodFragment;
@@ -183,8 +184,9 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                     Toast.makeText(this, "Sorry! Nothing is served this hour!", Toast.LENGTH_SHORT).show();
                 }
 
-                Reservation r = ((BeaconApplication) getApplication()).database.reservationDao().getUpcomingReservation();
-                Toast.makeText(RoomServiceActivity.this, r.getId()+" meow", Toast.LENGTH_SHORT).show();
+                Reservation r = RoomDB.getInstance(this).reservationDao().getUpcomingReservation();
+
+                Toast.makeText(RoomServiceActivity.this, r.getId() + " meow", Toast.LENGTH_SHORT).show();
 
 
                 break;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -105,6 +107,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
                 c.setTime(sqlFormat.parse(arrivalSQLString));
                 arrivalDate = c.getTime();
                 String arrivalLocalString = localizedFormat.format(arrivalDate);
+
                 c.setTime(sqlFormat.parse(departureSQLString));
                 departureDate = c.getTime();
                 String departureLocalString = localizedFormat.format(departureDate);
@@ -155,8 +158,15 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         int resID = json.getInt(POST.bookRoomReservationID);
-        long g = ((BeaconApplication) getApplication()).database.reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalDate, departureDate));
-        Toast.makeText(this, g+" a", Toast.LENGTH_SHORT).show();
+        /*new AsyncTask<Void,Void,Void>(){
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
+        long g = RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, arrivalSQLString, departureSQLString));
+        Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);
