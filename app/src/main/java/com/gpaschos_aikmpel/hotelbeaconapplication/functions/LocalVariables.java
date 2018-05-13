@@ -2,6 +2,9 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
@@ -88,8 +91,14 @@ public class LocalVariables {
         return buffer;
     }
 
-    public static void storePng(Context context){
+    public static void storeImageFromBase64(Context context, String fileName, String imageBase64) {
+        byte[] imageData = Base64.decode(imageBase64, Base64.DEFAULT);
+        storeFile(context, fileName, imageData);
+    }
 
+    public static Bitmap readImage(Context context, String filename) {
+        byte[] imageData = readFile(context,filename);
+        return BitmapFactory.decodeByteArray(imageData,0,imageData.length);
     }
 
 }

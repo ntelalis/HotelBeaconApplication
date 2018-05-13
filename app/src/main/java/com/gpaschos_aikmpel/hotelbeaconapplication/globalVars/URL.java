@@ -33,6 +33,7 @@ public class URL {
     private static final String checkoutConfirmationPage = "checkoutConfirm.php";
     private static final String welcomeNotificationPage = "welcomenotification.php";
     private static final String checkinNotificationPage = "checkinnotification.php";
+    private static final String roomTypesPage = "roomtypes.php";
 
 
 
@@ -57,4 +58,5 @@ public class URL {
     public static final String checkoutConfirmationUrl = serverAddress + checkoutConfirmationPage;
     public static final String welcomeNotificationUrl = serverAddress + welcomeNotificationPage;
     public static final String checkinNotificationUrl = serverAddress + checkinNotificationPage;
+    public static final String roomTypesUrl = serverAddress + roomTypesPage;
 }

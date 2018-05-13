@@ -171,5 +171,17 @@ public class POST {
     //RCV
     public static final String temp2 = "hasCheckedOut";
 
-
+    //~~~~~~~~~~~roomtype.php~~~~~~~~
+    //RCV
+    public static final String roomTypeArray = "roomTypeArray";
+    public static final String roomTypeID = "id";
+    public static final String roomTypeName = "name";
+    public static final String roomTypeCapacity = "capacity";
+    public static final String roomTypePrice = "price";
+    public static final String roomTypeImage = "image";
+    public static final String roomTypeDescription = "description";
+    //SND
+    public static final String roomTypeCheck = "check";
+    //BOTH
+    public static final String roomTypeModified = "modified";
 }

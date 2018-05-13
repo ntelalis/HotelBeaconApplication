@@ -19,8 +19,9 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation r WHERE r.startDate >= date('now')")
     List<Reservation> getAllUpcomingReservations();
 
-    @Query("")
+    /*@Query("")
     Reservation getCurrentReservation();
+    */
 
     @Insert
     long insert(Reservation reservation);

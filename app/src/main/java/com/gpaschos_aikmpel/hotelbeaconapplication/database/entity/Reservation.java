@@ -40,10 +40,6 @@ public class Reservation {
         this.roomBeaconId = roomBeaconId;
     }
 
-    public void checkOut(String checkOut) {
-        this.checkOut = checkOut;
-    }
-
     public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
     }

@@ -9,10 +9,12 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.BeaconDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.ReservationDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeDao;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Beacon;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 
-@Database(entities = {Customer.class, Reservation.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Reservation.class, Beacon.class, RoomType.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
 
     private static final String DB_NAME = "HotelDatabase";
