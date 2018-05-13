@@ -125,7 +125,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             tvPersons.setText(String.valueOf(persons));
 
             String imageFileName = extras.getString(ROOM_IMAGE_KEY);
-            Bitmap roomImage = LocalVariables.readImage(this,imageFileName);
+            //FIXME Image setting crashes application
+            Bitmap roomImage = null;//LocalVariables.readImage(this,imageFileName);
             ivRoomImage.setImageBitmap(roomImage);
         }
 
@@ -167,6 +168,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
                 return null;
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
+
         RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons,bookedDate, arrivalSQLString, departureSQLString));
        // Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
 

@@ -5,8 +5,9 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 
-@Entity(foreignKeys = {@ForeignKey(entity = RoomType.class, parentColumns = "id", childColumns = "roomTypeID"),
-        @ForeignKey(entity = Beacon.class, parentColumns = "id", childColumns = "roomBeaconId")})
+//@Entity(foreignKeys = {@ForeignKey(entity = RoomType.class, parentColumns = "id", childColumns = "roomTypeID"),
+//        @ForeignKey(entity = Beacon.class, parentColumns = "id", childColumns = "roomBeaconId")})
+@Entity
 public class Reservation {
     @PrimaryKey
     private int id;
