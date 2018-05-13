@@ -126,7 +126,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
             String imageFileName = extras.getString(ROOM_IMAGE_KEY);
             //FIXME Image setting crashes application
-            Bitmap roomImage = null;//LocalVariables.readImage(this,imageFileName);
+            Bitmap roomImage = LocalVariables.readImage(this,imageFileName);
             ivRoomImage.setImageBitmap(roomImage);
         }
 

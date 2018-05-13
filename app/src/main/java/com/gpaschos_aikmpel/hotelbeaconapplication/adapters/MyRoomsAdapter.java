@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 
 import java.util.List;
 
@@ -78,7 +80,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         void bind(int position) {
             tvRoomDescription.setText(roomList.get(position).description);
             tvRoomTitle.setText(roomList.get(position).title);
-            ivRoomImage.setImageBitmap(roomList.get(position).imgBitmap);
+            ivRoomImage.setImageBitmap(roomList.get(position).img);
             tvRoomTotalPrice.setText(String.valueOf(roomList.get(position).price*roomList.get(position).days));
             tvRoomPricePerNight.setText(String.valueOf(roomList.get(position).price));
             tvRoomDays.setText(String.valueOf(roomList.get(position).days));
@@ -109,15 +111,17 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public String title;
         public String description;
         public int price;
-        public Bitmap imgBitmap;
+        public Bitmap img;
+        public String imgName;
         public int days;
 
-        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap imgBitmap) {
+        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap img, String imgName) {
             this.roomTypeID = roomTypeID;
             this.title = title;
             this.description = description;
             this.price = price;
-            this.imgBitmap = imgBitmap;
+            this.img = img;
+            this.imgName = imgName;
             this.days = days;
         }
     }

@@ -26,6 +26,9 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation r1 WHERE r1.id=:id")
     Reservation getReservationByID(int id);
 
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate >= :startDate AND r1.endDate <= :endDate")
+    Reservation getReservationWithinDate(String startDate, String endDate);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Reservation reservation);
 
