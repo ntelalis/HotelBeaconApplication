@@ -209,7 +209,7 @@ public class NotificationCreation implements JsonListener {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
         // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
         //If necessary, you can add arguments to Intent objects in the stack by calling
         // TaskStackBuilder.editIntentAt().
         //stackBuilder.editIntentAt()

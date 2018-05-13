@@ -74,7 +74,9 @@
             android:parentActivityName=".activities.HomeActivity" />
         <activity android:name=".NotificationsFunctions.TestNotificationsActivity" />
         <activity android:name=".activities.MonitoringActivity" />
-        <activity android:name=".activities.CheckInActivity"></activity>
+        <activity
+            android:name=".activities.CheckInActivity"
+            android:parentActivityName=".activities.HomeActivity" />
 
         <service
             android:name=".NotificationsFunctions.MyJobService"
