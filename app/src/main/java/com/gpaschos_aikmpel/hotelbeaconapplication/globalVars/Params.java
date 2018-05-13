@@ -13,6 +13,7 @@ public class Params {
 
     //hotel name
     public static final String HotelName = "HotelName";
+    public static final String HotelCheckoutTime = "12:00";
 
 
     //~~~~~~~~~~~~~~~~~Notifications~~~~~~~~~~~~~~~~~~~~~~
@@ -55,9 +56,8 @@ public class Params {
 
     //checkout messages
     public static final int notificationCheckoutID = 4;
-    public static final String notificationCheckoutTitle = "Reminder";
-    public static final String notificationCheckoutReminder = "You can check out anytime after ";
-    public static final String notificationCheckoutReminder2 = "on the ";
-    public static final String notificationCheckout = "Check-out is available now";
+    public static final String notificationCheckoutTitle = "Reminder for Check-out";
+    public static final String notificationCheckoutReminder = "You can check-out using your smartphone." +
+            "Just remember that check-out time is ";
 
 }

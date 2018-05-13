@@ -142,6 +142,16 @@ public class NotificationCreation implements JsonListener {
         }
     }
 
+    public static void notifyCheckout(Context context) {
+        if (shouldNotifyCheckout(context)) {
+            notification(context, Params.NOTIFICATION_CHANNEL_ID
+                    , Params.notificationCheckoutID, Params.notificationCheckoutTitle
+                    , Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , R.drawable.ic_welcome, Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , CheckOutActivity.class);
+        }
+    }
+
 
     //Check if a welcomeNotification has been received, and in case of a previous
     // farewellNotification reception check if 5 hours have past ever since.
@@ -184,6 +194,67 @@ public class NotificationCreation implements JsonListener {
         return false;
     }
 
+    //check if should notify check-in/ check-out. the checkerVariable(R.string.is_checked_in)
+    //differentiates the 2 different cases.
+    private static boolean shouldNotify(Context context,int checkerVariable){
+
+        SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Reservation r=null;
+        String scheduleDate=null;
+
+        switch(checkerVariable){
+            case R.string.is_checked_in:
+                r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
+                scheduleDate = r.getStartDate();
+                break;
+            case R.string.is_checked_out:
+                r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+                scheduleDate = r.getEndDate();
+                break;
+        }
+
+        Date formattedDate = null;
+        try {
+            formattedDate = mySQLFormat.parse(scheduleDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long lFormattedDate = formattedDate.getTime();
+        long currentTime = Calendar.getInstance().getTime().getTime();
+
+        if (!LocalVariables.readBoolean(context,checkerVariable) && (lFormattedDate <= currentTime)
+                && (r != null)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private static boolean shouldNotifyCheckout(Context context) {
+
+        Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+        SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        //String reservationEndDate = r.getEndDate();
+        String reservationEndDate = "2018-05-13";
+        Date formattedEndDate = null;
+        try {
+            formattedEndDate = mySQLFormat.parse(reservationEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long lFormattedEndDate = formattedEndDate.getTime();
+        long currentTime = Calendar.getInstance().getTime().getTime();
+
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_out) && (lFormattedEndDate <= currentTime)
+                && (r != null)) {
+            return true;
+        }
+        return false;
+    }
+
 
     //creates a notification channel
     public static void channel(Context context, String channelID, String channelName) {
@@ -216,7 +287,7 @@ public class NotificationCreation implements JsonListener {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
         // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(101, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20)+100, PendingIntent.FLAG_UPDATE_CURRENT);
         //If necessary, you can add arguments to Intent objects in the stack by calling
         // TaskStackBuilder.editIntentAt().
         //stackBuilder.editIntentAt()

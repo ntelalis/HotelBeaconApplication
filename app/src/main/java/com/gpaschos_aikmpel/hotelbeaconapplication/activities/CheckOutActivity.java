@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -41,7 +44,8 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
-        reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
+        //reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
+        reservationID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
 
         confirmCheckout = findViewById(R.id.btnCheckoutConfirm);
         totalPrice = findViewById(R.id.tvCheckoutTotalPrice);
@@ -67,9 +71,8 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
     }
 
     public void confirmCheckout (View view){
-
         Map<String, String> params = new HashMap<>();
-        params.put(POST.checkoutReservationID, String.valueOf(reservationID));
+        params.put(POST.checkoutConfirmReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkoutConfirmationUrl, params);
     }
 
@@ -92,7 +95,15 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
                 fillRecyclerViewAndTextView(charges,totalPrice);
                 break;
             case URL.checkoutConfirmationUrl:
+                String checkoutDate = json.getString(POST.checkoutConfirmDate);
+
+                //update Room with the checked-out information
+                Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+                r.setCheckOut(checkoutDate);
+                RoomDB.getInstance(this).reservationDao().update(r);
+
                 Intent intent = new Intent(this, CheckedOutActivity.class);
+
                 startActivity(intent);
                 finish();
         }

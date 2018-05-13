@@ -81,7 +81,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
     @Override
     public void checkOut(MyReservationsAdapter.ReservationModel obj) {
         Intent intent = new Intent(this, CheckOutActivity.class);
-        intent.putExtra(CheckOutActivity.RESERVATION_ID, obj.reservationID);
+        //intent.putExtra(CheckOutActivity.RESERVATION_ID, obj.reservationID);
         startActivity(intent);
 
     }
