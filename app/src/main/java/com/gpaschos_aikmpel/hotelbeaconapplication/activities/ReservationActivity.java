@@ -18,9 +18,14 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.DBHelperFunctions;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ImageViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.GetData;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -86,6 +91,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         });
 
         loadSpinnerData();
+        GetData.getInstance(this).getDataFromServer();
     }
 
 
@@ -234,16 +240,13 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     JSONObject room = availabilityResults.getJSONObject(i);
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
-                    String description = room.getString(POST.availabilityRoomDescription);
-                    String title = room.getString(POST.availabilityRoomTitle);
-                    int price = room.getInt(POST.availabilityRoomPrice);
 
+                    RoomType rt = RoomDB.getInstance(this).roomTypeDao().getRoomTypeById(roomTypeID);
 
-                    String imageBase64 = room.getString(POST.availabilityRoomImage);
-                    //decode the base64 string to convert it to byte array
-                    byte[] imageData = Base64.decode(imageBase64, Base64.DEFAULT);
-                    //use this byte array to convert Bitmap imageBitmap
-                    Bitmap imageBitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+                    String description = rt.getDescription();
+                    String title = rt.getName();
+                    int price = rt.getPrice();
+                    Bitmap imageBitmap = LocalVariables.readImage(this, rt.getImage());
 
                     MyRoomsAdapter.ModelRoomView roomType =
                             new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, imageBitmap);
@@ -290,7 +293,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
-        int roomPrice = room.days*room.price;
+        int roomPrice = room.days * room.price;
         Bitmap roomImage = room.imgBitmap;
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

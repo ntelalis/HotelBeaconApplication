@@ -22,6 +22,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.Notifi
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -104,6 +105,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             arrivalSQLString = extras.getString(ARRIVAL_KEY);
             departureSQLString = extras.getString(DEPARTURE_KEY);
 
+
             try {
                 Calendar c = Calendar.getInstance();
                 c.setTime(sqlFormat.parse(arrivalSQLString));
@@ -122,11 +124,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             persons = extras.getInt(PERSONS_KEY);
             tvPersons.setText(String.valueOf(persons));
 
-            byte[] imgBytes = null;//= extras.getByteArray(ROOM_IMAGE_KEY);
-            Bitmap roomImage = null;
-            if (imgBytes != null) {
-                roomImage = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-            }
+            String imageFileName = extras.getString(ROOM_IMAGE_KEY);
+            Bitmap roomImage = LocalVariables.readImage(this,imageFileName);
             ivRoomImage.setImageBitmap(roomImage);
         }
 

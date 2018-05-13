@@ -12,16 +12,18 @@ public class RoomType {
     private String name;
     private int capacity;
     private int price;
-    private Bitmap image;
+    private String image;
     private String description;
+    private String modified;
 
-    public RoomType(int id, String name, int capacity, int price, Bitmap image, String description) {
+    public RoomType(int id, String name, int capacity, int price, String image, String description, String modified) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
         this.price = price;
         this.image = image;
         this.description = description;
+        this.modified = modified;
     }
 
     public int getId() {
@@ -56,11 +58,11 @@ public class RoomType {
         this.price = price;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -70,5 +72,13 @@ public class RoomType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 }

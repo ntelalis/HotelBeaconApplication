@@ -14,6 +14,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.UpdateStoredVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.GetData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         //create a notification channel
         NotificationCreation.channel(this, "basic_channel","default channel" );
 
-
+        GetData.getInstance(this).getDataFromServer();
         String storedEmail = LocalVariables.readString(this, R.string.saved_email);
         String storedPass = LocalVariables.readString(this, R.string.saved_password);
 
