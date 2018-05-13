@@ -174,6 +174,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
 
         ScheduleNotifications.checkinNotification(this, arrivalSQLString);
+        ScheduleNotifications.checkoutNotification(this, departureSQLString);
 
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);

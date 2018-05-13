@@ -59,12 +59,26 @@ public class ScheduleNotifications {
     }
 
     public static void checkoutNotification(Context context, String triggerDate){
+
+        int windowStart=0;
+        long currentTime = System.currentTimeMillis();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        try {
+            long formattedTriggerDate = simpleDateFormat.parse(triggerDate).getTime();
+            windowStart = (int)(formattedTriggerDate-currentTime);
+            if(windowStart<0)
+                windowStart=0;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
         Job myjob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(MyJobService.class)
                 //A unique tag
-                .setTag("CheckOutNotification")
+                .setTag(CHECKOUT_TAG)
                 //One time job
                 .setRecurring(false)
                 //Persist reboot

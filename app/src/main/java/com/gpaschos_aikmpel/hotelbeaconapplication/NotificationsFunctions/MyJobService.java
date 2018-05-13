@@ -6,7 +6,7 @@ import com.firebase.jobdispatcher.JobService;
 
 public class MyJobService extends JobService {
 
-    //This get called when the job begins executing
+    //This gets called when the job begins executing
     @Override
     public boolean onStartJob(JobParameters params) {
 
@@ -14,7 +14,8 @@ public class MyJobService extends JobService {
             case ScheduleNotifications.CHECKIN_TAG:
                 NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECKIN_REMINDER);
                 break;
-            default:
+            case ScheduleNotifications.CHECKOUT_TAG:
+                NotificationCreation.notifyCheckout(getApplicationContext());
                 break;
         }
 

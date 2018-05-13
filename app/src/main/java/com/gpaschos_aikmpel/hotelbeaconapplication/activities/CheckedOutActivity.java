@@ -17,5 +17,6 @@ public class CheckedOutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checked_out);
 
         UpdateStoredVariables.checkedOut(this);
+
     }
 }

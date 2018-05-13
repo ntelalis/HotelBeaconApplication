@@ -65,6 +65,15 @@ public class POST {
     public static final String checkoutServicePrice= "price";
 
 
+
+    //~~~~~~~~~~~~~~~checkoutConfirm.php~~~~~~~~~~~~~~~~
+    //SND
+    public static final String checkoutConfirmReservationID = "reservationID";
+    //RCV
+    public static final String checkoutConfirmDate= "date";
+
+
+
     //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~
     //SND
     public static String availabilityArrivalDate = "arrivalDate";

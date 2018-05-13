@@ -53,7 +53,12 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         //Region scanning setup
         Region region = new Region("welcomeBeacon", Identifier.parse(Params.beaconArea), null, null);
 
+        //ADD NEW REGIONS HERE
+        //Region region1 = new Region("roomBeacon",Identifier.parse(Params.beaconArea),null,null);
+
+
         regionBootstrap = new RegionBootstrap(this, region);
+        //regionBootstrap.addRegion(region1);
     }
 
     public void checkin(int reservationID){
@@ -66,6 +71,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     @Override
     public void didEnterRegion(Region region) {
         Log.d("BeaconApplication", "Region: " + region.getUniqueId() + " found");
+
         if (region.getUniqueId().equals("welcomeBeacon")) {
             NotificationCreation.notifyWelcome(this);
         }

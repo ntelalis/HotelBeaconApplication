@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -83,7 +84,7 @@ public class NotificationCreation implements JsonListener {
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
             //notify the customer that they can check-in if they are eligible
-            notifyCheckin(context,CHECKIN_BEACON_NOTIFICATION);
+            notifyCheckin(context, CHECKIN_BEACON_NOTIFICATION);
         }
 
     }
@@ -92,7 +93,7 @@ public class NotificationCreation implements JsonListener {
     public static void notifyFarewell(Context context) {
 
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
-                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
+                && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
             lastName = LocalVariables.readString(context, R.string.saved_lastName);
             title = LocalVariables.readString(context, R.string.saved_title);
 
@@ -110,12 +111,12 @@ public class NotificationCreation implements JsonListener {
     // when passing by the front door beacon-after the welcomingNotification)
     public static void notifyCheckin(Context context, String tag) {
 
-        String notificationTitle=null;
-        String notificationContent=null;
-        int notificationID=0;
+        String notificationTitle = null;
+        String notificationContent = null;
+        int notificationID = 0;
 
         if (shouldNotifyCheckin(context)) {
-            switch (tag){
+            switch (tag) {
                 case CHECKIN_BEACON_NOTIFICATION:
                     notificationTitle = Params.notificationCheckinTitle;
                     notificationContent = Params.notificationCheckinMsg;
@@ -123,15 +124,25 @@ public class NotificationCreation implements JsonListener {
                     break;
                 case CHECKIN_REMINDER:
                     notificationTitle = Params.notificationCheckinReminderTitle;
-                    notificationContent = Params.notificationCheckinReminderMsg+Params.HotelName
-                            +Params.notificationCheckinReminderMsg2;
+                    notificationContent = Params.notificationCheckinReminderMsg + Params.HotelName
+                            + Params.notificationCheckinReminderMsg2;
                     notificationID = Params.notificationCheckinReminderID;
                     break;
             }
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
-                    ,notificationContent, R.drawable.ic_welcome
+                    , notificationContent, R.drawable.ic_welcome
                     , notificationContent, CheckInActivity.class);
+        }
+    }
+
+    public static void notifyCheckout(Context context) {
+        if (shouldNotifyCheckout(context)) {
+            notification(context, Params.NOTIFICATION_CHANNEL_ID
+                    , Params.notificationCheckoutID, Params.notificationCheckoutTitle
+                    , Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , R.drawable.ic_welcome, Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , CheckOutActivity.class);
         }
     }
 
@@ -170,8 +181,69 @@ public class NotificationCreation implements JsonListener {
         long lFormattedStartDate = formattedStartDate.getTime();
         long currentTime = Calendar.getInstance().getTime().getTime();
 
-        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(lFormattedStartDate<=currentTime)
-                &&(r!=null)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_in) && (lFormattedStartDate <= currentTime)
+                && (r != null)) {
+            return true;
+        }
+        return false;
+    }
+
+    //check if should notify check-in/ check-out. the checkerVariable(R.string.is_checked_in)
+    //differentiates the 2 different cases.
+    private static boolean shouldNotify(Context context,int checkerVariable){
+
+        SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Reservation r=null;
+        String scheduleDate=null;
+
+        switch(checkerVariable){
+            case R.string.is_checked_in:
+                r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
+                scheduleDate = r.getStartDate();
+                break;
+            case R.string.is_checked_out:
+                r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+                scheduleDate = r.getEndDate();
+                break;
+        }
+
+        Date formattedDate = null;
+        try {
+            formattedDate = mySQLFormat.parse(scheduleDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long lFormattedDate = formattedDate.getTime();
+        long currentTime = Calendar.getInstance().getTime().getTime();
+
+        if (!LocalVariables.readBoolean(context,checkerVariable) && (lFormattedDate <= currentTime)
+                && (r != null)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private static boolean shouldNotifyCheckout(Context context) {
+
+        Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+        SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        String reservationEndDate = r.getEndDate();
+
+        Date formattedEndDate = null;
+        try {
+            formattedEndDate = mySQLFormat.parse(reservationEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        long lFormattedEndDate = formattedEndDate.getTime();
+        long currentTime = Calendar.getInstance().getTime().getTime();
+
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_out) && (lFormattedEndDate <= currentTime)
+                && (r != null)) {
             return true;
         }
         return false;
