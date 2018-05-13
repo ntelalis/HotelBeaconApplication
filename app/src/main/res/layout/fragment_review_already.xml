@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ReviewAlreadyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/ivReviewAlreadyIcon"
         android:layout_width="0dp"

@@ -17,6 +17,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -57,8 +58,10 @@ public class NotificationCreation implements JsonListener {
     public static void notifyWelcome(Context context) {
 
         if (shouldNotifyWelcome(context)) {
-            lastName = LocalVariables.readString(context, R.string.saved_lastName);
-            title = LocalVariables.readString(context, R.string.saved_title);
+            Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+
+            lastName = customer.getLastName();
+            title = customer.getTitle();
 
 
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
@@ -70,7 +73,9 @@ public class NotificationCreation implements JsonListener {
             } else {
                 notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
             }
+
             int icon;
+
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 icon = R.drawable.ic_welcome;
 
@@ -83,7 +88,7 @@ public class NotificationCreation implements JsonListener {
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
             //notify the customer that they can check-in if they are eligible
-            notifyCheckin(context,CHECKIN_BEACON_NOTIFICATION);
+            notifyCheckin(context, CHECKIN_BEACON_NOTIFICATION);
         }
 
     }
@@ -91,10 +96,12 @@ public class NotificationCreation implements JsonListener {
 
     public static void notifyFarewell(Context context) {
 
+        String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
-                &&LocalVariables.readBoolean(context,R.string.is_checked_out)) {
-            lastName = LocalVariables.readString(context, R.string.saved_lastName);
-            title = LocalVariables.readString(context, R.string.saved_title);
+                && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
+            Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+            lastName = customer.getLastName();
+            title = customer.getTitle();
 
             String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
             notification(context, Params.NOTIFICATION_CHANNEL_ID
@@ -110,12 +117,12 @@ public class NotificationCreation implements JsonListener {
     // when passing by the front door beacon-after the welcomingNotification)
     public static void notifyCheckin(Context context, String tag) {
 
-        String notificationTitle=null;
-        String notificationContent=null;
-        int notificationID=0;
+        String notificationTitle = null;
+        String notificationContent = null;
+        int notificationID = 0;
 
         if (shouldNotifyCheckin(context)) {
-            switch (tag){
+            switch (tag) {
                 case CHECKIN_BEACON_NOTIFICATION:
                     notificationTitle = Params.notificationCheckinTitle;
                     notificationContent = Params.notificationCheckinMsg;
@@ -123,14 +130,14 @@ public class NotificationCreation implements JsonListener {
                     break;
                 case CHECKIN_REMINDER:
                     notificationTitle = Params.notificationCheckinReminderTitle;
-                    notificationContent = Params.notificationCheckinReminderMsg+Params.HotelName
-                            +Params.notificationCheckinReminderMsg2;
+                    notificationContent = Params.notificationCheckinReminderMsg + Params.HotelName
+                            + Params.notificationCheckinReminderMsg2;
                     notificationID = Params.notificationCheckinReminderID;
                     break;
             }
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
-                    ,notificationContent, R.drawable.ic_welcome
+                    , notificationContent, R.drawable.ic_welcome
                     , notificationContent, CheckInActivity.class);
         }
     }
@@ -170,8 +177,8 @@ public class NotificationCreation implements JsonListener {
         long lFormattedStartDate = formattedStartDate.getTime();
         long currentTime = Calendar.getInstance().getTime().getTime();
 
-        if (!LocalVariables.readBoolean(context, R.string.is_checked_in)&&(lFormattedStartDate<=currentTime)
-                &&(r!=null)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_checked_in) && (lFormattedStartDate <= currentTime)
+                && (r != null)) {
             return true;
         }
         return false;

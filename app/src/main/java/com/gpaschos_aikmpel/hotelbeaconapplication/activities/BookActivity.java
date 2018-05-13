@@ -125,7 +125,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             tvPersons.setText(String.valueOf(persons));
 
             String imageFileName = extras.getString(ROOM_IMAGE_KEY);
-            //FIXME Image setting crashes application
+
             Bitmap roomImage = LocalVariables.readImage(this,imageFileName);
             ivRoomImage.setImageBitmap(roomImage);
         }
@@ -138,7 +138,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
 
     // TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
-    // in order to not let 2 users make a reservation for one last room)
+    // TODO in order to not let 2 users make a reservation for one last room)
     public void confirmAndBook(View view) {
 
         Map<String, String> values = new HashMap<>();

@@ -48,7 +48,6 @@ public class ForgotNewPassActivity extends AppCompatActivity implements JsonList
         String passVerify = etPassVerify.getText().toString();
 
         if (pass.equals(passVerify)) {
-            //TODO check for password validity
             Map<String, String> params = new HashMap<>();
 
             params.put(POST.forgotNewPassEmail, email);
