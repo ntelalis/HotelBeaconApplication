@@ -9,8 +9,10 @@ public class MyJobService extends JobService {
     //This get called when the job begins executing
     @Override
     public boolean onStartJob(JobParameters params) {
+
         switch (params.getTag()) {
-            case "AAA":
+            case ScheduleNotifications.CHECKIN_TAG:
+                NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECKIN_REMINDER);
                 break;
             default:
                 break;

@@ -26,7 +26,7 @@ public class Params {
     public static final String NOTIFICATION_CHANNEL_NAME = "Default channel";
 
     //welcoming messages
-    public static final int notificationWelcomeID = 1;
+    public static final int notificationWelcomeID = 2;
     public static final String notificationWelcomeTitle = "Welcome to ";
     public static final String notificationWelcomeBackTitle = "Welcome back to ";
     //public static final String getNotificationWelcomeTitle2 = " to";
@@ -44,16 +44,17 @@ public class Params {
             "that you had an enjoyable experience.";
 
     //checkin messages
-    public static final int notificationCheckinID = 2;
-    public static final String notificationCheckinReminderTitle = "Check-in for reservation ";
-    public static final String notificationCheckinReminderTitle2 = " is now open!";
+    public static final int notificationCheckinID = 3;
+    public static final int notificationCheckinReminderID = 1;
+    public static final String notificationCheckinReminderTitle = "Reminder for Check-in";
     public static final String notificationCheckinTitle = "Check-in";
-    public static final String notificationCheckinReminderMsg = "You can check in whenever you are ready";
+    public static final String notificationCheckinReminderMsg = "You can check in for your reservation at ";
+    public static final String notificationCheckinReminderMsg2 = " whenever you are ready";
     public static final String notificationCheckinMsg = "You can check-in using your smartphone to get" +
             " your room number and key";
 
     //checkout messages
-    public static final int notificationCheckoutID = 3;
+    public static final int notificationCheckoutID = 4;
     public static final String notificationCheckoutTitle = "Reminder";
     public static final String notificationCheckoutReminder = "You can check out anytime after ";
     public static final String notificationCheckoutReminder2 = "on the ";

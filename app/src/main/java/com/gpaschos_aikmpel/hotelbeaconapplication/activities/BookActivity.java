@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -168,10 +170,15 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
         RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons,bookedDate, arrivalSQLString, departureSQLString));
        // Toast.makeText(this, g + " a", Toast.LENGTH_SHORT).show();
+
+        ScheduleNotifications.checkinNotification(this, NotificationCreation.CHECKIN_REMINDER);
+
         Intent intent = new Intent(this, BookConfirmationActivity.class);
         intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
         startActivity(intent);
+
         finish();
+
     }
 
     @Override

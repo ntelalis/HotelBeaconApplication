@@ -37,6 +37,9 @@ public class NotificationCreation implements JsonListener {
 
     private static String lastName;
     private static String title;
+    public static final String CHECKIN_REMINDER = "scheduledNotification";
+    public static final String CHECKIN_BEACON_NOTIFICATION = "beaconNotification";
+
 
     private NotificationCreation() {
     }
@@ -77,9 +80,8 @@ public class NotificationCreation implements JsonListener {
 
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
-            notifyCheckin(context);
-
-
+            //notify the customer that they can check-in if they are eligible
+            notifyCheckin(context,CHECKIN_BEACON_NOTIFICATION);
         }
 
     }
@@ -102,18 +104,32 @@ public class NotificationCreation implements JsonListener {
         }
     }
 
-    public static void notifyCheckin(Context context) {
+    //notify the customer that he can check-in(the same day of the reservation's startDate and
+    // when passing by the front door beacon-after the welcomingNotification)
+    public static void notifyCheckin(Context context, String tag) {
+
+        String notificationTitle=null;
+        String notificationContent=null;
+        int notificationID=0;
 
         if (shouldNotifyCheckin(context)) {
-
-            String notificationTitle = Params.notificationCheckinTitle;
-
+            switch (tag){
+                case CHECKIN_BEACON_NOTIFICATION:
+                    notificationTitle = Params.notificationCheckinTitle;
+                    notificationContent = Params.notificationCheckinMsg;
+                    notificationID = Params.notificationCheckinID;
+                    break;
+                case CHECKIN_REMINDER:
+                    notificationTitle = Params.notificationCheckinReminderTitle;
+                    notificationContent = Params.notificationCheckinReminderMsg+Params.HotelName
+                            +Params.notificationCheckinReminderMsg2;
+                    notificationID = Params.notificationCheckinReminderID;
+                    break;
+            }
             notification(context, Params.NOTIFICATION_CHANNEL_ID
-                    , Params.notificationCheckinID, notificationTitle
-                    ,Params.notificationCheckinMsg, R.drawable.ic_welcome
-                    , Params.notificationCheckinMsg);
-
-
+                    , notificationID, notificationTitle
+                    ,notificationContent, R.drawable.ic_welcome
+                    , notificationContent);
         }
     }
 
