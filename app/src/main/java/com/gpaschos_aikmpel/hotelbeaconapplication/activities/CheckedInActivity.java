@@ -17,9 +17,10 @@ public class CheckedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checked_in);
-        String room = getIntent().getStringExtra(ROOM);
+        int room = getIntent().getIntExtra(ROOM,-1);
+
         tvroom = findViewById(R.id.tvcheckedinRoom);
-        tvroom.setText(room);
+        tvroom.setText(String.valueOf(room));
 
         UpdateStoredVariables.checkedIn(this);
     }

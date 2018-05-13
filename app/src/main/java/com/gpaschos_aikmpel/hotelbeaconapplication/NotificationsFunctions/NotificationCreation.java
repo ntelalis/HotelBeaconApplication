@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -29,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 public class NotificationCreation implements JsonListener {
 
@@ -129,7 +131,7 @@ public class NotificationCreation implements JsonListener {
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
                     ,notificationContent, R.drawable.ic_welcome
-                    , notificationContent);
+                    , notificationContent, CheckInActivity.class);
         }
     }
 
@@ -200,9 +202,9 @@ public class NotificationCreation implements JsonListener {
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
-        Intent intent = new Intent(context, UpcomingReservationActivity.class);
+        Intent intent = new Intent(context, activity);
         //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-
+        intent.setAction(Intent.ACTION_VIEW);
         //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);

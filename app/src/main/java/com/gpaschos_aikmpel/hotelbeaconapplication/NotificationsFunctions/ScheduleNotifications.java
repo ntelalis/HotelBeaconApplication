@@ -27,6 +27,8 @@ public class ScheduleNotifications {
         try {
             long formattedTriggerDate = simpleDateFormat.parse(triggerDate).getTime();
             windowStart = (int)(formattedTriggerDate-currentTime);
+            if(windowStart<0)
+                windowStart=0;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -43,7 +45,7 @@ public class ScheduleNotifications {
                 //Persist reboot
                 .setLifetime(Lifetime.FOREVER)
                 //start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(windowStart,windowStart+60))
+                .setTrigger(Trigger.executionWindow(windowStart,windowStart+10))
                 //Do not overwrite an existing job with the same tag
                 .setReplaceCurrent(false)
                 //Retry strategy

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -37,6 +38,7 @@ public class CheckInActivity extends AppCompatActivity {
         tvReservationNo.setText(String.valueOf(reservationID));
         tvArrivalDate.setText(reservationStartDate);
         tvDepartureDate.setText(reservationEndDate);
+        Toast.makeText(this, "meow "+reservationID, Toast.LENGTH_LONG).show();
     }
 
     public void checkIn(View view){

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedInActivity;
@@ -83,11 +84,11 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if(url.equals(URL.checkinUrl)) {
-            int room = Integer.parseInt(json.getString(POST.checkinRoom));
+            int room = json.getInt(POST.checkinRoom);
             String checkinDate = json.getString(POST.checkinDate);
-            int floor = Integer.parseInt(json.getString(POST.checkinRoomFloor));
+            int floor = json.getInt(POST.checkinRoomFloor);
             String roomPassword = json.getString(POST.checkinRoomPassword);
-            int beaconID = Integer.parseInt(json.getString(POST.checkinBeaconID));
+            int beaconID = json.getInt(POST.checkinBeaconID);
 
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
@@ -96,12 +97,13 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
             Intent intent = new Intent(this, CheckedInActivity.class);
             intent.putExtra(CheckedInActivity.ROOM, room);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-
+        Toast.makeText(this, url+""+error, Toast.LENGTH_SHORT).show();
     }
 }
