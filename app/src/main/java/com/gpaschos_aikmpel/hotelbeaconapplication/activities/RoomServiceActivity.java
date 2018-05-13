@@ -126,7 +126,8 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
             Map<String, String> params = new HashMap<>();
             //TODO reservationID how to get it
-            int resID = 101;
+            //int resID = 101;
+            int resID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
             params.put(POST.roomServiceOrderReservationID, String.valueOf(resID));
             params.put(POST.roomServiceOrderJson, json.toString());
             params.put(POST.roomServiceOrderComments, etComments.getText().toString());

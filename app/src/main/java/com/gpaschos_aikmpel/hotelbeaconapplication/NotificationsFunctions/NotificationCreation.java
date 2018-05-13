@@ -230,8 +230,8 @@ public class NotificationCreation implements JsonListener {
         Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-        String reservationEndDate = r.getEndDate();
-
+        //String reservationEndDate = r.getEndDate();
+        String reservationEndDate = "2018-05-13";
         Date formattedEndDate = null;
         try {
             formattedEndDate = mySQLFormat.parse(reservationEndDate);
@@ -281,7 +281,7 @@ public class NotificationCreation implements JsonListener {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
         // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(101, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20)+100, PendingIntent.FLAG_UPDATE_CURRENT);
         //If necessary, you can add arguments to Intent objects in the stack by calling
         // TaskStackBuilder.editIntentAt().
         //stackBuilder.editIntentAt()

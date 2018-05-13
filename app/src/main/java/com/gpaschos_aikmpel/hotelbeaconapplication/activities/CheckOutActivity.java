@@ -44,7 +44,8 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_out);
 
-        reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
+        //reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
+        reservationID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
 
         confirmCheckout = findViewById(R.id.btnCheckoutConfirm);
         totalPrice = findViewById(R.id.tvCheckoutTotalPrice);
@@ -100,7 +101,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
                 Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
                 r.setCheckOut(checkoutDate);
                 RoomDB.getInstance(this).reservationDao().update(r);
-                
+
                 Intent intent = new Intent(this, CheckedOutActivity.class);
 
                 startActivity(intent);

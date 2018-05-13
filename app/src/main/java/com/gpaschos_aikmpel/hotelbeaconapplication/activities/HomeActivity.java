@@ -8,6 +8,7 @@ import android.view.View;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.TestNotificationsActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,6 +54,13 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TestNotificationsActivity.class);
         startActivity(intent);
 
+    }
+
+    public void clearDatabase(View view){
+        RoomDB.getInstance(this).clearAllTables();
+        Intent intent = new Intent(this,LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     public void beacon(View view){
