@@ -20,7 +20,7 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation r WHERE r.startDate >= date('now')")
     List<Reservation> getAllUpcomingReservations();
 
-    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now') AND r1.endDate >= date('now')")
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now','localtime') and r1.endDate>=date('now','localtime')")
     Reservation getCurrentReservation();
 
     @Query("SELECT * FROM Reservation r1 WHERE r1.id=:id")

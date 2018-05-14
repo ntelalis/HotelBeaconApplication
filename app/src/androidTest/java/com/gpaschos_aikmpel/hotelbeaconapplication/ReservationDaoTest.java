@@ -25,6 +25,7 @@ public class ReservationDaoTest {
     private ReservationDao reservationDao;
     private RoomDB roomDB;
     private Reservation inReservation, outReservation;
+
     @Before
     public void createDB() {
         Context context = InstrumentationRegistry.getTargetContext();
@@ -36,11 +37,12 @@ public class ReservationDaoTest {
             c.set(2019,10,10);
             c1.set(2019,10,15);
 */
-            String c = "2018-08-03";
-            String c1 = "2018-08-05";
-         inReservation = new Reservation(1, 2, 3, c, c1);
+        String c0 = "2018-08-03";
+        String c = "2018-05-14";
+        String c1 = "2018-05-15";
+        inReservation = new Reservation(1, 2, 3, c0, c, c1);
         reservationDao.insert(inReservation);
-         outReservation = reservationDao.getUpcomingReservation();
+        outReservation = reservationDao.getCurrentReservation();
     }
 
     @After
@@ -72,6 +74,11 @@ public class ReservationDaoTest {
     @Test
     public void endDate() throws Exception {
         assertThat(inReservation.getEndDate(), equalTo(outReservation.getEndDate()));
+    }
+
+    @Test
+    public void bookDate() throws Exception {
+        assertThat(inReservation.getBookDate(), equalTo(outReservation.getBookDate()));
     }
 
 

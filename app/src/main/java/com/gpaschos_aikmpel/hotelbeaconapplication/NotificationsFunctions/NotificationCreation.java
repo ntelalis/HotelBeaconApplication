@@ -168,6 +168,7 @@ public class NotificationCreation implements JsonListener {
 
         Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        //SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("el","GR"));
 
         String reservationStartDate = r.getStartDate();
 
@@ -231,7 +232,7 @@ public class NotificationCreation implements JsonListener {
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
         //String reservationEndDate = r.getEndDate();
-        String reservationEndDate = "2018-05-13";
+        String reservationEndDate = "2018-05-14";
         Date formattedEndDate = null;
         try {
             formattedEndDate = mySQLFormat.parse(reservationEndDate);
