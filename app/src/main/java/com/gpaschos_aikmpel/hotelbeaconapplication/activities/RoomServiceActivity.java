@@ -183,12 +183,8 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                     Toast.makeText(this, "Sorry! Nothing is served this hour!", Toast.LENGTH_SHORT).show();
                 }
 
-                Reservation r = RoomDB.getInstance(this).reservationDao().getUpcomingReservation();
-
-                Toast.makeText(RoomServiceActivity.this, r.getId() + " meow", Toast.LENGTH_SHORT).show();
-
-
                 break;
+
             case URL.roomServiceFoodUrl:
                 JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceTypeCategory);
 

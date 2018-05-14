@@ -16,6 +16,7 @@ import android.animation.Animator;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.HoloCircularProgressBar;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -73,7 +74,7 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
     public void getLoyalty() {
         Map<String, String> params = new HashMap<>();
         sharedPref = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
-        customerID = sharedPref.getInt(getString(R.string.saved_customerId), 0);
+        customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
         params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loyaltyPointsURL, params);
     }
