@@ -125,8 +125,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
             }
 
             Map<String, String> params = new HashMap<>();
-            //TODO reservationID how to get it
-            //int resID = 101;
+
             int resID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
             params.put(POST.roomServiceOrderReservationID, String.valueOf(resID));
             params.put(POST.roomServiceOrderJson, json.toString());
@@ -156,8 +155,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                     String to = jsonObject.getString(POST.roomServiceCategoriesTo);
                     categoriesList.add(new Categories(id, name, from, to));
                 }
-                ////TODO Change this to pick optimal meal for now
-                //getFood(categoriesList.get(1).getName());
+
                 Calendar now = Calendar.getInstance();
 
                 now.set(Calendar.HOUR_OF_DAY, Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
@@ -185,12 +183,8 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                     Toast.makeText(this, "Sorry! Nothing is served this hour!", Toast.LENGTH_SHORT).show();
                 }
 
-                Reservation r = RoomDB.getInstance(this).reservationDao().getUpcomingReservation();
-
-                Toast.makeText(RoomServiceActivity.this, r.getId() + " meow", Toast.LENGTH_SHORT).show();
-
-
                 break;
+
             case URL.roomServiceFoodUrl:
                 JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceTypeCategory);
 

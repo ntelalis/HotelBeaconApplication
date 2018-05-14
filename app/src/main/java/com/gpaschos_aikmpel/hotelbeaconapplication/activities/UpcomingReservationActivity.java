@@ -13,6 +13,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -53,8 +54,9 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
 
     //query to the server about my reservation list
     public void myReservations() {
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
-        int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), 0);
+        //SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
+        //int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), 0);
+        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
         Map<String, String> params = new HashMap<>();
         params.put(POST.upcomingreservationsCustomerID, String.valueOf(customerID));
@@ -70,7 +72,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
     @Override
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
         int reservationID = obj.reservationID;
-        ((BeaconApplication)getApplication()).checkin(reservationID);
+        ((BeaconApplication) getApplication()).checkin(reservationID);
 
         /*Map<String, String> params = new HashMap<>();
         params.put(POST.checkinReservationID, String.valueOf(reservationID));
@@ -88,7 +90,7 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if(url.equals(URL.upcomingreservationsUrl)) {
+        if (url.equals(URL.upcomingreservationsUrl)) {
             JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
 
             List<MyReservationsAdapter.ReservationModel> reservations = new ArrayList<>();

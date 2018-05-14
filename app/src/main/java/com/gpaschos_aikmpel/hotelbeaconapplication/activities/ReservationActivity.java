@@ -2,14 +2,12 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,14 +16,12 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.DBHelperFunctions;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ImageViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.GetData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -38,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -251,7 +246,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     String imageName = rt.getImage();
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, imageBitmap,imageName);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }
@@ -285,8 +280,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
     //TODO Change this to more efficient design by not passing the bitmap around
     @Override
-    public void imgClicked(Bitmap bitmap) {
-        ImageViewFragment fragment = ImageViewFragment.newInstance(bitmap);
+    public void imgClicked(String imgFileName) {
+        ImageViewFragment fragment = ImageViewFragment.newInstance(imgFileName);
         fragment.show(getFragmentManager(), ImageViewFragment.TAG);
     }
 
@@ -311,31 +306,25 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             return;
         }
 
-        Reservation r = RoomDB.getInstance(this).reservationDao().getReservationWithinDate(arrivalDateSQL,departureDateSQL);
-        if(r==null){
-            int roomTypeID = room.roomTypeID;
-            String roomTitle = room.title;
-            int roomPrice = room.days * room.price;
-            String roomImage = room.imgName;
+        int roomTypeID = room.roomTypeID;
+        String roomTitle = room.title;
+        int roomPrice = room.days * room.price;
+        String roomImage = room.imgFileName;
 
 
-            int people = Integer.parseInt(spPeople.getSelectedItem().toString());
+        int people = Integer.parseInt(spPeople.getSelectedItem().toString());
 
 
+        Intent intent = new Intent(this, BookActivity.class);
+        intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
+        intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
+        intent.putExtra(BookActivity.ROOM_IMAGE_KEY, roomImage);
+        intent.putExtra(BookActivity.ROOM_PRICE_KEY, roomPrice);
+        intent.putExtra(BookActivity.ARRIVAL_KEY, arrivalDateSQL);
+        intent.putExtra(BookActivity.DEPARTURE_KEY, departureDateSQL);
+        intent.putExtra(BookActivity.PERSONS_KEY, people);
+        startActivity(intent);
 
-            Intent intent = new Intent(this, BookActivity.class);
-            intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
-            intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
-            intent.putExtra(BookActivity.ROOM_IMAGE_KEY, roomImage);
-            intent.putExtra(BookActivity.ROOM_PRICE_KEY, roomPrice);
-            intent.putExtra(BookActivity.ARRIVAL_KEY, arrivalDateSQL);
-            intent.putExtra(BookActivity.DEPARTURE_KEY, departureDateSQL);
-            intent.putExtra(BookActivity.PERSONS_KEY, people);
-            startActivity(intent);
-        }
-        else{
-            Toast.makeText(this, "You already have an active reservation within these days", Toast.LENGTH_SHORT).show();
-        }
 
     }
 }

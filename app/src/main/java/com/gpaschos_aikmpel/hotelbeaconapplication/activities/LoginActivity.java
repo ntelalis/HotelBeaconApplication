@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.UpdateStoredVariables;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.GetData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
 
     private EditText etEmail;
     private EditText etPass;
+    private Customer customer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +42,15 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         setContentView(R.layout.activity_login);
 
         //create a notification channel
-        NotificationCreation.channel(this, "basic_channel","default channel" );
+        NotificationCreation.channel(this, "basic_channel", "default channel");
 
+        //TODO DataSyncing on Login. Is this a good choice?
         GetData.getInstance(this).getDataFromServer();
-        String storedEmail = LocalVariables.readString(this, R.string.saved_email);
-        String storedPass = LocalVariables.readString(this, R.string.saved_password);
 
-        if (storedEmail != null && storedPass != null) {
-            loginRequest(storedEmail,storedPass);
+        customer = RoomDB.getInstance(this).customerDao().getCustomer();
+
+        if (customer != null) {
+            loginRequest(customer.getEmail(), customer.getPassword());
         }
 
         etEmail = findViewById(R.id.etLoginEmail);
@@ -59,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         String email = etEmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
 
-        loginRequest(email,pass);
+        loginRequest(email, pass);
 
         //store notification variables and set them to false
         UpdateStoredVariables.setDefaults(this);
@@ -87,31 +91,43 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
+
             int customerId = json.getInt(POST.loginCustomerID);
-            String firstName = json.getString(POST.loginFirstName);
-            String title = json.getString(POST.loginTitle);
-            String lastName = json.getString(POST.loginLastName);
-            int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
-            boolean isCheckedIn = json.getBoolean(POST.loginIsCheckedIn);
-            boolean isCheckedOut = json.getBoolean(POST.loginIsCheckedOut);
 
+            if (customer == null) {
+                String firstName = json.getString(POST.loginFirstName);
+                String title = json.getString(POST.loginTitle);
+                String lastName = json.getString(POST.loginLastName);
+                int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
+                boolean isCheckedIn = json.getBoolean(POST.loginIsCheckedIn);
+                boolean isCheckedOut = json.getBoolean(POST.loginIsCheckedOut);
 
-            //TODO Implement OAUTH2 Token
-            LocalVariables.storeInt(this, R.string.saved_customerId,customerId);
-            LocalVariables.storeString(this, R.string.saved_email,etEmail.getText().toString().trim());
-            LocalVariables.storeString(this, R.string.saved_password,etPass.getText().toString().trim());
-            LocalVariables.storeString(this, R.string.saved_firstName,firstName);
-            LocalVariables.storeString(this, R.string.saved_lastName,lastName);
-            LocalVariables.storeString(this, R.string.saved_title,title);
-            if(isOldCustomer>0){
-                LocalVariables.storeBoolean(this,R.string.is_old_customer,true);
+                //TODO implement birthdate country
+                String birthDate = "";
+                String country = "";
+
+                String email = etEmail.getText().toString().trim();
+                String password = etPass.getText().toString().trim();
+
+                //TODO Implement OAUTH2 Token Maybe??
+
+                Customer customer = new Customer(customerId, title, firstName, lastName, birthDate, country, email, password);
+                RoomDB.getInstance(this).customerDao().insert(customer);
+
+                //FIXME OldCustomer????
+                if (isOldCustomer > 0) {
+                    LocalVariables.storeBoolean(this, R.string.is_old_customer, true);
+                } else {
+                    LocalVariables.storeBoolean(this, R.string.is_old_customer, false);
+                }
+                Toast.makeText(this, "Login Successful! CustomerID: " + customer.getCustomerId(), Toast.LENGTH_LONG).show();
             }
             else{
-                LocalVariables.storeBoolean(this,R.string.is_old_customer,false);
+                Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_LONG).show();
             }
 
-            Toast.makeText(this, "Login Successful! CustomerID: " + customerId
-                    +"isCheckedIn: "+isCheckedIn + " " + isCheckedOut , Toast.LENGTH_LONG).show();
+
+
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();

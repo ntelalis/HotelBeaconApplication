@@ -15,6 +15,17 @@ public class Customer {
     private String email;
     private String password;
 
+    public Customer(int customerId, String title, String firstName, String lastName, String birthDate, String country, String email, String password) {
+        this.customerId = customerId;
+        this.title = title;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.country = country;
+        this.email = email;
+        this.password = password;
+    }
+
     public String getTitle() {
         return title;
     }

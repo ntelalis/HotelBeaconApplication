@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.TestNotificationsActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 
@@ -23,47 +21,34 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void viewReservations(View view){
+    public void viewReservations(View view) {
         Intent intent = new Intent(this, UpcomingReservationActivity.class);
         startActivity(intent);
     }
 
-    public void loyalty(View view){
+    public void loyalty(View view) {
         Intent intent = new Intent(this, LoyaltyProgramActivity.class);
         startActivity(intent);
     }
 
-    public void roomService(View view){
+    public void roomService(View view) {
         Intent intent = new Intent(this, RoomServiceActivity.class);
         startActivity(intent);
     }
 
-    //public void notificationWelcome(View view){
-    //    NotificationCreation.welcomeNotify(this);
-    //}
-
-    public void review(View view){
+    public void review(View view) {
         Intent intent = new Intent(this, ReviewActivity.class);
         startActivity(intent);
     }
 
-    public void notify(View view){
-      //  NotificationCreation.channel(this,"testChannel","defaultChannel" );
-      //  NotificationCreation.notification(this,"testChannel","Test",
-          //      21,"My new Notification",R.drawable.ic_food,UpcomingReservationActivity.class);
-        Intent intent = new Intent(this, TestNotificationsActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void clearDatabase(View view){
+    public void logout(View view) {
         RoomDB.getInstance(this).clearAllTables();
-        Intent intent = new Intent(this,LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
-    public void beacon(View view){
+    public void beacon(View view) {
         Intent intent = new Intent(this, MonitoringActivity.class);
         startActivity(intent);
     }

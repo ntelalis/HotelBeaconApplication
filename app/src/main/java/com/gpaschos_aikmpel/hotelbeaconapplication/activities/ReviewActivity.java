@@ -3,8 +3,12 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OnReviewInteraction;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewAlreadyFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewCheckFragment;
@@ -13,18 +17,25 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewWriteFragment
 
 public class ReviewActivity extends AppCompatActivity implements OnReviewInteraction {
 
-    //TODO change it to get it correctly
-    private int reservationID = 95;
+    private int reservationID;
+    private String checkout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ReviewCheckFragment reviewCheckFragment = ReviewCheckFragment.newInstance(reservationID);
-        transaction.replace(R.id.ReviewfragmentContainer, reviewCheckFragment);
-        transaction.commit();
+        Reservation reservation = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+
+        reservationID = reservation.getId();
+        checkout = reservation.getCheckOut();
+
+        if (checkout != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            ReviewCheckFragment reviewCheckFragment = ReviewCheckFragment.newInstance(reservationID);
+            transaction.replace(R.id.ReviewfragmentContainer, reviewCheckFragment);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -38,7 +49,7 @@ public class ReviewActivity extends AppCompatActivity implements OnReviewInterac
     @Override
     public void checkReview(double rating, String comments) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ReviewAlreadyFragment reviewAlreadyFragment = ReviewAlreadyFragment.newInstance(rating,comments);
+        ReviewAlreadyFragment reviewAlreadyFragment = ReviewAlreadyFragment.newInstance(rating, comments);
         transaction.replace(R.id.ReviewfragmentContainer, reviewAlreadyFragment);
         transaction.commit();
     }

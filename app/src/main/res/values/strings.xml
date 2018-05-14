@@ -116,6 +116,9 @@
     <string name="tvCheckInReservationNoLabel">Reservation Number</string>
     <string name="tvCheckInReservationArrivalLabel">Arrival Date</string>
     <string name="tvCheckInReservationDepartureLabel">Departure Date</string>
+    <string name="btnHomeLoyalty">Loyalty</string>
+    <string name="btnHomeReview">Review</string>
+    <string name="btnHomeLogout">Logout</string>
 
 
 </resources>

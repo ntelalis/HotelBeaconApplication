@@ -11,43 +11,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Objects;
 
 public class ImageViewFragment extends DialogFragment {
 
     public static final String TAG = "imageViewFragment";
     private static final String image_KEY = "img";
 
-    public ImageViewFragment(){
+    public ImageViewFragment() {
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (getDialog() == null) {
-            return;
-        }
-
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        getDialog().getWindow().setLayout(size.x, size.y / 2);
-    }
-
-    public static ImageViewFragment newInstance(Bitmap bitmap) {
+    public static ImageViewFragment newInstance(String imgFileName) {
 
         ImageViewFragment fragment = new ImageViewFragment();
 
         Bundle args = new Bundle();
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-
-        args.putByteArray(image_KEY, stream.toByteArray());
+        args.putString(image_KEY, imgFileName);
 
         fragment.setArguments(args);
         return fragment;
@@ -63,17 +49,31 @@ public class ImageViewFragment extends DialogFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle bundle = getArguments();
-        byte[] imgBytes = bundle.getByteArray(image_KEY);
 
-        Bitmap imgBitmap = null;
+        String imgFileName = getArguments().getString(image_KEY);
 
-        if (imgBytes != null) {
-            imgBitmap = BitmapFactory.decodeByteArray(imgBytes, 0, imgBytes.length);
-        }
+        Bitmap imgBitmap = LocalVariables.readImage(getActivity(), imgFileName);
 
         ImageView ivPreview = view.findViewById(R.id.ivPreview);
         ivPreview.setImageBitmap(imgBitmap);
+
+        if (getDialog() == null) {
+            return;
+        }
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int imgHeight = imgBitmap.getHeight();
+        int imgWidth = imgBitmap.getWidth();
+        if (imgWidth < size.x) {
+            size.x = imgWidth;
+        }
+        if (imgHeight < size.y) {
+            size.y = imgHeight;
+        }
+
+        Objects.requireNonNull(getDialog().getWindow()).setLayout(size.x, size.y);
 
     }
 }

@@ -1,9 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 
 import java.util.List;
 
@@ -50,7 +47,6 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
     }
 
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivRoomImage;
@@ -81,7 +77,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomDescription.setText(roomList.get(position).description);
             tvRoomTitle.setText(roomList.get(position).title);
             ivRoomImage.setImageBitmap(roomList.get(position).img);
-            tvRoomTotalPrice.setText(String.valueOf(roomList.get(position).price*roomList.get(position).days));
+            tvRoomTotalPrice.setText(String.valueOf(roomList.get(position).price * roomList.get(position).days));
             tvRoomPricePerNight.setText(String.valueOf(roomList.get(position).price));
             tvRoomDays.setText(String.valueOf(roomList.get(position).days));
         }
@@ -90,17 +86,16 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public void onClick(View view) {
 
             if (view.getId() == ivRoomImage.getId()) {
-                BitmapDrawable drawable = (BitmapDrawable) ((ImageView) view).getDrawable();
-                clickCallbacks.imgClicked(drawable.getBitmap());
+                String imgFileName = roomList.get(getAdapterPosition()).imgFileName;
+                clickCallbacks.imgClicked(imgFileName);
             } else if (view.getId() == btnRoomBook.getId()) {
-                int positionInList = getAdapterPosition();
-                clickCallbacks.bookRoom(roomList.get(positionInList));
+                clickCallbacks.bookRoom(roomList.get(getAdapterPosition()));
             }
         }
     }
 
     public interface ClickCallbacks {
-        void imgClicked(Bitmap bitmap);
+        void imgClicked(String imgFileName);
 
         void bookRoom(ModelRoomView obj);
     }
@@ -112,16 +107,16 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public String description;
         public int price;
         public Bitmap img;
-        public String imgName;
+        public String imgFileName;
         public int days;
 
-        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap img, String imgName) {
+        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap img, String imgFileName) {
             this.roomTypeID = roomTypeID;
             this.title = title;
             this.description = description;
             this.price = price;
             this.img = img;
-            this.imgName = imgName;
+            this.imgFileName = imgFileName;
             this.days = days;
         }
     }

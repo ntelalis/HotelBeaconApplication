@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,26 +91,27 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             buttonAndTextViewsHandler(reservationsList.get(position).checkincheckoutbtn,
                     reservationsList.get(position).room);
 
-            roomNo=reservationsList.get(position).room;
+            roomNo = reservationsList.get(position).room;
         }
 
         @Override
         public void onClick(View view) {
             if (view.getId() == btnCheckInCheckOut.getId()) {
-                if(roomNo.equals("null")) {
+                if (roomNo.equals("null")) {
                     clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
-                }
-                else{
+                } else {
                     clickCallbacks.checkOut(reservationsList.get(getAdapterPosition()));
                 }
             }
         }
 
-        public void buttonAndTextViewsHandler(int checkincheckoutbtn, String room){
-            switch(checkincheckoutbtn){
+        public void buttonAndTextViewsHandler(int checkincheckoutbtn, String room) {
+            Context context = itemView.getContext();
+            switch (checkincheckoutbtn) {
                 case Params.NOTeligibleForCheckin:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(false);
+                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                     tvCheckedinRoom.setVisibility(View.INVISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
@@ -116,6 +119,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                 case Params.eligibleForCheckin:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(true);
+                    //btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                    //TextViewCompat.setTextAppearance(btnCheckInCheckOut,R.style.PrimaryButton);
                     tvCheckedinRoom.setVisibility(View.INVISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
@@ -123,6 +128,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                 case Params.NOTeligibleForCheckout:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(false);
+                    //btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+                    TextViewCompat.setTextAppearance(btnCheckInCheckOut,R.style.PrimaryButtonDisabled);
                     tvCheckedinRoom.setText(room);
                     tvCheckedinRoom.setVisibility(View.VISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
@@ -131,6 +138,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                 case Params.eligibleForCheckout:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(true);
+                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     tvCheckedinRoom.setText(room);
                     tvCheckedinRoom.setVisibility(View.VISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
@@ -139,6 +147,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                 case Params.CheckedOut:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
                     btnCheckInCheckOut.setEnabled(false);
+                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                     tvCheckedinRoom.setText(room);
                     tvCheckedinRoom.setVisibility(View.VISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
@@ -150,6 +159,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
 
     public interface ClickCallbacks {
         void checkOut(ReservationModel obj);
+
         void checkIn(ReservationModel obj);
     }
 

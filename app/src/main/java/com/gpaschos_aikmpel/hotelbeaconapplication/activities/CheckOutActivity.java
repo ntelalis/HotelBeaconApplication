@@ -64,7 +64,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkoutUrl, params);
     }
 
-    private void fillRecyclerVandTextV(List<MyCheckoutAdapter.ChargeModel> list, double totalprice) {
+    private void fillRecyclerViewAndTextView(List<MyCheckoutAdapter.ChargeModel> list, double totalprice) {
         adapter = new MyCheckoutAdapter(list);
         recyclerView.setAdapter(adapter);
         totalPrice.setText(String.valueOf(totalprice));
@@ -92,7 +92,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
 
                     charges.add(new MyCheckoutAdapter.ChargeModel(service, price));
                 }
-                fillRecyclerVandTextV(charges,totalPrice);
+                fillRecyclerViewAndTextView(charges,totalPrice);
                 break;
             case URL.checkoutConfirmationUrl:
                 String checkoutDate = json.getString(POST.checkoutConfirmDate);

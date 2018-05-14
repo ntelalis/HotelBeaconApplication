@@ -91,14 +91,14 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if(url.equals(URL.checkinUrl)) {
             int room = json.getInt(POST.checkinRoom);
-            String checkinDate = json.getString(POST.checkinDate);
+            String checkInDate = json.getString(POST.checkinDate);
             int floor = json.getInt(POST.checkinRoomFloor);
             String roomPassword = json.getString(POST.checkinRoomPassword);
             int beaconID = json.getInt(POST.checkinBeaconID);
 
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-            r.checkIn(checkinDate,room,floor,roomPassword,beaconID);
+            r.checkIn(checkInDate,room,floor,roomPassword,beaconID);
             RoomDB.getInstance(this).reservationDao().update(r);
 
             Intent intent = new Intent(this, CheckedInActivity.class);

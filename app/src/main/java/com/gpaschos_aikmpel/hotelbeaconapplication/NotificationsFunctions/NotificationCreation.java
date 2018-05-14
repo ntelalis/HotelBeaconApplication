@@ -18,6 +18,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -58,8 +59,10 @@ public class NotificationCreation implements JsonListener {
     public static void notifyWelcome(Context context) {
 
         if (shouldNotifyWelcome(context)) {
-            lastName = LocalVariables.readString(context, R.string.saved_lastName);
-            title = LocalVariables.readString(context, R.string.saved_title);
+            Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+
+            lastName = customer.getLastName();
+            title = customer.getTitle();
 
 
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
@@ -71,7 +74,9 @@ public class NotificationCreation implements JsonListener {
             } else {
                 notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
             }
+
             int icon;
+
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 icon = R.drawable.ic_welcome;
 
@@ -92,10 +97,12 @@ public class NotificationCreation implements JsonListener {
 
     public static void notifyFarewell(Context context) {
 
+        String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
                 && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
-            lastName = LocalVariables.readString(context, R.string.saved_lastName);
-            title = LocalVariables.readString(context, R.string.saved_title);
+            Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+            lastName = customer.getLastName();
+            title = customer.getTitle();
 
             String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
             notification(context, Params.NOTIFICATION_CHANNEL_ID
