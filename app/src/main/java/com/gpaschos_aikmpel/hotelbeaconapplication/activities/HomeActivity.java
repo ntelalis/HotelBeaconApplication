@@ -4,11 +4,18 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-public class HomeActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class HomeActivity extends AppCompatActivity implements JsonListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,22 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void clearServerDatabse(View view){
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.deleteUrl,null);
+    }
+
     public void beacon(View view) {
         Intent intent = new Intent(this, MonitoringActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+        Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void getErrorResult(String url, String error) {
+        Toast.makeText(this, "Failed!", Toast.LENGTH_SHORT).show();
     }
 }

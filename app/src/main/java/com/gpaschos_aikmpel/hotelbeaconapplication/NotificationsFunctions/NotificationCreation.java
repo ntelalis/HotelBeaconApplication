@@ -104,10 +104,19 @@ public class NotificationCreation implements JsonListener {
             lastName = customer.getLastName();
             title = customer.getTitle();
 
+            int icon;
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                icon = R.drawable.ic_welcome;
+
+            } else {
+                icon = R.drawable.ic_welcome_png;
+            }
+
             String notificationTitle = Params.notificationFarewellTitle + " " + title + " " + lastName;
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , Params.notificationFarewellID, notificationTitle
-                    , Params.notificationFarewellGreeting1, R.drawable.ic_welcome
+                    , Params.notificationFarewellGreeting1, icon
                     , Params.notificationFarewellGreeting1);
 
             UpdateStoredVariables.farewellNotified(context);
@@ -121,6 +130,8 @@ public class NotificationCreation implements JsonListener {
         String notificationTitle = null;
         String notificationContent = null;
         int notificationID = 0;
+        int icon;
+
 
         if (shouldNotifyCheckin(context)) {
             switch (tag) {
@@ -136,19 +147,36 @@ public class NotificationCreation implements JsonListener {
                     notificationID = Params.notificationCheckinReminderID;
                     break;
             }
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                icon = R.drawable.ic_welcome;
+
+            } else {
+                icon = R.drawable.ic_welcome_png;
+            }
+
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
-                    , notificationContent, R.drawable.ic_welcome
+                    , notificationContent, icon
                     , notificationContent, CheckInActivity.class);
         }
     }
 
     public static void notifyCheckout(Context context) {
         if (shouldNotifyCheckout(context)) {
+            int icon;
+
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                icon = R.drawable.ic_welcome;
+
+            } else {
+                icon = R.drawable.ic_welcome_png;
+            }
+
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , Params.notificationCheckoutID, Params.notificationCheckoutTitle
                     , Params.notificationCheckoutReminder+Params.HotelCheckoutTime
-                    , R.drawable.ic_welcome, Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , icon, Params.notificationCheckoutReminder+Params.HotelCheckoutTime
                     , CheckOutActivity.class);
         }
     }
