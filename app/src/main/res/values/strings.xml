@@ -119,6 +119,7 @@
     <string name="btnHomeLoyalty">Loyalty</string>
     <string name="btnHomeReview">Review</string>
     <string name="btnHomeLogout">Logout</string>
+    <string name="btnCheckInCheckedin">CHECKED-IN</string>
     <string name="tvBookCurrency">€</string>
     <string name="tvCreditCardYear">Exp. Year</string>
     <string name="tvCreditCardMonth">Exp. Month</string>
