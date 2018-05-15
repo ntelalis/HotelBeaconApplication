@@ -55,6 +55,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         private TextView tvRoomTotalPrice;
         private TextView tvRoomPricePerNight;
         private TextView tvRoomDays;
+        private TextView tvRoomPersons;
         private Button btnRoomBook;
         private Button btnRoomDetails;
 
@@ -66,6 +67,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomTotalPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
             tvRoomPricePerNight = itemView.findViewById(R.id.tvRoomPrice);
             tvRoomDays = itemView.findViewById(R.id.tvRoomDays);
+            tvRoomPersons = itemView.findViewById(R.id.tvRoomPersons);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
             ivRoomImage.setOnClickListener(this);
@@ -74,12 +76,15 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         }
 
         void bind(int position) {
-            tvRoomDescription.setText(roomList.get(position).description);
-            tvRoomTitle.setText(roomList.get(position).title);
-            ivRoomImage.setImageBitmap(roomList.get(position).img);
-            tvRoomTotalPrice.setText(String.valueOf(roomList.get(position).price * roomList.get(position).days));
-            tvRoomPricePerNight.setText(String.valueOf(roomList.get(position).price));
-            tvRoomDays.setText(String.valueOf(roomList.get(position).days));
+            ModelRoomView mrv = roomList.get(position);
+
+            tvRoomDescription.setText(mrv.description);
+            tvRoomTitle.setText(mrv.title);
+            ivRoomImage.setImageBitmap(mrv.img);
+            tvRoomTotalPrice.setText(String.valueOf(mrv.price * mrv.days * mrv.persons));
+            tvRoomPricePerNight.setText(String.valueOf(mrv.price));
+            tvRoomDays.setText(String.valueOf(mrv.days));
+            tvRoomPersons.setText(String.valueOf(mrv.persons));
         }
 
         @Override
@@ -109,8 +114,9 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public Bitmap img;
         public String imgFileName;
         public int days;
+        public int persons;
 
-        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, Bitmap img, String imgFileName) {
+        public ModelRoomView(int roomTypeID, String title, String description, int price, int days, int persons, Bitmap img, String imgFileName) {
             this.roomTypeID = roomTypeID;
             this.title = title;
             this.description = description;
@@ -118,6 +124,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             this.img = img;
             this.imgFileName = imgFileName;
             this.days = days;
+            this.persons = persons;
         }
     }
 }

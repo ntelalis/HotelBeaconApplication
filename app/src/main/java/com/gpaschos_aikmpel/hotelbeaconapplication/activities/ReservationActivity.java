@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -83,6 +84,18 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onClick(View view) {
                 pickDate(etDepartureDate);
+            }
+        });
+
+        spPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                recyclerView.setAdapter(null);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
@@ -244,9 +257,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     int price = rt.getPrice();
                     Bitmap imageBitmap = LocalVariables.readImage(this, rt.getImage());
                     String imageName = rt.getImage();
+                    int persons = Integer.parseInt(spPeople.getSelectedItem().toString());
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, imageBitmap, imageName);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, persons, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }
@@ -308,7 +322,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
-        int roomPrice = room.days * room.price;
+        int roomPrice = room.days * room.price * room.persons;
         String roomImage = room.imgFileName;
 
 

@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 
 import android.animation.Animator;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.HoloCircularProgressBar;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;

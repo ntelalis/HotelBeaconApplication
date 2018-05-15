@@ -35,9 +35,9 @@ public class POST {
     public static final String forgotVerifyVerification = "verification";
 
     //forgotnewpass.php
-    public static String forgotNewPassEmail = "email";
-    public static String forgotNewPassPassword = "pass";
-    public static String forgotNewPassVerification = "code";
+    public static final String forgotNewPassEmail = "email";
+    public static final String forgotNewPassPassword = "pass";
+    public static final String forgotNewPassVerification = "code";
 
 
     //~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,50 +76,56 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~
     //SND
-    public static String availabilityArrivalDate = "arrivalDate";
-    public static String availabilityDepartureDate = "departureDate";
-    public static String availabilityPeople = "persons";
+    public static final String availabilityArrivalDate = "arrivalDate";
+    public static final String availabilityDepartureDate = "departureDate";
+    public static final String availabilityPeople = "persons";
 
     //RCV
-    public static String availabilityResultsArray = "results";
-    public static String availabilityRoomTypeID = "roomTypeID";
-    public static String availabilityRoomTitle = "title";
-    public static String availabilityRoomDescription = "description";
-    public static String availabilityRoomPrice = "price";
-    public static String availabilityRoomImage = "img";
+    public static final String availabilityResultsArray = "results";
+    public static final String availabilityRoomTypeID = "roomTypeID";
+    public static final String availabilityRoomTitle = "title";
+    public static final String availabilityRoomDescription = "description";
+    public static final String availabilityRoomPrice = "price";
+    public static final String availabilityRoomImage = "img";
 
     //persons.php
-    public static String personsMaxCapacity = "capacity";
+    public static final String personsMaxCapacity = "capacity";
 
     //~~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~~~~~
     //SND
-    public static String bookRoomTypeID = "roomTypeID";
-    public static String bookRoomArrival = "arrival";
-    public static String bookRoomDeparture = "departure";
-    public static String bookRoomPeople = "persons";
-    public static String bookRoomCustomerID = "customerID";
+    public static final String bookRoomTypeID = "roomTypeID";
+    public static final String bookRoomArrival = "arrival";
+    public static final String bookRoomDeparture = "departure";
+    public static final String bookRoomPeople = "persons";
+    public static final String bookRoomCustomerID = "customerID";
+    public static final String roomTypeModified = "modified";
+    public static final String bookRoomCreditCard = "ccNumber";
+    public static final String bookRoomHoldersName = "ccName";
+    public static final String bookRoomExpMonth = "ccMonth";
+    public static final String bookRoomExpYear = "ccYear";
+    public static final String bookRoomCVV = "ccCVV";
 
     //RCV
-    public static String bookRoomReservationID = "reservationID";
-    public static String bookRoomBookedDate = "bookedDate";
+    public static final String bookRoomReservationID = "reservationID";
+    public static final String bookRoomBookedDate = "bookedDate";
 
 
     //~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~~
 
     //SND
-    public static String roomServiceTimeType = "timeType";
+    public static final String roomServiceTimeType = "timeType";
 
     //RCV
-    public static String roomServiceCategoriesID = "id";
-    public static String roomServiceCategoriesName = "name";
-    public static String roomServiceCategoriesFrom = "from";
-    public static String roomServiceCategoriesTo = "to";
-    public static String roomServiceTimeCategory = "timeCategory";
-    public static String roomServiceTypeCategory = "typeCategory";
-    public static String roomServiceFoodID = "id";
-    public static String roomServiceFoodName = "name";
-    public static String roomServiceFoodDesc = "desc";
-    public static String roomServiceFoodPrice = "price";
+    public static final String roomServiceCategoriesID = "id";
+    public static final String roomServiceCategoriesName = "name";
+    public static final String roomServiceCategoriesFrom = "from";
+    public static final String roomServiceCategoriesTo = "to";
+    public static final String roomServiceTimeCategory = "timeCategory";
+    public static final String roomServiceTypeCategory = "typeCategory";
+    public static final String roomServiceFoodID = "id";
+    public static final String roomServiceFoodName = "name";
+    public static final String roomServiceFoodDesc = "desc";
+    public static final String roomServiceFoodPrice = "price";
 
     //~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~
     //SND
@@ -200,5 +206,5 @@ public class POST {
     //SND
     public static final String roomTypeCheck = "check";
     //BOTH
-    public static final String roomTypeModified = "modified";
+
 }

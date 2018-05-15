@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +26,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.Schedu
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -78,7 +82,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
         TextView tvRoomTitle = findViewById(R.id.tvBookRoomTitle);
         TextView tvPersons = findViewById(R.id.tvBookPersons);
-        TextView tvPrice = findViewById(R.id.tvBookCurrency);
+        TextView tvPrice = findViewById(R.id.tvBookPrice);
         ImageView ivRoomImage = findViewById(R.id.ivBookRoomImage);
 
         btnBook = findViewById(R.id.btnBookConfirm);
@@ -142,14 +146,50 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     // TODO in order to not let 2 users make a reservation for one last room)
     public void confirmAndBook(View view) {
 
+        View fragmentView = getSupportFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
+
+        EditText etCreditCard = fragmentView.findViewById(R.id.etCrediCardCard);
+        EditText etHoldersName = fragmentView.findViewById(R.id.etCreditCardHoldersName);
+        EditText etCVV = fragmentView.findViewById(R.id.etCreditCardCVV);
+
+        Spinner spMonth = fragmentView.findViewById(R.id.spCreditCardExpMonth);
+        Spinner spYear = fragmentView.findViewById(R.id.spCreditCardExpYear);
+
+        etCreditCard.setError(null);
+        etHoldersName.setError(null);
+        boolean flag = false;
+
+        String creditCard = etCreditCard.getText().toString().replaceAll("\\s","");
+        String holdersName = etHoldersName.getText().toString();
+        if(!Validation.checkCreditCard(creditCard)){
+            etCreditCard.setError("Please enter a valid card");
+            flag=true;
+        }
+
+        if(!Validation.checkLength(holdersName,4,null)){
+            etHoldersName.setError("Please enter a valid name");
+            flag=true;
+        }
+        if(flag) return;
+
+        String month = String.valueOf(spMonth.getSelectedItem());
+        String year = String.valueOf(spYear.getSelectedItem());
+        String cvv = etCVV.getText().toString();
+
         Map<String, String> values = new HashMap<>();
 
         values.put(POST.bookRoomTypeID, String.valueOf(roomTypeID));
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));
-        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
+        values.put(POST.bookRoomCreditCard,creditCard);
+        values.put(POST.bookRoomHoldersName,holdersName);
+        values.put(POST.bookRoomExpMonth,month);
+        values.put(POST.bookRoomExpYear,year);
+        values.put(POST.bookRoomCVV,cvv);
+
+        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
         values.put(POST.bookRoomCustomerID, String.valueOf(customerID));
 
@@ -170,8 +210,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
 
         RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, bookedDate, arrivalSQLString, departureSQLString));
         Reservation r1 = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-
-        Toast.makeText(this, "withinID:" + r1.getId() + " current:" + r1.getId(), Toast.LENGTH_SHORT).show();
+        
 
         ScheduleNotifications.checkinNotification(this, arrivalSQLString);
         ScheduleNotifications.checkoutNotification(this, departureSQLString);
