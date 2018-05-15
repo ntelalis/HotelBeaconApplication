@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +39,13 @@ public class CheckInActivity extends AppCompatActivity {
         tvReservationNo.setText(String.valueOf(reservationID));
         tvArrivalDate.setText(reservationStartDate);
         tvDepartureDate.setText(reservationEndDate);
-        Toast.makeText(this, "meow "+reservationID, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "meow "+reservationID, Toast.LENGTH_LONG).show();
+
+        if(RoomDB.getInstance(this).reservationDao().getCurrentReservation().getCheckIn()!=null){
+            btnCheckIn.setEnabled(false);
+            btnCheckIn.setText(R.string.btnCheckInCheckedin);
+        }
+
     }
 
     public void checkIn(View view){

@@ -119,6 +119,7 @@
     <string name="btnHomeLoyalty">Loyalty</string>
     <string name="btnHomeReview">Review</string>
     <string name="btnHomeLogout">Logout</string>
+    <string name="btnCheckInCheckedin">CHECKED-IN</string>
 
 
 </resources>
