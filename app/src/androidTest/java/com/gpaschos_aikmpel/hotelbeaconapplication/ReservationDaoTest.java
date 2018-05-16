@@ -42,7 +42,12 @@ public class ReservationDaoTest {
         String c1 = "2018-05-15";
         inReservation = new Reservation(1, 2, 3, c0, c, c1);
         reservationDao.insert(inReservation);
-        outReservation = reservationDao.getCurrentReservation();
+        inReservation.checkIn(c,100,1,"ASDFASDF",2);
+        reservationDao.insert(inReservation);
+        inReservation.setCheckOut(c1);
+        reservationDao.insert(inReservation);
+        //outReservation = reservationDao.getCurrentReservation();
+        //outReservation = reservationDao.getActiveReservation();
     }
 
     @After

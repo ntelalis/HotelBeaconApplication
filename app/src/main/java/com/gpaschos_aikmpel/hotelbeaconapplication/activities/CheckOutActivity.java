@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -36,7 +35,7 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
     private RecyclerView recyclerView;
     private MyCheckoutAdapter adapter;
     private TextView totalPrice;
-    private Button confirmCheckout;
+    private Button btnConfirmCheckout;
     private int reservationID;
 
     @Override
@@ -47,13 +46,17 @@ public class CheckOutActivity extends AppCompatActivity implements JsonListener{
         //reservationID=getIntent().getIntExtra(RESERVATION_ID,0);
         reservationID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
 
-        confirmCheckout = findViewById(R.id.btnCheckoutConfirm);
+        btnConfirmCheckout = findViewById(R.id.btnCheckoutConfirm);
         totalPrice = findViewById(R.id.tvCheckoutTotalPrice);
         recyclerView = findViewById(R.id.rvCheckout);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         getCharges(reservationID);
+
+        if(RoomDB.getInstance(this).reservationDao().getCurrentReservation().getCheckIn()==null){
+            btnConfirmCheckout.setEnabled(false);
+        }
 
     }
 

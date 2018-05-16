@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
@@ -88,6 +89,8 @@ public class NotificationCreation implements JsonListener {
 
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
+
+
             //notify the customer that they can check-in if they are eligible
             notifyCheckin(context, CHECKIN_BEACON_NOTIFICATION);
         }
@@ -175,8 +178,8 @@ public class NotificationCreation implements JsonListener {
 
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , Params.notificationCheckoutID, Params.notificationCheckoutTitle
-                    , Params.notificationCheckoutReminder+Params.HotelCheckoutTime
-                    , icon, Params.notificationCheckoutReminder+Params.HotelCheckoutTime
+                    , Params.notificationCheckoutReminder + Params.HotelCheckoutTime
+                    , icon, Params.notificationCheckoutReminder + Params.HotelCheckoutTime
                     , CheckOutActivity.class);
         }
     }
@@ -189,19 +192,25 @@ public class NotificationCreation implements JsonListener {
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
 
-        if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
-            if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
+       // if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
+         //   if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
                 return true;
-            }
-        }
-        return false;
+         //   }
+        //}
+        //return false;
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
     //then notifyCheckin
     private static boolean shouldNotifyCheckin(Context context) {
 
-        Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
+
+        Reservation currentReservation = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+        boolean check = currentReservation != null && currentReservation.getCheckIn() == null;
+        return check;
+
+
+        /*Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         //SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", new Locale("el","GR"));
 
@@ -221,18 +230,18 @@ public class NotificationCreation implements JsonListener {
                 && (r != null)) {
             return true;
         }
-        return false;
+        return false;*/
     }
 
     //check if should notify check-in/ check-out. the checkerVariable(R.string.is_checked_in)
     //differentiates the 2 different cases.
-    private static boolean shouldNotify(Context context,int checkerVariable){
+    private static boolean shouldNotify(Context context, int checkerVariable) {
 
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        Reservation r=null;
-        String scheduleDate=null;
+        Reservation r = null;
+        String scheduleDate = null;
 
-        switch(checkerVariable){
+        switch (checkerVariable) {
             case R.string.is_checked_in:
                 r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
                 scheduleDate = r.getStartDate();
@@ -253,7 +262,7 @@ public class NotificationCreation implements JsonListener {
         long lFormattedDate = formattedDate.getTime();
         long currentTime = Calendar.getInstance().getTime().getTime();
 
-        if (!LocalVariables.readBoolean(context,checkerVariable) && (lFormattedDate <= currentTime)
+        if (!LocalVariables.readBoolean(context, checkerVariable) && (lFormattedDate <= currentTime)
                 && (r != null)) {
             return true;
         }
@@ -317,7 +326,7 @@ public class NotificationCreation implements JsonListener {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
         // Get the PendingIntent containing the entire back stack
-        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20)+100, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20) + 100, PendingIntent.FLAG_CANCEL_CURRENT);
         //If necessary, you can add arguments to Intent objects in the stack by calling
         // TaskStackBuilder.editIntentAt().
         //stackBuilder.editIntentAt()
