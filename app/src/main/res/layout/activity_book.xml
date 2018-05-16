@@ -10,8 +10,34 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.BookActivity">
+
+        <TextView
+            android:id="@+id/tvBookRoomPriceCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvBookRoomPriceCurrency"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookRoomPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvBookRoomPrice" />
+
+        <TextView
+            android:id="@+id/tvBookRoomPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Room Price"
+            app:layout_constraintStart_toStartOf="@+id/tvBookDaysLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookDaysLabel" />
+
+        <TextView
+            android:id="@+id/tvBookRoomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@+id/tvBookDays"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookDays"
+            tools:text="40" />
 
         <TextView
             android:id="@+id/tvBookCheckInLabel"
@@ -37,8 +63,8 @@
 
         <TextView
             android:id="@+id/tvBookCheckOutLabel"
-            android:layout_width="75dp"
-            android:layout_height="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/tvCheckOutLabel"
             app:layout_constraintStart_toStartOf="@+id/tvBookPersonsLabel"
@@ -48,9 +74,9 @@
             android:id="@+id/tvBookPersons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPersonsLabel"
-            app:layout_constraintStart_toEndOf="@+id/tvBookPersonsLabel"
+            app:layout_constraintStart_toEndOf="@+id/tvBookCheckOutLabel"
             tools:text="3" />
 
         <ImageView
@@ -102,7 +128,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/tvBookPrice"
+            android:id="@+id/tvBookTotalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -120,8 +146,8 @@
             android:text="@string/tvBookTotalPriceLabel"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textSize="18sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPrice"
-            app:layout_constraintEnd_toStartOf="@+id/tvBookPrice" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookTotalPrice"
+            app:layout_constraintEnd_toStartOf="@+id/tvBookTotalPrice" />
 
         <CheckBox
             android:id="@+id/cbBookTerms"
@@ -156,12 +182,37 @@
             android:layout_marginBottom="32dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/tvBookPrice"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvBookTotalPrice"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBookCheckOutLabel"
             tools:layout="@layout/fragment_credit_card" />
+
+        <TextView
+            android:id="@+id/tvBookDaysLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@string/tvBookDaysLabel"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPersonsLabel"
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+        <TextView
+            android:id="@+id/tvBookDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookDaysLabel"
+            app:layout_constraintStart_toEndOf="@+id/tvBookRoomPriceLabel"
+            tools:text="2" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
     </android.support.constraint.ConstraintLayout>
 

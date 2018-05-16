@@ -52,10 +52,10 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         private ImageView ivRoomImage;
         private TextView tvRoomTitle;
         private TextView tvRoomDescription;
-        private TextView tvRoomTotalPrice;
+        //private TextView tvRoomTotalPrice;
         private TextView tvRoomPricePerNight;
-        private TextView tvRoomDays;
-        private TextView tvRoomPersons;
+        //private TextView tvRoomDays;
+        //private TextView tvRoomPersons;
         private Button btnRoomBook;
         private Button btnRoomDetails;
 
@@ -64,10 +64,10 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             btnRoomBook = itemView.findViewById(R.id.btnRoomBook);
             btnRoomDetails = itemView.findViewById(R.id.btnRoomDetails);
             tvRoomDescription = itemView.findViewById(R.id.tvRoomShortDescription);
-            tvRoomTotalPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
+            //tvRoomTotalPrice = itemView.findViewById(R.id.tvRoomTotalPrice);
             tvRoomPricePerNight = itemView.findViewById(R.id.tvRoomPrice);
-            tvRoomDays = itemView.findViewById(R.id.tvRoomDays);
-            tvRoomPersons = itemView.findViewById(R.id.tvRoomPersons);
+            //tvRoomDays = itemView.findViewById(R.id.tvRoomDays);
+            //tvRoomPersons = itemView.findViewById(R.id.tvRoomPersons);
             tvRoomTitle = itemView.findViewById(R.id.tvRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivRoomImage);
             ivRoomImage.setOnClickListener(this);
@@ -81,10 +81,10 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
             tvRoomDescription.setText(mrv.description);
             tvRoomTitle.setText(mrv.title);
             ivRoomImage.setImageBitmap(mrv.img);
-            tvRoomTotalPrice.setText(String.valueOf(mrv.price * mrv.days * mrv.persons));
+            //tvRoomTotalPrice.setText(String.valueOf(mrv.price * mrv.days * mrv.persons));
             tvRoomPricePerNight.setText(String.valueOf(mrv.price));
-            tvRoomDays.setText(String.valueOf(mrv.days));
-            tvRoomPersons.setText(String.valueOf(mrv.persons));
+            //tvRoomDays.setText(String.valueOf(mrv.days));
+            //tvRoomPersons.setText(String.valueOf(mrv.persons));
         }
 
         @Override

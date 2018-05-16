@@ -18,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ImageViewFragment;
@@ -322,21 +321,22 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
-        int roomPrice = room.days * room.price * room.persons;
+        int roomTotalPrice = room.days * room.price * room.persons;
         String roomImage = room.imgFileName;
 
 
         int people = Integer.parseInt(spPeople.getSelectedItem().toString());
 
-
         Intent intent = new Intent(this, BookActivity.class);
         intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
         intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
         intent.putExtra(BookActivity.ROOM_IMAGE_KEY, roomImage);
-        intent.putExtra(BookActivity.ROOM_PRICE_KEY, roomPrice);
-        intent.putExtra(BookActivity.ARRIVAL_KEY, arrivalDateSQL);
-        intent.putExtra(BookActivity.DEPARTURE_KEY, departureDateSQL);
-        intent.putExtra(BookActivity.PERSONS_KEY, people);
+        intent.putExtra(BookActivity.ROOM_TOTAL_PRICE_KEY, roomTotalPrice);
+        intent.putExtra(BookActivity.ROOM_PRICE_KEY, room.price);
+        intent.putExtra(BookActivity.ROOM_DAYS_KEY, room.days);
+        intent.putExtra(BookActivity.ROOM_ARRIVAL_KEY, arrivalDateSQL);
+        intent.putExtra(BookActivity.ROOM_DEPARTURE_KEY, departureDateSQL);
+        intent.putExtra(BookActivity.ROOM_PERSONS_KEY, people);
         startActivity(intent);
 
 

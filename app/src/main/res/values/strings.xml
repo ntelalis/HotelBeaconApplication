@@ -131,6 +131,8 @@
     <string name="tvRoomPersonsLabel">Total</string>
     <string name="tvRoomsPersonsLabel">People</string>
     <string name="tvRoomTotalLabel">Total:</string>
+    <string name="tvBookDaysLabel">Days</string>
+    <string name="tvBookRoomPriceCurrency">€</string>
 
 
 </resources>

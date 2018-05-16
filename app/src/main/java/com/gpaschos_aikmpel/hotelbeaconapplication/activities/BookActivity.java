@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -41,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,11 +44,13 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     //KEYS
     public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
     public static final String ROOM_TITLE_KEY = "room_KEY";
-    public static final String ROOM_PRICE_KEY = "price_KEY";
+    public static final String ROOM_TOTAL_PRICE_KEY = "pricetotal_KEY";
     public static final String ROOM_IMAGE_KEY = "image_KEY";
-    public static final String ARRIVAL_KEY = "arrival_KEY";
-    public static final String DEPARTURE_KEY = "departure_KEY";
-    public static final String PERSONS_KEY = "persons_KEY";
+    public static final String ROOM_ARRIVAL_KEY = "arrival_KEY";
+    public static final String ROOM_DEPARTURE_KEY = "departure_KEY";
+    public static final String ROOM_PERSONS_KEY = "persons_KEY";
+    public static final String ROOM_PRICE_KEY = "roomprice_KEY" ;
+    public static final String ROOM_DAYS_KEY = "roomDays_KEY" ;
 
     private Button btnBook;
 
@@ -64,16 +60,12 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     private String arrivalSQLString;
     private String departureSQLString;
     private Date arrivalDate, departureDate;
-    private int persons;
-
-    private SharedPreferences sharedPreferences;
+    private int persons,days,roomPrice,totalPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-
-        sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
 
         SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -82,7 +74,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
         TextView tvRoomTitle = findViewById(R.id.tvBookRoomTitle);
         TextView tvPersons = findViewById(R.id.tvBookPersons);
-        TextView tvPrice = findViewById(R.id.tvBookPrice);
+        TextView tvTotalPrice = findViewById(R.id.tvBookTotalPrice);
+        TextView tvRoomPrice = findViewById(R.id.tvBookRoomPrice);
+        TextView tvDays = findViewById(R.id.tvBookDays);
+
         ImageView ivRoomImage = findViewById(R.id.ivBookRoomImage);
 
         btnBook = findViewById(R.id.btnBookConfirm);
@@ -105,11 +100,18 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         if (extras != null) {
             roomTypeID = extras.getInt(ROOM_TYPE_ID_KEY);
             roomTitle = extras.getString(ROOM_TITLE_KEY);
-            tvRoomTitle.setText(roomTitle);
-            tvPrice.setText(String.valueOf(extras.getInt(ROOM_PRICE_KEY)));
-            arrivalSQLString = extras.getString(ARRIVAL_KEY);
-            departureSQLString = extras.getString(DEPARTURE_KEY);
+            days = extras.getInt(ROOM_DAYS_KEY);
+            roomPrice = extras.getInt(ROOM_PRICE_KEY);
+            arrivalSQLString = extras.getString(ROOM_ARRIVAL_KEY);
+            departureSQLString = extras.getString(ROOM_DEPARTURE_KEY);
+            totalPrice = extras.getInt(ROOM_TOTAL_PRICE_KEY);
+            persons = extras.getInt(ROOM_PERSONS_KEY);
 
+            tvRoomTitle.setText(roomTitle);
+            tvTotalPrice.setText(String.valueOf(totalPrice));
+            tvDays.setText(String.valueOf(days));
+            tvRoomPrice.setText(String.valueOf(roomPrice));
+            tvPersons.setText(String.valueOf(persons));
 
             try {
                 Calendar c = Calendar.getInstance();
@@ -126,7 +128,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
                 Log.e(getLocalClassName(), e.getLocalizedMessage());
             }
 
-            persons = extras.getInt(PERSONS_KEY);
+            persons = extras.getInt(ROOM_PERSONS_KEY);
             tvPersons.setText(String.valueOf(persons));
 
             String imageFileName = extras.getString(ROOM_IMAGE_KEY);
