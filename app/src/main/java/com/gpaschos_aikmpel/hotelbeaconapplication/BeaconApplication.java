@@ -30,6 +30,7 @@ import java.util.Map;
 
 public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener {
 
+    private static final String TAG = BeaconApplication.class.getSimpleName();
 
     private RegionBootstrap regionBootstrap;
     private BackgroundPowerSaver backgroundPowerSaver;
@@ -70,7 +71,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void didEnterRegion(Region region) {
-        Log.d("BeaconApplication", "Region: " + region.getUniqueId() + " found");
+        Log.d(TAG, "Entered Region: " + region.getUniqueId());
 
         if (region.getUniqueId().equals("welcomeBeacon")) {
             NotificationCreation.notifyWelcome(this);
@@ -80,7 +81,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     @Override
     public void didExitRegion(Region region) {
         if (region.getUniqueId().equals("welcomeBeacon")) {
-            Log.d("exit","exit");
+            Log.d(TAG,"Exited from Region" + region.getUniqueId());
         }
     }
 

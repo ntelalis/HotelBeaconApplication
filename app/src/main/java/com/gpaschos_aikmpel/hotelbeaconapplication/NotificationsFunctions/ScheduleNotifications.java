@@ -17,7 +17,7 @@ import java.util.Locale;
 
 public class ScheduleNotifications {
 
-    public static final String CHECKIN_TAG= "CheckInNotifrication";
+    public static final String CHECKIN_TAG= "CheckInNotification";
     public static final String CHECKOUT_TAG= "CheckOutNotification";
 
     public static void checkinNotification(Context context, String triggerDate){
@@ -34,15 +34,13 @@ public class ScheduleNotifications {
             e.printStackTrace();
         }
 
-        Log.d("meow","windowStart Check in"+windowStart);
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
-        Log.d("meow","insideschecule checkin");
         Job myjob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(MyJobService.class)
                 //A unique tag
-                .setTag(CHECKIN_TAG)
+                .setTag(CHECKIN_TAG+triggerDate)
                 //One time job
                 .setRecurring(false)
                 //Persist reboot
@@ -75,14 +73,13 @@ public class ScheduleNotifications {
             e.printStackTrace();
         }
 
-        Log.d("meow","insideschecule checkout");
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
         Job myjob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(MyJobService.class)
                 //A unique tag
-                .setTag(CHECKOUT_TAG)
+                .setTag(CHECKOUT_TAG+triggerDate)
                 //One time job
                 .setRecurring(false)
                 //Persist reboot
