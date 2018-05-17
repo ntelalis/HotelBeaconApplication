@@ -238,7 +238,6 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
         recyclerAdapter.addFood(new FoodAdapter.FoodOrderView(foodModel.getId(), foodModel.getName(), quantity, foodModel.getPrice()));
         int i = Integer.parseInt(orderTotalCount.getText().toString()) + 1;
         orderTotalCount.setText(String.valueOf(i));
-        Log.d("aaa", String.valueOf(recyclerAdapter.totalCost()));
         orderTotalPrice.setText(String.valueOf(recyclerAdapter.totalCost()));
 
     }

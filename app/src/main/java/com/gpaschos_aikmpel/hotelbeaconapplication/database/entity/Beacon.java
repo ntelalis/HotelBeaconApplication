@@ -9,10 +9,10 @@ public class Beacon {
     @PrimaryKey
     private int id;
     private String UUID;
-    private int major;
-    private int minor;
+    private String major;
+    private String minor;
 
-    public Beacon(int id, String UUID, int major, int minor) {
+    public Beacon(int id, String UUID, String major, String minor) {
         this.id = id;
         this.UUID = UUID;
         this.major = major;
@@ -27,11 +27,11 @@ public class Beacon {
         return UUID;
     }
 
-    public int getMajor() {
+    public String getMajor() {
         return major;
     }
 
-    public int getMinor() {
+    public String getMinor() {
         return minor;
     }
 }

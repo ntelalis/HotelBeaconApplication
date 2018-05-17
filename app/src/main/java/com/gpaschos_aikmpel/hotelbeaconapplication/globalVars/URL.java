@@ -35,6 +35,7 @@ public class URL {
     private static final String checkinNotificationPage = "checkinnotification.php";
     private static final String roomTypesPage = "roomtypes.php";
     private static final String deletePage = "delete.php";
+    private static final String doorUnlockPage = "doorunlock.php";
 
 
     public static final String loginUrl = serverAddress + loginPage;
@@ -59,5 +60,6 @@ public class URL {
     public static final String welcomeNotificationUrl = serverAddress + welcomeNotificationPage;
     public static final String checkinNotificationUrl = serverAddress + checkinNotificationPage;
     public static final String roomTypesUrl = serverAddress + roomTypesPage;
-    public static String deleteUrl = serverAddress + deletePage;
+    public static final String deleteUrl = serverAddress + deletePage;
+    public static final String doorUnlockUrl = serverAddress + doorUnlockPage;
 }

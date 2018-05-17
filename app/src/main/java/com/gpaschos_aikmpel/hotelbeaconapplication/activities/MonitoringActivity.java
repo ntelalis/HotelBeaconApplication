@@ -30,8 +30,8 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
 
     private BeaconManager beaconManager;
     private TextView tvDistance;
-    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
+    private final static int PERMISSION_REQUEST_COARSE_LOCATION = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +74,6 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.d("meow", "coarse location permission granted");
                 } else {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Functionality limited");
@@ -133,7 +132,6 @@ public class MonitoringActivity extends AppCompatActivity implements BeaconConsu
                     MonitoringActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("mew", "meow2");
                             tvDistance.setText(String.valueOf(Math.floor(collection.iterator().next().getDistance() * 100) / 100));
                         }
                     });

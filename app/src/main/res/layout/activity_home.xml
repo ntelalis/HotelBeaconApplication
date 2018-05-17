@@ -60,7 +60,19 @@
         app:layout_constraintTop_toBottomOf="@+id/btnHomeViewReservations" />
 
     <Button
-        android:id="@+id/btnHomeReview"
+        android:id="@+id/btnHomeUnlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="doorUnlock"
+        android:text="@string/btnHomeUnlock"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/btnHomeReview2"
+        app:layout_constraintStart_toStartOf="@+id/btnHomeReview2"
+        app:layout_constraintTop_toBottomOf="@+id/btnHomeReview2" />
+
+    <Button
+        android:id="@+id/btnHomeReview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -77,13 +89,15 @@
         android:id="@+id/btnHomeLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="logout"
         android:text="@string/btnHomeLogout"
         android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeReview"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeReview"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeReview" />
+        app:layout_constraintEnd_toEndOf="@+id/btnHomeUnlock"
+        app:layout_constraintStart_toStartOf="@+id/btnHomeUnlock"
+        app:layout_constraintTop_toBottomOf="@+id/btnHomeUnlock" />
 
     <Button
         android:id="@+id/button7"

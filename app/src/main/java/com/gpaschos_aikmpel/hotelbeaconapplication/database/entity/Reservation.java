@@ -41,6 +41,25 @@ public class Reservation {
         this.roomBeaconId = roomBeaconId;
     }
 
+
+    public boolean isCheckedIn() {
+        return checkIn != null;
+    }
+
+
+    public boolean isCheckedOut() {
+        return checkOut != null;
+    }
+
+    public boolean isCheckedInNotCheckedOut(){
+        return isCheckedIn() && !isCheckedOut();
+    }
+
+    public boolean isCheckedInCheckedOut(){
+        return isCheckedIn() && isCheckedOut();
+    }
+
+
     public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
     }

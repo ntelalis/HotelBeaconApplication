@@ -207,4 +207,10 @@ public class POST {
     public static final String roomTypeCheck = "check";
     //BOTH
 
+
+    //~~~~~~~~~doorunlock.php~~~~~~~~~
+    //SND
+    public static String doorUnlockReservationID = "reservationID";
+    public static String doorUnlockRoomPassword = "roomPassword";
+
 }
