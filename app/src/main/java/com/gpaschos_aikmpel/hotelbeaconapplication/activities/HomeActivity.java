@@ -64,6 +64,11 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
         startActivity(intent);
     }
 
+    public void doorUnlock(View v){
+        Intent intent = new Intent(this, DoorUnlockActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
