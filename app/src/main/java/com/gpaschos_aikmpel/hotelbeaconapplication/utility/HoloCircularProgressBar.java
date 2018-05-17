@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication;
+package com.gpaschos_aikmpel.hotelbeaconapplication.utility;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,6 +13,8 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 
 public class HoloCircularProgressBar extends View {

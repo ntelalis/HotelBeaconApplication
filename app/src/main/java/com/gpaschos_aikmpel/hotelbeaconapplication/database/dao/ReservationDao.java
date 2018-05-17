@@ -24,6 +24,13 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now','localtime') AND r1.endDate >= date('now','localtime')")
     Reservation getCurrentReservation();
 
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now','localtime') AND r1.endDate >= date('now','localtime') AND r1.checkIn IS NULL")
+    Reservation getCurrentNotCheckedInReservation();
+
+    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now','localtime') AND r1.endDate >= date('now','localtime') AND r1.checkIn IS NULL AND r1.checkOut IS NOT NULL")
+    Reservation getCurrentCheckedInNotCheckedOutReservation();
+
+
 /*    @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate <= date('now','localtime') AND r1.endDate >= date('now','localtime') AND r1.checkIn IS NOT NULL AND  r1.checkOut IS NULL")
     Reservation getActiveReservation();
 

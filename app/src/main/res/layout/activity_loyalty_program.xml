@@ -195,7 +195,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:color/darker_gray" />
 
-    <com.gpaschos_aikmpel.hotelbeaconapplication.HoloCircularProgressBar
+    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
         android:id="@+id/cpbLoyalty"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -15,6 +15,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tvRoomPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="bottom|center"
+            android:text="@string/tvRoomPriceLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvRoomPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvRoomPriceCurrencyDay"
+            app:layout_constraintTop_toTopOf="@+id/tvRoomPrice" />
+
         <Button
             android:id="@+id/btnRoomBook"
             android:layout_width="wrap_content"
@@ -46,102 +59,21 @@
             android:id="@+id/tvRoomPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomPriceCurrencyDay"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvRoomMultiplier"
+            app:layout_constraintStart_toStartOf="@+id/tvRoomTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvRoomTitle"
             tools:text="80" />
 
         <TextView
-            android:id="@+id/tvRoomTotalPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom|center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomPriceCurrencyTotal"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvRoomEquals"
-            tools:text="100" />
-
-        <TextView
-            android:id="@+id/tvRoomPriceCurrencyTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="bottom|center"
-            android:text="@string/tvRoomPriceCurrency"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toEndOf="@+id/tvRoomTitle"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvRoomTotalPrice" />
-
-        <TextView
             android:id="@+id/tvRoomPriceCurrencyDay"
-            android:layout_width="wrap_content"
+            android:layout_width="8dp"
             android:layout_height="wrap_content"
             android:gravity="bottom|center"
             android:text="@string/tvRoomPriceCurrency"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomEquals"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomPrice"
             app:layout_constraintStart_toEndOf="@+id/tvRoomPrice" />
-
-        <TextView
-            android:id="@+id/tvRoomDays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="bottom|center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomMultiplier"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="@+id/tvRoomTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvRoomTitle"
-            tools:text="4" />
-
-        <TextView
-            android:id="@+id/tvRoomMultiplier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            android:gravity="bottom|center"
-            android:text="@string/tvRoomMultiply"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomPrice"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvRoomDays" />
-
-        <TextView
-            android:id="@+id/tvRoomEquals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginStart="4dp"
-            android:gravity="bottom|center"
-            android:text="@string/tvRoomEquals"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tvRoomDays"
-            app:layout_constraintEnd_toStartOf="@+id/tvRoomTotalPrice"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/tvRoomPriceCurrencyDay" />
 
         <TextView
             android:id="@+id/tvRoomShortDescription"
@@ -149,11 +81,13 @@
             android:layout_height="50dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnRoomBook"
-            app:layout_constraintStart_toStartOf="@+id/tvRoomTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvRoomDays"
+            app:layout_constraintEnd_toStartOf="@+id/btnRoomDetails"
+            app:layout_constraintStart_toEndOf="@+id/ivRoomImage"
+            app:layout_constraintTop_toBottomOf="@+id/tvRoomPrice"
             tools:text="Rate includes Buffet Breakfast, and variety of extra services" />
 
         <ImageView
@@ -173,13 +107,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
             android:text="@string/btnRoomDetails"
             android:theme="@style/PrimaryFlatButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnRoomBook"
-            app:layout_constraintStart_toStartOf="@+id/btnRoomBook"
-            app:layout_constraintTop_toBottomOf="@+id/btnRoomBook" />
+            app:layout_constraintStart_toStartOf="@+id/btnRoomBook" />
 
     </android.support.constraint.ConstraintLayout>
 

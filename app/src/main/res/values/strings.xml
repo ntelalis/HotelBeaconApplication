@@ -120,6 +120,19 @@
     <string name="btnHomeReview">Review</string>
     <string name="btnHomeLogout">Logout</string>
     <string name="btnCheckInCheckedin">CHECKED-IN</string>
+    <string name="tvBookCurrency">€</string>
+    <string name="tvCreditCardYear">Exp. Year</string>
+    <string name="tvCreditCardMonth">Exp. Month</string>
+    <string name="tvCreditCardDivider">/</string>
+    <string name="tvBookTotalPriceLabel">Total Price:</string>
+    <string name="tvRoomPriceLabel">Per Night</string>
+    <string name="tvRoomPriceTotalLabel">Total</string>
+    <string name="tvRoomDaysLabel">Days</string>
+    <string name="tvRoomPersonsLabel">Total</string>
+    <string name="tvRoomsPersonsLabel">People</string>
+    <string name="tvRoomTotalLabel">Total:</string>
+    <string name="tvBookDaysLabel">Days</string>
+    <string name="tvBookRoomPriceCurrency">€</string>
 
 
 </resources>
