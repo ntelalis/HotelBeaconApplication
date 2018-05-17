@@ -79,7 +79,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void didExitRegion(Region region) {
-
+        if (region.getUniqueId().equals("welcomeBeacon")) {
+            Log.d("exit","exit");
+        }
     }
 
     @Override

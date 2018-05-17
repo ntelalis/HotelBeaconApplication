@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -33,8 +34,10 @@ public class ScheduleNotifications {
             e.printStackTrace();
         }
 
+        Log.d("meow","windowStart Check in"+windowStart);
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
+        Log.d("meow","insideschecule checkin");
         Job myjob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(MyJobService.class)
@@ -45,9 +48,9 @@ public class ScheduleNotifications {
                 //Persist reboot
                 .setLifetime(Lifetime.FOREVER)
                 //start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(windowStart,windowStart+10))
+                .setTrigger(Trigger.executionWindow(windowStart,windowStart+30))
                 //Do not overwrite an existing job with the same tag
-                .setReplaceCurrent(false)
+                .setReplaceCurrent(true)
                 //Retry strategy
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 //Some constraints
@@ -72,6 +75,7 @@ public class ScheduleNotifications {
             e.printStackTrace();
         }
 
+        Log.d("meow","insideschecule checkout");
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
         Job myjob = dispatcher.newJobBuilder()
@@ -86,7 +90,7 @@ public class ScheduleNotifications {
                 //start between 0 and 60 seconds from now
                 .setTrigger(Trigger.executionWindow(1,5))
                 //Do not overwrite an existing job with the same tag
-                .setReplaceCurrent(false)
+                .setReplaceCurrent(true)
                 //Retry strategy
                 .setRetryStrategy(RetryStrategy.DEFAULT_LINEAR)
                 //Some constraints

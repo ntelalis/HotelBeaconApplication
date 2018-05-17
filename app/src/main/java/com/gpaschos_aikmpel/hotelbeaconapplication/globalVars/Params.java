@@ -39,7 +39,7 @@ public class Params {
             " to have you as our guest. We wish you a pleasant stay.";
 
     //farewell messages
-    public static final int notificationFarewellID = 4;
+    public static final int notificationFarewellID = 5;
     public static final String notificationFarewellTitle = "Goodbye";
     public static final String notificationFarewellGreeting1 = "We thank you for your stay and hope " +
             "that you had an enjoyable experience.";

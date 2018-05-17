@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 
+import android.util.Log;
+
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
@@ -10,12 +12,16 @@ public class MyJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
 
+        Log.d("meow","jobservice"+params.getTag());
+
         switch (params.getTag()) {
             case ScheduleNotifications.CHECKIN_TAG:
                 NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECKIN_REMINDER);
+                Log.d("meow","insidejobservice");
                 break;
             case ScheduleNotifications.CHECKOUT_TAG:
                 NotificationCreation.notifyCheckout(getApplicationContext());
+                Log.d("meow","insidejobservicecheckout");
                 break;
         }
 

@@ -58,7 +58,7 @@ public class NotificationCreation implements JsonListener {
     }
 
     public static void notifyWelcome(Context context) {
-
+        Log.d("meow","before shouldnotifywelcome");
         if (shouldNotifyWelcome(context)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
 
@@ -84,13 +84,14 @@ public class NotificationCreation implements JsonListener {
             } else {
                 icon = R.drawable.ic_welcome_png;
             }
+
             notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationWelcomeID
                     , notificationTitle, notificationContent, icon, notificationContent);
 
             //update the variable for welcome notification
             UpdateStoredVariables.welcomeNotified(context);
 
-
+            Log.d("meow","before notifycheckin");
             //notify the customer that they can check-in if they are eligible
             notifyCheckin(context, CHECKIN_BEACON_NOTIFICATION);
         }
@@ -135,13 +136,15 @@ public class NotificationCreation implements JsonListener {
         int notificationID = 0;
         int icon;
 
-
+        Log.d("meow","meow1");
         if (shouldNotifyCheckin(context)) {
+            Log.d("meow","meow2");
             switch (tag) {
                 case CHECKIN_BEACON_NOTIFICATION:
                     notificationTitle = Params.notificationCheckinTitle;
                     notificationContent = Params.notificationCheckinMsg;
                     notificationID = Params.notificationCheckinID;
+                    Log.d("meow","meow3");
                     break;
                 case CHECKIN_REMINDER:
                     notificationTitle = Params.notificationCheckinReminderTitle;
@@ -157,7 +160,7 @@ public class NotificationCreation implements JsonListener {
             } else {
                 icon = R.drawable.ic_welcome_png;
             }
-
+            Log.d("meow","meow4");
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
                     , notificationContent, icon
@@ -205,9 +208,10 @@ public class NotificationCreation implements JsonListener {
     //then notifyCheckin
     private static boolean shouldNotifyCheckin(Context context) {
 
-
+        Log.d("meow","inside shouldnotifycheckin");
         Reservation currentReservation = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
         boolean check = currentReservation != null && currentReservation.getCheckIn() == null;
+        Log.d("meow","shouldnotifycheckin result:"+ String.valueOf(check));
         return check;
 
 
@@ -320,9 +324,10 @@ public class NotificationCreation implements JsonListener {
         builder.setDefaults(Notification.DEFAULT_SOUND);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
+        Log.d("meow","inside ntofication");
         Intent intent = new Intent(context, activity);
         //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        intent.setAction(Intent.ACTION_VIEW);
+        //intent.setAction(Intent.ACTION_VIEW);
         //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
@@ -338,7 +343,6 @@ public class NotificationCreation implements JsonListener {
         builder.setContentIntent(resultPendingIntent);
         //automatically removes the notification when the user taps it
         builder.setAutoCancel(true);
-
         Notification notification = builder.build();
 
         //Oreo Notification Code
@@ -351,12 +355,15 @@ public class NotificationCreation implements JsonListener {
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
         //notification id is a unique int for each notification
         notificationManagerCompat.notify(notificationID, notification);
+        Log.d("meow","at the end of notification");
     }
 
 
     //creates a notification
     private static void notification(Context context, String channelID, int notificationID
             , String notificationTitle, String notificationContent, int smallIcon, String bigText) {
+
+        Log.d("meow","inside notification withtout class");
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
 
