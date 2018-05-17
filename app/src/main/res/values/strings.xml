@@ -133,6 +133,7 @@
     <string name="tvRoomTotalLabel">Total:</string>
     <string name="tvBookDaysLabel">Days</string>
     <string name="tvBookRoomPriceCurrency">€</string>
+    <string name="tvCreditCardDate">Expiration Date</string>
 
 
 </resources>

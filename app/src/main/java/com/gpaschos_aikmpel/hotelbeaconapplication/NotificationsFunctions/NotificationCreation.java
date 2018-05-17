@@ -195,12 +195,12 @@ public class NotificationCreation implements JsonListener {
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
 
-       // if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
-         //   if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
+            if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
                 return true;
-         //   }
-        //}
-        //return false;
+            }
+        }
+        return false;
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate

@@ -42,6 +42,7 @@
         <activity android:name=".activities.ViewPagerTestActivity" />
         <activity
             android:name=".activities.BookActivity"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".activities.ReservationActivity" />
         <activity
             android:name=".activities.BookConfirmationActivity"

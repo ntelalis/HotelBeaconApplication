@@ -94,6 +94,6 @@ public class GetData implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-    Log.e("",error);
+    Log.e(TAG,error);
     }
 }

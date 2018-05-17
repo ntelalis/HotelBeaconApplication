@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley;
 
 import android.content.Context;
+
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -66,6 +68,7 @@ public class VolleyQueue {
 
                     }
                 });
+        request.setRetryPolicy(new DefaultRetryPolicy(25000,3,1f));
         requestQueue.add(request);
     }
 

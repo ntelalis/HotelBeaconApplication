@@ -108,6 +108,12 @@ public class UpcomingReservationActivity extends AppCompatActivity implements Js
                         arrival, departure, statusCode, room));
             }
             fillRecyclerView(reservations);
+            if(reservations.isEmpty()){
+                Toast.makeText(this, "You don't have any upcoming reservations", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this,HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
