@@ -311,27 +311,17 @@ public class NotificationCreation implements JsonListener {
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
         Intent intent = new Intent(context, activity);
-        //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        intent.setAction(Intent.ACTION_VIEW);
-        //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//
+
+        //intent.setAction(Intent.ACTION_VIEW);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addNextIntentWithParentStack(intent);
-        // Get the PendingIntent containing the entire back stack
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20)+100, PendingIntent.FLAG_UPDATE_CURRENT);
-        //If necessary, you can add arguments to Intent objects in the stack by calling
-        // TaskStackBuilder.editIntentAt().
-        //stackBuilder.editIntentAt()
-
-        //Because a "special activity" started from a notification doesn't need a back stack, you can create the PendingIntent
-        // by calling getActivity(), but you should also be sure you've defined the appropriate task options in the manifest
-        //PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
-        //automatically removes the notification when the user taps it
         builder.setAutoCancel(true);
 
         Notification notification = builder.build();
 
-        //Oreo Notification Code
+
         /*NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
@@ -339,7 +329,7 @@ public class NotificationCreation implements JsonListener {
         }*/
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        //notification id is a unique int for each notification
+
         notificationManagerCompat.notify(notificationID, notification);
     }
 
@@ -358,7 +348,7 @@ public class NotificationCreation implements JsonListener {
         builder.setAutoCancel(true);
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
-        //notification id is a unique int for each notification
+
         notificationManagerCompat.notify(notificationID, builder.build());
     }
 
