@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".BeaconApplication"
         android:allowBackup="true"
@@ -42,8 +43,8 @@
         <activity android:name=".activities.ViewPagerTestActivity" />
         <activity
             android:name=".activities.BookActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".activities.ReservationActivity" />
+            android:parentActivityName=".activities.ReservationActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.BookConfirmationActivity"
             android:parentActivityName=".activities.ReservationActivity" />
@@ -86,7 +87,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.DoorUnlockActivity"></activity>
+        <activity android:name=".activities.DoorUnlockActivity" />
+        <activity android:name=".activities.MyRoomActivity"></activity>
     </application>
 
 </manifest>

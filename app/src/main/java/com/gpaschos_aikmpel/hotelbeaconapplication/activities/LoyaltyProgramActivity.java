@@ -78,6 +78,10 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loyaltyPointsURL, params);
     }
 
+    public void animateTextView(int initialValue, int finalValue, final TextView textView){
+
+    }
+
     private void updateUI() {
         tvCustomerID.setText(String.valueOf(customerID));
         tvFirstName.setText(firstName);
@@ -100,6 +104,17 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
             tvNextTierPointsLabel.setVisibility(View.INVISIBLE);
             animate(hcpb,null,1f,1500);
         }
+
+        final ValueAnimator valueAnimator = ValueAnimator.ofInt(0,points);
+        valueAnimator.setDuration(1500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                tvPoints.setText(valueAnimator.getAnimatedValue().toString());
+            }
+        });
+        valueAnimator.start();
+
     }
 
     @Override
