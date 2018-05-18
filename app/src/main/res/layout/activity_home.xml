@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:onClick="doorUnlock"
-        android:text="me"
+        android:text="@string/btnHomeUnlock"
         android:theme="@style/PrimaryButton"
         app:layout_constraintEnd_toEndOf="@+id/btnHomeReview2"
         app:layout_constraintStart_toStartOf="@+id/btnHomeReview2"

@@ -134,6 +134,7 @@
     <string name="tvBookDaysLabel">Days</string>
     <string name="tvBookRoomPriceCurrency">€</string>
     <string name="tvCreditCardDate">Expiration Date</string>
+    <string name="btnHomeUnlock">Unlock your room</string>
 
 
 </resources>
