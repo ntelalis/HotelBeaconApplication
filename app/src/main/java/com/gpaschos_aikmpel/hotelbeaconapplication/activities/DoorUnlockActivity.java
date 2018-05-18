@@ -1,8 +1,11 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,10 +40,11 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     private static final String roomBeaconUniqueID = "roomBeacon";
 
     private BeaconManager beaconManager;
-
+    private Handler handler;
+    private Runnable runnable;
     private Button btnDoorUnlock;
 
-    private boolean canOpenDoor = false;
+    private boolean canOpenDoor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,19 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        canOpenDoor = false;
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                canOpenDoor = false;
+            }
+        };
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         beaconManager.unbind(this);
@@ -65,16 +82,16 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         if (r != null && r.isCheckedInNotCheckedOut()) {
             int reservationId = r.getId();
             String roomPass = r.getRoomPassword();
+            Log.d(TAG, reservationId + " " + roomPass);
 
-            Map<String,String> params = new HashMap<>();
-            params.put(POST.doorUnlockReservationID,String.valueOf(reservationId));
-            params.put(POST.doorUnlockRoomPassword,roomPass);
+            Map<String, String> params = new HashMap<>();
+            params.put(POST.doorUnlockReservationID, String.valueOf(reservationId));
+            params.put(POST.doorUnlockRoomPassword, roomPass);
 
-            if(canOpenDoor){
-                VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl,params);
-            }
-            else{
-                Toast.makeText(this, "Please get in 2 meters range from your door", Toast.LENGTH_SHORT).show();
+            if (canOpenDoor) {
+                VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl, params);
+            } else {
+                Toast.makeText(this, "Please get in 1 meter range from your door", Toast.LENGTH_SHORT).show();
             }
 
         } else {
@@ -85,6 +102,8 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         Toast.makeText(this, "Unlocked!", Toast.LENGTH_SHORT).show();
+        //beaconManager.removeAllMonitorNotifiers();
+        //beaconManager.removeAllRangeNotifiers();
     }
 
     @Override
@@ -97,42 +116,25 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
         Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
 
+        Log.d(TAG, "check if reservation");
         if (r != null && r.isCheckedInNotCheckedOut()) {
-
+            Log.d(TAG, "reservation found");
             String id = String.valueOf(r.getRoomBeaconId());
             Region region = new Region(roomBeaconUniqueID, Identifier.parse(Params.beaconArea), Identifier.parse("580"), Identifier.parse(id));
-
             beaconManager.addMonitorNotifier(new MonitorNotifier() {
 
                 @Override
                 public void didEnterRegion(Region region) {
+                    Log.d(TAG, "monitoring entered region" + region.getUniqueId());
                     if (region.getUniqueId().equals(roomBeaconUniqueID)) {
-                        beaconManager.addRangeNotifier(new RangeNotifier() {
-                            @Override
-                            public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
-                                if (region.getUniqueId().equals(roomBeaconUniqueID)) {
-                                    double distance = collection.iterator().next().getDistance();
-                                    if (distance < (double) 2) {
-                                        canOpenDoor = true;
-                                    } else {
-                                        canOpenDoor = false;
-                                    }
-                                }
-                            }
-                        });
-                        try {
-                            beaconManager.startRangingBeaconsInRegion(region);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
+
                     }
                 }
 
                 @Override
                 public void didExitRegion(Region region) {
                     if (region.getUniqueId().equals(roomBeaconUniqueID)) {
-                        canOpenDoor = false;
-                        beaconManager.removeAllRangeNotifiers();
+                        Log.d(TAG, "exited region" + region.getUniqueId());
                     }
                 }
 
@@ -144,11 +146,38 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
             try {
                 beaconManager.startMonitoringBeaconsInRegion(region);
+                Log.d(TAG, "monitoring started");
             } catch (RemoteException e) {
                 e.printStackTrace();
+                Log.e(TAG, "monitoring failed");
             }
-        }
 
+            beaconManager.addRangeNotifier(new RangeNotifier() {
+                @Override
+                public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
+                    Log.d(TAG, "range before region notifier");
+                    if (region.getUniqueId().equals(roomBeaconUniqueID)) {
+                        if (collection.iterator().hasNext()) {
+                            double distance = collection.iterator().next().getDistance();
+                            Log.d(TAG, "range notifier" + distance);
+                            if (distance < (double) 1) {
+                                canOpenDoor = true;
+                                handler.removeCallbacks(runnable);
+                                handler.postDelayed(runnable, 3000);
+                            }
+                        }
+                    }
+                }
+            });
+            try {
+                beaconManager.startRangingBeaconsInRegion(region);
+                Log.d(TAG, "ranging started");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                Log.e(TAG, "ranging failed");
+            }
+
+        }
 
         //TODO implement this in database
         /*Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
