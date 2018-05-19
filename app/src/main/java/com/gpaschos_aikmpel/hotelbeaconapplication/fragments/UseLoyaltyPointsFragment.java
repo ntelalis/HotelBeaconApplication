@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,8 +19,10 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
  */
 public class UseLoyaltyPointsFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TOTAL_POINTS = "total_points";
+    private static final String POINTS_FREE_NIGHT = "free_night_points";
+    private static final String POINTS_PARTIAL_PAYMENT = "free_night_points";
+    private static final String CASH_PARTIAL_PAYMENT = "free_night_points";
 
     private String mParam1;
     private String mParam2;
@@ -35,8 +36,8 @@ public class UseLoyaltyPointsFragment extends Fragment {
     public static UseLoyaltyPointsFragment newInstance(String param1, String param2) {
         UseLoyaltyPointsFragment fragment = new UseLoyaltyPointsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(TOTAL_POINTS, param1);
+        args.putString(POINTS_FREE_NIGHT, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,8 +46,8 @@ public class UseLoyaltyPointsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getString(TOTAL_POINTS);
+            mParam2 = getArguments().getString(POINTS_FREE_NIGHT);
         }
     }
 
