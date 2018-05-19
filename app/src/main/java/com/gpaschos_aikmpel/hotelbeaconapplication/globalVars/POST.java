@@ -3,11 +3,17 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.globalVars;
 public class POST {
 
     //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~~~~
+    //SND
     public static final String registerTitle = "title";
     public static final String registerFirstName = "firstName";
     public static final String registerLastName = "lastName";
     public static final String registerEmail = "email";
     public static final String registerPassword = "pass";
+    public static final String registerBirthDate ="birthDate";
+    public static final String registerCountry = "country";
+    //RCV
+    public static final String registerCustomerID = "customerID";
+
 
     //titles.php
     public static final String titlesTitleList = "titleList";
@@ -18,13 +24,12 @@ public class POST {
     public static final String loginPassword = "pass";
     //RCV
     public static final String loginCustomerID = "customerID";
-    public static final String loginFirstName= "firstName";
-    public static final String loginLastName= "lastName";
-    public static final String loginTitle= "title";
-    public static final String loginIsOldCustomer= "isOldCustomer";
-    public static final String loginIsCheckedIn= "isCheckedIn";
-    public static final String loginIsCheckedOut= "isCheckedOut";
-
+    public static final String loginFirstName = "firstName";
+    public static final String loginLastName = "lastName";
+    public static final String loginTitle = "title";
+    public static final String loginIsOldCustomer = "isOldCustomer";
+    public static final String loginIsCheckedIn = "isCheckedIn";
+    public static final String loginIsCheckedOut = "isCheckedOut";
 
 
     //~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~
@@ -54,24 +59,21 @@ public class POST {
     public static final String checkinBeaconMinor = "beaconMinor";
 
 
-
     //~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkoutReservationID = "reservationID";
     //RCV
-    public static final String checkoutTotalPrice= "totalPrice";
-    public static final String checkoutChargeDetails= "chargeDetails";
-    public static final String checkoutService= "service";
-    public static final String checkoutServicePrice= "price";
-
+    public static final String checkoutTotalPrice = "totalPrice";
+    public static final String checkoutChargeDetails = "chargeDetails";
+    public static final String checkoutService = "service";
+    public static final String checkoutServicePrice = "price";
 
 
     //~~~~~~~~~~~~~~~checkoutConfirm.php~~~~~~~~~~~~~~~~
     //SND
     public static final String checkoutConfirmReservationID = "reservationID";
     //RCV
-    public static final String checkoutConfirmDate= "date";
-
+    public static final String checkoutConfirmDate = "date";
 
 
     //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~
@@ -137,8 +139,8 @@ public class POST {
     public static final String upcomingreservationsArrival = "arrivalDate";
     public static final String upcomingreservationsDeparture = "departureDate";
     public static final String upcomingreservationsRoomTitle = "roomType";
-    public static final String upcomingreservationsEligibleForCheckinCheckout= "statusCode";
-    public static final String upcomingreservationsCheckedinRoom= "roomNumber";
+    public static final String upcomingreservationsEligibleForCheckinCheckout = "statusCode";
+    public static final String upcomingreservationsCheckedinRoom = "roomNumber";
 
     //~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~
     //SND
@@ -186,11 +188,11 @@ public class POST {
     //SND
     public static final String welcomeNotificationCustomerID = "customerID";
     //RCV
-    public static final String welcomeNotificationHasStayed= "hasStayed";
+    public static final String welcomeNotificationHasStayed = "hasStayed";
 
     //~~~~~~~~~.php~~~~~~~~~~~
     //SND
-    public static final String temp  = "customerID";
+    public static final String temp = "customerID";
     //RCV
     public static final String temp2 = "hasCheckedOut";
 
@@ -210,7 +212,11 @@ public class POST {
 
     //~~~~~~~~~doorunlock.php~~~~~~~~~
     //SND
-    public static String doorUnlockReservationID = "reservationID";
-    public static String doorUnlockRoomPassword = "roomPassword";
+    public static final String doorUnlockReservationID = "reservationID";
+    public static final String doorUnlockRoomPassword = "roomPassword";
 
+    //~~~~~~~~~~countries.php~~~~~~~~~~~
+    //SND
+    //RCV
+    public static final String countryArray = "countryArray";
 }

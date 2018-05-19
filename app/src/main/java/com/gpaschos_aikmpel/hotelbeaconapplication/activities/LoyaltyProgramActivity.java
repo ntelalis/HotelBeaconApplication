@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import android.animation.Animator;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -121,8 +122,10 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
             case URL.loyaltyPointsURL:
-                firstName = json.getString(POST.loyaltyProgramFirstName);
-                lastName = json.getString(POST.loyaltyProgramLastName);
+                Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+
+                firstName = customer.getFirstName();
+                lastName = customer.getLastName();
                 points = json.getInt(POST.loyaltyProgramPoints);
                 tierName = json.getString(POST.loyaltyProgramTierName);
                 tierPoints = json.getInt(POST.loyaltyProgramTierPoints);

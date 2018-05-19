@@ -26,6 +26,7 @@ public class Customer {
         this.password = password;
     }
 
+
     public String getTitle() {
         return title;
     }

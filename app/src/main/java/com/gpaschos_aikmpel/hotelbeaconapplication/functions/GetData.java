@@ -2,8 +2,10 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -41,12 +43,21 @@ public class GetData implements JsonListener {
 
     public void getDataFromServer() {
         getRoomTypes(context);
+        getCountries(context);
+    }
+
+    private void getCountries(Context context){
+        Log.i(TAG,"Check countries");
+        if(RoomDB.getInstance(context).countryDao().getCountries().isEmpty()){
+            Log.i(TAG,"Get Countries");
+            VolleyQueue.getInstance(context).jsonRequest(this, URL.countriesUrl, null);
+        }
     }
 
     private void getRoomTypes(Context context) {
         Log.i(TAG,"Check if RoomTypes have Changed");
         Map<String, String> params = new HashMap<>();
-        List<RoomType> roomTypeList = RoomDB.getInstance(context).roomTypeDao().check();
+        List<RoomType> roomTypeList = RoomDB.getInstance(context).roomTypeDao().getRoomTypes();
         JSONArray jsonArray = new JSONArray();
         for (RoomType roomType : roomTypeList) {
             int id = roomType.getId();
@@ -71,18 +82,31 @@ public class GetData implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
+            case URL.countriesUrl:
+
+                Log.i(TAG,"RoomType results OK!");
+                JSONArray jsonArrayCountries = json.getJSONArray(POST.countryArray);
+                List<Country> countryList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayCountries.length(); i++) {
+                    String name = jsonArrayCountries.getString(i);
+                    countryList.add(new Country(name));
+                }
+
+                RoomDB.getInstance(context).countryDao().insertAll(countryList);
+
+                break;
             case URL.roomTypesUrl:
                 Log.i(TAG,"RoomType results OK!");
-                JSONArray jsonArray = json.getJSONArray(POST.roomTypeArray);
+                JSONArray jsonArrayRoomTypes = json.getJSONArray(POST.roomTypeArray);
                 List<RoomType> roomTypeList = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    int id = jsonArray.getJSONObject(i).getInt(POST.roomTypeID);
-                    String name = jsonArray.getJSONObject(i).getString(POST.roomTypeName);
-                    int capacity = jsonArray.getJSONObject(i).getInt(POST.roomTypeCapacity);
-                    int price = jsonArray.getJSONObject(i).getInt(POST.roomTypePrice);
-                    String img = jsonArray.getJSONObject(i).getString(POST.roomTypeImage);
-                    String description = jsonArray.getJSONObject(i).getString(POST.roomTypeDescription);
-                    String modified = jsonArray.getJSONObject(i).getString(POST.roomTypeModified);
+                for (int i = 0; i < jsonArrayRoomTypes.length(); i++) {
+                    int id = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeID);
+                    String name = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeName);
+                    int capacity = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeCapacity);
+                    int price = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypePrice);
+                    String img = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeImage);
+                    String description = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeDescription);
+                    String modified = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeModified);
                     LocalVariables.storeImageFromBase64(context, name, img);
                     roomTypeList.add(new RoomType(id, name, capacity, price, name, description, modified));
                 }
