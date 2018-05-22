@@ -172,7 +172,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                 try {
                     calendar = Calendar.getInstance();
                     calendar.setTime(localizedFormat.parse(arrivalDateLocal));
-                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    //FIXME DEBUG MODE FOR CHECKOUT
+                    //calendar.add(Calendar.DAY_OF_MONTH, 1);
                     bundle.putLong(DatePickerFragment.minimumDate_KEY, calendar.getTimeInMillis());
                     bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservationDeparture);
 

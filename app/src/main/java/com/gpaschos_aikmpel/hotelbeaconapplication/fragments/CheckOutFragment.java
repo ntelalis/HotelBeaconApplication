@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivityWithFragments;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedOutActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -92,7 +90,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
         adapter = new MyCheckoutAdapter(list);
         recyclerView.setAdapter(adapter);
         this.totalPrice.setText(String.valueOf(totalPrice));
-        if(RoomDB.getInstance(getContext()).reservationDao().getCurrentReservation().getCheckIn()!=null){
+        if(RoomDB.getInstance(getActivity()).reservationDao().getCurrentReservation().getCheckIn()!=null){
             btnConfirmCheckout.setEnabled(true);
         }
     }
@@ -123,7 +121,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
                 r.setCheckOut(checkoutDate);
                 RoomDB.getInstance(getContext()).reservationDao().update(r);
 
-                ((CheckOutActivityWithFragments)getActivity()).checkedOutConfirmation();
+                ((CheckOutActivity)getActivity()).checkedOutConfirmation();
 
 
         }
