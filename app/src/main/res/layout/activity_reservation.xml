@@ -16,6 +16,7 @@
         android:focusable="false"
         android:hint="@string/etArrivalDateHint"
         android:inputType="date"
+        android:text="May 25, 2018"
         app:layout_constraintStart_toStartOf="@+id/glReservation"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +30,7 @@
         android:focusable="false"
         android:hint="@string/etDepartureDateHint"
         android:inputType="date"
+        android:text="May 26, 2018"
         app:layout_constraintStart_toStartOf="@+id/glReservation"
         app:layout_constraintTop_toBottomOf="@+id/etReservationArrival" />
 

@@ -15,7 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.LoginActivity">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,61 +27,111 @@
         </activity>
         <activity
             android:name=".activities.RegisterActivity"
-            android:parentActivityName=".activities.LoginActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ForgotActivity"
-            android:parentActivityName=".activities.LoginActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ForgotVerifyActivity"
-            android:parentActivityName=".activities.ForgotActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.ForgotActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ForgotNewPassActivity"
-            android:parentActivityName=".activities.LoginActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.LoginActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ReservationActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.HomeActivity"
-            android:launchMode="singleInstance" />
-        <activity android:name=".activities.ViewPagerTestActivity" />
+            android:configChanges="orientation"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ViewPagerTestActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.BookActivity"
+            android:configChanges="orientation"
             android:parentActivityName=".activities.ReservationActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.BookConfirmationActivity"
-            android:parentActivityName=".activities.ReservationActivity" />
+            android:parentActivityName=".activities.ReservationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.RoomServiceActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.UpcomingReservationActivity"
-            android:parentActivityName=".activities.HomeActivity" />
-        <activity android:name=".activities.LoadingScreenActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.LoadingScreenActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.LoyaltyProgramActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.ReviewActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <!-- TODO:alter these activities' parent activity(back to room's features) -->
         <activity
             android:name=".activities.RoomServiceConfirmationActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CheckedInActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CheckOutActivity"
-            android:parentActivityName=".activities.UpcomingReservationActivity" />
+            android:parentActivityName=".activities.UpcomingReservationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CheckedOutActivity"
-            android:parentActivityName=".activities.HomeActivity" />
-        <activity android:name=".activities.MonitoringActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.MonitoringActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CheckInActivity"
-            android:parentActivityName=".activities.HomeActivity" />
-
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.DoorUnlockActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.MyRoomActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <service
             android:name=".NotificationsFunctions.MyJobService"
             android:exported="false">
@@ -86,9 +139,6 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
-
-        <activity android:name=".activities.DoorUnlockActivity" />
-        <activity android:name=".activities.MyRoomActivity"></activity>
     </application>
 
 </manifest>

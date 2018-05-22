@@ -135,6 +135,11 @@
     <string name="tvBookRoomPriceCurrency">€</string>
     <string name="tvCreditCardDate">Expiration Date</string>
     <string name="btnHomeUnlock">Unlock your room</string>
+    <string name="tvUsePointsTotalPoints">Total Points</string>
+    <string name="tvUsePointsDays">Days</string>
+    <string name="tvUsePointsPointsDIvider">/</string>
+    <string name="tvUsePointsCurrency">€</string>
+    <string name="tvUsePointsDaysDivider">/</string>
 
 
 </resources>

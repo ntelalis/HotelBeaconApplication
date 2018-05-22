@@ -321,9 +321,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
         int roomTypeID = room.roomTypeID;
         String roomTitle = room.title;
-        int roomTotalPrice = room.days * room.price * room.persons;
-        String roomImage = room.imgFileName;
 
+        String roomImage = room.imgFileName;
 
         int people = Integer.parseInt(spPeople.getSelectedItem().toString());
 
@@ -331,7 +330,6 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
         intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
         intent.putExtra(BookActivity.ROOM_IMAGE_KEY, roomImage);
-        intent.putExtra(BookActivity.ROOM_TOTAL_PRICE_KEY, roomTotalPrice);
         intent.putExtra(BookActivity.ROOM_PRICE_KEY, room.price);
         intent.putExtra(BookActivity.ROOM_DAYS_KEY, room.days);
         intent.putExtra(BookActivity.ROOM_ARRIVAL_KEY, arrivalDateSQL);

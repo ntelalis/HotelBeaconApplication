@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -39,7 +41,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class BookActivity extends AppCompatActivity implements JsonListener {
+public class BookActivity extends AppCompatActivity implements JsonListener, UseLoyaltyPointsFragment.OnPickedLoyaltyReward {
 
     //KEYS
     public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
@@ -49,8 +51,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     public static final String ROOM_ARRIVAL_KEY = "arrival_KEY";
     public static final String ROOM_DEPARTURE_KEY = "departure_KEY";
     public static final String ROOM_PERSONS_KEY = "persons_KEY";
-    public static final String ROOM_PRICE_KEY = "roomprice_KEY" ;
-    public static final String ROOM_DAYS_KEY = "roomDays_KEY" ;
+    public static final String ROOM_PRICE_KEY = "roomprice_KEY";
+    public static final String ROOM_DAYS_KEY = "roomDays_KEY";
 
     private Button btnBook;
 
@@ -60,7 +62,9 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     private String arrivalSQLString;
     private String departureSQLString;
     private Date arrivalDate, departureDate;
-    private int persons,days,roomPrice,totalPrice;
+    private int persons, days, roomPrice, totalPrice;
+
+    private TextView tvTotalPrice,tvPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +78,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
         TextView tvRoomTitle = findViewById(R.id.tvBookRoomTitle);
         TextView tvPersons = findViewById(R.id.tvBookPersons);
-        TextView tvTotalPrice = findViewById(R.id.tvBookTotalPrice);
         TextView tvRoomPrice = findViewById(R.id.tvBookRoomPrice);
         TextView tvDays = findViewById(R.id.tvBookDays);
+        tvPoints = findViewById(R.id.tvBookPoints);
+        tvTotalPrice = findViewById(R.id.tvBookTotalPrice);
 
         ImageView ivRoomImage = findViewById(R.id.ivBookRoomImage);
 
@@ -104,10 +109,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
             roomPrice = extras.getInt(ROOM_PRICE_KEY);
             arrivalSQLString = extras.getString(ROOM_ARRIVAL_KEY);
             departureSQLString = extras.getString(ROOM_DEPARTURE_KEY);
-            totalPrice = extras.getInt(ROOM_TOTAL_PRICE_KEY);
             persons = extras.getInt(ROOM_PERSONS_KEY);
 
             tvRoomTitle.setText(roomTitle);
+            totalPrice = roomPrice * days * persons;
             tvTotalPrice.setText(String.valueOf(totalPrice));
             tvDays.setText(String.valueOf(days));
             tvRoomPrice.setText(String.valueOf(roomPrice));
@@ -161,18 +166,18 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         etHoldersName.setError(null);
         boolean flag = false;
 
-        String creditCard = etCreditCard.getText().toString().replaceAll("\\s","");
+        String creditCard = etCreditCard.getText().toString().replaceAll("\\s", "");
         String holdersName = etHoldersName.getText().toString();
-        if(!Validation.checkCreditCard(creditCard)){
+        if (!Validation.checkCreditCard(creditCard)) {
             etCreditCard.setError("Please enter a valid card");
-            flag=true;
+            flag = true;
         }
 
-        if(!Validation.checkLength(holdersName,4,null)){
+        if (!Validation.checkLength(holdersName, 4, null)) {
             etHoldersName.setError("Please enter a valid name");
-            flag=true;
+            flag = true;
         }
-        if(flag) return;
+        if (flag) return;
 
         String month = String.valueOf(spMonth.getSelectedItem());
         String year = String.valueOf(spYear.getSelectedItem());
@@ -185,11 +190,11 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));
 
-        values.put(POST.bookRoomCreditCard,creditCard);
-        values.put(POST.bookRoomHoldersName,holdersName);
-        values.put(POST.bookRoomExpMonth,month);
-        values.put(POST.bookRoomExpYear,year);
-        values.put(POST.bookRoomCVV,cvv);
+        values.put(POST.bookRoomCreditCard, creditCard);
+        values.put(POST.bookRoomHoldersName, holdersName);
+        values.put(POST.bookRoomExpMonth, month);
+        values.put(POST.bookRoomExpYear, year);
+        values.put(POST.bookRoomCVV, cvv);
 
         int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
@@ -202,6 +207,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         int resID = json.getInt(POST.bookRoomReservationID);
         String bookedDate = json.getString(POST.bookRoomBookedDate);
+
         /*new AsyncTask<Void,Void,Void>(){
 
             @Override
@@ -228,5 +234,24 @@ public class BookActivity extends AppCompatActivity implements JsonListener {
     @Override
     public void getErrorResult(String url, String error) {
         Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+    }
+
+    public void test4(View v) {
+        DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(1500, 500, 200, 20, this.days);
+        dialogFragment.show(getSupportFragmentManager(), UseLoyaltyPointsFragment.TAG);
+    }
+
+    @Override
+    public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
+        int roomPriceWithPoints = 10;
+        int price = totalPrice - roomPrice * freeNights* persons - roomPriceWithPoints * cashNights* persons;
+        tvTotalPrice.setText(String.valueOf(price));
+        tvPoints.setText(String.valueOf(totalPoints));
+        if(totalPoints>0){
+            findViewById(R.id.groupBookPoints).setVisibility(View.VISIBLE);
+        }
+        else{
+            findViewById(R.id.groupBookPoints).setVisibility(View.GONE);
+        }
     }
 }

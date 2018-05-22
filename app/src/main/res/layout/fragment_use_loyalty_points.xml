@@ -2,44 +2,210 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".fragments.UseLoyaltyPointsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
-        android:id="@+id/tvUsePointsCurrentPoints"
+        android:id="@+id/tvUsePointsTotalPointsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textSize="30sp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tvUsePointsDays"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUsePointsTotalPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pnUsePointsCashAndPoints"
         tools:text="800" />
 
     <TextView
-        android:id="@+id/tvUsePointsFreeNightPoints"
+        android:id="@+id/tvUsePointsFreeNightLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="300" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="4dp"
+        android:text="Points for a FREE Night"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsFreeNight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsFreeNight" />
 
     <TextView
-        android:id="@+id/tvUsePointsCashAndPointsPoints"
+        android:id="@+id/tvUsePointsFreeNight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsFreeNightLabel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUsePointsCurrentPoints"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsePointsSelectedDays"
+        tools:text="300" />
+
+    <com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber
+        android:id="@+id/pnUsePointsFreeNight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvUsePointsFreeNightLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvUsePointsFreeNight"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsePointsFreeNight" />
+
+    <TextView
+        android:id="@+id/tvUsePointsCashPointsLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="4dp"
+        android:text="for a Cash&amp;Points Night"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsCurrency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsCurrency" />
+
+    <TextView
+        android:id="@+id/tvUsePointsCashAndPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsCashPointsLabel1"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pnUsePointsFreeNight"
         tools:text="100" />
+
+    <com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber
+        android:id="@+id/pnUsePointsCashAndPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvUsePointsCashPointsLabel2"
+        app:layout_constraintStart_toStartOf="@+id/tvUsePointsCashAndPoints"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsePointsCashAndPoints" />
+
+    <TextView
+        android:id="@+id/tvUsePointsSelectedTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsPointsDivider"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsPointsDivider" />
+
+    <TextView
+        android:id="@+id/tvUsePointsSelectedTotalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="Points Needed:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsSelectedTotal"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsSelectedTotal" />
+
+    <TextView
+        android:id="@+id/tvUsePointsSelectedDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="0"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsDaysDivider"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsePointsTotalPointsLabel" />
+
+    <TextView
+        android:id="@+id/tvUsePointsDaysDivider"
+        android:layout_width="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="@string/tvUsePointsDaysDivider"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsSelectedDays"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsTotalDays"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsSelectedDays" />
+
+    <TextView
+        android:id="@+id/tvUsePointsTotalDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsDaysDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsDaysDivider"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/tvUsePointsPointsDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tvUsePointsPointsDIvider"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsTotalPoints"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsTotalPoints" />
+
+    <TextView
+        android:id="@+id/tvUsePointsCashPointsLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Points +"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsCashAndPoints"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsCashPointsPrice"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsCashAndPoints" />
+
+    <TextView
+        android:id="@+id/tvUsePointsCashPointsPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsCashPointsLabel1"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsCurrency"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsCashPointsLabel1"
+        tools:text="40" />
+
+    <TextView
+        android:id="@+id/tvUsePointsCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvUsePointsCurrency"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsCashPointsPrice"
+        app:layout_constraintEnd_toStartOf="@+id/tvUsePointsCashPointsLabel2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvUsePointsCashPointsPrice" />
+
 </android.support.constraint.ConstraintLayout>
