@@ -70,7 +70,7 @@
             android:parentActivityName=".activities.HomeActivity" />
         <activity
             android:name=".activities.CheckOutActivity"
-            android:parentActivityName=".activities.UpcomingReservationActivity" />
+            android:parentActivityName=".activities.UpcomingReservationsWithFragmentsActivity" />
         <activity
             android:name=".activities.CheckedOutActivity"
             android:parentActivityName=".activities.HomeActivity" />
@@ -88,7 +88,12 @@
         </service>
 
         <activity android:name=".activities.DoorUnlockActivity" />
-        <activity android:name=".activities.MyRoomActivity"></activity>
+        <activity android:name=".activities.MyRoomActivity" />
+        <activity android:name=".activities.CustomerServicesActivity" />
+        <activity
+            android:name=".activities.UpcomingReservationsWithFragmentsActivity"
+            android:parentActivityName=".activities.HomeActivity" />
+        <activity android:name=".activities.CheckOutActivityWithFragments"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -163,7 +165,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         void checkIn(ReservationModel obj);
     }
 
-    public static class ReservationModel {
+    public static class ReservationModel implements Parcelable{
         public int adults;
         public String roomTitle;
         public int reservationID;
@@ -182,6 +184,44 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             this.checkincheckoutbtn = checkinCheckoutbtn;
             this.room = room;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.adults);
+            dest.writeString(this.roomTitle);
+            dest.writeInt(this.reservationID);
+            dest.writeString(this.arrival);
+            dest.writeString(this.departure);
+            dest.writeString(this.room);
+            dest.writeInt(this.checkincheckoutbtn);
+        }
+
+        protected ReservationModel(Parcel in) {
+            this.adults = in.readInt();
+            this.roomTitle = in.readString();
+            this.reservationID = in.readInt();
+            this.arrival = in.readString();
+            this.departure = in.readString();
+            this.room = in.readString();
+            this.checkincheckoutbtn = in.readInt();
+        }
+
+        public static final Creator<ReservationModel> CREATOR = new Creator<ReservationModel>() {
+            @Override
+            public ReservationModel createFromParcel(Parcel source) {
+                return new ReservationModel(source);
+            }
+
+            @Override
+            public ReservationModel[] newArray(int size) {
+                return new ReservationModel[size];
+            }
+        };
     }
 
 

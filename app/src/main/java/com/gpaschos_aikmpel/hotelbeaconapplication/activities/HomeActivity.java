@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UpcomingReservationRecyclerViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
@@ -29,7 +30,7 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
     }
 
     public void viewReservations(View view) {
-        Intent intent = new Intent(this, UpcomingReservationActivity.class);
+        Intent intent = new Intent(this, UpcomingReservationsWithFragmentsActivity.class);
         startActivity(intent);
     }
 
