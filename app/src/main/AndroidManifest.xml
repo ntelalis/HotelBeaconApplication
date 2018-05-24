@@ -110,6 +110,7 @@
             android:parentActivityName=".activities.UpcomingReservationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+            android:parentActivityName=".activities.UpcomingReservationsWithFragmentsActivity" />
         <activity
             android:name=".activities.CheckedOutActivity"
             android:parentActivityName=".activities.HomeActivity"
@@ -139,6 +140,13 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+
+        <activity android:name=".activities.DoorUnlockActivity" />
+        <activity android:name=".activities.MyRoomActivity" />
+        <activity android:name=".activities.CustomerServicesActivity" />
+        <activity
+            android:name=".activities.UpcomingReservationsWithFragmentsActivity"
+            android:parentActivityName=".activities.HomeActivity" />
     </application>
 
 </manifest>

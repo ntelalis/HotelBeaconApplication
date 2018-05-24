@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HotelBeaconApplication</string>
+    <string name="app_name">My Hotel</string>
 
     <string name="btnLogin">Sign in</string>
     <string name="btnRegister">Sign up</string>
@@ -135,6 +135,8 @@
     <string name="tvBookRoomPriceCurrency">€</string>
     <string name="tvCreditCardDate">Expiration Date</string>
     <string name="btnHomeUnlock">Unlock your room</string>
+    <string name="tietRegisterBirthDate">Birth Date</string>
+    <string name="tvUpcomingReservationNoneFragment">You currently have no reservations. To make one, please see the \'make a reservation\' feature in the main menu.</string>
     <string name="tvUsePointsTotalPoints">Total Points</string>
     <string name="tvUsePointsDays">Days</string>
     <string name="tvUsePointsPointsDIvider">/</string>

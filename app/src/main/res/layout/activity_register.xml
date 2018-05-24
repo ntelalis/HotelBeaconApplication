@@ -17,6 +17,7 @@
         android:ems="10"
         android:hint="@string/etFirstNameHint"
         android:inputType="text"
+        android:text="Alexandros"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,6 +30,7 @@
         android:ems="10"
         android:hint="@string/etLastNameHint"
         android:inputType="text"
+        android:text="Miaoulis"
         app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterFirstName" />
 
@@ -40,8 +42,9 @@
         android:ems="10"
         android:hint="@string/etEmailHint"
         android:inputType="textEmailAddress"
+        android:text="asdf@asdf.com"
         app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterBirthDate" />
 
     <EditText
         android:id="@+id/etRegisterPassword"
@@ -51,6 +54,7 @@
         android:ems="10"
         android:hint="@string/etPasswordHint"
         android:inputType="textPassword"
+        android:text="ASDFasdf11!!"
         app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
 
@@ -62,6 +66,7 @@
         android:ems="10"
         android:hint="@string/etPasswordConfirmHint"
         android:inputType="textPassword"
+        android:text="ASDFasdf11!!"
         app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
         app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword" />
 
@@ -103,5 +108,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/etRegisterPasswordConfirm"
         app:layout_constraintTop_toBottomOf="@+id/btnRegisterCreate" />
+
+    <Spinner
+        android:id="@+id/spRegisterCountry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/etRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etRegisterLastName" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterBirthDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/etRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/spRegisterCountry">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterBirthDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tietRegisterBirthDate" />
+    </android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>

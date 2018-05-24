@@ -202,7 +202,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
-                            if (distance < (double) 1) {
+                            if (distance < (double) 0.5) {
                                 canOpenDoor = true;
                                 handler.removeCallbacks(runnable);
                                 handler.postDelayed(runnable, 3000);
@@ -211,7 +211,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                     }
                 }
             });
-            RangedBeacon.setSampleExpirationMilliseconds(5000);
+            RangedBeacon.setSampleExpirationMilliseconds(2000);
             try {
                 beaconManager.startRangingBeaconsInRegion(region);
                 Log.d(TAG, "ranging started");

@@ -18,9 +18,6 @@ public interface RoomTypeDao {
     @Query("SELECT * FROM RoomType WHERE id = :id")
     RoomType getRoomTypeById(int id);
 
-    @Query("SELECT * FROM RoomType")
-    List<RoomType> check();
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<RoomType> roomTypeList);
 }
