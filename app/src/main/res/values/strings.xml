@@ -143,6 +143,7 @@
     <string name="btnCustomerServicesCheckOut">Check out</string>
     <string name="btnCustomerServicesFloorLabel">floor</string>
     <string name="btnCustomerServicesUnlockDoor">Unlock door</string>
+    <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
 
 
 </resources>

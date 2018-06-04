@@ -100,6 +100,19 @@
         app:layout_constraintTop_toBottomOf="@+id/btnHomeUnlock" />
 
     <Button
+        android:id="@+id/btnHomeLogout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="myRoom"
+        android:text="MyRoom"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/btnHomeLogout"
+        app:layout_constraintStart_toStartOf="@+id/btnHomeLogout"
+        app:layout_constraintTop_toBottomOf="@+id/btnHomeLogout" />
+
+    <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
