@@ -10,14 +10,9 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -132,7 +127,6 @@ public class NotificationCreation implements JsonListener {
     // when passing by the front door beacon-after the welcomingNotification)
     public static void notifyCheckin(Context context, String tag) {
 
-        Log.d(TAG,"checkinNotification");
 
         String notificationTitle = null;
         String notificationContent = null;
@@ -171,7 +165,6 @@ public class NotificationCreation implements JsonListener {
     }
 
     public static void notifyCheckout(Context context) {
-        Log.d(TAG,"checkOutNotification");
         if (shouldNotifyCheckout(context)) {
             int icon;
 

@@ -1,7 +1,5 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
-import android.util.Log;
-
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;
 
@@ -12,7 +10,6 @@ public class NotificationJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
 
-        Log.d(TAG,"Job Hit for"+ params.getTag());
         if(params.getTag().contains(ScheduleNotifications.CHECKIN_TAG)){
             NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECKIN_REMINDER);
         }

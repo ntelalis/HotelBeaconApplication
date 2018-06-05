@@ -56,10 +56,6 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ViewPagerTestActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.BookActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activities.ReservationActivity"

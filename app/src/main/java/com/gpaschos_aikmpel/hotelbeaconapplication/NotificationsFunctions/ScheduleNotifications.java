@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -24,7 +23,6 @@ public class ScheduleNotifications {
 
     public static void checkinNotification(Context context, String triggerDate){
 
-        Log.d(TAG,"checkInNotification");
         int windowStart=0;
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -64,7 +62,6 @@ public class ScheduleNotifications {
 
     public static void checkoutNotification(Context context, String triggerDate){
 
-        Log.d(TAG,"checkOutNotification");
 
         int windowStart=0;
         long currentTime = System.currentTimeMillis();
