@@ -37,6 +37,7 @@ public class URL {
     private static final String deletePage = "delete.php";
     private static final String doorUnlockPage = "doorunlock.php";
     private static final String countriesPage = "countries.php";
+    private static final String totalPointsPage = "totalpoints.php";
 
     public static final String loginUrl = serverAddress + loginPage;
     public static final String forgotUrl = serverAddress + forgotPage;
@@ -63,4 +64,5 @@ public class URL {
     public static final String deleteUrl = serverAddress + deletePage;
     public static final String doorUnlockUrl = serverAddress + doorUnlockPage;
     public static final String countriesUrl = serverAddress + countriesPage;
+    public static final String totalPointsUrl = serverAddress + totalPointsPage;
 }

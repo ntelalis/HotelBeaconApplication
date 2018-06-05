@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ImageViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
@@ -236,6 +237,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     }
 
 
+
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
@@ -249,12 +251,19 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     JSONObject room = availabilityResults.getJSONObject(i);
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
+                    int people = Integer.parseInt(spPeople.getSelectedItem().toString());
 
-                    RoomType rt = RoomDB.getInstance(this).roomTypeDao().getRoomTypeById(roomTypeID);
+                    RoomDB roomDB = RoomDB.getInstance(this);
+
+                    Log.d("ASDFASDF",roomTypeID+"");
+                    RoomType rt = roomDB.roomTypeDao().getRoomTypeById(roomTypeID);
+                    Log.d("ASDFASDF",rt.getId()+"");
+                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), people, 1);
 
                     String description = rt.getDescription();
                     String title = rt.getName();
-                    int price = rt.getPrice();
+                    //int price = rt.getPrice();
+                    int price = rtc.getPrice();
                     Bitmap imageBitmap = LocalVariables.readImage(this, rt.getImage());
                     String imageName = rt.getImage();
                     int persons = Integer.parseInt(spPeople.getSelectedItem().toString());

@@ -9,7 +9,7 @@ public class POST {
     public static final String registerLastName = "lastName";
     public static final String registerEmail = "email";
     public static final String registerPassword = "pass";
-    public static final String registerBirthDate ="birthDate";
+    public static final String registerBirthDate = "birthDate";
     public static final String registerCountry = "country";
     //RCV
     public static final String registerCustomerID = "customerID";
@@ -99,6 +99,8 @@ public class POST {
     public static final String bookRoomArrival = "arrival";
     public static final String bookRoomDeparture = "departure";
     public static final String bookRoomPeople = "persons";
+    public static final String bookRoomFreeNights = "freeNights";
+    public static final String bookRoomCashNights = "cashNights";
     public static final String bookRoomCustomerID = "customerID";
     public static final String roomTypeModified = "modified";
     public static final String bookRoomCreditCard = "ccNumber";
@@ -219,4 +221,25 @@ public class POST {
     //SND
     //RCV
     public static final String countryArray = "countryArray";
+    public static final String roomTypeCashArray = "roomTypeCashArray";
+    public static final String roomTypeCashID = "roomTypeID";
+    public static final String roomTypeCashPersons = "persons";
+    public static final String roomTypeCashCurrencyID = "currencyID";
+    public static final String roomTypeCashPrice = "price";
+    public static final String roomTypeFreeNightsPointsArray = "roomTypeFreeNightsPointsArray";
+    public static final String roomTypeFreeNightsPointsRoomTypeID = "roomTypeID";
+    public static final String roomTypeFreeNightsPointsPersons = "persons";
+    public static final String roomTypeFreeNightsPointsPoints = "points";
+    public static final String roomTypePointsAndCashArray = "roomTypePointsAndCashArray";
+    public static final String roomTypePointsAndCashRoomTypeID = "roomTypeID";
+    public static final String roomTypePointsAndCashPersons = "persons";
+    public static final String roomTypePointsAndCashCurrencyID = "currencyID";
+    public static final String roomTypePointsAndCashCash = "cash";
+    public static final String roomTypePointsAndCashPoints = "points";
+    public static final String currencyArray = "currencyArray";
+    public static final String currencyID = "id";
+    public static final String currencyName = "name";
+    public static final String currencyCode = "code";
+    public static final String currencySymbol = "symbol";
+    public static final String totalPoints = "points";
 }

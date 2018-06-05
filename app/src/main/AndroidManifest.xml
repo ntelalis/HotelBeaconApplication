@@ -107,10 +107,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.CheckOutActivity"
-            android:parentActivityName=".activities.UpcomingReservationActivity"
+            android:parentActivityName=".activities.UpcomingReservationsWithFragmentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-            android:parentActivityName=".activities.UpcomingReservationsWithFragmentsActivity" />
         <activity
             android:name=".activities.CheckedOutActivity"
             android:parentActivityName=".activities.HomeActivity"
@@ -133,6 +132,7 @@
             android:name=".activities.MyRoomActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
+
         <service
             android:name=".NotificationsFunctions.MyJobService"
             android:exported="false">
@@ -141,12 +141,15 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.DoorUnlockActivity" />
-        <activity android:name=".activities.MyRoomActivity" />
-        <activity android:name=".activities.CustomerServicesActivity" />
+        <activity
+            android:name=".activities.CustomerServicesActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.UpcomingReservationsWithFragmentsActivity"
-            android:parentActivityName=".activities.HomeActivity" />
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

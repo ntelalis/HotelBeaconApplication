@@ -148,6 +148,10 @@
     <string name="btnCustomerServicesCheckOut">Check out</string>
     <string name="btnCustomerServicesFloorLabel">floor</string>
     <string name="btnCustomerServicesUnlockDoor">Unlock door</string>
+    <string name="btnBookLoyalty">Redeem your Points</string>
+    <string name="tvBookPointsLabel">Points</string>
+    <string name="tvBookPointsPlus">+</string>
+    <string name="tvBookRoomPriceLabel">Room Price</string>
 
 
 </resources>

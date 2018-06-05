@@ -8,13 +8,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumber.OnPickedNumber {
 
@@ -65,6 +74,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumb
             cashPrice = getArguments().getInt(PRICE_CASH);
             totalDays = getArguments().getInt(TOTAL_DAYS);
         }
+
     }
 
 
@@ -160,6 +170,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumb
 
         tvSelectedTotal.setText(String.valueOf(freeTotal + cashTotal));
     }
+
 
     public interface OnPickedLoyaltyReward {
         void onLoyaltyPicked(int freeNights, int cashNights, int neededPoints);

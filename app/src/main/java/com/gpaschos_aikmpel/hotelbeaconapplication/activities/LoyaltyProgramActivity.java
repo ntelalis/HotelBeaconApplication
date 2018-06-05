@@ -79,10 +79,6 @@ public class LoyaltyProgramActivity extends AppCompatActivity implements JsonLis
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loyaltyPointsURL, params);
     }
 
-    public void animateTextView(int initialValue, int finalValue, final TextView textView){
-
-    }
-
     private void updateUI() {
         tvCustomerID.setText(String.valueOf(customerID));
         tvFirstName.setText(firstName);

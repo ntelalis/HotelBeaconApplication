@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
@@ -63,8 +65,9 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
     private String departureSQLString;
     private Date arrivalDate, departureDate;
     private int persons, days, roomPrice, totalPrice;
-
-    private TextView tvTotalPrice,tvPoints;
+    private int cashPrice;
+    private int freeNights = 0,cashNights = 0;
+    private TextView tvTotalPrice, tvPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +115,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
             persons = extras.getInt(ROOM_PERSONS_KEY);
 
             tvRoomTitle.setText(roomTitle);
-            totalPrice = roomPrice * days * persons;
+            totalPrice = roomPrice * days;
             tvTotalPrice.setText(String.valueOf(totalPrice));
             tvDays.setText(String.valueOf(days));
             tvRoomPrice.setText(String.valueOf(roomPrice));
@@ -189,6 +192,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
         values.put(POST.bookRoomPeople, (String.valueOf(persons)));
+        values.put(POST.bookRoomFreeNights,String.valueOf(freeNights));
+        values.put(POST.bookRoomCashNights,String.valueOf(cashNights));
 
         values.put(POST.bookRoomCreditCard, creditCard);
         values.put(POST.bookRoomHoldersName, holdersName);
@@ -206,8 +211,11 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
 
-        int resID = json.getInt(POST.bookRoomReservationID);
-        String bookedDate = json.getString(POST.bookRoomBookedDate);
+        switch (url) {
+            case URL.bookUrl:
+
+                int resID = json.getInt(POST.bookRoomReservationID);
+                String bookedDate = json.getString(POST.bookRoomBookedDate);
 
         /*new AsyncTask<Void,Void,Void>(){
 
@@ -217,16 +225,32 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
 
-        RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, bookedDate, arrivalSQLString, departureSQLString));
+                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, bookedDate, arrivalSQLString, departureSQLString));
 
-        ScheduleNotifications.checkinNotification(this, arrivalSQLString);
-        ScheduleNotifications.checkoutNotification(this, departureSQLString);
+                ScheduleNotifications.checkinNotification(this, arrivalSQLString);
+                ScheduleNotifications.checkoutNotification(this, departureSQLString);
 
-        Intent intent = new Intent(this, BookConfirmationActivity.class);
-        intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
-        startActivity(intent);
-        finish();
+                Intent intent = new Intent(this, BookConfirmationActivity.class);
+                intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
+                startActivity(intent);
+                finish();
+                break;
+            case URL.totalPointsUrl:
 
+                int totalPoints = json.getInt(POST.totalPoints);
+
+                RoomDB roomDB = RoomDB.getInstance(this);
+                RoomTypeFreeNightsPoints roomTypeFreeNightsPoints = roomDB.roomTypeFreeNightsPointsDao().getRoomTypeFreeNightsPoints(roomTypeID, persons);
+                int freeNightPoints = roomTypeFreeNightsPoints.getPoints();
+
+                RoomTypePointsAndCash roomTypePointsAndCash = roomDB.roomTypePointsAndCashDao().getRoomTypePointsAndCash(roomTypeID, persons, 1);
+                int cashPoints = roomTypePointsAndCash.getPoints();
+                cashPrice = roomTypePointsAndCash.getCash();
+
+                DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPoints, freeNightPoints, cashPoints, cashPrice, this.days);
+                dialogFragment.show(getSupportFragmentManager(), UseLoyaltyPointsFragment.TAG);
+                break;
+        }
     }
 
     @Override
@@ -235,20 +259,29 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
     }
 
     public void test4(View v) {
-        DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(1500, 500, 200, 20, this.days);
-        dialogFragment.show(getSupportFragmentManager(), UseLoyaltyPointsFragment.TAG);
+
+        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
+
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.totalPointsUrl, params);
+    }
+
+    public void test5() {
+
     }
 
     @Override
     public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
-        int roomPriceWithPoints = 10;
-        int price = totalPrice - roomPrice * freeNights* persons - roomPriceWithPoints * cashNights* persons;
+        this.freeNights = freeNights;
+        this.cashNights = cashNights;
+        //int price = totalPrice - roomPrice * freeNights - cashNights * roomPrice + cashPrice * cashNights;
+        int price = totalPrice - roomPrice * freeNights + cashNights*(cashPrice-roomPrice);
         tvTotalPrice.setText(String.valueOf(price));
         tvPoints.setText(String.valueOf(totalPoints));
-        if(totalPoints>0){
+        if (totalPoints > 0) {
             findViewById(R.id.groupBookPoints).setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             findViewById(R.id.groupBookPoints).setVisibility(View.GONE);
         }
     }
