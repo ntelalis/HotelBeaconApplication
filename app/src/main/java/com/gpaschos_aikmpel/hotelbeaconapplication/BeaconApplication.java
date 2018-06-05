@@ -75,7 +75,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
         if (region.getUniqueId().equals("welcomeBeacon")) {
             NotificationCreation.notifyWelcome(this);
+            NotificationCreation.notifyFarewell(this);
         }
+
     }
 
     @Override

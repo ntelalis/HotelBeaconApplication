@@ -152,6 +152,7 @@
     <string name="tvBookPointsLabel">Points</string>
     <string name="tvBookPointsPlus">+</string>
     <string name="tvBookRoomPriceLabel">Room Price</string>
+    <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
 
 
 </resources>

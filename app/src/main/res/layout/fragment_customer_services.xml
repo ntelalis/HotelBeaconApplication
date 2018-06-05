@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.CustomerServicesActivity">
+
+    <Button
+        android:id="@+id/btnCustomerServicesUnlockDoor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCustomerServicesUnlockDoor"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService" />
+
+    <Button
+        android:id="@+id/btnCustomerServicesCheckOut"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCustomerServicesCheckOut"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomService" />
+
+    <Button
+        android:id="@+id/btnCustomerServicesRoomService"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginStart="100dp"
+        android:text="@string/roomServiceBtn"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesRoomNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesRoomNoLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesRoomNoLabel"
+        tools:text="12" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesRoomNoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvCustomerServicesRoomNoLabel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvCustomerServicesCheckedIn"
+        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesCheckedInLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesReservationIDLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/tvCustomerServicesReservationIDLabel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesReservationID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesReservationIDLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesReservationIDLabel"
+        tools:text="1223" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesCheckedInLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/tvCustomerServicesCheckedInLabel"
+        app:layout_constraintEnd_toStartOf="@+id/tvCustomerServicesCheckedIn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesCheckedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesCheckedInLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="12-09-1985" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesFloorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="21dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/btnCustomerServicesFloorLabel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        app:layout_constraintEnd_toEndOf="@+id/tvCustomerServicesRoomNoLabel"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesRoomNoLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesRoomNoLabel" />
+
+    <TextView
+        android:id="@+id/tvCustomerServicesFloor"
+        android:layout_width="13dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesFloorLabel"
+        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesRoomNo"
+        tools:text="1" />
+
+</android.support.constraint.ConstraintLayout>
