@@ -142,6 +142,12 @@
     <string name="tvUsePointsPointsDIvider">/</string>
     <string name="tvUsePointsCurrency">€</string>
     <string name="tvUsePointsDaysDivider">/</string>
+    <string name="tvCustomerServicesRoomNoLabel">Room</string>
+    <string name="tvCustomerServicesReservationIDLabel">Reservation Number</string>
+    <string name="tvCustomerServicesCheckedInLabel">Checked in</string>
+    <string name="btnCustomerServicesCheckOut">Check out</string>
+    <string name="btnCustomerServicesFloorLabel">floor</string>
+    <string name="btnCustomerServicesUnlockDoor">Unlock door</string>
 
 
 </resources>
