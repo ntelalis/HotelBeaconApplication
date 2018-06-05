@@ -100,7 +100,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         });
 
         loadSpinnerData();
-        //GetData.getInstance(this).getDataFromServer();
+        //SyncServerData.getInstance(this).getDataFromServer();
     }
 
 

@@ -134,7 +134,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <service
-            android:name=".NotificationsFunctions.MyJobService"
+            android:name=".NotificationsFunctions.NotificationJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />

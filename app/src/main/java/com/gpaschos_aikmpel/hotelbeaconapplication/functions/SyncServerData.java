@@ -2,7 +2,6 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
@@ -20,26 +19,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GetData implements JsonListener {
+public class SyncServerData implements JsonListener {
 
-    private static final String TAG = GetData.class.getSimpleName();
+    private static final String TAG = SyncServerData.class.getSimpleName();
 
-    private static GetData instance;
+    private static SyncServerData instance;
     private final Context context;
 
-    private GetData(Context context) {
+    private SyncServerData(Context context) {
         this.context = context.getApplicationContext();
     }
 
-    public static GetData getInstance(Context context) {
+    public static SyncServerData getInstance(Context context) {
         if (instance == null) {
-            instance = new GetData(context);
+            instance = new SyncServerData(context);
 
         }
         return instance;
