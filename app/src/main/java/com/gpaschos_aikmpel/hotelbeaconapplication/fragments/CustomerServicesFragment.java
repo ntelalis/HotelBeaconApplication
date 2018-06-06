@@ -22,7 +22,7 @@ public class CustomerServicesFragment extends Fragment {
     private static final String CHECK_IN_DATE = "date";
     private static final String RESERVATION_ID = "ID";
     private static final String ROOM_NO = "Room Number";
-    private static final String FLOOR = "ROom Floor";
+    private static final String FLOOR = "Rοom Floor";
 
     private String checkInDate;
     private int reservationID;
@@ -42,7 +42,7 @@ public class CustomerServicesFragment extends Fragment {
     }
 
     public static CustomerServicesFragment newInstance(String date, int reservID,
-                                                       int roomFloor, int roomNumber) {
+                                                       int roomNumber, int roomFloor) {
         CustomerServicesFragment fragment = new CustomerServicesFragment();
         Bundle args = new Bundle();
         args.putString(CHECK_IN_DATE, date);

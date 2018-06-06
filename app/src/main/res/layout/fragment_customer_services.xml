@@ -47,7 +47,7 @@
         android:id="@+id/tvCustomerServicesRoomNo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -59,39 +59,37 @@
 
     <TextView
         android:id="@+id/tvCustomerServicesRoomNoLabel"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tvCustomerServicesRoomNoLabel"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tvCustomerServicesCheckedIn"
-        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesCheckedInLabel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCustomerServicesReservationIDLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tvCustomerServicesReservationIDLabel"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvCustomerServicesReservationID"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesCheckedIn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCustomerServicesReservationID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesReservationIDLabel"
-        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesReservationIDLabel"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:text="1223" />
 
     <TextView
@@ -99,15 +97,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tvCustomerServicesCheckedInLabel"
         app:layout_constraintEnd_toStartOf="@+id/tvCustomerServicesCheckedIn"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesReservationIDLabel" />
 
     <TextView
         android:id="@+id/tvCustomerServicesCheckedIn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="18dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesCheckedInLabel"
         app:layout_constraintEnd_toEndOf="parent"
@@ -117,22 +118,20 @@
         android:id="@+id/tvCustomerServicesFloorLabel"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="8dp"
         android:text="@string/btnCustomerServicesFloorLabel"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toEndOf="@+id/tvCustomerServicesRoomNoLabel"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesRoomNoLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesRoomNoLabel" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesRoomNoLabel"
+        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesRoomNo" />
 
     <TextView
         android:id="@+id/tvCustomerServicesFloor"
         android:layout_width="13dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesFloorLabel"
-        app:layout_constraintStart_toStartOf="@+id/tvCustomerServicesRoomNo"
+        app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesFloorLabel"
         tools:text="1" />
 
 </android.support.constraint.ConstraintLayout>
