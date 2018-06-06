@@ -2,7 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.globalVars;
 
 public class POST {
 
-    //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String registerTitle = "title";
     public static final String registerFirstName = "firstName";
@@ -14,11 +14,11 @@ public class POST {
     //RCV
     public static final String registerCustomerID = "customerID";
 
-
-    //titles.php
+    //~~~~~~~~~~~~~~~~~~titles.php~~~~~~~~~~~~~~~~~~
+    //RCV
     public static final String titlesTitleList = "titleList";
 
-    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String loginEmail = "email";
     public static final String loginPassword = "pass";
@@ -32,20 +32,23 @@ public class POST {
     public static final String loginIsCheckedOut = "isCheckedOut";
 
 
-    //~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~~~
+    //SND
     public static final String forgotEmail = "email";
 
-    //forgotverify.php
+    //~~~~~~~~~~~~~~~~~~forgotverify.php~~~~~~~~~~~~~~~~~~
+    //SND
     public static final String forgotVerifyEmail = "email";
     public static final String forgotVerifyVerification = "verification";
 
-    //forgotnewpass.php
+    //~~~~~~~~~~~~~~~~~~forgotnewpass.php~~~~~~~~~~~~~~~~~~
+    //SND
     public static final String forgotNewPassEmail = "email";
     public static final String forgotNewPassPassword = "pass";
     public static final String forgotNewPassVerification = "code";
 
 
-    //~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkinReservationID = "reservationID";
     //RCV
@@ -59,7 +62,7 @@ public class POST {
     public static final String checkinBeaconMinor = "beaconMinor";
 
 
-    //~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkoutReservationID = "reservationID";
     //RCV
@@ -69,19 +72,18 @@ public class POST {
     public static final String checkoutServicePrice = "price";
 
 
-    //~~~~~~~~~~~~~~~checkoutConfirm.php~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~checkoutConfirm.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkoutConfirmReservationID = "reservationID";
     //RCV
     public static final String checkoutConfirmDate = "date";
 
 
-    //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String availabilityArrivalDate = "arrivalDate";
     public static final String availabilityDepartureDate = "departureDate";
     public static final String availabilityPeople = "persons";
-
     //RCV
     public static final String availabilityResultsArray = "results";
     public static final String availabilityRoomTypeID = "roomTypeID";
@@ -90,10 +92,11 @@ public class POST {
     public static final String availabilityRoomPrice = "price";
     public static final String availabilityRoomImage = "img";
 
-    //persons.php
+    //~~~~~~~~~~~~~~~~~~persons.php~~~~~~~~~~~~~~~~~~
+    //RCV
     public static final String personsMaxCapacity = "capacity";
 
-    //~~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String bookRoomTypeID = "roomTypeID";
     public static final String bookRoomArrival = "arrival";
@@ -108,17 +111,14 @@ public class POST {
     public static final String bookRoomExpMonth = "ccMonth";
     public static final String bookRoomExpYear = "ccYear";
     public static final String bookRoomCVV = "ccCVV";
-
     //RCV
     public static final String bookRoomReservationID = "reservationID";
     public static final String bookRoomBookedDate = "bookedDate";
 
 
-    //~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~~
-
+    //~~~~~~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String roomServiceTimeType = "timeType";
-
     //RCV
     public static final String roomServiceCategoriesID = "id";
     public static final String roomServiceCategoriesName = "name";
@@ -131,7 +131,7 @@ public class POST {
     public static final String roomServiceFoodDesc = "desc";
     public static final String roomServiceFoodPrice = "price";
 
-    //~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String upcomingreservationsCustomerID = "customerID";
     //RCV
@@ -144,7 +144,7 @@ public class POST {
     public static final String upcomingreservationsEligibleForCheckinCheckout = "statusCode";
     public static final String upcomingreservationsCheckedinRoom = "roomNumber";
 
-    //~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String roomServiceOrderReservationID = "reservationID";
     public static final String roomServiceOrderArray = "order";
@@ -154,16 +154,14 @@ public class POST {
     public static final String roomServiceOrderJson = "order";
     public static final String roomServiceOrderComments = "comment";
 
-    //RCV
-
-    //~~~~~~~~~rating.php~~~~~~~~~~~~`
+    //~~~~~~~~~~~~~~~~~~rating.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String reviewRating = "rating";
     public static final String reviewRatingComments = "comments";
     public static final String reviewReservationID = "reservationID";
 
 
-    //~~~~~~checkrating.php~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~checkrating.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String reviewCheckReservationID = "reservationID";
     //RCV
@@ -172,12 +170,10 @@ public class POST {
     public static final String reviewCheckComments = "comments";
 
 
-    //~~~~~~loyaltypoints.php~~~~~~~
+    //~~~~~~~~~~~~~~~~~~loyaltypoints.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String loyaltyPointsCustomerID = "customerID";
     //RCV
-    public static final String loyaltyProgramFirstName = "firstName";
-    public static final String loyaltyProgramLastName = "lastName";
     public static final String loyaltyProgramPoints = "points";
     public static final String loyaltyProgramTierName = "tierName";
     public static final String loyaltyProgramTierPoints = "tierPoints";
@@ -185,20 +181,9 @@ public class POST {
     public static final String loyaltyProgramNextTierPoints = "nextTierPoints";
     public static final String loyaltyProgramBenefits = "tierBenefits";
 
-
-    //~~~~~~~~~Welcome.php~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~roomtype.php~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String welcomeNotificationCustomerID = "customerID";
-    //RCV
-    public static final String welcomeNotificationHasStayed = "hasStayed";
-
-    //~~~~~~~~~.php~~~~~~~~~~~
-    //SND
-    public static final String temp = "customerID";
-    //RCV
-    public static final String temp2 = "hasCheckedOut";
-
-    //~~~~~~~~~~~roomtype.php~~~~~~~~
+    public static final String roomTypeCheck = "check";
     //RCV
     public static final String roomTypeArray = "roomTypeArray";
     public static final String roomTypeID = "id";
@@ -207,20 +192,23 @@ public class POST {
     public static final String roomTypePrice = "price";
     public static final String roomTypeImage = "image";
     public static final String roomTypeDescription = "description";
-    //SND
-    public static final String roomTypeCheck = "check";
-    //BOTH
 
-
-    //~~~~~~~~~doorunlock.php~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~doorunlock.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String doorUnlockReservationID = "reservationID";
     public static final String doorUnlockRoomPassword = "roomPassword";
 
-    //~~~~~~~~~~countries.php~~~~~~~~~~~
-    //SND
+    //~~~~~~~~~~~~~~~~~~countries.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String countryArray = "countryArray";
+
+    //~~~~~~~~~~~~~~~~~~roomtypes.php~~~~~~~~~~~~~~~~~~
+    //RCV
+    public static final String currencyArray = "currencyArray";
+    public static final String currencyID = "id";
+    public static final String currencyName = "name";
+    public static final String currencyCode = "code";
+    public static final String currencySymbol = "symbol";
     public static final String roomTypeCashArray = "roomTypeCashArray";
     public static final String roomTypeCashID = "roomTypeID";
     public static final String roomTypeCashPersons = "persons";
@@ -236,10 +224,8 @@ public class POST {
     public static final String roomTypePointsAndCashCurrencyID = "currencyID";
     public static final String roomTypePointsAndCashCash = "cash";
     public static final String roomTypePointsAndCashPoints = "points";
-    public static final String currencyArray = "currencyArray";
-    public static final String currencyID = "id";
-    public static final String currencyName = "name";
-    public static final String currencyCode = "code";
-    public static final String currencySymbol = "symbol";
+
+    //~~~~~~~~~~~~~~~~~~totalpoints.php~~~~~~~~~~~~~~~~~~
+    //RCV
     public static final String totalPoints = "points";
 }

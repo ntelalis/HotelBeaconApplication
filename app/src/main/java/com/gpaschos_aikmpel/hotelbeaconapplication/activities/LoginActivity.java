@@ -1,22 +1,17 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.PointerIcon;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.UpdateStoredVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.GetData;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -45,7 +40,7 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
         //TODO DataSyncing on Login. Is this a good choice?
-        GetData.getInstance(this).getDataFromServer();
+        SyncServerData.getInstance(this).getDataFromServer();
 
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 

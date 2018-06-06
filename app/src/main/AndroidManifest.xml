@@ -56,10 +56,6 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.ViewPagerTestActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.BookActivity"
             android:configChanges="orientation"
             android:parentActivityName=".activities.ReservationActivity"
@@ -134,7 +130,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <service
-            android:name=".NotificationsFunctions.MyJobService"
+            android:name=".NotificationsFunctions.NotificationJobService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />

@@ -10,14 +10,9 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.UpcomingReservationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -37,6 +32,8 @@ import java.util.Random;
 
 public class NotificationCreation implements JsonListener {
 
+
+    private static final String TAG = NotificationCreation.class.getSimpleName() ;
 
     private static NotificationCreation instance = null;
 
@@ -100,6 +97,7 @@ public class NotificationCreation implements JsonListener {
     public static void notifyFarewell(Context context) {
 
         String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
+        boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
                 && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
@@ -128,6 +126,7 @@ public class NotificationCreation implements JsonListener {
     //notify the customer that he can check-in(the same day of the reservation's startDate and
     // when passing by the front door beacon-after the welcomingNotification)
     public static void notifyCheckin(Context context, String tag) {
+
 
         String notificationTitle = null;
         String notificationContent = null;

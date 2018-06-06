@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -16,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class ScheduleNotifications {
+
+    private static final String TAG = ScheduleNotifications.class.getSimpleName();
 
     public static final String CHECKIN_TAG= "CheckInNotification";
     public static final String CHECKOUT_TAG= "CheckOutNotification";
@@ -36,9 +37,9 @@ public class ScheduleNotifications {
 
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
-        Job myjob = dispatcher.newJobBuilder()
+        Job checkInJob = dispatcher.newJobBuilder()
                 //What service to call
-                .setService(MyJobService.class)
+                .setService(NotificationJobService.class)
                 //A unique tag
                 .setTag(CHECKIN_TAG+triggerDate)
                 //One time job
@@ -56,10 +57,11 @@ public class ScheduleNotifications {
                 //Bundle
                 //.setExtras()
                 .build();
-        dispatcher.mustSchedule(myjob);
+        dispatcher.mustSchedule(checkInJob);
     }
 
     public static void checkoutNotification(Context context, String triggerDate){
+
 
         int windowStart=0;
         long currentTime = System.currentTimeMillis();
@@ -75,9 +77,9 @@ public class ScheduleNotifications {
 
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
-        Job myjob = dispatcher.newJobBuilder()
+        Job checkOutJob = dispatcher.newJobBuilder()
                 //What service to call
-                .setService(MyJobService.class)
+                .setService(NotificationJobService.class)
                 //A unique tag
                 .setTag(CHECKOUT_TAG+triggerDate)
                 //One time job
@@ -95,6 +97,6 @@ public class ScheduleNotifications {
                 //Bundle
                 //.setExtras(bundle)
                 .build();
-        dispatcher.mustSchedule(myjob);
+        dispatcher.mustSchedule(checkOutJob);
     }
 }
