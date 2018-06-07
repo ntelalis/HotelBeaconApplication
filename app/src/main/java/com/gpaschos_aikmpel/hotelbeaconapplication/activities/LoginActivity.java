@@ -40,14 +40,14 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
         //TODO DataSyncing on Login. Is this a good choice?
-        SyncServerData.getInstance(this).getDataFromServer();
-
+       // SyncServerData.getInstance(this).getDataFromServer();
+        /*
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
         if (customer != null) {
             loginRequest(customer.getEmail(), customer.getPassword());
         }
-
+        */
         etEmail = findViewById(R.id.etLoginEmail);
         etPass = findViewById(R.id.etLoginPassword);
 
