@@ -19,12 +19,12 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.RoomServiceActivit
 
 public class CustomerServicesFragment extends Fragment {
 
-    private static final String CHECK_IN_DATE = "date";
+    //private static final String CHECK_IN_DATE = "date";
     private static final String RESERVATION_ID = "ID";
     private static final String ROOM_NO = "Room Number";
     private static final String FLOOR = "Rοom Floor";
 
-    private String checkInDate;
+    //private String checkInDate;
     private int reservationID;
     private int floor;
     private int roomNo;
@@ -33,7 +33,6 @@ public class CustomerServicesFragment extends Fragment {
     private Button btnRoomService;
     private Button btnCheckOut;
     private TextView tvReservationID;
-    private TextView tvCheckInDate;
     private TextView tvRoomNo;
     private TextView tvRoomFloor;
 
@@ -41,11 +40,11 @@ public class CustomerServicesFragment extends Fragment {
     public CustomerServicesFragment() {
     }
 
-    public static CustomerServicesFragment newInstance(String date, int reservID,
+    public static CustomerServicesFragment newInstance(int reservID,
                                                        int roomNumber, int roomFloor) {
         CustomerServicesFragment fragment = new CustomerServicesFragment();
         Bundle args = new Bundle();
-        args.putString(CHECK_IN_DATE, date);
+        //args.putString(CHECK_IN_DATE, date);
         args.putInt(RESERVATION_ID, reservID);
         args.putInt(FLOOR, roomFloor);
         args.putInt(ROOM_NO, roomNumber);
@@ -57,7 +56,7 @@ public class CustomerServicesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            checkInDate = getArguments().getString(CHECK_IN_DATE);
+            //checkInDate = getArguments().getString(CHECK_IN_DATE);
             reservationID = getArguments().getInt(RESERVATION_ID);
             floor = getArguments().getInt(FLOOR);
             roomNo = getArguments().getInt(ROOM_NO);
@@ -69,12 +68,12 @@ public class CustomerServicesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_customer_services, container, false);
 
-        tvCheckInDate = view.findViewById(R.id.tvCustomerServicesCheckedIn);
+        //tvCheckInDate = view.findViewById(R.id.tvCustomerServicesCheckedIn);
         tvReservationID = view.findViewById(R.id.tvCustomerServicesReservationID);
         tvRoomFloor = view.findViewById(R.id.tvCustomerServicesFloor);
         tvRoomNo = view.findViewById(R.id.tvCustomerServicesRoomNo);
 
-        tvCheckInDate.setText(checkInDate);
+        //tvCheckInDate.setText(checkInDate);
         tvReservationID.setText(String.valueOf(reservationID));
         tvRoomNo.setText(String.valueOf(roomNo));
         tvRoomFloor.setText(String.valueOf(floor));

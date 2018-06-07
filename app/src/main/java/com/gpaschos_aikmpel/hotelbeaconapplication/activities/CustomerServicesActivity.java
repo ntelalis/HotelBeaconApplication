@@ -22,13 +22,13 @@ public class CustomerServicesActivity extends AppCompatActivity {
 
         Reservation current = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
         if (current != null && current.isCheckedInNotCheckedOut()) {
-            String checkIn = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getCheckIn();
+           // String checkIn = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getCheckIn();
             int reservationID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
             int roomNo = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getRoomNumber();
             int floor = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getRoomFloor();
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CustomerServicesFragment fragment = CustomerServicesFragment.newInstance(checkIn, reservationID, roomNo, floor);
+            CustomerServicesFragment fragment = CustomerServicesFragment.newInstance(reservationID, roomNo, floor);
             transaction.replace(R.id.flCustomerServicesContainer, fragment);
             transaction.commit();
         }

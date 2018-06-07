@@ -176,4 +176,8 @@ public class SyncServerData implements JsonListener {
     public void getErrorResult(String url, String error) {
         Log.e(TAG, url+": "+error);
     }
+
+    private void notifyFinished(){
+
+    }
 }
