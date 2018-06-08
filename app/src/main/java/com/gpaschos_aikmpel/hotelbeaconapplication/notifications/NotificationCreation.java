@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
+package com.gpaschos_aikmpel.hotelbeaconapplication.notifications;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
+
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
@@ -33,7 +34,7 @@ import java.util.Random;
 public class NotificationCreation implements JsonListener {
 
 
-    private static final String TAG = NotificationCreation.class.getSimpleName() ;
+    private static final String TAG = NotificationCreation.class.getSimpleName();
 
     private static NotificationCreation instance = null;
 
@@ -191,12 +192,7 @@ public class NotificationCreation implements JsonListener {
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
 
-        if (!LocalVariables.readBoolean(context, R.string.is_notified_Welcome)) {
-            if (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000) {
-                return true;
-            }
-        }
-        return false;
+        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
@@ -204,8 +200,7 @@ public class NotificationCreation implements JsonListener {
     private static boolean shouldNotifyCheckin(Context context) {
 
         Reservation currentReservation = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
-        boolean check = currentReservation != null && currentReservation.getCheckIn() == null;
-        return check;
+        return currentReservation != null && currentReservation.getCheckIn() == null;
 
 
         /*Reservation r = RoomDB.getInstance(context).reservationDao().getUpcomingReservation();
@@ -250,20 +245,19 @@ public class NotificationCreation implements JsonListener {
                 break;
         }
 
-        Date formattedDate = null;
+        Date formattedDate;
         try {
             formattedDate = mySQLFormat.parse(scheduleDate);
+            long lFormattedDate = formattedDate.getTime();
+            long currentTime = Calendar.getInstance().getTime().getTime();
+
+            return !LocalVariables.readBoolean(context, checkerVariable) && (lFormattedDate <= currentTime)
+                    && (r != null);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        long lFormattedDate = formattedDate.getTime();
-        long currentTime = Calendar.getInstance().getTime().getTime();
-
-        if (!LocalVariables.readBoolean(context, checkerVariable) && (lFormattedDate <= currentTime)
-                && (r != null)) {
-            return true;
-        }
         return false;
     }
 
@@ -273,23 +267,23 @@ public class NotificationCreation implements JsonListener {
         Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
         SimpleDateFormat mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
-        //String reservationEndDate = r.getEndDate();
-        String reservationEndDate = "2018-05-14";
-        Date formattedEndDate = null;
-        try {
-            formattedEndDate = mySQLFormat.parse(reservationEndDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        if (r != null) {
+            String reservationEndDate = r.getEndDate();
+            try {
+                Date formattedEndDate = mySQLFormat.parse(reservationEndDate);
+                long lFormattedEndDate = formattedEndDate.getTime();
+                long currentTime = Calendar.getInstance().getTime().getTime();
 
-        long lFormattedEndDate = formattedEndDate.getTime();
-        long currentTime = Calendar.getInstance().getTime().getTime();
-
-        if (!LocalVariables.readBoolean(context, R.string.is_checked_out) && (lFormattedEndDate <= currentTime)
-                && (r != null)) {
-            return true;
+                return !LocalVariables.readBoolean(context, R.string.is_checked_out) && (lFormattedEndDate <= currentTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                throw new RuntimeException("shouldNotifyCheckout exception");
+            }
         }
-        return false;
+        else
+            return false;
+
+
     }
 
 
@@ -300,7 +294,12 @@ public class NotificationCreation implements JsonListener {
             //NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
 
             NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+            else{
+                throw new RuntimeException("problem getting notificationManager");
+            }
         }
     }
 
@@ -370,7 +369,7 @@ public class NotificationCreation implements JsonListener {
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
 
     }
 

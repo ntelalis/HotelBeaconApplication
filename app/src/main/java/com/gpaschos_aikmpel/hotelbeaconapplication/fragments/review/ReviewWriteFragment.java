@@ -1,8 +1,8 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -53,7 +53,9 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        reservationID = getArguments().getInt(reservationID_KEY);
+        if (getArguments() != null) {
+            reservationID = getArguments().getInt(reservationID_KEY);
+        }
     }
 
     @Override
@@ -68,7 +70,7 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_write, container, false);
 
@@ -105,7 +107,7 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
 
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         switch (url) {
             case URL.reviewURL:
             listener.completeReview();

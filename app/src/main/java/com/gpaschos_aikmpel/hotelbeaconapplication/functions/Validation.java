@@ -5,9 +5,7 @@ import android.util.Patterns;
 public class Validation {
 
     public static boolean checkEmail(String email) {
-        if (Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            return true;
-        return false;
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static boolean checkPassword(String password, int minLength, PasswordType type) {
@@ -43,9 +41,7 @@ public class Validation {
 
         passwordPattern += ".{" + minLength + ",}";
 
-        if (password.matches(passwordPattern))
-            return true;
-        return false;
+        return password.matches(passwordPattern);
 
     }
 
@@ -74,9 +70,7 @@ public class Validation {
         minimumLength = minimumLength != null ? minimumLength : Integer.MIN_VALUE;
         maximumLength = maximumLength != null ? maximumLength : Integer.MAX_VALUE;
 
-        if (value.length() < minimumLength || value.length() > maximumLength)
-            return false;
-        return true;
+        return value.length() >= minimumLength && value.length() <= maximumLength;
     }
 
     public static boolean checkCreditCard(String ccNumber) {

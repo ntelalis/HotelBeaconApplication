@@ -1,7 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 

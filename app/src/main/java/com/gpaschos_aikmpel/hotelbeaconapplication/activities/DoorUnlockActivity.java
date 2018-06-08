@@ -5,11 +5,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -37,6 +37,7 @@ import org.json.JSONObject;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DoorUnlockActivity extends AppCompatActivity implements JsonListener, BeaconConsumer {
 
@@ -54,7 +55,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
+            if(Objects.equals(intent.getAction(), BluetoothAdapter.ACTION_STATE_CHANGED)){
                 int state =intent.getIntExtra(BluetoothAdapter.EXTRA_STATE,BluetoothAdapter.ERROR);
                 switch (state){
                     case BluetoothAdapter.STATE_ON:
@@ -83,7 +84,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         fabDoorUnlock = findViewById(R.id.fabDoorUnlock);
         if(bluetoothAdapter==null){
-
+        throw new RuntimeException("Cannot Find Bluetooth");
         }
         else{
             if(!bluetoothAdapter.isEnabled()){
@@ -142,7 +143,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         Toast.makeText(this, "Unlocked!", Toast.LENGTH_SHORT).show();
         //beaconManager.removeAllMonitorNotifiers();
         //beaconManager.removeAllRangeNotifiers();
@@ -167,9 +168,8 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
                 @Override
                 public void didEnterRegion(Region region) {
-                    Log.d(TAG, "monitoring entered region" + region.getUniqueId());
                     if (region.getUniqueId().equals(roomBeaconUniqueID)) {
-
+                        Log.d(TAG, "monitoring entered region" + region.getUniqueId());
                     }
                 }
 
@@ -202,7 +202,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
-                            if (distance < (double) 0.5) {
+                            if (distance < 0.5) {
                                 canOpenDoor = true;
                                 handler.removeCallbacks(runnable);
                                 handler.postDelayed(runnable, 3000);

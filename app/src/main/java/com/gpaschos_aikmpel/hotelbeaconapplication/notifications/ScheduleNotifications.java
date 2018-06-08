@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
+package com.gpaschos_aikmpel.hotelbeaconapplication.notifications;
 
 import android.content.Context;
 

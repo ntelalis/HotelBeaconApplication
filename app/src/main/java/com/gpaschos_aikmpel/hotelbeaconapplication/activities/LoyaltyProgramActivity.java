@@ -1,26 +1,25 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.animation.Animator;
-
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;

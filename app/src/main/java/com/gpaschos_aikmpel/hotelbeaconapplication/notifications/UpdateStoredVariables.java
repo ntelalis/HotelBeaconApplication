@@ -1,11 +1,9 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
+package com.gpaschos_aikmpel.hotelbeaconapplication.notifications;
 
 import android.content.Context;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
-
-import java.util.Date;
 
 public class UpdateStoredVariables {
 

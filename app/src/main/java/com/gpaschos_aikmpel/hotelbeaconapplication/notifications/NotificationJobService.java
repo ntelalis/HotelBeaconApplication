@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions;
+package com.gpaschos_aikmpel.hotelbeaconapplication.notifications;
 
 import com.firebase.jobdispatcher.JobParameters;
 import com.firebase.jobdispatcher.JobService;

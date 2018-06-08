@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication;
+package com.gpaschos_aikmpel.hotelbeaconapplication.utility;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class PickNumber extends ConstraintLayout {
 

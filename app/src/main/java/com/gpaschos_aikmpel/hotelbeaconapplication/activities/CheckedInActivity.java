@@ -1,11 +1,11 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.UpdateStoredVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.UpdateStoredVariables;
 
 public class CheckedInActivity extends AppCompatActivity {
 

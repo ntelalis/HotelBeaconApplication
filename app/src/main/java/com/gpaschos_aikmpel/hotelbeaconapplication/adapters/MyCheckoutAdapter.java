@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +26,9 @@ public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.My
         this.pricesList = pricesList;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         int layoutId = R.layout.viewholder_checkout;
@@ -38,7 +40,7 @@ public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(position);
     }
 
