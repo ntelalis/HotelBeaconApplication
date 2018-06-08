@@ -9,7 +9,6 @@ import android.util.Base64;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class LocalVariables {

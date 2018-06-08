@@ -10,15 +10,16 @@ public class Country {
     @NonNull
     private String name;
 
-    public Country(String name) {
+    public Country(@NonNull String name) {
         this.name = name;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 }

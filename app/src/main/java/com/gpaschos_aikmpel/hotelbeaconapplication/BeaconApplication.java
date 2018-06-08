@@ -1,18 +1,17 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication;
 
 import android.app.Application;
-import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 

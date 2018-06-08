@@ -14,22 +14,14 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 }*/
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewCheckFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UpcomingReservationRecyclerViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;

@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -31,8 +32,9 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         this.reservationsList = reservationsList;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         int layoutId = R.layout.viewholder_upcomingreservations;
@@ -44,7 +46,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.bind(position);
     }
 

@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,18 +40,23 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        listener = (OnClickAddToBasket)context;
+        listener = (OnClickAddToBasket) context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Parcelable parcelable = getArguments().getParcelable(listKEY);
-        foodList = ((RoomServiceActivity.RoomServiceModel) parcelable).getFoodList();
+        if (getArguments() != null) {
+            Parcelable parcelable = getArguments().getParcelable(listKEY);
+            if (parcelable != null) {
+                foodList = ((RoomServiceActivity.RoomServiceModel) parcelable).getFoodList();
+            }
+        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_food, container, false);
         recyclerView = v.findViewById(R.id.rvFoodFragmentRecycler);
@@ -77,15 +83,16 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
             this.listener = listener;
         }
 
+        @NonNull
         @Override
-        public FoodAdapter.FoodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public FoodAdapter.FoodViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View v = inflater.inflate(R.layout.viewholder_food_pick, parent, false);
             return new FoodViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(FoodAdapter.FoodViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull FoodAdapter.FoodViewHolder holder, int position) {
             holder.name.setText(foodModelList.get(position).getName());
             holder.description.setText(foodModelList.get(position).getDescription());
             holder.price.setText(String.valueOf(foodModelList.get(position).getPrice()));

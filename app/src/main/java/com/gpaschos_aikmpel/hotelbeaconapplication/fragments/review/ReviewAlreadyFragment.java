@@ -1,7 +1,8 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -42,12 +43,15 @@ public class ReviewAlreadyFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        rating = getArguments().getDouble(KEY_RATING);
-        comments = getArguments().getString(KEY_COMMENTS);
+        if (getArguments() != null) {
+            rating = getArguments().getDouble(KEY_RATING);
+            comments = getArguments().getString(KEY_COMMENTS);
+        }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_already, container, false);
         rbRating = view.findViewById(R.id.rbReviewAlreadyRating);

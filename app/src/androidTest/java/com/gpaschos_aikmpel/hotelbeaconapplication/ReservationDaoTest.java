@@ -14,9 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -56,33 +53,33 @@ public class ReservationDaoTest {
     }
 
     @Test
-    public void id() throws Exception {
+    public void id() {
         assertThat(inReservation.getId(), equalTo(outReservation.getId()));
     }
 
     @Test
-    public void roomTypeID() throws Exception {
+    public void roomTypeID() {
         assertThat(inReservation.getRoomTypeID(), equalTo(outReservation.getRoomTypeID()));
     }
 
     @Test
-    public void adults() throws Exception {
+    public void adults() {
 
         assertThat(inReservation.getAdults(), equalTo(outReservation.getAdults()));
     }
 
     @Test
-    public void startDate() throws Exception {
+    public void startDate() {
         assertThat(inReservation.getStartDate(), equalTo(outReservation.getStartDate()));
     }
 
     @Test
-    public void endDate() throws Exception {
+    public void endDate() {
         assertThat(inReservation.getEndDate(), equalTo(outReservation.getEndDate()));
     }
 
     @Test
-    public void bookDate() throws Exception {
+    public void bookDate() {
         assertThat(inReservation.getBookDate(), equalTo(outReservation.getBookDate()));
     }
 

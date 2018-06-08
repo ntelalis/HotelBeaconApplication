@@ -2,12 +2,13 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.os.Bundle;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -34,18 +35,22 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         dateSelected = (DateSelected) getActivity();
 
         Bundle bundle = getArguments();
-        long minDate = bundle.getLong(minimumDate_KEY);
-        long maxDate = bundle.getLong(maximumDate_KEY);
-        etType = bundle.getInt(EditTextType);
 
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-        datePickerDialog.getDatePicker().setMinDate(minDate);
-        datePickerDialog.getDatePicker().setMaxDate(maxDate);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getActivity()), this, year, month, day);
+
+        if (bundle != null) {
+            long minDate = bundle.getLong(minimumDate_KEY);
+            long maxDate = bundle.getLong(maximumDate_KEY);
+            etType = bundle.getInt(EditTextType);
+            datePickerDialog.getDatePicker().setMinDate(minDate);
+            datePickerDialog.getDatePicker().setMaxDate(maxDate);
+        }
+
         return datePickerDialog;
     }
 

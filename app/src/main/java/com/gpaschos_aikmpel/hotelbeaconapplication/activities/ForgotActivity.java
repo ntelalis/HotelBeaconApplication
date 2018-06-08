@@ -1,57 +1,52 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotCallbacks;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotNewPasswordFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotVerifyFragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class ForgotActivity extends AppCompatActivity implements JsonListener {
-
-    private EditText etEmail;
+public class ForgotActivity extends AppCompatActivity implements ForgotCallbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
 
-        etEmail = findViewById(R.id.etForgotEmail);
-    }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ForgotFragment forgotFragment = ForgotFragment.newInstance();
+        transaction.setCustomAnimations(0, R.anim.exit_to_left, R.anim.enter_from_left, 0);
+        transaction.replace(R.id.ForgotFragmentContainer, forgotFragment);
+        transaction.commit();
 
-    public void reset(View view) {
-        String email = etEmail.getText().toString().trim();
-
-        Map<String, String> params = new HashMap<>();
-
-        params.put(POST.forgotEmail, email);
-
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.forgotUrl, params);
-    }
-
-
-    @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        String email = etEmail.getText().toString().trim();
-        Intent intent = new Intent(this, ForgotVerifyActivity.class);
-        intent.putExtra(ForgotVerifyActivity.email_KEY, email);
-        startActivity(intent);
     }
 
     @Override
-    public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+    public void finishedForgot(String email) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        ForgotVerifyFragment forgotVerifyFragment = ForgotVerifyFragment.newInstance(email);
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.ForgotFragmentContainer, forgotVerifyFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void finishedVerify(String email, String code) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+        ForgotNewPasswordFragment forgotNewPasswordFragment = ForgotNewPasswordFragment.newInstance(email,code);
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.ForgotFragmentContainer, forgotNewPasswordFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void finishedNewPassword() {
+        finish();
     }
 }

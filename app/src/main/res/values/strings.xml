@@ -17,7 +17,7 @@
     <string name="forgotConfirmHint">Verify</string>
     <string name="forgotConfirmBtn">Enter</string>
     <string name="forgotNewPassBtn">Update</string>
-    <string name="passwordInstructions">The Password must have:\n-a length greater than 8 characters and lower than 15\n-at least One Number and one special character from (!@#$%^&amp;*-=+?.)\n-at least One lower case and one upper case letter\nand can't be a substring of the email </string>
+    <string name="passwordInstructions">The Password must have:\n-a length greater than 8 characters and lower than 15\n-at least One Number and one special character from (!@#$%^&amp;*-=+?.)\n-at least One lower case and one upper case letter\nand can\'t be a substring of the email </string>
     <string name="reservationButton">Make a reservation</string>
     <string name="datePickerButton">Pick Date</string>
     <string name="fragmentDoneBtn">Done</string>
@@ -86,7 +86,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btnUpcomingReservationsCheckin">Check In</string>
     <string name="tvUpcomingreservationsCheckedin">Checked in</string>
-    <string name="tvcheckedinmsg">You have succesfully checked-in!</string>
+    <string name="tvcheckedinmsg">You have successfully checked-in!</string>
     <string name="tvcheckedinmsg2">Your room number is</string>
     <string name="tvViewHmyReservationsCheckInInstructionsTRUE">You can check in now!</string>
     <string name="tvViewHmyReservationsCheckInInstructionsFALSE">You can\'t Check in yet.</string>
@@ -100,7 +100,7 @@
     <string name="tvViewHCheckoutCurrency">€</string>
     <string name="tvCheckoutTotalPriceLabel">Total price</string>
     <string name="btnCheckoutConfirm">Confirm and Checkout</string>
-    <string name="tvcheckedoutmsg">You have succesfully Checked out!</string>
+    <string name="tvcheckedoutmsg">You have successfully Checked out!</string>
     <string name="LoyaltyPointsLabel">Points</string>
     <string name="tvLoyaltyPointsNextTierPointsLabel">Unlock</string>
     <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>
@@ -112,7 +112,7 @@
     <string name="btnRoomDetails">Details</string>
     <string name="btnCheckInCheckin">Check-in!</string>
     <string name="tvCheckInRoomLabel">Room Number</string>
-    <string name="tvCheckInInform">You have succesfully checked-in!</string>
+    <string name="tvCheckInInform">You have successfully checked-in!</string>
     <string name="tvCheckInReservationNoLabel">Reservation Number</string>
     <string name="tvCheckInReservationArrivalLabel">Arrival Date</string>
     <string name="tvCheckInReservationDepartureLabel">Departure Date</string>
@@ -153,6 +153,8 @@
     <string name="tvBookPointsPlus">+</string>
     <string name="tvBookRoomPriceLabel">Room Price</string>
     <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
+    <string name="etReviewAlreadyComments" />
+    <string name="etReviewComments" />
 
 
 </resources>

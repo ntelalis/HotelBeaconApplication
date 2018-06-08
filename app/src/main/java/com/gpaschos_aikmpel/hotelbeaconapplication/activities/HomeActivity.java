@@ -1,14 +1,13 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UpcomingReservationRecyclerViewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
@@ -60,11 +59,6 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
         VolleyQueue.getInstance(this).jsonRequest(this, URL.deleteUrl,null);
     }
 
-    public void beacon(View view) {
-        Intent intent = new Intent(this, MonitoringActivity.class);
-        startActivity(intent);
-    }
-
     public void doorUnlock(View v){
         Intent intent = new Intent(this, DoorUnlockActivity.class);
         startActivity(intent);
@@ -76,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         Toast.makeText(this, "Done!", Toast.LENGTH_SHORT).show();
     }
 

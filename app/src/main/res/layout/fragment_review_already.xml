@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ReviewAlreadyFragment">
+    tools:context=".fragments.review.ReviewAlreadyFragment">
 
     <ImageView
         android:id="@+id/ivReviewAlreadyIcon"
@@ -45,10 +45,10 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-
         android:background="@drawable/edittextbackground"
         android:ems="10"
         android:gravity="top|start"
+        android:hint="@string/etReviewAlreadyComments"
         android:inputType="text"
         android:padding="8dp"
         android:textAlignment="gravity"

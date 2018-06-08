@@ -11,19 +11,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumber.OnPickedNumber {
 

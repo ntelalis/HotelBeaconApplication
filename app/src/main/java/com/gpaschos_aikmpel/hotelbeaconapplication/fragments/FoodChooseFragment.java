@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -48,7 +49,9 @@ public class FoodChooseFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        parcelable = args.getParcelable(PARCEL_KEY);
+        if (args != null) {
+            parcelable = args.getParcelable(PARCEL_KEY);
+        }
     }
 
     @Override
@@ -58,7 +61,7 @@ public class FoodChooseFragment extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_food_choose, container, false);
 

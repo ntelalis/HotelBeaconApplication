@@ -43,7 +43,6 @@
         android:text="Σύνολο"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/btnBottomSheet"
-        app:layout_constraintEnd_toStartOf="@+id/tvBottomSheetHolderPrice"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

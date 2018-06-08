@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvUsePointsSelectedDays"
         tools:text="300" />
 
-    <com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber
+    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber
         android:id="@+id/pnUsePointsFreeNight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pnUsePointsFreeNight"
         tools:text="100" />
 
-    <com.gpaschos_aikmpel.hotelbeaconapplication.PickNumber
+    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber
         android:id="@+id/pnUsePointsCashAndPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -487,11 +487,7 @@ public class HoloCircularProgressBar extends View {
             mProgress = 1;
         } else {
 
-            if (progress >= 1) {
-                mOverrdraw = true;
-            } else {
-                mOverrdraw = false;
-            }
+            mOverrdraw = progress >= 1;
 
             mProgress = progress % 1.0f;
         }
@@ -570,10 +566,10 @@ public class HoloCircularProgressBar extends View {
         }
 
         switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-            case Gravity.LEFT:
+            case Gravity.START:
                 mHorizontalInset = 0;
                 break;
-            case Gravity.RIGHT:
+            case Gravity.END:
                 mHorizontalInset = dx;
                 break;
             case Gravity.CENTER_HORIZONTAL:

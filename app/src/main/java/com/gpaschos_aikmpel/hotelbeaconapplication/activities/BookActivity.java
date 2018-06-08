@@ -1,12 +1,10 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.NotificationsFunctions.ScheduleNotifications;
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
@@ -28,7 +26,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
-import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
@@ -147,16 +145,18 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
 
 
     }
-    //TODO 1:include option to use "Use my Rewards Points" checkbox, then "Check Availability" btn
-    //TODO 2:that opens a new Activity that displays the points needed per night. maybe use cash+
-    // TODO and points if available
 
 
-    // TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
-    // TODO in order to not let 2 users make a reservation for one last room)
+    /* TODO Reservation Pending Idea (Change DB to include status of reservation PENDING/CONFIRMED
+     in order to not let 2 users make a reservation for one last room)*/
+
     public void confirmAndBook(View view) {
 
         View fragmentView = getSupportFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
+
+        if(fragmentView==null){
+            throw new RuntimeException("Fragment is not found");
+        }
 
         EditText etCreditCard = fragmentView.findViewById(R.id.etCrediCardCard);
         EditText etHoldersName = fragmentView.findViewById(R.id.etCreditCardHoldersName);

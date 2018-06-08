@@ -2,6 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +53,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_check_out, container, false);
@@ -121,7 +123,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
                 r.setCheckOut(checkoutDate);
                 RoomDB.getInstance(getContext()).reservationDao().update(r);
 
-                ((CheckOutActivity)getActivity()).checkedOutConfirmation();
+                ((CheckOutActivity) Objects.requireNonNull(getActivity())).checkedOutConfirmation();
 
 
         }

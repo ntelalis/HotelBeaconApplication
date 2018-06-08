@@ -44,17 +44,21 @@ public class VolleyQueue {
                         try {
                             int result = response.getInt(successString);
                             response.remove(successString);
-                            if (result == 1) {
-                                jsonListener.getSuccessResult(url, response);
-                            } else if (result == 0) {
-                                try {
-                                    String failMsg = response.getString(failString);
-                                    jsonListener.getErrorResult(url, failMsg);
-                                } catch (JSONException e) {
-                                    jsonListener.getErrorResult(url, errorMsgNotSetString);
-                                }
-                            } else {
-                                jsonListener.getErrorResult(url, successInvalidValueString);
+                            switch (result) {
+                                case 1:
+                                    jsonListener.getSuccessResult(url, response);
+                                    break;
+                                case 0:
+                                    try {
+                                        String failMsg = response.getString(failString);
+                                        jsonListener.getErrorResult(url, failMsg);
+                                    } catch (JSONException e) {
+                                        jsonListener.getErrorResult(url, errorMsgNotSetString);
+                                    }
+                                    break;
+                                default:
+                                    jsonListener.getErrorResult(url, successInvalidValueString);
+                                    break;
                             }
                         } catch (JSONException e) {
                             jsonListener.getErrorResult(url, e.getLocalizedMessage());

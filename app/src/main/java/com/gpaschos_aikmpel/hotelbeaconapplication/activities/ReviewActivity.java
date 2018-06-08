@@ -1,19 +1,17 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OnReviewInteraction;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewAlreadyFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewCheckFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewConfirmationFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ReviewWriteFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review.OnReviewInteraction;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review.ReviewAlreadyFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review.ReviewCheckFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review.ReviewConfirmationFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.review.ReviewWriteFragment;
 
 public class ReviewActivity extends AppCompatActivity implements OnReviewInteraction {
 
