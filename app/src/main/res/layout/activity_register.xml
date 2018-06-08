@@ -8,130 +8,189 @@
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.RegisterActivity">
 
 
-    <android.support.design.widget.TextInputEditText
-        android:id="@+id/etRegisterFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/etFirstNameHint"
-        android:inputType="text"
-        android:text="Alexandros"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/etRegisterLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:hint="@string/etLastNameHint"
-        android:inputType="text"
-        android:text="Miaoulis"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterFirstName" />
-
-    <EditText
-        android:id="@+id/etRegisterEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/etEmailHint"
-        android:inputType="textEmailAddress"
-        android:text="asdf@asdf.com"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/tilRegisterBirthDate" />
-
-    <EditText
-        android:id="@+id/etRegisterPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/etPasswordHint"
-        android:inputType="textPassword"
-        android:text="ASDFasdf11!!"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterEmail" />
-
-    <EditText
-        android:id="@+id/etRegisterPasswordConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/etPasswordConfirmHint"
-        android:inputType="textPassword"
-        android:text="ASDFasdf11!!"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterPassword" />
-
-
-    <Button
-        android:id="@+id/btnRegisterCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:onClick="register"
-        android:text="@string/btnCreate"
-        app:layout_constraintEnd_toEndOf="@+id/etRegisterPasswordConfirm"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterPasswordConfirm"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterPasswordConfirm" />
-
-    <Spinner
-        android:id="@+id/spRegisterTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:animateLayoutChanges="false"
-        android:focusableInTouchMode="false"
-        android:spinnerMode="dialog"
-        app:layout_constraintBottom_toBottomOf="@+id/etRegisterFirstName"
-        app:layout_constraintStart_toEndOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toTopOf="@+id/etRegisterFirstName" />
-
-    <TextView
-        android:id="@+id/tvRegisterErrorMessage"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginTop="16dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterPasswordConfirm"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegisterCreate" />
-
-    <Spinner
-        android:id="@+id/spRegisterCountry"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/etRegisterFirstName"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/etRegisterLastName" />
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/etFirstNameHint"
+            android:inputType="text"
+            android:text="Alexandros"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterFirstName">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/etLastNameHint"
+            android:inputType="text"
+            android:text="Miaoulis"
+            app:layout_constraintStart_toStartOf="@+id/tietRegisterFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/tietRegisterFirstName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterCountry">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/etEmailHint"
+            android:inputType="textEmailAddress"
+            android:text="asdf@asdf.com"
+            app:layout_constraintStart_toStartOf="@+id/tietRegisterFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/tilRegisterBirthDate" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterEmail">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/etPasswordHint"
+            android:inputType="textPassword"
+            android:text="ASDFasdf11!!"
+            app:layout_constraintStart_toStartOf="@+id/tietRegisterFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/tietRegisterEmail" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterPasswordConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterPassword">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/tietRegisterPasswordConfirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/etPasswordConfirmHint"
+            android:inputType="textPassword"
+            android:text="ASDFasdf11!!"
+            app:layout_constraintStart_toStartOf="@+id/tietRegisterFirstName"
+            app:layout_constraintTop_toBottomOf="@+id/tietRegisterPassword" />
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilRegisterBirthDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/etRegisterFirstName"
-        app:layout_constraintStart_toStartOf="@+id/etRegisterFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/spRegisterCountry">
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterLastName">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/tietRegisterBirthDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/tietRegisterBirthDate" />
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/tietRegisterBirthDate"
+            android:longClickable="false" />
     </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnRegisterCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="register"
+        android:text="@string/btnCreate"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterPasswordConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterPasswordConfirm" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilRegisterCountry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/tilRegisterFirstName"
+        app:layout_constraintStart_toStartOf="@+id/tilRegisterFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tilRegisterBirthDate">
+
+        <com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner
+            android:id="@+id/ctsetRegisterCountry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:hint="Country" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="128dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner
+            android:id="@+id/etsRegisterTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+            android:hint="Title" />
+    </android.support.design.widget.TextInputLayout>
+
 
 </android.support.constraint.ConstraintLayout>

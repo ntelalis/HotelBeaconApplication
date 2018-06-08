@@ -73,6 +73,10 @@ public class Validation {
         return value.length() >= minimumLength && value.length() <= maximumLength;
     }
 
+    public static boolean checkNotEmpty(String value) {
+        return checkLength(value,1,null);
+    }
+
     public static boolean checkCreditCard(String ccNumber) {
         ccNumber = ccNumber.replaceAll("\\s","");
         int sum = 0;

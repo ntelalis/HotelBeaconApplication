@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.LoadingScreenActivity">
 
     <ProgressBar
+
         android:id="@+id/pbLoadingScreen"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
@@ -29,6 +31,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="cursive"
         android:text="Thermai Sylla"
+        android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"

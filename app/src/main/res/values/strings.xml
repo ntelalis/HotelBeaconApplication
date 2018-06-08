@@ -3,7 +3,7 @@
 
     <string name="btnLogin">Sign in</string>
     <string name="btnRegister">Sign up</string>
-    <string name="btnForgot">Forgot Password</string>
+    <string name="btnForgot">Forgot Password?</string>
 
     <string name="etFirstNameHint">First Name</string>
     <string name="etLastNameHint">Last Name</string>

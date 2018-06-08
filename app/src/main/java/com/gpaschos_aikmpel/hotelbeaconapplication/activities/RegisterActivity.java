@@ -22,6 +22,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     private EditText etFirstName;
     private EditText etLastName;
     private TextInputEditText tietBirthDate;
-    private Spinner spTitle, spCountry;
+    private EditTextSpinner<String> etsCountry, etsTitle;
 
     private int adultAge = 18;
     private int targetAge = 30;
@@ -70,14 +71,13 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        etEmail = findViewById(R.id.etRegisterEmail);
-        etPass = findViewById(R.id.etRegisterPassword);
-        etPassConf = findViewById(R.id.etRegisterPasswordConfirm);
-        etFirstName = findViewById(R.id.etRegisterFirstName);
-        etLastName = findViewById(R.id.etRegisterLastName);
-        spTitle = findViewById(R.id.spRegisterTitle);
-        spCountry = findViewById(R.id.spRegisterCountry);
-
+        etEmail = findViewById(R.id.tietRegisterEmail);
+        etPass = findViewById(R.id.tietRegisterPassword);
+        etPassConf = findViewById(R.id.tietRegisterPasswordConfirm);
+        etFirstName = findViewById(R.id.tietRegisterFirstName);
+        etLastName = findViewById(R.id.tietRegisterLastName);
+        etsTitle = findViewById(R.id.etsRegisterTitle);
+        etsCountry = findViewById(R.id.ctsetRegisterCountry);
         cal = Calendar.getInstance();
 
 
@@ -116,12 +116,17 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         for(Country country: countryListObj){
             countryList.add(country.getName());
         }
-        spCountry.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
-
+        etsCountry.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
+        etsCountry.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<String>() {
+            @Override
+            public void onItemSelectedListener(String item, int selectedIndex) {
+                etsCountry.setText(item);
+            }
+        });
         loadSpinnerData();
     }
 
-    //fill the spTitle with the Titles data.
+    //fill the etsTitle with the Titles data.
     private void loadSpinnerData() {
         VolleyQueue.getInstance(this).jsonRequest(this, URL.titlesUrl, null);
     }
@@ -134,13 +139,14 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         String passConf = etPassConf.getText().toString().trim();
         firstName = etFirstName.getText().toString().trim();
         lastName = etLastName.getText().toString().trim();
-        title = spTitle.getSelectedItem().toString().trim();
+        title = etsTitle.getText().toString().trim();
+
         try {
             birthDate =sqlFormat.format(localFormat.parse(tietBirthDate.getText().toString()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        country = spCountry.getSelectedItem().toString();
+        country = etsCountry.getText().toString();
 
         boolean flag = true;
 
@@ -172,6 +178,14 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
 
         if (!Validation.checkLength(lastName, 2, null)) {
             etLastName.setError("Minimum Length is 2");
+            flag = false;
+        }
+        if (!Validation.checkNotEmpty(country)) {
+            etsCountry.setError("Select a country");
+            flag = false;
+        }
+        if (!Validation.checkNotEmpty(title)) {
+            etsTitle.setError("Select a title");
             flag = false;
         }
 
@@ -212,7 +226,13 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     titleList.add(jsonArray.getString(i));
                 }
-                spTitle.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
+                etsTitle.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
+                etsTitle.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<String>() {
+                    @Override
+                    public void onItemSelectedListener(String item, int selectedIndex) {
+                        etsTitle.setText(item);
+                    }
+                });
                 break;
         }
     }

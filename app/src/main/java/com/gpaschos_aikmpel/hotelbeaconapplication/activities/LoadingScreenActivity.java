@@ -1,6 +1,8 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 .setDuration(mAnimationDuration)
                 .setListener(null);
 
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.MULTIPLY);
         progressBar.setAlpha(0f);
         progressBar.setVisibility(View.VISIBLE);
 
