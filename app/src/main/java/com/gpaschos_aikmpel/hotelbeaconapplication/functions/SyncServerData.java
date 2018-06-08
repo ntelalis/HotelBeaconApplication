@@ -30,8 +30,15 @@ public class SyncServerData implements JsonListener {
 
     private static SyncServerData instance;
     private final Context context;
+    private SyncCallbacks syncCallbacks;
 
     private SyncServerData(Context context) {
+        if(context instanceof SyncCallbacks) {
+            syncCallbacks = (SyncCallbacks) context;
+        }
+        else{
+            throw new ClassCastException("interface SyncCallbacks must be implemented");
+        }
         this.context = context.getApplicationContext();
     }
 
@@ -44,6 +51,7 @@ public class SyncServerData implements JsonListener {
     }
 
     public void getDataFromServer() {
+        Log.d(TAG,"GetDataFromServer");
         getRoomTypes(context);
         getCountries(context);
     }
@@ -79,7 +87,6 @@ public class SyncServerData implements JsonListener {
         params.put(POST.roomTypeCheck, jsonArray.toString());
         VolleyQueue.getInstance(context).jsonRequest(this, URL.roomTypesUrl, params);
     }
-
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
@@ -167,7 +174,8 @@ public class SyncServerData implements JsonListener {
                 roomDB.roomTypePointsAndCashDao().insertAll(roomTypePointsAndCashList);
 
                 Log.i(TAG, "RoomType results OK!!!!!!");
-
+                Log.d(TAG,"inside synced Data Server Response results");
+                syncCallbacks.synced();
                 break;
         }
     }
@@ -180,6 +188,11 @@ public class SyncServerData implements JsonListener {
     private void notifyFinished(){
 
     }
+
+    public interface SyncCallbacks{
+        void synced();
+    }
+
 
 
 }

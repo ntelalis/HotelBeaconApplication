@@ -2,19 +2,17 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.UpdateStoredVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -32,8 +30,6 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
     private EditText etPass;
     private Customer customer = null;
 
-    private TextInputLayout tilEmail;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,18 +39,16 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
         //TODO DataSyncing on Login. Is this a good choice?
-        SyncServerData.getInstance(this).getDataFromServer();
-        tilEmail = findViewById(R.id.tilLoginEmail);
-
+       // SyncServerData.getInstance(this).getDataFromServer();
+        /*
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
         if (customer != null) {
             loginRequest(customer.getEmail(), customer.getPassword());
         }
-
+        */
         etEmail = findViewById(R.id.etLoginEmail);
         etPass = findViewById(R.id.etLoginPassword);
-
 
 
     }
