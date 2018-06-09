@@ -66,15 +66,13 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
             @Override
             public void run() {
                 //TODO DataSyncing on Login. Is this a good choice?
-                    Log.d("meow", "gav");
-                    SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
+                SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
             }
         }, 5000);
 
     }
 
     public void login() {
-        Log.d("meow", "inside login()");
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
         if (customer != null) {
@@ -84,11 +82,9 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
             params.put(POST.loginPassword, customer.getPassword());
 
             VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
-            Log.d("meow", "Requested login to server");
         } else {
-            Log.d("meow", "redirecting to login Activity...");
-
             Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
@@ -102,6 +98,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
             Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
