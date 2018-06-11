@@ -4,19 +4,22 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String registerTitle = "title";
+    public static final String registerTitleID = "titleID";
     public static final String registerFirstName = "firstName";
     public static final String registerLastName = "lastName";
     public static final String registerEmail = "email";
     public static final String registerPassword = "pass";
     public static final String registerBirthDate = "birthDate";
-    public static final String registerCountry = "country";
+    public static final String registerCountryID = "countryID";
     //RCV
     public static final String registerCustomerID = "customerID";
 
     //~~~~~~~~~~~~~~~~~~titles.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String titlesTitleList = "titleList";
+    public static final String titlesID = "id";
+    public static final String titlesTitle = "title";
+
 
     //~~~~~~~~~~~~~~~~~~login.php~~~~~~~~~~~~~~~~~~
     //SND
@@ -26,8 +29,11 @@ public class POST {
     public static final String loginCustomerID = "customerID";
     public static final String loginFirstName = "firstName";
     public static final String loginLastName = "lastName";
-    public static final String loginTitle = "title";
+    public static final String loginTitleID = "titleID";
+    public static final String loginCountryID = "countryID";
+    public static final String loginBirthDate = "birthDate";
     public static final String loginIsOldCustomer = "isOldCustomer";
+
     public static final String loginIsCheckedIn = "isCheckedIn";
     public static final String loginIsCheckedOut = "isCheckedOut";
 
@@ -201,6 +207,8 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~countries.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String countryArray = "countryArray";
+    public static final String countryID = "id";
+    public static final String countryName = "name";
 
     //~~~~~~~~~~~~~~~~~~roomtypes.php~~~~~~~~~~~~~~~~~~
     //RCV

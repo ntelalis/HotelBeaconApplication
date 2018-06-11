@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -68,15 +69,16 @@ public class ForgotFragment extends Fragment implements JsonListener {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String email = tietEmail.getText().toString().trim();
+                if (!email.isEmpty()) {
+                    Map<String, String> params = new HashMap<>();
 
-                Map<String, String> params = new HashMap<>();
+                    params.put(POST.forgotEmail, email);
 
-                params.put(POST.forgotEmail, email);
-
-                VolleyQueue.getInstance(getContext()).jsonRequest(ForgotFragment.this, URL.forgotUrl, params);
-
+                    VolleyQueue.getInstance(getContext()).jsonRequest(ForgotFragment.this, URL.forgotUrl, params);
+                } else {
+                    Toast.makeText(getContext(), "Please enter an e-mail", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return v;

@@ -60,7 +60,7 @@ public class NotificationCreation implements JsonListener {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
 
             lastName = customer.getLastName();
-            title = customer.getTitle();
+            title = RoomDB.getInstance(context).titleDao().getTitleByID(customer.getTitleID()).getValue();
 
 
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
@@ -103,7 +103,7 @@ public class NotificationCreation implements JsonListener {
                 && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
             lastName = customer.getLastName();
-            title = customer.getTitle();
+            title = RoomDB.getInstance(context).titleDao().getTitleByID(customer.getTitleID()).getValue();
 
             int icon;
 

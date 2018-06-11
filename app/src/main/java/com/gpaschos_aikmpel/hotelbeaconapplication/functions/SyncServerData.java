@@ -10,6 +10,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -52,8 +53,18 @@ public class SyncServerData implements JsonListener {
 
     public void getDataFromServer() {
         Log.d(TAG,"GetDataFromServer");
+        getTitles(context);
         getRoomTypes(context);
         getCountries(context);
+    }
+
+    private void getTitles(Context context) {
+        Log.i(TAG, "Check Titles");
+        if (RoomDB.getInstance(context).titleDao().getTitles().isEmpty()) {
+            Log.i(TAG, "Get Titles");
+            VolleyQueue.getInstance(context).jsonRequest(this, URL.titlesUrl, null);
+        }
+
     }
 
     private void getCountries(Context context) {
@@ -91,14 +102,24 @@ public class SyncServerData implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
+            case URL.titlesUrl:
+                List<Title> titleList = new ArrayList<>();
+                JSONArray jsonArrayTitle = json.getJSONArray(POST.titlesTitleList);
+                for (int i = 0; i < jsonArrayTitle.length(); i++) {
+                    int id = jsonArrayTitle.getJSONObject(i).getInt(POST.titlesID);
+                    String title = jsonArrayTitle.getJSONObject(i).getString(POST.titlesTitle);
+                    titleList.add(new Title(id,title));
+                }
+                RoomDB.getInstance(context).titleDao().insertAll(titleList);
             case URL.countriesUrl:
 
                 Log.i(TAG, "RoomType results OK!");
                 JSONArray jsonArrayCountries = json.getJSONArray(POST.countryArray);
                 List<Country> countryList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayCountries.length(); i++) {
-                    String name = jsonArrayCountries.getString(i);
-                    countryList.add(new Country(name));
+                    int id = jsonArrayCountries.getJSONObject(i).getInt(POST.countryID);
+                    String name = jsonArrayCountries.getJSONObject(i).getString(POST.countryName);
+                    countryList.add(new Country(id,name));
                 }
 
                 RoomDB.getInstance(context).countryDao().insertAll(countryList);
@@ -108,7 +129,7 @@ public class SyncServerData implements JsonListener {
 
                 RoomDB roomDB = RoomDB.getInstance(context);
 
-                Log.i(TAG, "RoomType results OK!");
+
 
                 JSONArray jsonArrayCurrency = json.getJSONArray(POST.currencyArray);
                 List<Currency> currencyList = new ArrayList<>();
@@ -120,8 +141,8 @@ public class SyncServerData implements JsonListener {
                     currencyList.add(new Currency(id, name, code, symbol));
                 }
                 roomDB.currencyDao().insertAll(currencyList);
+                Log.i(TAG, "Currencies OK");
 
-                Log.i(TAG, "RoomType results OK!!");
                 JSONArray jsonArrayRoomTypes = json.getJSONArray(POST.roomTypeArray);
                 List<RoomType> roomTypeList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypes.length(); i++) {
@@ -136,8 +157,8 @@ public class SyncServerData implements JsonListener {
                     roomTypeList.add(new RoomType(id, name, capacity, price, name, description, modified));
                 }
                 roomDB.roomTypeDao().insertAll(roomTypeList);
+                Log.i(TAG, "RoomTypes OK");
 
-                Log.i(TAG, "RoomType results OK!!!");
                 JSONArray jsonArrayRoomTypeCash = json.getJSONArray(POST.roomTypeCashArray);
                 List<RoomTypeCash> roomTypeCashList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypeCash.length(); i++) {
@@ -148,8 +169,8 @@ public class SyncServerData implements JsonListener {
                     roomTypeCashList.add(new RoomTypeCash(roomTypeID, persons, currencyID, price));
                 }
                 roomDB.roomTypeCashDao().insertAll(roomTypeCashList);
+                Log.i(TAG, "RoomTypeCash OK");
 
-                Log.i(TAG, "RoomType results OK!!!!");
                 JSONArray jsonArrayRoomTypeFreeNightsPoints = json.getJSONArray(POST.roomTypeFreeNightsPointsArray);
                 List<RoomTypeFreeNightsPoints> roomTypeFreeNightsPointsList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypeFreeNightsPoints.length(); i++) {
@@ -159,8 +180,8 @@ public class SyncServerData implements JsonListener {
                     roomTypeFreeNightsPointsList.add(new RoomTypeFreeNightsPoints(roomTypeID, persons, points));
                 }
                 roomDB.roomTypeFreeNightsPointsDao().insertAll(roomTypeFreeNightsPointsList);
+                Log.i(TAG, "RoomTypeFreeNightsPoints OK");
 
-                Log.i(TAG, "RoomType results OK!!!!!");
                 JSONArray jsonArrayRoomTypePointsAndCash = json.getJSONArray(POST.roomTypePointsAndCashArray);
                 List<RoomTypePointsAndCash> roomTypePointsAndCashList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypePointsAndCash.length(); i++) {
@@ -173,8 +194,7 @@ public class SyncServerData implements JsonListener {
                 }
                 roomDB.roomTypePointsAndCashDao().insertAll(roomTypePointsAndCashList);
 
-                Log.i(TAG, "RoomType results OK!!!!!!");
-                Log.d(TAG,"inside synced Data Server Response results");
+                Log.i(TAG, "RoomTypePointsAndCash OK");
                 syncCallbacks.synced();
                 break;
         }

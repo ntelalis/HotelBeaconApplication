@@ -6,17 +6,17 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MySpinnerAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -24,13 +24,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -45,13 +43,15 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     private EditText etFirstName;
     private EditText etLastName;
     private TextInputEditText tietBirthDate;
-    private EditTextSpinner<String> etsCountry, etsTitle;
+    private EditTextSpinner<Title> etsTitle;
+    private EditTextSpinner<Country> etsCountry;
 
     private int adultAge = 18;
     private int targetAge = 30;
     private int maxAge = 100;
 
-    private String email, pass, firstName, lastName, title, birthDate, country;
+    private String email, pass, firstName, lastName, birthDate;
+    private int titleID, countryID;
 
     private SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
     private SimpleDateFormat localFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
@@ -61,8 +61,8 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             cal.set(year, month, dayOfMonth);
-
             tietBirthDate.setText(String.valueOf(localFormat.format(cal.getTime())));
+            tietBirthDate.setError(null);
         }
     };
 
@@ -111,24 +111,33 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
             }
         });
 
-        List<Country> countryListObj = RoomDB.getInstance(this).countryDao().getCountries();
-        List<String> countryList = new ArrayList<>();
-        for(Country country: countryListObj){
-            countryList.add(country.getName());
-        }
-        etsCountry.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
-        etsCountry.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<String>() {
-            @Override
-            public void onItemSelectedListener(String item, int selectedIndex) {
-                etsCountry.setText(item);
-            }
-        });
         loadSpinnerData();
     }
 
-    //fill the etsTitle with the Titles data.
     private void loadSpinnerData() {
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.titlesUrl, null);
+
+        List<Title> titleList = RoomDB.getInstance(this).titleDao().getTitles();
+        List<Country> countryList = RoomDB.getInstance(this).countryDao().getCountries();
+
+        etsTitle.setAdapter(new MySpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
+        etsTitle.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Title>() {
+            @Override
+            public void onItemSelectedListener(Title item, int selectedIndex) {
+                etsTitle.setText(item.getValue());
+                etsTitle.setError(null);
+                titleID = item.getId();
+            }
+        });
+
+        etsCountry.setAdapter(new MySpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
+        etsCountry.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Country>() {
+            @Override
+            public void onItemSelectedListener(Country item, int selectedIndex) {
+                etsCountry.setText(item.getValue());
+                etsCountry.setError(null);
+                countryID = item.getId();
+            }
+        });
     }
 
 
@@ -139,16 +148,16 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         String passConf = etPassConf.getText().toString().trim();
         firstName = etFirstName.getText().toString().trim();
         lastName = etLastName.getText().toString().trim();
-        title = etsTitle.getText().toString().trim();
-
-        try {
-            birthDate =sqlFormat.format(localFormat.parse(tietBirthDate.getText().toString()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        country = etsCountry.getText().toString();
 
         boolean flag = true;
+
+        try {
+            birthDate = sqlFormat.format(localFormat.parse(tietBirthDate.getText().toString()));
+        } catch (ParseException e) {
+            tietBirthDate.setError("Select a date");
+            flag = false;
+            e.printStackTrace();
+        }
 
         if (!Validation.checkEmail(email)) {
             etEmail.setError("Please enter a valid email address");
@@ -180,11 +189,11 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
             etLastName.setError("Minimum Length is 2");
             flag = false;
         }
-        if (!Validation.checkNotEmpty(country)) {
+        if (countryID==0) {
             etsCountry.setError("Select a country");
             flag = false;
         }
-        if (!Validation.checkNotEmpty(title)) {
+        if (titleID==0) {
             etsTitle.setError("Select a title");
             flag = false;
         }
@@ -195,13 +204,13 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
 
         Map<String, String> params = new HashMap<>();
 
-        params.put(POST.registerTitle, title);
+        params.put(POST.registerTitleID, String.valueOf(titleID));
         params.put(POST.registerFirstName, firstName);
         params.put(POST.registerLastName, lastName);
         params.put(POST.registerEmail, email);
         params.put(POST.registerPassword, pass);
-        params.put(POST.registerCountry,country);
-        params.put(POST.registerBirthDate,birthDate);
+        params.put(POST.registerCountryID, String.valueOf(countryID));
+        params.put(POST.registerBirthDate, birthDate);
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.registerUrl, params);
     }
@@ -213,26 +222,12 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
                 int customerID = json.getInt(POST.registerCustomerID);
 
 
-                Customer customer = new Customer(customerID, title, firstName, lastName, birthDate, country, email, pass);
+                Customer customer = new Customer(customerID, titleID, firstName, lastName, birthDate, countryID, email, pass);
                 CustomerDao customerDao = RoomDB.getInstance(this).customerDao();
                 customerDao.insert(customer);
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
-                break;
-            case URL.titlesUrl:
-                List<String> titleList = new ArrayList<>();
-                JSONArray jsonArray = json.getJSONArray(POST.titlesTitleList);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    titleList.add(jsonArray.getString(i));
-                }
-                etsTitle.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
-                etsTitle.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<String>() {
-                    @Override
-                    public void onItemSelectedListener(String item, int selectedIndex) {
-                        etsTitle.setText(item);
-                    }
-                });
                 break;
         }
     }

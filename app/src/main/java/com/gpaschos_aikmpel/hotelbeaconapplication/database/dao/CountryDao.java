@@ -14,6 +14,9 @@ public interface CountryDao {
     @Query("SELECT * FROM Country")
     List<Country> getCountries();
 
+    @Query("SELECT * FROM Country WHERE id=:id")
+    Country getCountryByID(int id);
+
     @Insert
     void insertAll(List<Country> countryList);
 

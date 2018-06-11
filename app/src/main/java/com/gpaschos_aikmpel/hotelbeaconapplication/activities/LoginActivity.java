@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
 
     private EditText etEmail;
     private EditText etPass;
-    private Customer customer = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +37,8 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         //create a notification channel
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
-        //TODO DataSyncing on Login. Is this a good choice?
-       // SyncServerData.getInstance(this).getDataFromServer();
-        /*
-        customer = RoomDB.getInstance(this).customerDao().getCustomer();
-
-        if (customer != null) {
-            loginRequest(customer.getEmail(), customer.getPassword());
-        }
-        */
         etEmail = findViewById(R.id.etLoginEmail);
         etPass = findViewById(R.id.etLoginPassword);
-
 
     }
 
@@ -57,19 +46,16 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         String email = etEmail.getText().toString().trim();
         String pass = etPass.getText().toString().trim();
 
-        loginRequest(email, pass);
-
-        //store notification variables and set them to false
-        UpdateStoredVariables.setDefaults(this);
-    }
-
-    private void loginRequest(String email, String pass) {
         Map<String, String> params = new HashMap<>();
 
         params.put(POST.loginEmail, email);
         params.put(POST.loginPassword, pass);
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
+
+        //store notification variables and set them to false
+        //TODO maybe fix this variable mess?
+        UpdateStoredVariables.setDefaults(this);
     }
 
     public void forgotBtn(View view) {
@@ -87,40 +73,27 @@ public class LoginActivity extends AppCompatActivity implements JsonListener {
         if (url.equals(URL.loginUrl)) {
 
             int customerId = json.getInt(POST.loginCustomerID);
+            String firstName = json.getString(POST.loginFirstName);
+            int titleID = json.getInt(POST.loginTitleID);
+            String lastName = json.getString(POST.loginLastName);
+            int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
+            String birthDate = json.getString(POST.loginBirthDate);
+            int countryID = json.getInt(POST.loginCountryID);
 
-            if (customer == null) {
-                String firstName = json.getString(POST.loginFirstName);
-                String title = json.getString(POST.loginTitle);
-                String lastName = json.getString(POST.loginLastName);
-                int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
-                boolean isCheckedIn = json.getBoolean(POST.loginIsCheckedIn);
-                boolean isCheckedOut = json.getBoolean(POST.loginIsCheckedOut);
+            String email = etEmail.getText().toString().trim();
+            String password = etPass.getText().toString().trim();
 
-                //TODO implement birthdate country
-                String birthDate = "";
-                String country = "";
+            //TODO Implement OAUTH2 Token Maybe??
 
-                String email = etEmail.getText().toString().trim();
-                String password = etPass.getText().toString().trim();
+            Customer customer = new Customer(customerId, titleID, firstName, lastName, birthDate, countryID, email, password);
+            RoomDB.getInstance(this).customerDao().insert(customer);
 
-                //TODO Implement OAUTH2 Token Maybe??
-
-                Customer customer = new Customer(customerId, title, firstName, lastName, birthDate, country, email, password);
-                RoomDB.getInstance(this).customerDao().insert(customer);
-
-                //FIXME OldCustomer????
-                if (isOldCustomer > 0) {
-                    LocalVariables.storeBoolean(this, R.string.is_old_customer, true);
-                } else {
-                    LocalVariables.storeBoolean(this, R.string.is_old_customer, false);
-                }
-                Toast.makeText(this, "Login Successful! CustomerID: " + customer.getCustomerId(), Toast.LENGTH_LONG).show();
+            //FIXME OldCustomer????
+            if (isOldCustomer > 0) {
+                LocalVariables.storeBoolean(this, R.string.is_old_customer, true);
+            } else {
+                LocalVariables.storeBoolean(this, R.string.is_old_customer, false);
             }
-            else{
-                Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_LONG).show();
-            }
-
-
 
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);

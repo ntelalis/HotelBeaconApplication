@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.IDValue;
 
 @Entity
-public class Country extends IDValue {
+public class Title extends IDValue {
 
-    public Country(@NonNull int id, String value) {
+    public Title(@NonNull int id, String value) {
         super(id,value);
     }
 }

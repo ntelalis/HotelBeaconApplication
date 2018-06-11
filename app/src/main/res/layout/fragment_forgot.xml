@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".fragments.forgot_password.ForgotFragment">
 
     <android.support.design.widget.TextInputLayout
@@ -14,6 +14,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/btnForgotReset"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -25,8 +26,8 @@
             android:id="@+id/tietForgotEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_account_box_black_24dp"
             android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_account_box_black_png"
             android:hint="@string/etEmailHint" />
 
     </android.support.design.widget.TextInputLayout>
@@ -35,6 +36,7 @@
         android:id="@+id/btnForgotReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"

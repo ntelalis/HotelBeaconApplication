@@ -85,12 +85,18 @@ public class ForgotVerifyFragment extends Fragment implements JsonListener {
             public void onClick(View v) {
                 code = tietVerify.getText().toString().trim();
 
-                Map<String, String> params = new HashMap<>();
+                if (!code.isEmpty()) {
+                    Map<String, String> params = new HashMap<>();
 
-                params.put(POST.forgotVerifyEmail, email);
-                params.put(POST.forgotVerifyVerification, code);
+                    params.put(POST.forgotVerifyEmail, email);
+                    params.put(POST.forgotVerifyVerification, code);
 
-                VolleyQueue.getInstance(getContext()).jsonRequest(ForgotVerifyFragment.this, URL.forgotVerifyUrl, params);
+                    VolleyQueue.getInstance(getContext()).jsonRequest(ForgotVerifyFragment.this, URL.forgotVerifyUrl, params);
+                } else {
+                    Toast.makeText(getContext(), "Please enter the verification code", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
         return v;

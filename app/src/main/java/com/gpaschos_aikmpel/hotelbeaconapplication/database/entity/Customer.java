@@ -7,32 +7,32 @@ import android.arch.persistence.room.PrimaryKey;
 public class Customer {
     @PrimaryKey
     private int customerId;
-    private String title;
+    private int titleID;
     private String firstName;
     private String lastName;
     private String birthDate;
-    private String country;
+    private int countryID;
     private String email;
     private String password;
 
-    public Customer(int customerId, String title, String firstName, String lastName, String birthDate, String country, String email, String password) {
+    public Customer(int customerId, int titleID, String firstName, String lastName, String birthDate, int countryID, String email, String password) {
         this.customerId = customerId;
-        this.title = title;
+        this.titleID = titleID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthDate = birthDate;
-        this.country = country;
+        this.countryID = countryID;
         this.email = email;
         this.password = password;
     }
 
 
-    public String getTitle() {
-        return title;
+    public int getTitleID() {
+        return titleID;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitleID(int titleID) {
+        this.titleID = titleID;
     }
 
     public String getBirthDate() {
@@ -43,12 +43,12 @@ public class Customer {
         this.birthDate = birthDate;
     }
 
-    public String getCountry() {
-        return country;
+    public int getCountryID() {
+        return countryID;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
     }
 
     public int getCustomerId() {
