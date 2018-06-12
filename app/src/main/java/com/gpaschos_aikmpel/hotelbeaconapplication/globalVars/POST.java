@@ -11,6 +11,7 @@ public class POST {
     public static final String registerPassword = "pass";
     public static final String registerBirthDate = "birthDate";
     public static final String registerCountryID = "countryID";
+    public static final String registerPhone = "phone";
     //RCV
     public static final String registerCustomerID = "customerID";
 

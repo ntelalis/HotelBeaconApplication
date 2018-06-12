@@ -47,10 +47,9 @@
         <item name="colorControlHighlight">@color/gray</item>
     </style>
 
-    <style name="PrimaryFlatButton" parent="Theme.AppCompat.Light">
-        <item name="buttonBarButtonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+    <style name="PrimaryFlatButton">
+        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
-        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
 </resources>

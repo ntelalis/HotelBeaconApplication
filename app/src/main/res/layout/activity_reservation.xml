@@ -6,85 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.ReservationActivity">
 
-    <EditText
-        android:id="@+id/etReservationArrival"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="@string/etArrivalDateHint"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/glReservation"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etReservationDeparture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="@string/etDepartureDateHint"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/glReservation"
-        app:layout_constraintTop_toBottomOf="@+id/etReservationArrival" />
-
-    <TextView
-        android:id="@+id/tvReservationArrival"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tvArrivalDate"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etReservationArrival"
-        app:layout_constraintEnd_toStartOf="@+id/glReservation" />
-
-    <TextView
-        android:id="@+id/tvReservationDeparture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/tvDepartureDate"
-        app:layout_constraintBaseline_toBaselineOf="@+id/etReservationDeparture"
-        app:layout_constraintEnd_toStartOf="@+id/glReservation" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/glReservation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="76dp" />
-
-    <TextView
-        android:id="@+id/tvReservationPeople"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="@string/etReservationPeople"
-        app:layout_constraintBottom_toBottomOf="@+id/spReservationPeople"
-        app:layout_constraintEnd_toStartOf="@+id/glReservation"
-        app:layout_constraintTop_toTopOf="@+id/spReservationPeople" />
-
-    <Spinner
-        android:id="@+id/spReservationPeople"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="@+id/glReservation"
-        app:layout_constraintTop_toBottomOf="@+id/etReservationDeparture" />
-
     <Button
         android:id="@+id/btnReservationSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:onClick="roomAvailability"
         android:text="@string/btnReservationSearch"
-        app:layout_constraintEnd_toEndOf="@+id/etReservationDeparture"
-        app:layout_constraintTop_toBottomOf="@+id/etReservationDeparture" />
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tilReservationPeople" />
 
     <ProgressBar
         android:id="@+id/pbAvailability"
@@ -108,14 +42,138 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layoutAnimation="@anim/layout_animation_fall_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReservationSearch">
+        app:layout_constraintTop_toBottomOf="@+id/btnReservationSearch"
+        app:layout_constraintVertical_bias="0.0">
 
     </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/tilReservationPeople"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvReservation">
+
+        <com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner
+            android:id="@+id/etsReservationPeople"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/ic_arrow_drop_down_black_png"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_person_black_png"
+            android:ems="8"
+            android:hint="@string/etReservationPeople"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/tilReservationDeparture"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tilReservationArrival"
+            app:layout_constraintTop_toBottomOf="@+id/tilReservationDeparture" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvReservation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="7dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clReservationDates"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilReservationArrival"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tilReservationDeparture"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/tietReservationArrival"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="2dp"
+                    android:drawableStart="@drawable/ic_date_range_black_png"
+                    android:ems="6"
+                    android:focusable="false"
+                    android:hint="@string/etArrivalDateHint"
+                    android:inputType="date"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/glReservation"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilReservationDeparture"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tilReservationArrival"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etReservationDeparture"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="2dp"
+                    android:drawableStart="@drawable/ic_date_range_black_png"
+                    android:ems="6"
+                    android:focusable="false"
+                    android:hint="@string/etDepartureDateHint"
+                    android:inputType="date"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/ivReservation"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/line" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
 
 </android.support.constraint.ConstraintLayout>

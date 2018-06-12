@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/ic_remove_black_png" />
 
     <ImageView
         android:id="@+id/ivPlus"
@@ -38,6 +38,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivMinus"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/ic_add_black_png" />
 
 </android.support.constraint.ConstraintLayout>

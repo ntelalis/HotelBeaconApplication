@@ -86,7 +86,7 @@
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cl2"
-        app:srcCompat="@drawable/minus" />
+        app:srcCompat="@drawable/ic_remove_black_png" />
 
     <ImageView
         android:id="@+id/ivChooseFoodPlusButton"
@@ -100,7 +100,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cl2"
         app:layout_constraintTop_toTopOf="@+id/cl2"
-        app:srcCompat="@drawable/plus" />
+        app:srcCompat="@drawable/ic_add_black_png" />
 
     <TextView
         android:id="@+id/tvChooseFoodName"
@@ -148,7 +148,8 @@
         android:layout_marginTop="32dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_add_white_png"
+        app:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvChooseFoodTotalLabel"

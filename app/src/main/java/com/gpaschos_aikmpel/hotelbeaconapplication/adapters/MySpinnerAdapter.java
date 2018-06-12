@@ -9,19 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.utility.IDValue;
-
 import java.util.List;
 
-public class MySpinnerAdapter<T extends IDValue> extends ArrayAdapter<T> implements android.widget.SpinnerAdapter {
+public class MySpinnerAdapter<T> extends ArrayAdapter<T> implements android.widget.SpinnerAdapter {
 
     public MySpinnerAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
         super(context, resource, objects);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return getItem(position).getId();
     }
 
     @NonNull
@@ -34,7 +27,7 @@ public class MySpinnerAdapter<T extends IDValue> extends ArrayAdapter<T> impleme
         TextView tv = convertView.findViewById(android.R.id.text1);
         T t = getItem(position);
         if (t != null) {
-            tv.setText(t.getValue());
+            tv.setText(t.toString());
         }
         return convertView;
     }

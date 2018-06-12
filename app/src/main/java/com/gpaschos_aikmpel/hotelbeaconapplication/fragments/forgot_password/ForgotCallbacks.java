@@ -8,4 +8,10 @@ public interface ForgotCallbacks {
 
     void finishedNewPassword();
 
+    void login();
+
+    void register();
+
+    void showForgot();
+
 }

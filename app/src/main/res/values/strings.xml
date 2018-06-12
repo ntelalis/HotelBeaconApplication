@@ -14,7 +14,7 @@
 
     <string name="btnForgotConfirm">Reset</string>
     <string name="title">Title</string>
-    <string name="forgotConfirmHint">Verification Code</string>
+    <string name="forgotConfirmHint">Password Confirm</string>
     <string name="forgotConfirmBtn">Enter</string>
     <string name="forgotNewPassBtn">Update</string>
     <string name="passwordInstructions">The Password must have:\n-a length greater than 8 characters and lower than 15\n-at least One Number and one special character from (!@#$%^&amp;*-=+?.)\n-at least One lower case and one upper case letter\nand can\'t be a substring of the email </string>
@@ -36,8 +36,8 @@
     <string name="reserveSuccess">Your reservation is complete!</string>
     <string name="reservationIDLabel">Reservation Number</string>
     <string name="btnHome">Home</string>
-    <string name="etArrivalDateHint">Arrival Date</string>
-    <string name="etDepartureDateHint">Departure Date</string>
+    <string name="etArrivalDateHint">Check in</string>
+    <string name="etDepartureDateHint">Check out</string>
     <string name="saved_customerId" translatable="false">customerID_KEY</string>
     <string name="saved_email" translatable="false">email_KEY</string>
     <string name="saved_password" translatable="false">password_KEY</string>
@@ -155,6 +155,12 @@
     <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
     <string name="etReviewAlreadyComments" />
     <string name="etReviewComments" />
+    <string name="tvForgotPrompt">Having trouble signing in?</string>
+    <string name="tvForgotVerifyPrompt">Check your email</string>
+    <string name="tvForgotVerifyPromptDetails">We have sent you a verification code, please verify your email address</string>
+    <string name="tvForgotPromptDetails">Please enter your email address associated with the hotel and we \'ll send you recovery information</string>
+    <string name="tvForgotNewPassPrompt">Choose a new password</string>
+    <string name="tvForgotNewPassPromptDetails">We are almost done! Please enter a new password in the form below</string>
 
 
 </resources>
