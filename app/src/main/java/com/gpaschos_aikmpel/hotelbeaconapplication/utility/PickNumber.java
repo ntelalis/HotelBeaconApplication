@@ -1,23 +1,22 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.utility;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 public class PickNumber extends ConstraintLayout {
 
+    private OnValueChangedListener onValueChangedListener;
 
-    private OnPickedNumber listener;
-
-    private View rootView;
-
-    private TextView tvNumber;
-    private View btnMinus, btnPlus;
+    private TextView tvNumber, tvLabel;
+    private TypedArray typedArray;
 
     private int minValue = 0;
     private int maxValue = Integer.MAX_VALUE;
@@ -25,25 +24,44 @@ public class PickNumber extends ConstraintLayout {
 
     public PickNumber(Context context) {
         super(context);
+        typedArray = context.obtainStyledAttributes(R.styleable.PickNumber);
         init(context);
     }
 
     public PickNumber(Context context, AttributeSet attrs) {
         super(context, attrs);
+        typedArray = context.obtainStyledAttributes(attrs, R.styleable.PickNumber);
         init(context);
     }
 
     public PickNumber(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        typedArray = context.obtainStyledAttributes(attrs, R.styleable.PickNumber);
         init(context);
     }
 
     private void init(Context context) {
-        rootView = inflate(context, R.layout.picknumber, this);
-        tvNumber = rootView.findViewById(R.id.tvNumber);
-        btnMinus = rootView.findViewById(R.id.ivMinus);
-        btnPlus = rootView.findViewById(R.id.ivPlus);
+        View rootView = inflate(context, R.layout.picknumber, this);
+        tvNumber = rootView.findViewById(R.id.tvPickNumberNumber);
+        tvLabel = rootView.findViewById(R.id.tvPickNumberLabel);
+        View btnMinus = rootView.findViewById(R.id.ivPickNumberMinus);
+        View btnPlus = rootView.findViewById(R.id.ivPickNumberPlus);
 
+        tvNumber.setText(String.valueOf(defaultValue));
+
+        int defaultValue = typedArray.getInt(R.styleable.PickNumber_defaultValue, this.defaultValue);
+        setValue(defaultValue);
+
+        int minValue = typedArray.getInt(R.styleable.PickNumber_minValue, this.minValue);
+        setMinValue(minValue);
+
+        int maxValue = typedArray.getInt(R.styleable.PickNumber_maxValue, this.maxValue);
+        setMaxValue(maxValue);
+
+        String text = typedArray.getString(R.styleable.PickNumber_label);
+        if (text != null && !text.isEmpty()){
+            setLabel(text);
+        }
 
         btnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +78,15 @@ public class PickNumber extends ConstraintLayout {
             }
         });
         setValue(defaultValue);
+    }
+
+    public String getLabel() {
+        return tvLabel.getText().toString();
+    }
+
+    public void setLabel(String label) {
+        tvLabel.setText(label);
+        tvLabel.setVisibility(View.VISIBLE);
     }
 
 
@@ -84,6 +111,7 @@ public class PickNumber extends ConstraintLayout {
     }
 
     public void setValue(int newValue) {
+
         int value = newValue;
         if (newValue < minValue) {
             value = minValue;
@@ -91,8 +119,9 @@ public class PickNumber extends ConstraintLayout {
             value = maxValue;
         }
         tvNumber.setText(String.valueOf(value));
-        if(listener!=null){
-            listener.value(getId(), value);
+        if(onValueChangedListener !=null){
+            int oldValue = getValue();
+            onValueChangedListener.onValueChanged(oldValue,value);
         }
     }
 
@@ -111,14 +140,12 @@ public class PickNumber extends ConstraintLayout {
         }
     }
 
-    public void setListener(OnPickedNumber onPickedNumber) {
-
-        listener = onPickedNumber;
-
+    public void setOnValueChangedListener(OnValueChangedListener onValueChangedListener){
+        this.onValueChangedListener = onValueChangedListener;
     }
 
-    public interface OnPickedNumber {
-        void value(int id, int value);
+    public interface OnValueChangedListener{
+        void onValueChanged(int oldValue, int newValue);
     }
 
 

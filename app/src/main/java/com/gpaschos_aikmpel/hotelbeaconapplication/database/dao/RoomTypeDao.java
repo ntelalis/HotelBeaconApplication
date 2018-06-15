@@ -18,6 +18,10 @@ public interface RoomTypeDao {
     @Query("SELECT * FROM RoomType WHERE id = :id")
     RoomType getRoomTypeById(int id);
 
+    //TODO Maybe Adults?
+    @Query("SELECT MAX(Capacity) FROM RoomType")
+    int getMaxCapacity();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<RoomType> roomTypeList);
 }

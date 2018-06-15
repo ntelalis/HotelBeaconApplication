@@ -2,42 +2,60 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clPickNumber"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
 
     <TextView
-        android:id="@+id/tvNumber"
+        android:id="@+id/tvPickNumberLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:lines="1"
+        android:layout_marginStart="16dp"
+        android:text="Test"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constrainedWidth="true"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivPlus"
-        app:layout_constraintStart_toEndOf="@+id/ivMinus"
+        app:layout_constraintStart_toEndOf="@+id/tvPickNumberNumber"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvPickNumberNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:lines="1"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivPickNumberMinus"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="27sp"
+        app:layout_constraintWidth_min="24sp"
         tools:text="1" />
 
     <ImageView
-        android:id="@+id/ivMinus"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
+        android:id="@+id/ivPickNumberPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/strokeviewgray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvPickNumberLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_add_black_png" />
+
+    <ImageView
+        android:id="@+id/ivPickNumberMinus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/strokeviewgray"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_remove_black_png" />
-
-    <ImageView
-        android:id="@+id/ivPlus"
-        android:layout_width="38dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivMinus"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_add_black_png" />
 
 </android.support.constraint.ConstraintLayout>

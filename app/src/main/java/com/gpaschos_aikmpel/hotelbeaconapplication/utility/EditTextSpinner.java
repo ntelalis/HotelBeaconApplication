@@ -51,7 +51,7 @@ public class EditTextSpinner<T> extends AppCompatEditText {
 
 
 
-
+    @SuppressWarnings("unchecked")
     private void configureOnClickListener() {
 
         setOnClickListener(new OnClickListener() {
@@ -64,7 +64,7 @@ public class EditTextSpinner<T> extends AppCompatEditText {
                     public void onClick(DialogInterface dialogInterface, int selectedIndex) {
                         if (onItemSelectedListener != null) {
 
-                            onItemSelectedListener.onItemSelectedListener((T)mSpinnerAdapter.getItem(selectedIndex), selectedIndex);
+                            onItemSelectedListener.onItemSelectedListener( (T)mSpinnerAdapter.getItem(selectedIndex), selectedIndex);
                         }
                     }
                 });

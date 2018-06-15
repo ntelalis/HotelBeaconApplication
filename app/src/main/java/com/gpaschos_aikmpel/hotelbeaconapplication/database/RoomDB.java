@@ -12,8 +12,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.ReservationDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeCashDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeDao;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeFreeNightsPointsDao;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypePointsAndCashDao;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypePointsDao;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeCashPointsDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.TitleDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Beacon;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
@@ -22,11 +22,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 
-@Database(entities = {Customer.class, Reservation.class, Beacon.class, RoomType.class, Country.class, RoomTypeCash.class, RoomTypeFreeNightsPoints.class, RoomTypePointsAndCash.class, Currency.class, Title.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Reservation.class, Beacon.class, RoomType.class, Country.class, RoomTypeCash.class, RoomTypePoints.class, RoomTypeCashPoints.class, Currency.class, Title.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
 
     private static final String DB_NAME = "HotelDatabase";
@@ -53,9 +53,9 @@ public abstract class RoomDB extends RoomDatabase {
 
     public abstract RoomTypeCashDao roomTypeCashDao();
 
-    public abstract RoomTypeFreeNightsPointsDao roomTypeFreeNightsPointsDao();
+    public abstract RoomTypePointsDao roomTypePointsDao();
 
-    public abstract RoomTypePointsAndCashDao roomTypePointsAndCashDao();
+    public abstract RoomTypeCashPointsDao roomTypeCashPointsDao();
 
     public abstract CurrencyDao currencyDao();
 

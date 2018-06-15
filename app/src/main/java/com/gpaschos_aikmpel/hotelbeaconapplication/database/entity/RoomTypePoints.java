@@ -2,30 +2,24 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.database.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
 
-@Entity(primaryKeys = {"roomTypeID", "adults", "children", "currencyID"},
-        indices = {@Index(value = "currencyID")},
+@Entity(primaryKeys = {"roomTypeID", "adults", "children"},
         foreignKeys = {@ForeignKey(entity = RoomType.class,
                 parentColumns = "id",
-                childColumns = "roomTypeID"),
-                @ForeignKey(entity = Currency.class,
-                        parentColumns = "id",
-                        childColumns = "currencyID")})
-public class RoomTypeCash {
-
+                childColumns = "roomTypeID")})
+public class RoomTypePoints {
     private int roomTypeID;
     private int adults;
     private int children;
-    private int currencyID;
-    private int cash;
+    private int spendingPoints;
+    private int gainingPoints;
 
-    public RoomTypeCash(int roomTypeID, int adults, int children, int currencyID, int cash) {
+    public RoomTypePoints(int roomTypeID, int adults, int children, int spendingPoints, int gainingPoints) {
         this.roomTypeID = roomTypeID;
         this.adults = adults;
         this.children = children;
-        this.currencyID = currencyID;
-        this.cash = cash;
+        this.spendingPoints = spendingPoints;
+        this.gainingPoints = gainingPoints;
     }
 
     public int getRoomTypeID() {
@@ -52,19 +46,19 @@ public class RoomTypeCash {
         this.children = children;
     }
 
-    public int getCurrencyID() {
-        return currencyID;
+    public int getSpendingPoints() {
+        return spendingPoints;
     }
 
-    public void setCurrencyID(int currencyID) {
-        this.currencyID = currencyID;
+    public void setSpendingPoints(int spendingPoints) {
+        this.spendingPoints = spendingPoints;
     }
 
-    public int getCash() {
-        return cash;
+    public int getGainingPoints() {
+        return gainingPoints;
     }
 
-    public void setCash(int cash) {
-        this.cash = cash;
+    public void setGainingPoints(int gainingPoints) {
+        this.gainingPoints = gainingPoints;
     }
 }

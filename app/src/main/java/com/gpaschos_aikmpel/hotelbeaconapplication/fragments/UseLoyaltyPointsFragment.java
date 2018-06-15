@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
-public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumber.OnPickedNumber {
+public class UseLoyaltyPointsFragment extends DialogFragment {
 
     private static final String TOTAL_POINTS = "total_points";
     private static final String TOTAL_DAYS = "total_days";
@@ -102,8 +102,19 @@ public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumb
         int maxCashNightsByPoints = (totalPoints / cashPoints);
         pnCashValue.setMaxValue(maxCashNightsByPoints < totalDays ? maxCashNightsByPoints : totalDays);
 
-        pnFreeValue.setListener(this);
-        pnCashValue.setListener(this);
+        pnFreeValue.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int oldValue, int newValue) {
+                setValues(newValue,pnCashValue.getValue());
+            }
+        });
+
+        pnCashValue.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int oldValue, int newValue) {
+                setValues(pnFreeValue.getValue(),newValue);
+            }
+        });
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
         dialog.setTitle("Choose your loyalty reward");
@@ -117,6 +128,23 @@ public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumb
         dialog.setView(v);
         return dialog.create();
 
+    }
+
+    private void setValues(int freeValue, int cashValue){
+
+        tvSelectedDays.setText(String.valueOf(freeValue+cashValue));
+
+        int freeTotal = freeValue * freePoints;
+        int cashTotal = cashValue * cashPoints;
+
+        int maxFreeNights = (totalPoints - cashTotal) / freePoints;
+        int freeSelectedDays = totalDays - cashValue;
+        pnFreeValue.setMaxValue(maxFreeNights < freeSelectedDays ? maxFreeNights : freeSelectedDays);
+        int maxCashNights = (totalPoints - freeTotal) / cashPoints;
+        int cashSelectedDays = totalDays - freeValue;
+        pnCashValue.setMaxValue(maxCashNights < cashSelectedDays ? maxCashNights : cashSelectedDays);
+
+        tvSelectedTotal.setText(String.valueOf(freeTotal + cashTotal));
     }
 
 
@@ -134,30 +162,6 @@ public class UseLoyaltyPointsFragment extends DialogFragment implements PickNumb
     public void onDetach() {
         super.onDetach();
         listener = null;
-    }
-
-    @Override
-    public void value(int id, int value) {
-
-        int freeValue = pnFreeValue.getValue();
-        int cashValue = pnCashValue.getValue();
-
-        tvSelectedDays.setText(String.valueOf(freeValue+cashValue));
-
-        int freeTotal = freeValue * freePoints;
-        int cashTotal = cashValue * cashPoints;
-
-        //tvFreeSelected.setText(String.valueOf(freeTotal));
-        //tvCashSelected.setText(String.valueOf(cashTotal));
-
-        int maxFreeNights = (totalPoints - cashTotal) / freePoints;
-        int freeSelectedDays = totalDays - cashValue;
-        pnFreeValue.setMaxValue(maxFreeNights < freeSelectedDays ? maxFreeNights : freeSelectedDays);
-        int maxCashNights = (totalPoints - freeTotal) / cashPoints;
-        int cashSelectedDays = totalDays - freeValue;
-        pnCashValue.setMaxValue(maxCashNights < cashSelectedDays ? maxCashNights : cashSelectedDays);
-
-        tvSelectedTotal.setText(String.valueOf(freeTotal + cashTotal));
     }
 
 

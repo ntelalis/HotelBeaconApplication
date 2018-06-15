@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -27,7 +26,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
-import com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +49,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     private EditText etDepartureDate;
     private SimpleDateFormat localizedFormat, mySQLFormat;
     //private Spinner spPeople;
-    private EditTextSpinner<Integer> etsPeople;
+    private PickNumber pnPeople;
+    //private EditTextSpinner<Integer> etsPeople;
     private RecyclerView recyclerView;
     private ProgressBar pbLoading;
 
@@ -65,7 +65,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         recyclerView = findViewById(R.id.rvReservationRecycler);
         pbLoading = findViewById(R.id.pbAvailability);
         //spPeople = findViewById(R.id.spReservationPeople);
-        etsPeople = findViewById(R.id.etsReservationPeople);
+        //etsPeople = findViewById(R.id.etsReservationPeople);
+        pnPeople = findViewById(R.id.pnReservationPeople);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -86,33 +87,17 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             }
         });
 
-        etsPeople.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Integer>() {
+        /*etsPeople.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Integer>() {
             @Override
             public void onItemSelectedListener(Integer item, int selectedIndex) {
                 etsPeople.setText(String.valueOf(item));
                 recyclerView.setAdapter(null);
             }
-        });
-        /*
-        spPeople.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recyclerView.setAdapter(null);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });*/
 
-        loadSpinnerData();
-        //SyncServerData.getInstance(this).getDataFromServer();
-    }
+        int maxCapacity = RoomDB.getInstance(this).roomTypeDao().getMaxCapacity();
+        pnPeople.setMaxValue(maxCapacity);
 
-
-    private void loadSpinnerData() {
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.personsUrl, null);
     }
 
     public void roomAvailability(View view) throws ParseException {
@@ -120,7 +105,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         String arrivalDateLocal = etArrivalDate.getText().toString();
         String departureDateLocal = etDepartureDate.getText().toString();
         //String persons = spPeople.getSelectedItem().toString();
-        String persons = etsPeople.getText().toString();
+        //String persons = etsPeople.getText().toString();
+        String persons = String.valueOf(pnPeople.getValue());
 
         if (!arrivalDateLocal.isEmpty() && !departureDateLocal.isEmpty() && !persons.isEmpty()) {
 
@@ -181,8 +167,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                 try {
                     calendar = Calendar.getInstance();
                     calendar.setTime(localizedFormat.parse(arrivalDateLocal));
-                    //FIXME DEBUG MODE FOR CHECKOUT
-                    //calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    calendar.add(Calendar.DAY_OF_MONTH, 1);
                     bundle.putLong(DatePickerFragment.minimumDate_KEY, calendar.getTimeInMillis());
                     bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservationDeparture);
 
@@ -260,8 +245,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
                     //int people = Integer.parseInt(spPeople.getSelectedItem().toString());
-                    int people = Integer.parseInt(etsPeople.getText().toString());
-
+                    //int people = Integer.parseInt(etsPeople.getText().toString());
+                    int people = pnPeople.getValue();
                     RoomDB roomDB = RoomDB.getInstance(this);
 
 
@@ -271,16 +256,13 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
                     String description = rt.getDescription();
                     String title = rt.getName();
-                    //int price = rt.getPrice();
-                    int price = rtc.getPrice();
+                    int price = rtc.getCash();
                     Bitmap imageBitmap = LocalVariables.readImage(this, rt.getImage());
                     String imageName = rt.getImage();
-                    //int persons = Integer.parseInt(spPeople.getSelectedItem().toString());
-                    int persons = Integer.parseInt(etsPeople.getText().toString());
 
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, persons, imageBitmap, imageName);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, people, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }
@@ -288,19 +270,6 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                 fillRecyclerView(roomList);
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
-                break;
-            case URL.personsUrl:
-
-                List<Integer> personsList = new ArrayList<>();
-
-                int maxCapacity = json.getInt(POST.personsMaxCapacity);
-                for (int i = 1; i <= maxCapacity; i++) {
-                    personsList.add(i);
-                }
-
-                //spPeople.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, personsList));
-                etsPeople.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,personsList));
-                etsPeople.setText("1");
                 break;
         }
     }
@@ -348,8 +317,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         String roomImage = room.imgFileName;
 
         //int people = Integer.parseInt(spPeople.getSelectedItem().toString());
-        int people = Integer.parseInt(etsPeople.getText().toString());
-
+        //int people = Integer.parseInt(etsPeople.getText().toString());
+        int people = pnPeople.getValue();
 
         Intent intent = new Intent(this, BookActivity.class);
         intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);

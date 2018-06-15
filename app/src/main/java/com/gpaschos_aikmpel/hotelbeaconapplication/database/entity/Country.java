@@ -2,9 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.database.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.utility.IDValue;
 
 @Entity
 public class Country {

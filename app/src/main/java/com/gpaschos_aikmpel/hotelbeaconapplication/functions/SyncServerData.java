@@ -8,8 +8,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -165,12 +165,13 @@ public class SyncServerData implements JsonListener {
                     int id = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeID);
                     String name = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeName);
                     int capacity = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeCapacity);
-                    int price = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypePrice);
+                    int adults = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeAdults);
+                    boolean childrenSupported = jsonArrayRoomTypes.getJSONObject(i).getBoolean(POST.roomTypeChildrenSupported);
                     String img = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeImage);
                     String description = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeDescription);
                     String modified = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeModified);
                     LocalVariables.storeImageFromBase64(context, name, img);
-                    roomTypeList.add(new RoomType(id, name, capacity, price, name, description, modified));
+                    roomTypeList.add(new RoomType(id, name, capacity, adults, childrenSupported, name, description, modified));
                 }
                 roomDB.roomTypeDao().insertAll(roomTypeList);
                 Log.i(TAG, "RoomTypes results OK!");
@@ -179,38 +180,42 @@ public class SyncServerData implements JsonListener {
                 List<RoomTypeCash> roomTypeCashList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypeCash.length(); i++) {
                     int roomTypeID = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashID);
-                    int persons = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashPersons);
+                    int adults = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashAdults);
+                    int children = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashChildren);
                     int currencyID = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashCurrencyID);
-                    int price = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashPrice);
-                    roomTypeCashList.add(new RoomTypeCash(roomTypeID, persons, currencyID, price));
+                    int price = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashCash);
+                    roomTypeCashList.add(new RoomTypeCash(roomTypeID, adults, children, currencyID, price));
                 }
                 roomDB.roomTypeCashDao().insertAll(roomTypeCashList);
                 Log.i(TAG, "RoomTypeCash results OK!");
 
-                JSONArray jsonArrayRoomTypeFreeNightsPoints = json.getJSONArray(POST.roomTypeFreeNightsPointsArray);
-                List<RoomTypeFreeNightsPoints> roomTypeFreeNightsPointsList = new ArrayList<>();
-                for (int i = 0; i < jsonArrayRoomTypeFreeNightsPoints.length(); i++) {
-                    int roomTypeID = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsRoomTypeID);
-                    int persons = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsPersons);
-                    int points = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsPoints);
-                    roomTypeFreeNightsPointsList.add(new RoomTypeFreeNightsPoints(roomTypeID, persons, points));
+                JSONArray jsonArrayRoomTypePoints = json.getJSONArray(POST.roomTypePointsArray);
+                List<RoomTypePoints> roomTypePointsList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayRoomTypePoints.length(); i++) {
+                    int roomTypeID = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsRoomTypeID);
+                    int adults = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsAdults);
+                    int children = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsChildren);
+                    int spendingPoints = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsSpendingPoints);
+                    int gainingPoints = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsGainingPoints);
+                    roomTypePointsList.add(new RoomTypePoints(roomTypeID, adults, children, spendingPoints, gainingPoints));
                 }
-                roomDB.roomTypeFreeNightsPointsDao().insertAll(roomTypeFreeNightsPointsList);
-                Log.i(TAG, "RoomTypeFreeNightsPoints results OK!");
+                roomDB.roomTypePointsDao().insertAll(roomTypePointsList);
+                Log.i(TAG, "RoomTypePoints results OK!");
 
-                JSONArray jsonArrayRoomTypePointsAndCash = json.getJSONArray(POST.roomTypePointsAndCashArray);
-                List<RoomTypePointsAndCash> roomTypePointsAndCashList = new ArrayList<>();
-                for (int i = 0; i < jsonArrayRoomTypePointsAndCash.length(); i++) {
-                    int roomTypeID = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashRoomTypeID);
-                    int persons = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashPersons);
-                    int currencyID = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashCurrencyID);
-                    int cash = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashCash);
-                    int points = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashPoints);
-                    roomTypePointsAndCashList.add(new RoomTypePointsAndCash(roomTypeID, persons, currencyID, cash, points));
+                JSONArray jsonArrayRoomTypeCashPoints = json.getJSONArray(POST.roomTypeCashPointsArray);
+                List<RoomTypeCashPoints> roomTypeCashPointsList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayRoomTypeCashPoints.length(); i++) {
+                    int roomTypeID = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsRoomTypeID);
+                    int adults = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsAdults);
+                    int children = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsChildren);
+                    int currencyID = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsCurrencyID);
+                    int cash = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsCash);
+                    int points = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsPoints);
+                    roomTypeCashPointsList.add(new RoomTypeCashPoints(roomTypeID, adults, children, currencyID, cash, points));
                 }
-                roomDB.roomTypePointsAndCashDao().insertAll(roomTypePointsAndCashList);
+                roomDB.roomTypeCashPointsDao().insertAll(roomTypeCashPointsList);
 
-                Log.i(TAG, "RoomTypePointsAndCash results OK!");
+                Log.i(TAG, "RoomTypeCashPoints results OK!");
 
                 syncCallbacks.synced();
                 break;

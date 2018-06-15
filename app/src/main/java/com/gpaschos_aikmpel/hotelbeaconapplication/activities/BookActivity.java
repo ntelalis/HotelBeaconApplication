@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
@@ -240,10 +240,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
                 int totalPoints = json.getInt(POST.totalPoints);
 
                 RoomDB roomDB = RoomDB.getInstance(this);
-                RoomTypeFreeNightsPoints roomTypeFreeNightsPoints = roomDB.roomTypeFreeNightsPointsDao().getRoomTypeFreeNightsPoints(roomTypeID, persons);
-                int freeNightPoints = roomTypeFreeNightsPoints.getPoints();
+                RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, persons);
+                int freeNightPoints = roomTypeFreeNightsPoints.getSpendingPoints();
 
-                RoomTypePointsAndCash roomTypePointsAndCash = roomDB.roomTypePointsAndCashDao().getRoomTypePointsAndCash(roomTypeID, persons, 1);
+                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, persons, 1);
                 int cashPoints = roomTypePointsAndCash.getPoints();
                 cashPrice = roomTypePointsAndCash.getCash();
 
