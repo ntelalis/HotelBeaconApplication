@@ -95,7 +95,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
             int customerId = json.getInt(POST.loginCustomerID);
             Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(this, HomeActivityNEW.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();

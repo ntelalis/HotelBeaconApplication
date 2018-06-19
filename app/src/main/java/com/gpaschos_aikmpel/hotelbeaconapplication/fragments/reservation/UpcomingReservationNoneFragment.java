@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

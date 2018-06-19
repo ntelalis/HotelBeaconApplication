@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getActivity()), this, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(Objects.requireNonNull(getActivity()),this, year, month, day);
 
         if (bundle != null) {
             long minDate = bundle.getLong(minimumDate_KEY);
@@ -49,6 +50,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             etType = bundle.getInt(EditTextType);
             datePickerDialog.getDatePicker().setMinDate(minDate);
             datePickerDialog.getDatePicker().setMaxDate(maxDate);
+            datePickerDialog.setTitle(null);
         }
 
         return datePickerDialog;

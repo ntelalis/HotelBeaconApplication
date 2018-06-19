@@ -48,9 +48,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     private EditText etArrivalDate;
     private EditText etDepartureDate;
     private SimpleDateFormat localizedFormat, mySQLFormat;
-    //private Spinner spPeople;
-    private PickNumber pnPeople;
-    //private EditTextSpinner<Integer> etsPeople;
+    private PickNumber pnAdults, pnChildren;
     private RecyclerView recyclerView;
     private ProgressBar pbLoading;
 
@@ -64,11 +62,11 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         etDepartureDate = findViewById(R.id.etReservationDeparture);
         recyclerView = findViewById(R.id.rvReservationRecycler);
         pbLoading = findViewById(R.id.pbAvailability);
-        //spPeople = findViewById(R.id.spReservationPeople);
-        //etsPeople = findViewById(R.id.etsReservationPeople);
-        pnPeople = findViewById(R.id.pnReservationPeople);
+        pnAdults = findViewById(R.id.pnReservationAdults);
+        pnChildren= findViewById(R.id.pnReservationChildren);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
 
         localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -84,19 +82,29 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onClick(View view) {
                 pickDate(etDepartureDate);
+
             }
         });
 
-        /*etsPeople.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Integer>() {
+
+        pnAdults.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
             @Override
-            public void onItemSelectedListener(Integer item, int selectedIndex) {
-                etsPeople.setText(String.valueOf(item));
+            public void onValueChanged(int oldValue, int newValue) {
                 recyclerView.setAdapter(null);
             }
-        });*/
+        });
 
-        int maxCapacity = RoomDB.getInstance(this).roomTypeDao().getMaxCapacity();
-        pnPeople.setMaxValue(maxCapacity);
+        pnChildren.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int oldValue, int newValue) {
+                recyclerView.setAdapter(null);
+            }
+        });
+
+        int maxAdults = RoomDB.getInstance(this).roomTypeDao().getMaxAdults();
+        pnAdults.setMaxValue(maxAdults);
+        int maxChildren = RoomDB.getInstance(this).roomTypeDao().getMaxChildren();
+        pnChildren.setMaxValue(maxChildren);
 
     }
 
@@ -104,11 +112,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         recyclerView.setAdapter(null);
         String arrivalDateLocal = etArrivalDate.getText().toString();
         String departureDateLocal = etDepartureDate.getText().toString();
-        //String persons = spPeople.getSelectedItem().toString();
-        //String persons = etsPeople.getText().toString();
-        String persons = String.valueOf(pnPeople.getValue());
+        String adults = String.valueOf(pnAdults.getValue());
+        String children = String.valueOf(pnChildren.getValue());
 
-        if (!arrivalDateLocal.isEmpty() && !departureDateLocal.isEmpty() && !persons.isEmpty()) {
+        if (!arrivalDateLocal.isEmpty() && !departureDateLocal.isEmpty() && !adults.isEmpty()) {
 
             Calendar calendarArrival = Calendar.getInstance();
             calendarArrival.setTime(localizedFormat.parse(arrivalDateLocal));
@@ -125,7 +132,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
             params.put(POST.availabilityArrivalDate, arrivalDateSQLString);
             params.put(POST.availabilityDepartureDate, departureDateSQLString);
-            params.put(POST.availabilityPeople, persons);
+            params.put(POST.availabilityAdults, adults);
+            params.put(POST.availabilityChildren, children);
 
             VolleyQueue.getInstance(this).jsonRequest(this, URL.availabilityUrl, params);
 
@@ -244,9 +252,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     JSONObject room = availabilityResults.getJSONObject(i);
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
-                    //int people = Integer.parseInt(spPeople.getSelectedItem().toString());
-                    //int people = Integer.parseInt(etsPeople.getText().toString());
-                    int people = pnPeople.getValue();
+                    int people = pnAdults.getValue();
                     RoomDB roomDB = RoomDB.getInstance(this);
 
 
@@ -283,11 +289,10 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         Toast.makeText(this, url + ": " + error, Toast.LENGTH_LONG).show();
     }
 
-    //TODO Change this to more efficient design by not passing the bitmap around
     @Override
     public void imgClicked(String imgFileName) {
         ImageViewFragment fragment = ImageViewFragment.newInstance(imgFileName);
-        fragment.show(getFragmentManager(), ImageViewFragment.TAG);
+        fragment.show(getSupportFragmentManager(), ImageViewFragment.TAG);
     }
 
     @Override
@@ -312,13 +317,11 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         }
 
         int roomTypeID = room.roomTypeID;
+        int adults = pnAdults.getValue();
+        int children = pnChildren.getValue();
         String roomTitle = room.title;
-
         String roomImage = room.imgFileName;
 
-        //int people = Integer.parseInt(spPeople.getSelectedItem().toString());
-        //int people = Integer.parseInt(etsPeople.getText().toString());
-        int people = pnPeople.getValue();
 
         Intent intent = new Intent(this, BookActivity.class);
         intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
@@ -328,7 +331,8 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         intent.putExtra(BookActivity.ROOM_DAYS_KEY, room.days);
         intent.putExtra(BookActivity.ROOM_ARRIVAL_KEY, arrivalDateSQL);
         intent.putExtra(BookActivity.ROOM_DEPARTURE_KEY, departureDateSQL);
-        intent.putExtra(BookActivity.ROOM_PERSONS_KEY, people);
+        intent.putExtra(BookActivity.ROOM_ADULTS_KEY, adults);
+        intent.putExtra(BookActivity.ROOM_CHILDREN_KEY, children);
         startActivity(intent);
 
 

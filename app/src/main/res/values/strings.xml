@@ -27,7 +27,8 @@
     <string name="etReservationPeople">People</string>
     <string name="btnReservationSearch">Search</string>
     <string name="btnRoomBook">Book This</string>
-    <string name="tvPersonsLabel">Persons</string>
+    <string name="tvAdultsLabel">Adults</string>
+    <string name="tvChildrenLabel">Children</string>
     <string name="tvCheckInLabel">Check-in</string>
     <string name="tvCheckOutLabel">Check-out</string>
     <string name="cbTerms"><![CDATA[I agree with the terms & conditions by making this booking.]]></string>
@@ -161,6 +162,10 @@
     <string name="tvForgotPromptDetails">Please enter your email address associated with the hotel and we \'ll send you recovery information</string>
     <string name="tvForgotNewPassPrompt">Choose a new password</string>
     <string name="tvForgotNewPassPromptDetails">We are almost done! Please enter a new password in the form below</string>
+    <string name="title_activity_main11">MainActivity11</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 
 </resources>

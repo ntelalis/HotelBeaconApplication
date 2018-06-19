@@ -90,7 +90,8 @@ public class POST {
     //SND
     public static final String availabilityArrivalDate = "arrivalDate";
     public static final String availabilityDepartureDate = "departureDate";
-    public static final String availabilityPeople = "persons";
+    public static final String availabilityAdults = "adults";
+    public static final String availabilityChildren = "children";
     //RCV
     public static final String availabilityResultsArray = "results";
     public static final String availabilityRoomTypeID = "roomTypeID";
@@ -108,7 +109,8 @@ public class POST {
     public static final String bookRoomTypeID = "roomTypeID";
     public static final String bookRoomArrival = "arrival";
     public static final String bookRoomDeparture = "departure";
-    public static final String bookRoomPeople = "persons";
+    public static final String bookRoomAdults = "adults";
+    public static final String bookRoomChildren = "children";
     public static final String bookRoomFreeNights = "freeNights";
     public static final String bookRoomCashNights = "cashNights";
     public static final String bookRoomCustomerID = "customerID";
@@ -252,4 +254,5 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~totalpoints.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String totalPoints = "points";
+
 }
