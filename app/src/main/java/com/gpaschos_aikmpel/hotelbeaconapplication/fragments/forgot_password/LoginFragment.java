@@ -107,24 +107,20 @@ public class LoginFragment extends Fragment implements JsonListener {
             String firstName = json.getString(POST.loginFirstName);
             int titleID = json.getInt(POST.loginTitleID);
             String lastName = json.getString(POST.loginLastName);
-            int isOldCustomer = json.getInt(POST.loginIsOldCustomer);
+            boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
             String birthDate = json.getString(POST.loginBirthDate);
             int countryID = json.getInt(POST.loginCountryID);
-
+            String modified = json.getString(POST.loginModified);
             String email = etEmail.getText().toString().trim();
             String password = etPass.getText().toString().trim();
 
             //TODO Implement OAUTH2 Token Maybe??
 
-            Customer customer = new Customer(customerId, titleID, firstName, lastName, birthDate, countryID, email, password);
+            Customer customer = new Customer(customerId, titleID, firstName, lastName, birthDate, countryID, email, password, modified);
             RoomDB.getInstance(getContext()).customerDao().insert(customer);
 
-            //FIXME OldCustomer????
-            if (isOldCustomer > 0) {
-                LocalVariables.storeBoolean(getContext(), R.string.is_old_customer, true);
-            } else {
-                LocalVariables.storeBoolean(getContext(), R.string.is_old_customer, false);
-            }
+            if (getContext() != null)
+                LocalVariables.storeBoolean(getContext(), R.string.is_old_customer, oldCustomer);
 
             listener.login();
         }

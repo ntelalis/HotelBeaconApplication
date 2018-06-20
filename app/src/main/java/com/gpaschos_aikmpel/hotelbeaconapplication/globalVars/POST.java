@@ -14,6 +14,7 @@ public class POST {
     public static final String registerPhone = "phone";
     //RCV
     public static final String registerCustomerID = "customerID";
+    public static final String registerModified = "modified";
 
     //~~~~~~~~~~~~~~~~~~titles.php~~~~~~~~~~~~~~~~~~
     //RCV
@@ -33,7 +34,8 @@ public class POST {
     public static final String loginTitleID = "titleID";
     public static final String loginCountryID = "countryID";
     public static final String loginBirthDate = "birthDate";
-    public static final String loginIsOldCustomer = "isOldCustomer";
+    public static final String loginModified = "modified";
+    public static final String loginOldCustomer = "oldCustomer";
 
     public static final String loginIsCheckedIn = "isCheckedIn";
     public static final String loginIsCheckedOut = "isCheckedOut";

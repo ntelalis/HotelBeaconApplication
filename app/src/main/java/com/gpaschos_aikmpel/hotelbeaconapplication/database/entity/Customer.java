@@ -14,8 +14,9 @@ public class Customer {
     private int countryID;
     private String email;
     private String password;
+    private String modified;
 
-    public Customer(int customerId, int titleID, String firstName, String lastName, String birthDate, int countryID, String email, String password) {
+    public Customer(int customerId, int titleID, String firstName, String lastName, String birthDate, int countryID, String email, String password, String modified) {
         this.customerId = customerId;
         this.titleID = titleID;
         this.firstName = firstName;
@@ -24,8 +25,8 @@ public class Customer {
         this.countryID = countryID;
         this.email = email;
         this.password = password;
+        this.modified = modified;
     }
-
 
     public int getTitleID() {
         return titleID;
@@ -89,5 +90,23 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
+    }
+
+    public void update(int customerId, int titleID, String firstName, String lastName, String birthDate, int countryID, String modified) {
+        setCustomerId(customerId);
+        setTitleID(titleID);
+        setFirstName(firstName);
+        setLastName(lastName);
+        setBirthDate(birthDate);
+        setCountryID(countryID);
+        setModified(modified);
     }
 }

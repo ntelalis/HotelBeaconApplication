@@ -230,11 +230,6 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
             case URL.registerUrl:
-                int customerID = json.getInt(POST.registerCustomerID);
-
-                Customer customer = new Customer(customerID, titleID, firstName, lastName, birthDate, countryID, email, pass);
-                CustomerDao customerDao = RoomDB.getInstance(this).customerDao();
-                customerDao.insert(customer);
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);

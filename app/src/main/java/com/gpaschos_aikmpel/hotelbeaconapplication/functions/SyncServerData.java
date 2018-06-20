@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
@@ -37,10 +38,9 @@ public class SyncServerData implements JsonListener {
     private VolleyQueue volleyQueue;
 
     private SyncServerData(Context context) {
-        if(context instanceof SyncCallbacks) {
+        if (context instanceof SyncCallbacks) {
             syncCallbacks = (SyncCallbacks) context;
-        }
-        else{
+        } else {
             throw new ClassCastException("interface SyncCallbacks must be implemented");
         }
         this.context = context.getApplicationContext();
@@ -57,11 +57,15 @@ public class SyncServerData implements JsonListener {
     }
 
     public void getDataFromServer() {
-        Log.d(TAG,"GetDataFromServer");
+        Log.d(TAG, "GetDataFromServer");
         getTitles();
         getCountries();
         getCurrencies();
         getRoomTypes();
+    }
+
+    public void getCustomerDataFromServer(int customerID){
+
     }
 
     private void getTitles() {
@@ -125,7 +129,7 @@ public class SyncServerData implements JsonListener {
                 for (int i = 0; i < jsonArrayTitle.length(); i++) {
                     int id = jsonArrayTitle.getJSONObject(i).getInt(POST.titlesID);
                     String title = jsonArrayTitle.getJSONObject(i).getString(POST.titlesTitle);
-                    titleList.add(new Title(id,title));
+                    titleList.add(new Title(id, title));
                 }
                 roomDB.titleDao().insertAll(titleList);
                 Log.i(TAG, "Title results OK!");
@@ -136,7 +140,7 @@ public class SyncServerData implements JsonListener {
                 for (int i = 0; i < jsonArrayCountries.length(); i++) {
                     int id = jsonArrayCountries.getJSONObject(i).getInt(POST.countryID);
                     String name = jsonArrayCountries.getJSONObject(i).getString(POST.countryName);
-                    countryList.add(new Country(id,name));
+                    countryList.add(new Country(id, name));
                 }
 
                 roomDB.countryDao().insertAll(countryList);
@@ -155,7 +159,7 @@ public class SyncServerData implements JsonListener {
                     currencyList.add(new Currency(id, name, code, symbol));
                 }
                 roomDB.currencyDao().insertAll(currencyList);
-                Log.i(TAG,"Currencies results OK!");
+                Log.i(TAG, "Currencies results OK!");
                 break;
             case URL.roomTypesUrl:
 
@@ -224,13 +228,12 @@ public class SyncServerData implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Log.e(TAG, url+": "+error);
+        Log.e(TAG, url + ": " + error);
     }
 
-    public interface SyncCallbacks{
+    public interface SyncCallbacks {
         void synced();
     }
-
 
 
 }
