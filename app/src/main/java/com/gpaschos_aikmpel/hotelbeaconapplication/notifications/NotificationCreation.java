@@ -55,6 +55,16 @@ public class NotificationCreation implements JsonListener {
 
     }
 
+    public static void notifyOffers(Context context, String regionUniqueID){
+        Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+
+        switch(regionUniqueID){
+            case "restaurantBeacon":
+
+        }
+    }
+
+
     public static void notifyWelcome(Context context) {
         if (shouldNotifyWelcome(context)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();

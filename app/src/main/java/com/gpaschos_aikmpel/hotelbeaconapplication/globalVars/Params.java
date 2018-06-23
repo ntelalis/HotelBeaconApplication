@@ -9,7 +9,7 @@ public class Params {
     public static final int eligibleForCheckout=4;
     public static final int NOTeligibleForCheckout=3;
     public static final int CheckedOut=5;
-    public static final String beaconArea = "3d8f1dc0-1b23-42f5-9fc1-849f161b2c0e";
+    public static final String beaconUUID = "3d8f1dc0-1b23-42f5-9fc1-849f161b2c0e";
 
     //hotel name
     public static final String HotelName = "HotelName";
@@ -26,15 +26,12 @@ public class Params {
     public static final String NOTIFICATION_CHANNEL_ID = "CHANNEL1";
     public static final String NOTIFICATION_CHANNEL_NAME = "Default channel";
 
-    //welcoming messages
+    //welcome messages
     public static final int notificationWelcomeID = 2;
     public static final String notificationWelcomeTitle = "Welcome to ";
     public static final String notificationWelcomeBackTitle = "Welcome back to ";
-    //public static final String getNotificationWelcomeTitle2 = " to";
+
     public static final String notificationWelcomeGreeting = "Dear ";
-    //public static final String notificationWelcomeGreeting1 = ", welcome ";
-    //public static final String notificationWelcomeBackGreeting1 = ", welcome back ";
-    //public static final String notificationWelcomeGreeting2 = "to the hotel ";
     public static final String notificationWelcomeGreeting3 = ", we are delighted with the opportunity" +
             " to have you as our guest. We wish you a pleasant stay.";
 
@@ -59,5 +56,8 @@ public class Params {
     public static final String notificationCheckoutTitle = "Reminder for Check-out";
     public static final String notificationCheckoutReminder = "You can check-out using your smartphone." +
             "Just remember that check-out time is ";
+
+    //OFFERS messages
+    //public static final
 
 }

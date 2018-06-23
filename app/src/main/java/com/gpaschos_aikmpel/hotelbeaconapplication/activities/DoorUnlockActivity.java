@@ -31,7 +31,6 @@ import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.service.RangedBeacon;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collection;
@@ -163,7 +162,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         if (r != null && r.isCheckedInNotCheckedOut()) {
             Log.d(TAG, "reservation found");
             String id = String.valueOf(r.getRoomBeaconId());
-            Region region = new Region(roomBeaconUniqueID, Identifier.parse(Params.beaconArea), Identifier.parse("580"), Identifier.parse(id));
+            Region region = new Region(roomBeaconUniqueID, Identifier.parse(Params.beaconUUID), Identifier.parse("580"), Identifier.parse(id));
             beaconManager.addMonitorNotifier(new MonitorNotifier() {
 
                 @Override
@@ -228,7 +227,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             int id =r.getRoomBeaconId();
             com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Beacon beacon = RoomDB.getInstance(this).beaconDao().getBeacon(id);
             Region region = new Region(roomBeaconUniqueID,Identifier.parse(beacon.getUUID()),Identifier.parse(beacon.getMajor()),Identifier.parse(beacon.getMinor()));
-            Region region = new Region("roomBeacon", Identifier.parse(Params.beaconArea), Identifier.parse("580"), Identifier.parse(""));
+            Region region = new Region("roomBeacon", Identifier.parse(Params.beaconUUID), Identifier.parse("580"), Identifier.parse(""));
 
             try {
                 beaconManager.startRangingBeaconsInRegion();
