@@ -51,10 +51,12 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         beaconManager.setBackgroundScanPeriod((long) 1100);
 
         //Region scanning setup
-        Region region = new Region("welcomeBeacon", Identifier.parse(Params.beaconArea), null, null);
+        Region region = new Region("welcomeBeacon", Identifier.parse(Params.beaconUUID), null, null);
+        Region restaurant = new Region("restaurantBeacon", Identifier.parse(Params.beaconUUID), null, null);
+
 
         //ADD NEW REGIONS HERE
-        //Region region1 = new Region("roomBeacon",Identifier.parse(Params.beaconArea),null,null);
+        //Region region1 = new Region("roomBeacon",Identifier.parse(Params.beaconUUID),null,null);
 
 
         regionBootstrap = new RegionBootstrap(this, region);
@@ -77,6 +79,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             NotificationCreation.notifyFarewell(this);
         }
 
+        if (region.getUniqueId().equals("restaurantBeacon")) {
+            NotificationCreation.notifyOffers(this,region.getUniqueId());
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@
         android:focusable="false"
         android:hint="@string/etArrivalDateHint"
         android:inputType="date"
+        android:phoneNumber="false"
         app:layout_constraintStart_toStartOf="@+id/glReservation"
         app:layout_constraintTop_toTopOf="parent" />
 
