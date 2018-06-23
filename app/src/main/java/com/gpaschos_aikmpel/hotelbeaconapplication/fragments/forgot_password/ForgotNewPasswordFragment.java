@@ -60,8 +60,8 @@ public class ForgotNewPasswordFragment extends Fragment implements JsonListener 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            code = getArguments().getString(email_KEY);
-            email = getArguments().getString(code_KEY);
+            email = getArguments().getString(email_KEY);
+            code = getArguments().getString(code_KEY);
         }
     }
 
@@ -114,6 +114,7 @@ public class ForgotNewPasswordFragment extends Fragment implements JsonListener 
 
     @Override
     public void getSuccessResult(String url, JSONObject json) {
+        Toast.makeText(getContext(), "Password successfully changed", Toast.LENGTH_SHORT).show();
         listener.finishedNewPassword();
     }
 

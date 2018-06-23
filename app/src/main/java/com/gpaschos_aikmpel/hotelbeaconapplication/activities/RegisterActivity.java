@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     private EditText etPassConf;
     private EditText etFirstName;
     private EditText etLastName;
+    private EditText etPhone;
     private TextInputEditText tietBirthDate;
     private EditTextSpinner<Title> etsTitle;
     private EditTextSpinner<Country> etsCountry;
@@ -50,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     private int targetAge = 30;
     private int maxAge = 100;
 
-    private String email, pass, firstName, lastName, birthDate;
+    private String email, pass, firstName, lastName, birthDate, phone;
     private int titleID, countryID;
 
     private SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -77,7 +79,9 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         etFirstName = findViewById(R.id.tietRegisterFirstName);
         etLastName = findViewById(R.id.tietRegisterLastName);
         etsTitle = findViewById(R.id.etsRegisterTitle);
-        etsCountry = findViewById(R.id.ctsetRegisterCountry);
+        etsCountry = findViewById(R.id.etsRegisterCountry);
+        etPhone = findViewById(R.id.tietRegisterPhone);
+        etPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         cal = Calendar.getInstance();
 
 
@@ -123,9 +127,9 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         etsTitle.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Title>() {
             @Override
             public void onItemSelectedListener(Title item, int selectedIndex) {
-                etsTitle.setText(item.getValue());
-                etsTitle.setError(null);
+                etsTitle.setText(item.getTitle());
                 titleID = item.getId();
+                etsTitle.setError(null);
             }
         });
 
@@ -133,9 +137,9 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         etsCountry.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Country>() {
             @Override
             public void onItemSelectedListener(Country item, int selectedIndex) {
-                etsCountry.setText(item.getValue());
-                etsCountry.setError(null);
+                etsCountry.setText(item.getCountry());
                 countryID = item.getId();
+                etsCountry.setError(null);
             }
         });
     }
@@ -148,6 +152,8 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         String passConf = etPassConf.getText().toString().trim();
         firstName = etFirstName.getText().toString().trim();
         lastName = etLastName.getText().toString().trim();
+        phone = etPhone.getText().toString().trim();
+
 
         boolean flag = true;
 
@@ -189,12 +195,16 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
             etLastName.setError("Minimum Length is 2");
             flag = false;
         }
-        if (countryID==0) {
+        if (countryID == 0) {
             etsCountry.setError("Select a country");
             flag = false;
         }
-        if (titleID==0) {
+        if (titleID == 0) {
             etsTitle.setError("Select a title");
+            flag = false;
+        }
+        if (!Validation.checkLength(phone, 4, null)) {
+            etPhone.setError("Please enter a valid phone");
             flag = false;
         }
 
@@ -211,6 +221,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         params.put(POST.registerPassword, pass);
         params.put(POST.registerCountryID, String.valueOf(countryID));
         params.put(POST.registerBirthDate, birthDate);
+        params.put(POST.registerPhone, phone);
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.registerUrl, params);
     }
@@ -219,12 +230,6 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
             case URL.registerUrl:
-                int customerID = json.getInt(POST.registerCustomerID);
-
-
-                Customer customer = new Customer(customerID, titleID, firstName, lastName, birthDate, countryID, email, pass);
-                CustomerDao customerDao = RoomDB.getInstance(this).customerDao();
-                customerDao.insert(customer);
                 Toast.makeText(this, "Account Created Successfully", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);

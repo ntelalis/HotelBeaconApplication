@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 
-@Entity(primaryKeys = {"roomTypeID", "persons", "currencyID"},
+@Entity(primaryKeys = {"roomTypeID", "adults", "children", "currencyID"},
         indices = {@Index(value = "currencyID")},
         foreignKeys = {@ForeignKey(entity = RoomType.class,
                 parentColumns = "id",
@@ -15,15 +15,17 @@ import android.arch.persistence.room.Index;
 public class RoomTypeCash {
 
     private int roomTypeID;
-    private int persons;
+    private int adults;
+    private int children;
     private int currencyID;
-    private int price;
+    private int cash;
 
-    public RoomTypeCash(int roomTypeID, int persons, int currencyID, int price) {
+    public RoomTypeCash(int roomTypeID, int adults, int children, int currencyID, int cash) {
         this.roomTypeID = roomTypeID;
-        this.persons = persons;
+        this.adults = adults;
+        this.children = children;
         this.currencyID = currencyID;
-        this.price = price;
+        this.cash = cash;
     }
 
     public int getRoomTypeID() {
@@ -34,12 +36,20 @@ public class RoomTypeCash {
         this.roomTypeID = roomTypeID;
     }
 
-    public int getPersons() {
-        return persons;
+    public int getAdults() {
+        return adults;
     }
 
-    public void setPersons(int persons) {
-        this.persons = persons;
+    public void setAdults(int adults) {
+        this.adults = adults;
+    }
+
+    public int getChildren() {
+        return children;
+    }
+
+    public void setChildren(int children) {
+        this.children = children;
     }
 
     public int getCurrencyID() {
@@ -50,11 +60,11 @@ public class RoomTypeCash {
         this.currencyID = currencyID;
     }
 
-    public int getPrice() {
-        return price;
+    public int getCash() {
+        return cash;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setCash(int cash) {
+        this.cash = cash;
     }
 }

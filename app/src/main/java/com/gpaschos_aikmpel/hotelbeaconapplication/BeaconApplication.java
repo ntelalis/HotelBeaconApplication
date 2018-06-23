@@ -37,9 +37,13 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     public RoomDB database;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //Create notification channel
+        NotificationCreation.channel(this, "basic_channel", "default channel");
 
         //BeaconManager and BackgroundPowerSaver init
         beaconManager = BeaconManager.getInstanceForApplication(this);

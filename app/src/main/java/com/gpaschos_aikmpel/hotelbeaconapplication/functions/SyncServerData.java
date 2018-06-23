@@ -6,10 +6,11 @@ import android.util.Log;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -33,14 +34,18 @@ public class SyncServerData implements JsonListener {
     private final Context context;
     private SyncCallbacks syncCallbacks;
 
+    private RoomDB roomDB;
+    private VolleyQueue volleyQueue;
+
     private SyncServerData(Context context) {
-        if(context instanceof SyncCallbacks) {
+        if (context instanceof SyncCallbacks) {
             syncCallbacks = (SyncCallbacks) context;
-        }
-        else{
+        } else {
             throw new ClassCastException("interface SyncCallbacks must be implemented");
         }
         this.context = context.getApplicationContext();
+        this.roomDB = RoomDB.getInstance(context);
+        this.volleyQueue = VolleyQueue.getInstance(context);
     }
 
     public static SyncServerData getInstance(Context context) {
@@ -52,33 +57,46 @@ public class SyncServerData implements JsonListener {
     }
 
     public void getDataFromServer() {
-        Log.d(TAG,"GetDataFromServer");
-        getTitles(context);
-        getRoomTypes(context);
-        getCountries(context);
+        Log.d(TAG, "GetDataFromServer");
+        getTitles();
+        getCountries();
+        getCurrencies();
+        getRoomTypes();
     }
 
-    private void getTitles(Context context) {
+    public void getCustomerDataFromServer(int customerID){
+
+    }
+
+    private void getTitles() {
         Log.i(TAG, "Check Titles");
-        if (RoomDB.getInstance(context).titleDao().getTitles().isEmpty()) {
+        if (roomDB.titleDao().getTitles().isEmpty()) {
             Log.i(TAG, "Get Titles");
-            VolleyQueue.getInstance(context).jsonRequest(this, URL.titlesUrl, null);
+            volleyQueue.jsonRequest(this, URL.titlesUrl, null);
         }
 
     }
 
-    private void getCountries(Context context) {
+    private void getCountries() {
         Log.i(TAG, "Check countries");
-        if (RoomDB.getInstance(context).countryDao().getCountries().isEmpty()) {
+        if (roomDB.countryDao().getCountries().isEmpty()) {
             Log.i(TAG, "Get Countries");
-            VolleyQueue.getInstance(context).jsonRequest(this, URL.countriesUrl, null);
+            volleyQueue.jsonRequest(this, URL.countriesUrl, null);
         }
     }
 
-    private void getRoomTypes(Context context) {
+    private void getCurrencies() {
+        Log.i(TAG, "Check currencies");
+        if (roomDB.currencyDao().getCurrencies().isEmpty()) {
+            Log.i(TAG, "Get currencies");
+            volleyQueue.jsonRequest(this, URL.currenciesUrl, null);
+        }
+    }
+
+    private void getRoomTypes() {
         Log.i(TAG, "Check if RoomTypes have Changed");
         Map<String, String> params = new HashMap<>();
-        List<RoomType> roomTypeList = RoomDB.getInstance(context).roomTypeDao().getRoomTypes();
+        List<RoomType> roomTypeList = roomDB.roomTypeDao().getRoomTypes();
         JSONArray jsonArray = new JSONArray();
         for (RoomType roomType : roomTypeList) {
             int id = roomType.getId();
@@ -96,11 +114,14 @@ public class SyncServerData implements JsonListener {
         }
         Log.d(TAG, jsonArray.toString());
         params.put(POST.roomTypeCheck, jsonArray.toString());
-        VolleyQueue.getInstance(context).jsonRequest(this, URL.roomTypesUrl, params);
+        volleyQueue.jsonRequest(this, URL.roomTypesUrl, params);
     }
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
+
+        //TODO Overhaul ALL Syncing
+
         switch (url) {
             case URL.titlesUrl:
                 List<Title> titleList = new ArrayList<>();
@@ -108,28 +129,25 @@ public class SyncServerData implements JsonListener {
                 for (int i = 0; i < jsonArrayTitle.length(); i++) {
                     int id = jsonArrayTitle.getJSONObject(i).getInt(POST.titlesID);
                     String title = jsonArrayTitle.getJSONObject(i).getString(POST.titlesTitle);
-                    titleList.add(new Title(id,title));
+                    titleList.add(new Title(id, title));
                 }
-                RoomDB.getInstance(context).titleDao().insertAll(titleList);
+                roomDB.titleDao().insertAll(titleList);
+                Log.i(TAG, "Title results OK!");
             case URL.countriesUrl:
 
-                Log.i(TAG, "RoomType results OK!");
                 JSONArray jsonArrayCountries = json.getJSONArray(POST.countryArray);
                 List<Country> countryList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayCountries.length(); i++) {
                     int id = jsonArrayCountries.getJSONObject(i).getInt(POST.countryID);
                     String name = jsonArrayCountries.getJSONObject(i).getString(POST.countryName);
-                    countryList.add(new Country(id,name));
+                    countryList.add(new Country(id, name));
                 }
 
-                RoomDB.getInstance(context).countryDao().insertAll(countryList);
+                roomDB.countryDao().insertAll(countryList);
+                Log.i(TAG, "Country results OK!");
 
                 break;
-            case URL.roomTypesUrl:
-
-                RoomDB roomDB = RoomDB.getInstance(context);
-
-
+            case URL.currenciesUrl:
 
                 JSONArray jsonArrayCurrency = json.getJSONArray(POST.currencyArray);
                 List<Currency> currencyList = new ArrayList<>();
@@ -141,7 +159,9 @@ public class SyncServerData implements JsonListener {
                     currencyList.add(new Currency(id, name, code, symbol));
                 }
                 roomDB.currencyDao().insertAll(currencyList);
-                Log.i(TAG, "Currencies OK");
+                Log.i(TAG, "Currencies results OK!");
+                break;
+            case URL.roomTypesUrl:
 
                 JSONArray jsonArrayRoomTypes = json.getJSONArray(POST.roomTypeArray);
                 List<RoomType> roomTypeList = new ArrayList<>();
@@ -149,52 +169,58 @@ public class SyncServerData implements JsonListener {
                     int id = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeID);
                     String name = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeName);
                     int capacity = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeCapacity);
-                    int price = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypePrice);
+                    int adults = jsonArrayRoomTypes.getJSONObject(i).getInt(POST.roomTypeAdults);
+                    boolean childrenSupported = jsonArrayRoomTypes.getJSONObject(i).getBoolean(POST.roomTypeChildrenSupported);
                     String img = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeImage);
                     String description = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeDescription);
                     String modified = jsonArrayRoomTypes.getJSONObject(i).getString(POST.roomTypeModified);
                     LocalVariables.storeImageFromBase64(context, name, img);
-                    roomTypeList.add(new RoomType(id, name, capacity, price, name, description, modified));
+                    roomTypeList.add(new RoomType(id, name, capacity, adults, childrenSupported, name, description, modified));
                 }
                 roomDB.roomTypeDao().insertAll(roomTypeList);
-                Log.i(TAG, "RoomTypes OK");
+                Log.i(TAG, "RoomTypes results OK!");
 
                 JSONArray jsonArrayRoomTypeCash = json.getJSONArray(POST.roomTypeCashArray);
                 List<RoomTypeCash> roomTypeCashList = new ArrayList<>();
                 for (int i = 0; i < jsonArrayRoomTypeCash.length(); i++) {
                     int roomTypeID = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashID);
-                    int persons = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashPersons);
+                    int adults = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashAdults);
+                    int children = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashChildren);
                     int currencyID = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashCurrencyID);
-                    int price = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashPrice);
-                    roomTypeCashList.add(new RoomTypeCash(roomTypeID, persons, currencyID, price));
+                    int price = jsonArrayRoomTypeCash.getJSONObject(i).getInt(POST.roomTypeCashCash);
+                    roomTypeCashList.add(new RoomTypeCash(roomTypeID, adults, children, currencyID, price));
                 }
                 roomDB.roomTypeCashDao().insertAll(roomTypeCashList);
-                Log.i(TAG, "RoomTypeCash OK");
+                Log.i(TAG, "RoomTypeCash results OK!");
 
-                JSONArray jsonArrayRoomTypeFreeNightsPoints = json.getJSONArray(POST.roomTypeFreeNightsPointsArray);
-                List<RoomTypeFreeNightsPoints> roomTypeFreeNightsPointsList = new ArrayList<>();
-                for (int i = 0; i < jsonArrayRoomTypeFreeNightsPoints.length(); i++) {
-                    int roomTypeID = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsRoomTypeID);
-                    int persons = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsPersons);
-                    int points = jsonArrayRoomTypeFreeNightsPoints.getJSONObject(i).getInt(POST.roomTypeFreeNightsPointsPoints);
-                    roomTypeFreeNightsPointsList.add(new RoomTypeFreeNightsPoints(roomTypeID, persons, points));
+                JSONArray jsonArrayRoomTypePoints = json.getJSONArray(POST.roomTypePointsArray);
+                List<RoomTypePoints> roomTypePointsList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayRoomTypePoints.length(); i++) {
+                    int roomTypeID = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsRoomTypeID);
+                    int adults = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsAdults);
+                    int children = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsChildren);
+                    int spendingPoints = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsSpendingPoints);
+                    int gainingPoints = jsonArrayRoomTypePoints.getJSONObject(i).getInt(POST.roomTypePointsGainingPoints);
+                    roomTypePointsList.add(new RoomTypePoints(roomTypeID, adults, children, spendingPoints, gainingPoints));
                 }
-                roomDB.roomTypeFreeNightsPointsDao().insertAll(roomTypeFreeNightsPointsList);
-                Log.i(TAG, "RoomTypeFreeNightsPoints OK");
+                roomDB.roomTypePointsDao().insertAll(roomTypePointsList);
+                Log.i(TAG, "RoomTypePoints results OK!");
 
-                JSONArray jsonArrayRoomTypePointsAndCash = json.getJSONArray(POST.roomTypePointsAndCashArray);
-                List<RoomTypePointsAndCash> roomTypePointsAndCashList = new ArrayList<>();
-                for (int i = 0; i < jsonArrayRoomTypePointsAndCash.length(); i++) {
-                    int roomTypeID = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashRoomTypeID);
-                    int persons = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashPersons);
-                    int currencyID = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashCurrencyID);
-                    int cash = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashCash);
-                    int points = jsonArrayRoomTypePointsAndCash.getJSONObject(i).getInt(POST.roomTypePointsAndCashPoints);
-                    roomTypePointsAndCashList.add(new RoomTypePointsAndCash(roomTypeID, persons, currencyID, cash, points));
+                JSONArray jsonArrayRoomTypeCashPoints = json.getJSONArray(POST.roomTypeCashPointsArray);
+                List<RoomTypeCashPoints> roomTypeCashPointsList = new ArrayList<>();
+                for (int i = 0; i < jsonArrayRoomTypeCashPoints.length(); i++) {
+                    int roomTypeID = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsRoomTypeID);
+                    int adults = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsAdults);
+                    int children = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsChildren);
+                    int currencyID = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsCurrencyID);
+                    int cash = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsCash);
+                    int points = jsonArrayRoomTypeCashPoints.getJSONObject(i).getInt(POST.roomTypeCashPointsPoints);
+                    roomTypeCashPointsList.add(new RoomTypeCashPoints(roomTypeID, adults, children, currencyID, cash, points));
                 }
-                roomDB.roomTypePointsAndCashDao().insertAll(roomTypePointsAndCashList);
+                roomDB.roomTypeCashPointsDao().insertAll(roomTypeCashPointsList);
 
-                Log.i(TAG, "RoomTypePointsAndCash OK");
+                Log.i(TAG, "RoomTypeCashPoints results OK!");
+
                 syncCallbacks.synced();
                 break;
         }
@@ -202,17 +228,12 @@ public class SyncServerData implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Log.e(TAG, url+": "+error);
+        Log.e(TAG, url + ": " + error);
     }
 
-    private void notifyFinished(){
-
-    }
-
-    public interface SyncCallbacks{
+    public interface SyncCallbacks {
         void synced();
     }
-
 
 
 }

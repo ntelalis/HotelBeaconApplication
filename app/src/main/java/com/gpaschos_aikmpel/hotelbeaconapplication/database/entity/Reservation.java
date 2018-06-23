@@ -12,6 +12,7 @@ public class Reservation {
     private int id;
     private int roomTypeID;
     private int adults;
+    private int children;
     private String bookDate;
     private String startDate;
     private String endDate;
@@ -22,10 +23,11 @@ public class Reservation {
     private int roomNumber;
     private int roomFloor;
 
-    public Reservation(int id, int roomTypeID, int adults, String bookDate, String startDate, String endDate) {
+    public Reservation(int id, int roomTypeID, int adults, int children ,String bookDate, String startDate, String endDate) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
+        this.children = children;
         this.bookDate = bookDate;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -97,6 +99,13 @@ public class Reservation {
         return adults;
     }
 
+    public int getChildren() {
+        return children;
+    }
+
+    public void setChildren(int children) {
+        this.children = children;
+    }
 
     public String getBookDate() {
         return bookDate;

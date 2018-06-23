@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeFreeNightsPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePointsAndCash;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
@@ -46,23 +46,21 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
     //KEYS
     public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
     public static final String ROOM_TITLE_KEY = "room_KEY";
-    public static final String ROOM_TOTAL_PRICE_KEY = "pricetotal_KEY";
     public static final String ROOM_IMAGE_KEY = "image_KEY";
     public static final String ROOM_ARRIVAL_KEY = "arrival_KEY";
     public static final String ROOM_DEPARTURE_KEY = "departure_KEY";
-    public static final String ROOM_PERSONS_KEY = "persons_KEY";
-    public static final String ROOM_PRICE_KEY = "roomprice_KEY";
+    public static final String ROOM_ADULTS_KEY = "adults_KEY";
+    public static final String ROOM_CHILDREN_KEY = "Children_KEY";
+    public static final String ROOM_PRICE_KEY = "roomPrice_KEY";
     public static final String ROOM_DAYS_KEY = "roomDays_KEY";
 
     private Button btnBook;
 
     private int roomTypeID;
-    private String roomTitle;
 
     private String arrivalSQLString;
     private String departureSQLString;
-    private Date arrivalDate, departureDate;
-    private int persons, days, roomPrice, totalPrice;
+    private int adults, children, days, roomPrice, totalPrice;
     private int cashPrice;
     private int freeNights = 0,cashNights = 0;
     private TextView tvTotalPrice, tvPoints;
@@ -78,7 +76,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         TextView tvCheckIn = findViewById(R.id.tvBookCheckIn);
         TextView tvCheckOut = findViewById(R.id.tvBookCheckOut);
         TextView tvRoomTitle = findViewById(R.id.tvBookRoomTitle);
-        TextView tvPersons = findViewById(R.id.tvBookPersons);
+        TextView tvAdults = findViewById(R.id.tvBookAdults);
+        TextView tvChildren = findViewById(R.id.tvBookChildren);
         TextView tvRoomPrice = findViewById(R.id.tvBookRoomPrice);
         TextView tvDays = findViewById(R.id.tvBookDays);
         tvPoints = findViewById(R.id.tvBookPoints);
@@ -105,37 +104,36 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
 
         if (extras != null) {
             roomTypeID = extras.getInt(ROOM_TYPE_ID_KEY);
-            roomTitle = extras.getString(ROOM_TITLE_KEY);
+            String roomTitle = extras.getString(ROOM_TITLE_KEY);
             days = extras.getInt(ROOM_DAYS_KEY);
             roomPrice = extras.getInt(ROOM_PRICE_KEY);
             arrivalSQLString = extras.getString(ROOM_ARRIVAL_KEY);
             departureSQLString = extras.getString(ROOM_DEPARTURE_KEY);
-            persons = extras.getInt(ROOM_PERSONS_KEY);
+            adults = extras.getInt(ROOM_ADULTS_KEY);
+            children = extras.getInt(ROOM_CHILDREN_KEY);
 
             tvRoomTitle.setText(roomTitle);
             totalPrice = roomPrice * days;
             tvTotalPrice.setText(String.valueOf(totalPrice));
             tvDays.setText(String.valueOf(days));
             tvRoomPrice.setText(String.valueOf(roomPrice));
-            tvPersons.setText(String.valueOf(persons));
+            tvAdults.setText(String.valueOf(adults));
+            tvChildren.setText(String.valueOf(children));
 
             try {
                 Calendar c = Calendar.getInstance();
                 c.setTime(sqlFormat.parse(arrivalSQLString));
-                arrivalDate = c.getTime();
+                Date arrivalDate = c.getTime();
                 String arrivalLocalString = localizedFormat.format(arrivalDate);
 
                 c.setTime(sqlFormat.parse(departureSQLString));
-                departureDate = c.getTime();
+                Date departureDate = c.getTime();
                 String departureLocalString = localizedFormat.format(departureDate);
                 tvCheckIn.setText(arrivalLocalString);
                 tvCheckOut.setText(departureLocalString);
             } catch (ParseException e) {
                 Log.e(getLocalClassName(), e.getLocalizedMessage());
             }
-
-            persons = extras.getInt(ROOM_PERSONS_KEY);
-            tvPersons.setText(String.valueOf(persons));
 
             String imageFileName = extras.getString(ROOM_IMAGE_KEY);
 
@@ -191,7 +189,8 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         values.put(POST.bookRoomTypeID, String.valueOf(roomTypeID));
         values.put(POST.bookRoomArrival, arrivalSQLString);
         values.put(POST.bookRoomDeparture, departureSQLString);
-        values.put(POST.bookRoomPeople, (String.valueOf(persons)));
+        values.put(POST.bookRoomAdults, (String.valueOf(adults)));
+        values.put(POST.bookRoomChildren, (String.valueOf(children)));
         values.put(POST.bookRoomFreeNights,String.valueOf(freeNights));
         values.put(POST.bookRoomCashNights,String.valueOf(cashNights));
 
@@ -225,7 +224,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
 
-                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, persons, bookedDate, arrivalSQLString, departureSQLString));
+                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString));
 
                 ScheduleNotifications.checkinNotification(this, arrivalSQLString);
                 ScheduleNotifications.checkoutNotification(this, departureSQLString);
@@ -240,10 +239,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
                 int totalPoints = json.getInt(POST.totalPoints);
 
                 RoomDB roomDB = RoomDB.getInstance(this);
-                RoomTypeFreeNightsPoints roomTypeFreeNightsPoints = roomDB.roomTypeFreeNightsPointsDao().getRoomTypeFreeNightsPoints(roomTypeID, persons);
-                int freeNightPoints = roomTypeFreeNightsPoints.getPoints();
+                RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, adults);
+                int freeNightPoints = roomTypeFreeNightsPoints.getSpendingPoints();
 
-                RoomTypePointsAndCash roomTypePointsAndCash = roomDB.roomTypePointsAndCashDao().getRoomTypePointsAndCash(roomTypeID, persons, 1);
+                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults, 1);
                 int cashPoints = roomTypePointsAndCash.getPoints();
                 cashPrice = roomTypePointsAndCash.getCash();
 
@@ -265,10 +264,6 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         Map<String, String> params = new HashMap<>();
         params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.totalPointsUrl, params);
-    }
-
-    public void test5() {
-
     }
 
     @Override

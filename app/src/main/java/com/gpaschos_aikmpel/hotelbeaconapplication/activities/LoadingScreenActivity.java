@@ -6,8 +6,6 @@ import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -80,11 +78,12 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
             params.put(POST.loginEmail, customer.getEmail());
             params.put(POST.loginPassword, customer.getPassword());
+            params.put(POST.loginModified, customer.getModified());
 
             VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
         }
@@ -93,14 +92,26 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
+            try {
+                int customerId = json.getInt(POST.loginCustomerID);
+                String firstName = json.getString(POST.loginFirstName);
+                int titleID = json.getInt(POST.loginTitleID);
+                String lastName = json.getString(POST.loginLastName);
+                String birthDate = json.getString(POST.loginBirthDate);
+                int countryID = json.getInt(POST.loginCountryID);
+                String modified = json.getString(POST.loginModified);
 
-            int customerId = json.getInt(POST.loginCustomerID);
-            Toast.makeText(this, "Login Successful! CustomerID: " + customerId, Toast.LENGTH_LONG).show();
+                RoomDB roomDB = RoomDB.getInstance(this);
+                Customer c = roomDB.customerDao().getCustomer();
+                c.update(customerId, titleID, firstName, lastName, birthDate, countryID, modified);
+                roomDB.customerDao().insert(c);
 
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            } finally {
+                Intent intent = new Intent(this, HomeActivityNEW.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
         }
 
     }

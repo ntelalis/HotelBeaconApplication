@@ -38,6 +38,8 @@ public class URL {
     private static final String doorUnlockPage = "doorunlock.php";
     private static final String countriesPage = "countries.php";
     private static final String totalPointsPage = "totalpoints.php";
+    private static final String currenciesPage = "currency.php";
+    private static final String customerPage = "customer.php";
 
     public static final String loginUrl = serverAddress + loginPage;
     public static final String forgotUrl = serverAddress + forgotPage;
@@ -65,4 +67,6 @@ public class URL {
     public static final String doorUnlockUrl = serverAddress + doorUnlockPage;
     public static final String countriesUrl = serverAddress + countriesPage;
     public static final String totalPointsUrl = serverAddress + totalPointsPage;
+    public static final String currenciesUrl = serverAddress + currenciesPage;
+    public static final String customerUrl = serverAddress + customerPage;
 }

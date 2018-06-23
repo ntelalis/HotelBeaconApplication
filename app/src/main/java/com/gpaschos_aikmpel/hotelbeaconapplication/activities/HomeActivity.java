@@ -12,7 +12,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class HomeActivity extends AppCompatActivity implements JsonListener{
@@ -53,6 +52,8 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
+
     }
 
     public void clearServerDatabse(View view){

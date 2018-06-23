@@ -10,16 +10,18 @@ public class RoomType {
     private int id;
     private String name;
     private int capacity;
-    private int price;
+    private int adults;
+    private boolean childrenSupported;
     private String image;
     private String description;
     private String modified;
 
-    public RoomType(int id, String name, int capacity, int price, String image, String description, String modified) {
+    public RoomType(int id, String name, int capacity, int adults, boolean childrenSupported, String image, String description, String modified) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
-        this.price = price;
+        this.adults = adults;
+        this.childrenSupported = childrenSupported;
         this.image = image;
         this.description = description;
         this.modified = modified;
@@ -49,12 +51,20 @@ public class RoomType {
         this.capacity = capacity;
     }
 
-    public int getPrice() {
-        return price;
+    public int getAdults() {
+        return adults;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setAdults(int adults) {
+        this.adults = adults;
+    }
+
+    public boolean isChildrenSupported() {
+        return childrenSupported;
+    }
+
+    public void setChildrenSupported(boolean childrenSupported) {
+        this.childrenSupported = childrenSupported;
     }
 
     public String getImage() {
