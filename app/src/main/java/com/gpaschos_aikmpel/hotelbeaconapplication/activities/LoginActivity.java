@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotCallbacks 
 
     @Override
     public void login() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivityNEW.class);
         startActivity(intent);
         finish();
     }

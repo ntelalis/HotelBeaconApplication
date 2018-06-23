@@ -58,8 +58,6 @@ public class UpcomingReservationsWithFragmentsActivity extends AppCompatActivity
 
     //query to the server about my reservation list
     public void myReservations() {
-        //SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.spfile), Context.MODE_PRIVATE);
-        //int customerID = sharedPreferences.getInt(getString(R.string.saved_customerId), 0);
         int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
         Map<String, String> params = new HashMap<>();

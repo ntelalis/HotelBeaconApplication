@@ -63,6 +63,10 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Customer customer = RoomDB.getInstance(getContext()).customerDao().getCustomer();
+        customerID = customer.getCustomerId();
+        firstName = customer.getFirstName();
+        lastName = customer.getLastName();
     }
 
     @Override
@@ -90,10 +94,6 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
             case URL.loyaltyPointsURL:
-                Customer customer = RoomDB.getInstance(getContext()).customerDao().getCustomer();
-
-                firstName = customer.getFirstName();
-                lastName = customer.getLastName();
                 points = json.getInt(POST.loyaltyProgramPoints);
                 tierName = json.getString(POST.loyaltyProgramTierName);
                 tierPoints = json.getInt(POST.loyaltyProgramTierPoints);
@@ -157,7 +157,7 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
         if (getContext() == null)
             return;
         Map<String, String> params = new HashMap<>();
-        customerID = RoomDB.getInstance(getContext()).customerDao().getCustomer().getCustomerId();
+
         params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.loyaltyPointsURL, params);
     }

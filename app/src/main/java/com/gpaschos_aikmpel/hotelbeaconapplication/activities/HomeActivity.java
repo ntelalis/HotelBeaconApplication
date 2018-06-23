@@ -48,11 +48,7 @@ public class HomeActivity extends AppCompatActivity implements JsonListener{
     }
 
     public void logout(View view) {
-        RoomDB.getInstance(this).clearAllTables();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+
 
     }
 

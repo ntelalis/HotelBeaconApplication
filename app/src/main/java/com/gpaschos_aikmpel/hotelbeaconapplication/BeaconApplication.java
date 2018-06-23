@@ -50,7 +50,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         backgroundPowerSaver = new BackgroundPowerSaver(this);
 
         //Scanning Settings
-        beaconManager.setBackgroundBetweenScanPeriod((long)150000);
+        beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
         //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
         beaconManager.setBackgroundScanPeriod((long) 1100);
 
@@ -65,7 +65,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         //regionBootstrap.addRegion(region1);
     }
 
-    public void checkin(int reservationID){
+    public void checkin(int reservationID) {
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkinReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkinUrl, params);
@@ -86,7 +86,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     @Override
     public void didExitRegion(Region region) {
         if (region.getUniqueId().equals("welcomeBeacon")) {
-            Log.d(TAG,"Exited from Region" + region.getUniqueId());
+            Log.d(TAG, "Exited from Region" + region.getUniqueId());
         }
     }
 
@@ -97,7 +97,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if(url.equals(URL.checkinUrl)) {
+        if (url.equals(URL.checkinUrl)) {
             int room = json.getInt(POST.checkinRoom);
             String checkInDate = json.getString(POST.checkinDate);
             int floor = json.getInt(POST.checkinRoomFloor);
@@ -106,18 +106,18 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-            r.checkIn(checkInDate,room,floor,roomPassword,beaconID);
+            r.checkIn(checkInDate, room, floor, roomPassword, beaconID);
             RoomDB.getInstance(this).reservationDao().update(r);
 
             Intent intent = new Intent(this, CheckedInActivity.class);
             intent.putExtra(CheckedInActivity.ROOM, room);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url+""+error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
     }
 }

@@ -42,6 +42,21 @@ public class Reservation {
         this.roomBeaconId = roomBeaconId;
     }
 
+    public void update(int id, int roomTypeID, int adults, int children ,String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, int roomBeaconId){
+        this.id = id;
+        this.roomTypeID = roomTypeID;
+        this.adults = adults;
+        this.children = children;
+        this.bookDate = bookDate;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.roomBeaconId = roomBeaconId;
+        this.roomNumber = roomNumber;
+        this.roomFloor = roomFloor;
+    }
+
 
     public boolean isCheckedIn() {
         return checkIn != null;
