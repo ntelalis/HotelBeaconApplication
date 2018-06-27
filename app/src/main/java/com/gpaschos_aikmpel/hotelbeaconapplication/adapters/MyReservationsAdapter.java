@@ -81,8 +81,6 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvCheckedinRoomLabel = itemView.findViewById(R.id.tvViewHmyReservationsRoomNoLabel);
             tvCheckedinRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
             btnCheckInCheckOut.setOnClickListener(this);
-
-            //ivRoomImage.setOnClickListener(this);
         }
 
         void bind(int position) {
@@ -92,10 +90,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvDeparture.setText(reservationsList.get(position).departure);
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
 
-            buttonAndTextViewsHandler(reservationsList.get(position).checkincheckoutbtn,
-                    reservationsList.get(position).room);
-
-            roomNo = reservationsList.get(position).room;
+            roomNo = String.valueOf(reservationsList.get(position).room);
+            buttonAndTextViewsHandler(reservationsList.get(position).reservationStatus, roomNo);
         }
 
         @Override
@@ -109,10 +105,10 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             }
         }
 
-        public void buttonAndTextViewsHandler(int checkincheckoutbtn, String room) {
+        public void buttonAndTextViewsHandler(int reservationStatus, String room) {
             Context context = itemView.getContext();
-            switch (checkincheckoutbtn) {
-                case Params.NOTeligibleForCheckin:
+            switch (reservationStatus) {
+                case ReservationModel.CANNOT_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
@@ -120,26 +116,23 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                     tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
                     break;
-                case Params.eligibleForCheckin:
+                case ReservationModel.CAN_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(true);
-                    //btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                    //TextViewCompat.setTextAppearance(btnCheckInCheckOut,R.style.PrimaryButton);
                     tvCheckedinRoom.setVisibility(View.INVISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
                     break;
-                case Params.NOTeligibleForCheckout:
+                case ReservationModel.CANNOT_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(false);
-                    //btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                     TextViewCompat.setTextAppearance(btnCheckInCheckOut,R.style.PrimaryButtonDisabled);
                     tvCheckedinRoom.setText(room);
                     tvCheckedinRoom.setVisibility(View.VISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
                     break;
-                case Params.eligibleForCheckout:
+                case ReservationModel.CAN_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(true);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -148,7 +141,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
                     break;
-                case Params.CheckedOut:
+                case ReservationModel.IS_CHECKED_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
@@ -156,7 +149,6 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                     tvCheckedinRoom.setVisibility(View.VISIBLE);
                     tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckinCheckoutInstructions.setVisibility(View.INVISIBLE);
-
             }
         }
     }
@@ -168,22 +160,30 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
     }
 
     public static class ReservationModel implements Parcelable{
+
+        public static final int CAN_CHECK_IN = 2;
+        public static final int CANNOT_CHECK_IN = 1;
+        public static final int CAN_CHECK_OUT = 4;
+        public static final int CANNOT_CHECK_OUT = 3;
+        public static final int IS_CHECKED_OUT = 5;
+
+
         public int adults;
         public String roomTitle;
         public int reservationID;
         public String arrival;
         public String departure;
-        public String room;
-        public int checkincheckoutbtn;
+        public int room;
+        public int reservationStatus;
 
         public ReservationModel(int adults, String roomTitle, int reservationID, String arrival,
-                                String departure, int checkinCheckoutbtn, String room) {
+                                String departure, int reservationStatus, int room) {
             this.adults = adults;
             this.roomTitle = roomTitle;
             this.reservationID = reservationID;
             this.arrival = arrival;
             this.departure = departure;
-            this.checkincheckoutbtn = checkinCheckoutbtn;
+            this.reservationStatus = reservationStatus;
             this.room = room;
         }
 
@@ -199,8 +199,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             dest.writeInt(this.reservationID);
             dest.writeString(this.arrival);
             dest.writeString(this.departure);
-            dest.writeString(this.room);
-            dest.writeInt(this.checkincheckoutbtn);
+            dest.writeInt(this.room);
+            dest.writeInt(this.reservationStatus);
         }
 
         protected ReservationModel(Parcel in) {
@@ -209,8 +209,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             this.reservationID = in.readInt();
             this.arrival = in.readString();
             this.departure = in.readString();
-            this.room = in.readString();
-            this.checkincheckoutbtn = in.readInt();
+            this.room = in.readInt();
+            this.reservationStatus = in.readInt();
         }
 
         public static final Creator<ReservationModel> CREATOR = new Creator<ReservationModel>() {

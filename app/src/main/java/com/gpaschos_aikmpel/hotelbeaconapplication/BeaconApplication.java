@@ -108,10 +108,11 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             int floor = json.getInt(POST.checkinRoomFloor);
             String roomPassword = json.getString(POST.checkinRoomPassword);
             int beaconID = json.getInt(POST.checkinBeaconID);
-
+            String modified = json.getString(POST.checkinModified);
+            int reservationID = json.getInt(POST.checkinReservationID);
             //update Room with the checked-in information
-            Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-            r.checkIn(checkInDate, room, floor, roomPassword, beaconID);
+            Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
+            r.checkIn(checkInDate, room, floor, roomPassword, beaconID, modified);
             RoomDB.getInstance(this).reservationDao().update(r);
 
             Intent intent = new Intent(this, CheckedInActivity.class);

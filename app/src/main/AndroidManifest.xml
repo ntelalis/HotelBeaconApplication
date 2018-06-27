@@ -50,11 +50,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activities.UpcomingReservationActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
             android:name=".activities.LoadingScreenActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">

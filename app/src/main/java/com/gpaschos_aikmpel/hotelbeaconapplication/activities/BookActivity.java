@@ -22,6 +22,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -214,17 +215,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
             case URL.bookUrl:
 
                 int resID = json.getInt(POST.bookRoomReservationID);
-                String bookedDate = json.getString(POST.bookRoomBookedDate);
+                String bookedDate = JSONHelper.getString(json,POST.bookRoomBookedDate);
+                String modified = JSONHelper.getString(json,POST.bookRoomModified);
 
-        /*new AsyncTask<Void,Void,Void>(){
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                return null;
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
-
-                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString));
+                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString,modified));
 
                 ScheduleNotifications.checkinNotification(this, arrivalSQLString);
                 ScheduleNotifications.checkoutNotification(this, departureSQLString);

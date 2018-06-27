@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragments.forgot_password.ForgotFragment">
+    tools:context=".fragments.login.ForgotFragment">
 
     <android.support.design.widget.TextInputLayout
 

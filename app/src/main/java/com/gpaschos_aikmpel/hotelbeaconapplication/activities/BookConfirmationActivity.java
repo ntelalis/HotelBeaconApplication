@@ -29,7 +29,7 @@ public class BookConfirmationActivity extends AppCompatActivity {
     }
 
     public void reservations(View view) {
-        Intent intent = new Intent(this, UpcomingReservationActivity.class);
+        Intent intent = new Intent(this, UpcomingReservationsWithFragmentsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

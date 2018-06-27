@@ -60,12 +60,14 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String checkinReservationID = "reservationID";
+    public static final String reservationCheck = "check";
     //RCV
     public static final String checkinRoom = "room";
     public static final String checkinDate = "date";
     public static final String checkinRoomFloor = "floor";
     public static final String checkinRoomPassword = "roomPassword";
     public static final String checkinBeaconID = "beaconID";
+    public static final String checkinModified = "modified";
     public static final String checkinBeaconUUID = "beaconUUID";
     public static final String checkinBeaconMajor = "beaconMajor";
     public static final String checkinBeaconMinor = "beaconMinor";
@@ -86,7 +88,7 @@ public class POST {
     public static final String checkoutConfirmReservationID = "reservationID";
     //RCV
     public static final String checkoutConfirmDate = "date";
-
+    public static final String checkoutConfirmModified = "modified";
 
     //~~~~~~~~~~~~~~~~~~availability.php~~~~~~~~~~~~~~~~~~
     //SND
@@ -124,6 +126,7 @@ public class POST {
     //RCV
     public static final String bookRoomReservationID = "reservationID";
     public static final String bookRoomBookedDate = "bookedDate";
+    public static final String bookRoomModified = "modified";
 
 
     //~~~~~~~~~~~~~~~~~~roomservicecategories.php~~~~~~~~~~~~~~~~~~
@@ -141,18 +144,24 @@ public class POST {
     public static final String roomServiceFoodDesc = "desc";
     public static final String roomServiceFoodPrice = "price";
 
-    //~~~~~~~~~~~~~~~~~~upcomingreservations.php~~~~~~~~~~~~~~~~~~
+    //~~~~~~~~~~~~~~~~~~reservation.php~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String upcomingreservationsCustomerID = "customerID";
+    public static final String reservationCustomerID = "customerID";
     //RCV
-    public static final String upcomingreservationsResponseArray = "reservations";
-    public static final String upcomingreservationsReservationID = "reservationID";
-    public static final String upcomingreservationsAdults = "adults";
-    public static final String upcomingreservationsArrival = "arrivalDate";
-    public static final String upcomingreservationsDeparture = "departureDate";
-    public static final String upcomingreservationsRoomTitle = "roomType";
-    public static final String upcomingreservationsEligibleForCheckinCheckout = "statusCode";
-    public static final String upcomingreservationsCheckedinRoom = "roomNumber";
+    public static final String reservationArray = "upcomingReservationsArray";
+    public static final String reservationReservationID = "reservationID";
+    public static final String reservationRoomTypeID = "roomTypeID";
+    public static final String reservationAdults = "adults";
+    public static final String reservationChildren = "children";
+    public static final String reservationBookedDate = "bookedDate";
+    public static final String reservationArrival = "startDate";
+    public static final String reservationDeparture = "endDate";
+    public static final String reservationCheckIn = "checkIn";
+    public static final String reservationCheckOut = "checkOut";
+    public static final String reservationRoomBeaconID = "roomBeaconID";
+    public static final String reservationRoomNumber = "roomNumber";
+    public static final String reservationRoomFloor = "roomFloor";
+    public static final String reservationModified = "modified";
 
     //~~~~~~~~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~~~~~~
     //SND
@@ -256,5 +265,11 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~totalpoints.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String totalPoints = "points";
+
+
+    //Sync anything
+    public static final String syncId = "id";
+    public static final String syncModified = "modified";
+
 
 }

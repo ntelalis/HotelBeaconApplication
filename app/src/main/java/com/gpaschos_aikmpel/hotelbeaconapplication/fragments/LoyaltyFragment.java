@@ -124,8 +124,6 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
         tvLastName.setText(lastName);
         tvRewardsMember.setText(tierName.toUpperCase());
         tvPoints.setText(String.valueOf(points));
-        hcpb.setProgressColor(ContextCompat.getColor(getContext(), R.color.green));
-        hcpb.setProgressBackgroundColor(ContextCompat.getColor(getContext(), R.color.gray));
 
         if (nextTierPoints != 0) {
             tvNextTier.setText(nextTierName);
@@ -198,7 +196,6 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
                 progressBar.setProgress((Float) animation.getAnimatedValue());
             }
         });
-        progressBar.setMarkerProgress(progress);
         hcpbAnimator.start();
     }
 }

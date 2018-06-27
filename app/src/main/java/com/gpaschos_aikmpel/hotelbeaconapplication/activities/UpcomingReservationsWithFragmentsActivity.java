@@ -1,116 +1,60 @@
-/*package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
-
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upcoming_reservations_with_fragments);
-    }
-}*/
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
-public class UpcomingReservationsWithFragmentsActivity extends AppCompatActivity implements JsonListener{
+public class UpcomingReservationsWithFragmentsActivity extends AppCompatActivity {
 
+    private SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_reservations_with_fragments);
-
-
-        //myReservations();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        myReservations();
-    }
-
-    //query to the server about my reservation list
-    public void myReservations() {
-        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
-
-        Map<String, String> params = new HashMap<>();
-        params.put(POST.upcomingreservationsCustomerID, String.valueOf(customerID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.upcomingreservationsUrl, params);
-    }
-
-    public void fillRecyclerView(List<MyReservationsAdapter.ReservationModel> list) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        UpcomingReservationRecyclerViewFragment fragment = UpcomingReservationRecyclerViewFragment.newInstance((ArrayList<MyReservationsAdapter.ReservationModel>) list);
-        transaction.replace(R.id.upcomingReservationsFragmentContainer, fragment);
-        transaction.commit();
+        //myReservations();
     }
 
 
-    @Override
+
+
+    /*@Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.upcomingreservationsUrl)) {
-            JSONArray response = json.getJSONArray(POST.upcomingreservationsResponseArray);
-
-            List<MyReservationsAdapter.ReservationModel> reservations = new ArrayList<>();
-
+            JSONArray response = json.getJSONArray(POST.upcomingReservationsArray);
+            List<Reservation> reservationList = new ArrayList<>();
             for (int i = 0; i < response.length(); i++) {
-                int adults = response.getJSONObject(i).getInt(POST.upcomingreservationsAdults);
-                int reservationID = response.getJSONObject(i).getInt(POST.upcomingreservationsReservationID);
-                String arrival = response.getJSONObject(i).getString(POST.upcomingreservationsArrival);
-                String departure = response.getJSONObject(i).getString(POST.upcomingreservationsDeparture);
-                String roomTitle = response.getJSONObject(i).getString(POST.upcomingreservationsRoomTitle);
-                String room = response.getJSONObject(i).getString(POST.upcomingreservationsCheckedinRoom);
-                int statusCode = response.getJSONObject(i).getInt(POST.upcomingreservationsEligibleForCheckinCheckout);
+                int adults = response.getJSONObject(i).getInt(POST.upcomingReservationsAdults);
+                int reservationID = response.getJSONObject(i).getInt(POST.upcomingReservationsReservationID);
+                String arrival = response.getJSONObject(i).getString(POST.upcomingReservationsArrival);
+                String departure = response.getJSONObject(i).getString(POST.upcomingReservationsDeparture);
+                String roomTitle = response.getJSONObject(i).getString(POST.upcomingReservationsRoomTitle);
+                String room = response.getJSONObject(i).getString(POST.upcomingReservationsCheckedinRoom);
+                int statusCode = response.getJSONObject(i).getInt(POST.upcomingReservationsEligibleForCheckinCheckout);
 
-                reservations.add(new MyReservationsAdapter.ReservationModel(adults, roomTitle, reservationID,
-                        arrival, departure, statusCode, room));
             }
-            if(reservations.isEmpty()){
-                /*Toast.makeText(this, "You don't have any upcoming reservations", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this,HomeActivity.class);
-                startActivity(intent);
-                finish();*/
 
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                UpcomingReservationNoneFragment fragment = UpcomingReservationNoneFragment.newInstance();
-                transaction.replace(R.id.upcomingReservationsFragmentContainer, fragment);
-                transaction.commit();
-            }
-            else{
-                fillRecyclerView(reservations);
-            }
         }
-    }
+    }*/
 
-    @Override
-    public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
-    }
 }
