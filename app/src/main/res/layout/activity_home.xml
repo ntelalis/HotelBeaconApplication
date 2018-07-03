@@ -1,128 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeDrawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnHomeReservation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:onClick="reserve"
-        android:text="@string/reservationButton"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnHomeViewReservations"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="viewReservations"
-        android:text="@string/viewReservationsBtn"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeReservation"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeReservation"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeReservation" />
+        <include layout="@layout/toolbar" />
 
-    <Button
-        android:id="@+id/btnHomeRoomService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="roomService"
-        android:text="@string/roomServiceBtn"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeLoyalty"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeLoyalty"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeLoyalty" />
 
-    <Button
-        android:id="@+id/btnHomeLoyalty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="loyalty"
-        android:text="@string/btnHomeLoyalty"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeViewReservations"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeViewReservations"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeViewReservations" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnHomeUnlock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:onClick="doorUnlock"
-        android:text="@string/btnHomeUnlock"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeReview2"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeReview2"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeReview2" />
+            <FrameLayout
+                android:id="@+id/homeScreenContainer"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/bnvHomeScreen"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnHomeReview2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="review"
-        android:text="@string/btnHomeReview"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeRoomService"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeRoomService"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeRoomService" />
+            </FrameLayout>
 
-    <Button
-        android:id="@+id/btnHomeLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="logout"
-        android:text="@string/btnHomeLogout"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeUnlock"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeUnlock"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeUnlock" />
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bnvHomeScreen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:itemBackground="@color/colorPrimary"
+                app:itemIconTint="@android:color/white"
+                app:itemTextColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_navigation_home" >
 
-    <Button
-        android:id="@+id/btnHomeLogout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="myRoom"
-        android:text="MyRoom"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintEnd_toEndOf="@+id/btnHomeLogout"
-        app:layout_constraintStart_toStartOf="@+id/btnHomeLogout"
-        app:layout_constraintTop_toBottomOf="@+id/btnHomeLogout" />
+            </android.support.design.widget.BottomNavigationView>
 
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/holo_red_dark"
-        android:onClick="clearServerDatabse"
-        android:text="DELETE SERVER RESERVATIONS"
-        android:theme="@style/PrimaryButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/navigation_drawer" />
+
+</android.support.v4.widget.DrawerLayout>

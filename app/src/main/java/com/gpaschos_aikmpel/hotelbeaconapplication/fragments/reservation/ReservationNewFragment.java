@@ -1,7 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +20,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.BookActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -59,6 +58,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
     private RecyclerView recyclerView;
     private ProgressBar pbLoading;
     private int reservationDays;
+    private ReservationCallbacks listener;
 
 
     public ReservationNewFragment() {
@@ -142,6 +142,16 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
         return v;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (ReservationCallbacks) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement ReservationCallbacks");
+        }
+    }
+
     private void search() {
         recyclerView.setAdapter(null);
         String arrivalDateLocal = etArrivalDate.getText().toString();
@@ -195,13 +205,14 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
                     JSONObject room = availabilityResults.getJSONObject(i);
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
-                    int people = pnAdults.getValue();
+                    int adults = pnAdults.getValue();
+                    int children = pnChildren.getValue();
                     RoomDB roomDB = RoomDB.getInstance(getContext());
 
 
                     RoomType rt = roomDB.roomTypeDao().getRoomTypeById(roomTypeID);
 
-                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), people, 1);
+                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), adults,children, 1);
 
                     String description = rt.getDescription();
                     String title = rt.getName();
@@ -211,7 +222,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
 
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, people, imageBitmap, imageName);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, adults, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }
@@ -310,21 +321,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
         int roomTypeID = room.roomTypeID;
         int adults = pnAdults.getValue();
         int children = pnChildren.getValue();
-        String roomTitle = room.title;
-        String roomImage = room.imgFileName;
-
-
-        Intent intent = new Intent(getContext(), BookActivity.class);
-        intent.putExtra(BookActivity.ROOM_TYPE_ID_KEY, roomTypeID);
-        intent.putExtra(BookActivity.ROOM_TITLE_KEY, roomTitle);
-        intent.putExtra(BookActivity.ROOM_IMAGE_KEY, roomImage);
-        intent.putExtra(BookActivity.ROOM_PRICE_KEY, room.price);
-        intent.putExtra(BookActivity.ROOM_DAYS_KEY, room.days);
-        intent.putExtra(BookActivity.ROOM_ARRIVAL_KEY, arrivalDateSQL);
-        intent.putExtra(BookActivity.ROOM_DEPARTURE_KEY, departureDateSQL);
-        intent.putExtra(BookActivity.ROOM_ADULTS_KEY, adults);
-        intent.putExtra(BookActivity.ROOM_CHILDREN_KEY, children);
-        startActivity(intent);
+        listener.book(roomTypeID,arrivalDateSQL,departureDateSQL,adults,children);
 
 
     }

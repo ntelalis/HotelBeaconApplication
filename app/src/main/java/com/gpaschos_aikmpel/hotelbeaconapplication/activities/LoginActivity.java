@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks {
 
     @Override
     public void login() {
-        Intent intent = new Intent(this, HomeActivityNEW.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

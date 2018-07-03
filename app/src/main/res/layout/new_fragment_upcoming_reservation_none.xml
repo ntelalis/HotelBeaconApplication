@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.reservation.UpcomingReservationNoneFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    @string/tvUpcomingReservationNoneFragment
-
     <TextView
         android:id="@+id/tvUpcomingReservationNoneFragment"
         android:layout_width="wrap_content"

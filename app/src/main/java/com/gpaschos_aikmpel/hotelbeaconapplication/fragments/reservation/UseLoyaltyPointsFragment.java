@@ -1,8 +1,7 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,8 +33,6 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
     private int freePoints, cashPoints;
     private int totalDays;
     private int cashPrice;
-
-    private OnPickedLoyaltyReward listener;
 
     public UseLoyaltyPointsFragment() {
         // Required empty public constructor
@@ -121,7 +118,9 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                listener.onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedTotal.getText().toString()));
+                if (getTargetFragment() != null) {
+                    ((BookFragment)getTargetFragment()).onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedTotal.getText().toString()));
+                }
             }
         });
         dialog.setNegativeButton("cancel", null);
@@ -147,25 +146,4 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         tvSelectedTotal.setText(String.valueOf(freeTotal + cashTotal));
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            listener = (OnPickedLoyaltyReward) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnReviewInteraction");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        listener = null;
-    }
-
-
-    public interface OnPickedLoyaltyReward {
-        void onLoyaltyPicked(int freeNights, int cashNights, int neededPoints);
-    }
 }

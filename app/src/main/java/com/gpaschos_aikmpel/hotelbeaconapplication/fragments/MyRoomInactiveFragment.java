@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
-public class CustomerServicesNoActiveReservationFragment extends Fragment {
+public class MyRoomInactiveFragment extends Fragment {
 
-    public CustomerServicesNoActiveReservationFragment() {
+    public MyRoomInactiveFragment() {
 
     }
 
-    public static CustomerServicesNoActiveReservationFragment newInstance() {
-        CustomerServicesNoActiveReservationFragment fragment = new CustomerServicesNoActiveReservationFragment();
+    public static MyRoomInactiveFragment newInstance() {
+        MyRoomInactiveFragment fragment = new MyRoomInactiveFragment();
         return fragment;
     }
 
@@ -28,7 +28,7 @@ public class CustomerServicesNoActiveReservationFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_customer_services_no_active_reservation, container, false);
+        return inflater.inflate(R.layout.fragment_my_room_inactive, container, false);
     }
 
 }

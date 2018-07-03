@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 
@@ -84,7 +85,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
 
     @Override
     public void checkOut(MyReservationsAdapter.ReservationModel obj) {
-        Intent intent = new Intent(getContext(), CheckOutActivity.class);
+        Intent intent = new Intent(getContext(), CheckInActivity.class);
         startActivity(intent);
 
     }

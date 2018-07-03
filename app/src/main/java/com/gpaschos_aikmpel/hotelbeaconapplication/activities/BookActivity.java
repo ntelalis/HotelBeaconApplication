@@ -21,7 +21,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UseLoyaltyPointsFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class BookActivity extends AppCompatActivity implements JsonListener, UseLoyaltyPointsFragment.OnPickedLoyaltyReward {
+public class BookActivity extends AppCompatActivity implements JsonListener/*, UseLoyaltyPointsFragment.OnPickedLoyaltyReward*/ {
 
     //KEYS
     public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
@@ -260,7 +260,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         VolleyQueue.getInstance(this).jsonRequest(this, URL.totalPointsUrl, params);
     }
 
-    @Override
+    /*@Override*/
     public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
         this.freeNights = freeNights;
         this.cashNights = cashNights;

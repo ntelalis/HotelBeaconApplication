@@ -59,18 +59,15 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String checkinReservationID = "reservationID";
+    public static final String checkInReservationID = "reservationID";
     public static final String reservationCheck = "check";
     //RCV
-    public static final String checkinRoom = "room";
-    public static final String checkinDate = "date";
-    public static final String checkinRoomFloor = "floor";
-    public static final String checkinRoomPassword = "roomPassword";
-    public static final String checkinBeaconID = "beaconID";
-    public static final String checkinModified = "modified";
-    public static final String checkinBeaconUUID = "beaconUUID";
-    public static final String checkinBeaconMajor = "beaconMajor";
-    public static final String checkinBeaconMinor = "beaconMinor";
+    public static final String checkInRoomNumber = "roomNumber";
+    public static final String checkInDate = "checkInDate";
+    public static final String checkInRoomFloor = "roomFloor";
+    public static final String checkInRoomPassword = "roomPassword";
+    public static final String checkInBeaconRegionID = "beaconRegionID";
+    public static final String checkInModified = "modified";
 
 
     //~~~~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~
@@ -158,7 +155,7 @@ public class POST {
     public static final String reservationDeparture = "endDate";
     public static final String reservationCheckIn = "checkIn";
     public static final String reservationCheckOut = "checkOut";
-    public static final String reservationRoomBeaconID = "roomBeaconID";
+    public static final String reservationRoomBeaconID = "roomBeaconRegionID";
     public static final String reservationRoomNumber = "roomNumber";
     public static final String reservationRoomFloor = "roomFloor";
     public static final String reservationModified = "modified";

@@ -12,8 +12,8 @@ import java.util.List;
 @Dao
 public interface RoomTypeCashDao {
 
-    @Query("SELECT * FROM RoomTypeCash WHERE RoomTypeID=:roomTypeID AND Adults=:adults AND CurrencyID=:currencyID")
-    RoomTypeCash getRoomTypeCash(int roomTypeID, int adults,int currencyID);
+    @Query("SELECT * FROM RoomTypeCash WHERE RoomTypeID=:roomTypeID AND Adults=:adults AND Children=:children AND CurrencyID=:currencyID")
+    RoomTypeCash getRoomTypeCash(int roomTypeID, int adults, int children, int currencyID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<RoomTypeCash> roomTypeCashList);

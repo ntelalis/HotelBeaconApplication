@@ -65,11 +65,12 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
         regionBootstrap = new RegionBootstrap(this, region);
         //regionBootstrap.addRegion(region1);
+
     }
 
     public void checkin(int reservationID) {
         Map<String, String> params = new HashMap<>();
-        params.put(POST.checkinReservationID, String.valueOf(reservationID));
+        params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkinUrl, params);
 
     }
@@ -103,20 +104,20 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.checkinUrl)) {
-            int room = json.getInt(POST.checkinRoom);
-            String checkInDate = json.getString(POST.checkinDate);
-            int floor = json.getInt(POST.checkinRoomFloor);
-            String roomPassword = json.getString(POST.checkinRoomPassword);
-            int beaconID = json.getInt(POST.checkinBeaconID);
-            String modified = json.getString(POST.checkinModified);
-            int reservationID = json.getInt(POST.checkinReservationID);
+            int reservationID = json.getInt(POST.checkInReservationID);
+            int roomNumber = json.getInt(POST.checkInRoomNumber);
+            String checkInDate = json.getString(POST.checkInDate);
+            int roomFloor = json.getInt(POST.checkInRoomFloor);
+            int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
+            String roomPassword = json.getString(POST.checkInRoomPassword);
+            String modified = json.getString(POST.checkInModified);
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
-            r.checkIn(checkInDate, room, floor, roomPassword, beaconID, modified);
+            r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
             RoomDB.getInstance(this).reservationDao().update(r);
 
             Intent intent = new Intent(this, CheckedInActivity.class);
-            intent.putExtra(CheckedInActivity.ROOM, room);
+            intent.putExtra(CheckedInActivity.ROOM, roomNumber);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

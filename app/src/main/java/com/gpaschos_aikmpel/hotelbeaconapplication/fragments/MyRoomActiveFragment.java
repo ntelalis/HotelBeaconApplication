@@ -15,7 +15,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.DoorUnlockActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.RoomServiceActivity;
 
-public class CustomerServicesFragment extends Fragment {
+public class MyRoomActiveFragment extends Fragment {
 
     //private static final String CHECK_IN_DATE = "date";
     private static final String RESERVATION_ID = "ID";
@@ -35,12 +35,12 @@ public class CustomerServicesFragment extends Fragment {
     private TextView tvRoomFloor;
 
 
-    public CustomerServicesFragment() {
+    public MyRoomActiveFragment() {
     }
 
-    public static CustomerServicesFragment newInstance(int reservID,
-                                                       int roomNumber, int roomFloor) {
-        CustomerServicesFragment fragment = new CustomerServicesFragment();
+    public static MyRoomActiveFragment newInstance(int reservID,
+                                                   int roomNumber, int roomFloor) {
+        MyRoomActiveFragment fragment = new MyRoomActiveFragment();
         Bundle args = new Bundle();
         //args.putString(CHECK_IN_DATE, date);
         args.putInt(RESERVATION_ID, reservID);
@@ -64,7 +64,7 @@ public class CustomerServicesFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_customer_services, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_room, container, false);
 
         //tvCheckInDate = view.findViewById(R.id.tvCustomerServicesCheckedIn);
         tvReservationID = view.findViewById(R.id.tvCustomerServicesReservationID);

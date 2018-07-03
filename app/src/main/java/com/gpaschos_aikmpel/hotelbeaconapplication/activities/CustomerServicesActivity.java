@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CustomerServicesFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CustomerServicesNoActiveReservationFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomActiveFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomInactiveFragment;
 
 public class CustomerServicesActivity extends AppCompatActivity {
 
@@ -25,13 +25,13 @@ public class CustomerServicesActivity extends AppCompatActivity {
             int floor = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getRoomFloor();
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CustomerServicesFragment fragment = CustomerServicesFragment.newInstance(reservationID, roomNo, floor);
+            MyRoomActiveFragment fragment = MyRoomActiveFragment.newInstance(reservationID, roomNo, floor);
             transaction.replace(R.id.flCustomerServicesContainer, fragment);
             transaction.commit();
         }
         else{
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CustomerServicesNoActiveReservationFragment fragment = CustomerServicesNoActiveReservationFragment.newInstance();
+            MyRoomInactiveFragment fragment = MyRoomInactiveFragment.newInstance();
             transaction.replace(R.id.flCustomerServicesContainer, fragment);
             transaction.commit();
         }

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/bottomNavigationReservations"
-        android:icon="@drawable/ic_date_range_black_png"
-        android:title="Reservations" />
+        android:icon="@drawable/ic_date_png"
+        android:title="Booking"/>
     <item
         android:id="@+id/bottomNavigationRewardsProgram"
-        android:icon="@drawable/ic_loyalty_black_png"
-        android:title="Rewards Program" />
+        android:icon="@drawable/ic_loyalty"
+        android:title="Loyalty Club"/>
+    <item
+        android:id="@+id/bottomNavigationOffers"
+        android:icon="@drawable/ic_offer_png"
+        android:title="Offers"/>
     <item
         android:id="@+id/bottomNavigationMyRoom"
-        android:icon="@drawable/ic_door_knob"
-        android:title="My Room" />
+        android:icon="@drawable/ic_open_exit_door"
+        android:title="My Room"/>
 </menu>
