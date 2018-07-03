@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
         app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesFloor"
-        app:layout_constraintVertical_bias="0.19999999"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
-        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomService" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesReview" />
 
     <Button
         android:id="@+id/btnCustomerServicesRoomService"
@@ -43,8 +43,9 @@
         android:text="@string/roomServiceBtn"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:theme="@style/PrimaryButton"
-        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesCheckOut"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesReview"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesUnlockDoor" />
 
@@ -123,5 +124,18 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCustomerServicesFloorLabel"
         app:layout_constraintStart_toEndOf="@+id/tvCustomerServicesFloorLabel"
         tools:text="1" />
+
+    <Button
+        android:id="@+id/btnCustomerServicesReview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btnHomeReview"
+        android:textAllCaps="false"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesCheckOut"
+        app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomService" />
 
 </android.support.constraint.ConstraintLayout>

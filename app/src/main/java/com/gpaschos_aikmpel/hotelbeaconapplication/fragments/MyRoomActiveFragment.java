@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.DoorUnlockActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.ReviewActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.RoomServiceActivity;
 
 public class MyRoomActiveFragment extends Fragment {
@@ -30,6 +31,7 @@ public class MyRoomActiveFragment extends Fragment {
     private Button btnDoorUnlock;
     private Button btnRoomService;
     private Button btnCheckOut;
+    private Button btnReview;
     private TextView tvReservationID;
     private TextView tvRoomNo;
     private TextView tvRoomFloor;
@@ -80,7 +82,7 @@ public class MyRoomActiveFragment extends Fragment {
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(), CheckOutActivity.class);
+                Intent intent = new Intent(getActivity(), CheckOutActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,7 +91,7 @@ public class MyRoomActiveFragment extends Fragment {
         btnRoomService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(), RoomServiceActivity.class);
+                Intent intent = new Intent(getActivity(), RoomServiceActivity.class);
                 startActivity(intent);
             }
         });
@@ -98,10 +100,20 @@ public class MyRoomActiveFragment extends Fragment {
         btnDoorUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getActivity(), DoorUnlockActivity.class);
+                Intent intent = new Intent(getActivity(), DoorUnlockActivity.class);
                 startActivity(intent);
             }
         });
+
+        btnReview = view.findViewById(R.id.btnCustomerServicesReview);
+        btnReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }

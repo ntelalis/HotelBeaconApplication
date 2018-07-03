@@ -28,7 +28,7 @@ public class ReviewActivity extends AppCompatActivity implements OnReviewInterac
         reservationID = reservation.getId();
         checkout = reservation.getCheckOut();
 
-        if (checkout != null) {
+        if (checkout == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             ReviewCheckFragment reviewCheckFragment = ReviewCheckFragment.newInstance(reservationID);
             transaction.replace(R.id.ReviewfragmentContainer, reviewCheckFragment);
