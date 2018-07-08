@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.NewReservationActivity;
 
 
 public class UpcomingReservationNoneFragment extends Fragment {
@@ -47,7 +49,9 @@ public class UpcomingReservationNoneFragment extends Fragment {
         btnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.newReservation();
+                // listener.newReservation();
+                Intent intent = new Intent(getContext(),NewReservationActivity.class);
+                startActivity(intent);
             }
         });
         return view;

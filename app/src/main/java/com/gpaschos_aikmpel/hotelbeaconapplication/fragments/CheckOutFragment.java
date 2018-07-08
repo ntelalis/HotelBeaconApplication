@@ -117,10 +117,10 @@ public class CheckOutFragment extends Fragment implements JsonListener {
                 break;
             case URL.checkoutConfirmationUrl:
                 String checkoutDate = json.getString(POST.checkoutConfirmDate);
-
+                String modified = json.getString(POST.checkoutConfirmModified);
                 //update Room with the checked-out information
-                Reservation r = RoomDB.getInstance(getContext()).reservationDao().getCurrentReservation();
-                r.setCheckOut(checkoutDate);
+                Reservation r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(reservationID);
+                r.checkOut(checkoutDate,modified);
                 RoomDB.getInstance(getContext()).reservationDao().update(r);
 
                 ((CheckOutActivity) Objects.requireNonNull(getActivity())).checkedOutConfirmation();

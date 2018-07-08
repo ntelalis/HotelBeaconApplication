@@ -21,7 +21,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.UseLoyaltyPointsFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UseLoyaltyPointsFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class BookActivity extends AppCompatActivity implements JsonListener, UseLoyaltyPointsFragment.OnPickedLoyaltyReward {
+public class BookActivity extends AppCompatActivity implements JsonListener/*, UseLoyaltyPointsFragment.OnPickedLoyaltyReward*/ {
 
     //KEYS
     public static final String ROOM_TYPE_ID_KEY = "room_type_id_KEY";
@@ -214,17 +215,10 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
             case URL.bookUrl:
 
                 int resID = json.getInt(POST.bookRoomReservationID);
-                String bookedDate = json.getString(POST.bookRoomBookedDate);
+                String bookedDate = JSONHelper.getString(json,POST.bookRoomBookedDate);
+                String modified = JSONHelper.getString(json,POST.bookRoomModified);
 
-        /*new AsyncTask<Void,Void,Void>(){
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                return null;
-            }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);*/
-
-                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString));
+                RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString,modified));
 
                 ScheduleNotifications.checkinNotification(this, arrivalSQLString);
                 ScheduleNotifications.checkoutNotification(this, departureSQLString);
@@ -266,7 +260,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener, Use
         VolleyQueue.getInstance(this).jsonRequest(this, URL.totalPointsUrl, params);
     }
 
-    @Override
+    /*@Override*/
     public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
         this.freeNights = freeNights;
         this.cashNights = cashNights;

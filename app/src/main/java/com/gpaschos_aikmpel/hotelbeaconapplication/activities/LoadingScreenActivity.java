@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import java.util.Map;
 
 public class LoadingScreenActivity extends AppCompatActivity implements JsonListener, SyncServerData.SyncCallbacks {
 
+    private static final String TAG = LoadingScreenActivity.class.getSimpleName();
     private ProgressBar progressBar;
     private TextView tvHotelName;
     private Customer customer = null;
@@ -66,7 +68,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 //TODO DataSyncing on Login. Is this a good choice?
                 SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
             }
-        }, 5000);
+        }, 3000);
 
     }
 
@@ -74,13 +76,9 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
         if (customer != null) {
-            Map<String, String> params = new HashMap<>();
 
-            params.put(POST.loginEmail, customer.getEmail());
-            params.put(POST.loginPassword, customer.getPassword());
-            params.put(POST.loginModified, customer.getModified());
+            SyncServerData.getInstance(LoadingScreenActivity.this).getCustomerDataFromServer(customer);
 
-            VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -92,7 +90,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
-            try {
+
+            try{
                 int customerId = json.getInt(POST.loginCustomerID);
                 String firstName = json.getString(POST.loginFirstName);
                 int titleID = json.getInt(POST.loginTitleID);
@@ -106,12 +105,17 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 c.update(customerId, titleID, firstName, lastName, birthDate, countryID, modified);
                 roomDB.customerDao().insert(c);
 
-            } finally {
-                Intent intent = new Intent(this, HomeActivityNEW.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
             }
+            catch (JSONException e){
+                Log.d(TAG,"No data modified");
+            }
+
+
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+
         }
 
     }
@@ -122,7 +126,18 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     }
 
     @Override
-    public void synced() {
-        login();
+    public void dataSynced() {
+        if(customer==null){
+            login();
+        }
+        else{
+            Map<String, String> params = new HashMap<>();
+
+            params.put(POST.loginEmail, customer.getEmail());
+            params.put(POST.loginPassword, customer.getPassword());
+            params.put(POST.loginModified, customer.getModified());
+
+            VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
+        }
     }
 }

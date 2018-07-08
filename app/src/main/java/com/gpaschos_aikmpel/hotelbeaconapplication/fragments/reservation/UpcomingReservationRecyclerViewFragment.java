@@ -2,6 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,12 @@ import android.view.ViewGroup;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -33,19 +36,12 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     *
-     * @return A new instance of fragment UpcomingReservationRecyclerViewFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static UpcomingReservationRecyclerViewFragment newInstance(ArrayList<MyReservationsAdapter.ReservationModel> list) {
+    public static UpcomingReservationRecyclerViewFragment newInstance(List<MyReservationsAdapter.ReservationModel> list) {
         UpcomingReservationRecyclerViewFragment fragment = new UpcomingReservationRecyclerViewFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_PARAM1, list);
-
+        if(list instanceof ArrayList){
+            args.putParcelableArrayList(ARG_PARAM1, (ArrayList<MyReservationsAdapter.ReservationModel>) list);
+        }
         fragment.setArguments(args);
         return fragment;
     }
@@ -85,16 +81,11 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
         if(application!=null){
             application.checkin(reservationID);
         }
-
-        /*Map<String, String> params = new HashMap<>();
-        params.put(POST.checkinReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this,URL.checkinUrl, params);
-        */
     }
 
     @Override
     public void checkOut(MyReservationsAdapter.ReservationModel obj) {
-        Intent intent = new Intent(getContext(), CheckOutActivity.class);
+        Intent intent = new Intent(getContext(), CheckInActivity.class);
         startActivity(intent);
 
     }

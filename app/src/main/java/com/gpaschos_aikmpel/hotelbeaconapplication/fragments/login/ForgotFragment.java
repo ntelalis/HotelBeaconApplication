@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
 
 import android.content.Context;
@@ -13,13 +13,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -31,7 +29,7 @@ import java.util.Map;
 public class ForgotFragment extends Fragment implements JsonListener {
 
 
-    private ForgotCallbacks listener;
+    private LoginCallbacks listener;
 
     private TextInputEditText tietEmail;
     private Button btnReset;
@@ -52,8 +50,8 @@ public class ForgotFragment extends Fragment implements JsonListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ForgotCallbacks) {
-            listener = (ForgotCallbacks) context;
+        if (context instanceof LoginCallbacks) {
+            listener = (LoginCallbacks) context;
         } else {
             throw new ClassCastException(context.toString() + " must implement OnForgotFinished");
         }

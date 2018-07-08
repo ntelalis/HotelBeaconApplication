@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -47,6 +48,7 @@ public class CheckInActivity extends AppCompatActivity {
     }
 
     public void checkIn(View view){
+        Toast.makeText(this, ""+reservationID, Toast.LENGTH_SHORT).show();
         ((BeaconApplication)getApplication()).checkin(reservationID);
     }
 }

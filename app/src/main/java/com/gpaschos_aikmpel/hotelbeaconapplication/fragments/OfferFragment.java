@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
 import android.os.Bundle;
@@ -12,21 +12,25 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ReservationsFragment extends Fragment {
+public class OfferFragment extends Fragment {
 
 
-
-
-    public ReservationsFragment() {
+    public OfferFragment() {
         // Required empty public constructor
     }
 
+    public static OfferFragment newInstance() {
+        OfferFragment fragment = new OfferFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reservations, container, false);
+        View v = inflater.inflate(R.layout.fragment_offer, container, false);
+        return v;
     }
 
 }

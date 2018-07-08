@@ -100,7 +100,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cl2"
         app:layout_constraintTop_toTopOf="@+id/cl2"
-        app:srcCompat="@drawable/ic_add_black_png" />
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
     <TextView
         android:id="@+id/tvChooseFoodName"

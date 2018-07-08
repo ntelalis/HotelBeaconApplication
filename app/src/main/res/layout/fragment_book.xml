@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.gpaschos_aikmpel.hotelbeaconapplication.activities.BookActivity">
+
+        <TextView
+            android:id="@+id/tvBookRoomPriceCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tvBookRoomPriceCurrency"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookRoomPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvBookRoomPrice" />
+
+        <TextView
+            android:id="@+id/tvBookRoomPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/tvBookRoomPriceLabel"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookAdultsLabel"
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
+
+        <TextView
+            android:id="@+id/tvBookRoomPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookRoomPriceLabel"
+            app:layout_constraintStart_toEndOf="@+id/barrierBookRight"
+            tools:text="40" />
+
+        <TextView
+            android:id="@+id/tvBookCheckInLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvCheckInLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookRoomPriceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookRoomPriceLabel" />
+
+        <TextView
+            android:id="@+id/tvBookRoomTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Standard Double Room" />
+
+        <TextView
+            android:id="@+id/tvBookCheckOutLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvCheckOutLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookRoomPriceLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookCheckInLabel" />
+
+        <TextView
+            android:id="@+id/tvBookAdults"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookAdultsLabel"
+            app:layout_constraintStart_toEndOf="@+id/barrierBookLeft"
+            tools:text="3" />
+
+        <ImageView
+            android:id="@+id/ivBookRoomImage"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/tvBookRoomTitle"
+            app:layout_constraintStart_toStartOf="@+id/tvBookRoomTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookRoomTitle" />
+
+        <TextView
+            android:id="@+id/tvBookCheckOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckOutLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookRoomPrice"
+            tools:text="2018-03-28" />
+
+        <TextView
+            android:id="@+id/tvBookAdultsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvAdultsLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivBookRoomImage" />
+
+        <TextView
+            android:id="@+id/tvBookCheckIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckInLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookRoomPrice"
+            tools:text="2018-03-21" />
+
+        <TextView
+            android:id="@+id/tvBookCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/tvBookCurrency"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnBookLoyalty" />
+
+        <TextView
+            android:id="@+id/tvBookTotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="36sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCurrency"
+            app:layout_constraintEnd_toStartOf="@+id/tvBookCurrency"
+            tools:text="200" />
+
+        <TextView
+            android:id="@+id/tvBookTotalPriceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="29dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/tvBookTotalPriceLabel"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="18sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookTotalPrice"
+            app:layout_constraintEnd_toStartOf="@+id/tvBookTotalPrice" />
+
+        <CheckBox
+            android:id="@+id/cbBookTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:checked="false"
+            android:text="@string/cbTerms"
+            app:layout_constraintBottom_toTopOf="@+id/btnBookConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookPointsLabel" />
+
+        <Button
+            android:id="@+id/btnBookConfirm"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:enabled="false"
+            android:onClick="confirmAndBook"
+            android:text="@string/btnBookConfirm"
+            android:theme="@style/PrimaryButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <fragment
+            android:id="@+id/fmBookCreditCard"
+
+            android:name="com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CreditCardFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookCheckOutLabel"
+            tools:layout="@layout/fragment_credit_card" />
+
+        <TextView
+            android:id="@+id/tvBookDaysLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvBookDaysLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookAdultsLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookChildrenLabel" />
+
+        <TextView
+            android:id="@+id/tvBookDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookDaysLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookAdults"
+            tools:text="2" />
+
+        <Button
+            android:id="@+id/btnBookLoyalty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/btnBookLoyalty"
+            android:theme="@style/PrimaryButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fmBookContactInfo" />
+
+        <TextView
+            android:id="@+id/tvBookPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPointsLabel"
+            app:layout_constraintEnd_toStartOf="@+id/tvBookPointsLabel"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/tvBookPointsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvBookPointsLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookTotalPrice"
+            tools:text="Points" />
+
+        <TextView
+            android:id="@+id/tvBookPointsPlus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/tvBookPointsPlus"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookPoints"
+            app:layout_constraintEnd_toStartOf="@+id/tvBookPoints" />
+
+        <android.support.constraint.Group
+            android:id="@+id/groupBookPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="tvBookPoints,tvBookPointsLabel,tvBookPointsPlus" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <fragment
+            android:id="@+id/fmBookContactInfo"
+            android:name="com.gpaschos_aikmpel.hotelbeaconapplication.fragments.ContactInfoFragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fmBookCreditCard" />
+
+        <TextView
+            android:id="@+id/tvBookChildrenLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvChildrenLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookAdultsLabel"
+            app:layout_constraintTop_toBottomOf="@+id/tvBookAdultsLabel" />
+
+        <TextView
+            android:id="@+id/tvBookChildren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvBookChildrenLabel"
+            app:layout_constraintStart_toStartOf="@+id/tvBookAdults"
+            tools:text="3" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrierBookLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvBookAdultsLabel,tvBookChildrenLabel,tvBookDaysLabel" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrierBookRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tvBookRoomPriceLabel,tvBookCheckInLabel,tvBookCheckOutLabel" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
+

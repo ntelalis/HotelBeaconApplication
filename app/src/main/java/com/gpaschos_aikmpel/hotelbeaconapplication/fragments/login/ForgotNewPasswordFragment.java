@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
 
 import android.content.Context;
@@ -20,7 +20,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -40,7 +39,7 @@ public class ForgotNewPasswordFragment extends Fragment implements JsonListener 
     private String code;
     private String email;
 
-    private ForgotCallbacks listener;
+    private LoginCallbacks listener;
 
     public ForgotNewPasswordFragment() {
         // Required empty public constructor
@@ -68,8 +67,8 @@ public class ForgotNewPasswordFragment extends Fragment implements JsonListener 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ForgotCallbacks) {
-            listener = (ForgotCallbacks) context;
+        if (context instanceof LoginCallbacks) {
+            listener = (LoginCallbacks) context;
         } else {
             throw new ClassCastException(context.toString() + " must implement OnForgotFinished");
         }

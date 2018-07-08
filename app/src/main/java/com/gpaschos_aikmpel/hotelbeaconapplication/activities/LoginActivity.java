@@ -6,13 +6,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotCallbacks;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotNewPasswordFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.ForgotVerifyFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password.LoginFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginCallbacks;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotNewPasswordFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotVerifyFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginFragment;
 
-public class LoginActivity extends AppCompatActivity implements ForgotCallbacks {
+public class LoginActivity extends AppCompatActivity implements LoginCallbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotCallbacks 
 
     @Override
     public void login() {
-        Intent intent = new Intent(this, HomeActivityNEW.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

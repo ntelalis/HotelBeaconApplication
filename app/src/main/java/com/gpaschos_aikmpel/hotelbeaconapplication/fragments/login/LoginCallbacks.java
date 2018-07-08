@@ -1,6 +1,6 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
-public interface ForgotCallbacks {
+public interface LoginCallbacks {
 
     void finishedForgot(String email);
 

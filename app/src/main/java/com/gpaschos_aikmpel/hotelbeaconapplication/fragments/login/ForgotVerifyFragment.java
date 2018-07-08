@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
 
 import android.content.Context;
@@ -38,7 +38,7 @@ public class ForgotVerifyFragment extends Fragment implements JsonListener {
     private TextInputEditText tietVerify;
     private Button btnVerify;
 
-    private ForgotCallbacks listener;
+    private LoginCallbacks listener;
 
     public ForgotVerifyFragment() {
         // Required empty public constructor
@@ -65,8 +65,8 @@ public class ForgotVerifyFragment extends Fragment implements JsonListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ForgotCallbacks) {
-            listener = (ForgotCallbacks) context;
+        if (context instanceof LoginCallbacks) {
+            listener = (LoginCallbacks) context;
         } else {
             throw new ClassCastException(context.toString() + " must implement OnForgotFinished");
         }

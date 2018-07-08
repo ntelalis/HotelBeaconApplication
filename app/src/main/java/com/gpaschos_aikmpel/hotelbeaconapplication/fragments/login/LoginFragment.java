@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.forgot_password;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
 
 import android.content.Context;
@@ -15,6 +15,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.UpdateStoredVariables;
@@ -27,13 +28,13 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFragment extends Fragment implements JsonListener {
+public class LoginFragment extends Fragment implements JsonListener, SyncServerData.SyncCallbacks{
 
     private EditText etEmail;
     private EditText etPass;
     private Button btnLogin, btnRegister, btnForgot;
 
-    private ForgotCallbacks listener;
+    private LoginCallbacks listener;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -50,8 +51,8 @@ public class LoginFragment extends Fragment implements JsonListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ForgotCallbacks) {
-            listener = (ForgotCallbacks) context;
+        if (context instanceof LoginCallbacks) {
+            listener = (LoginCallbacks) context;
         } else {
             throw new ClassCastException(context.toString() + " must implement OnForgotFinished");
         }
@@ -122,7 +123,7 @@ public class LoginFragment extends Fragment implements JsonListener {
             if (getContext() != null)
                 LocalVariables.storeBoolean(getContext(), R.string.is_old_customer, oldCustomer);
 
-            listener.login();
+            SyncServerData.getInstance(getContext()).getCustomerDataFromServer(customer);
         }
 
     }
@@ -130,5 +131,10 @@ public class LoginFragment extends Fragment implements JsonListener {
     @Override
     public void getErrorResult(String url, String error) {
         Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void dataSynced() {
+        listener.login();
     }
 }

@@ -63,7 +63,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         recyclerView = findViewById(R.id.rvReservationRecycler);
         pbLoading = findViewById(R.id.pbAvailability);
         pnAdults = findViewById(R.id.pnReservationAdults);
-        pnChildren= findViewById(R.id.pnReservationChildren);
+        pnChildren = findViewById(R.id.pnReservationChildren);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setNestedScrollingEnabled(false);
@@ -238,7 +238,6 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     }
 
 
-
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         switch (url) {
@@ -252,13 +251,14 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
                     JSONObject room = availabilityResults.getJSONObject(i);
 
                     int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
-                    int people = pnAdults.getValue();
+                    int adults = pnAdults.getValue();
+                    int children = pnChildren.getValue();
                     RoomDB roomDB = RoomDB.getInstance(this);
 
 
                     RoomType rt = roomDB.roomTypeDao().getRoomTypeById(roomTypeID);
 
-                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), people, 1);
+                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), adults, children, 1);
 
                     String description = rt.getDescription();
                     String title = rt.getName();
@@ -268,7 +268,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
 
 
                     MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, people, imageBitmap, imageName);
+                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, adults, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }

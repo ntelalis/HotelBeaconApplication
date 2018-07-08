@@ -9,19 +9,16 @@ public class BeaconRegion {
     @PrimaryKey
     private int id;
     private String uniqueID;
-    private String uuid;
-    private int major;
-    private int minor;
-    private String modified;
+    private String UUID;
+    private String major;
+    private String minor;
 
-
-    public BeaconRegion(int id, String uniqueID, String uuid, int major, int minor, String modified) {
+    public BeaconRegion(int id, String uniqueID, String UUID, String major, String minor) {
         this.id = id;
         this.uniqueID = uniqueID;
-        this.uuid = uuid;
+        this.UUID = UUID;
         this.major = major;
         this.minor = minor;
-        this.modified = modified;
     }
 
     public int getId() {
@@ -40,35 +37,27 @@ public class BeaconRegion {
         this.uniqueID = uniqueID;
     }
 
-    public String getUuid() {
-        return uuid;
+    public String getUUID() {
+        return UUID;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 
-    public int getMajor() {
+    public String getMajor() {
         return major;
     }
 
-    public void setMajor(int major) {
+    public void setMajor(String major) {
         this.major = major;
     }
 
-    public int getMinor() {
+    public String getMinor() {
         return minor;
     }
 
-    public void setMinor(int minor) {
+    public void setMinor(String minor) {
         this.minor = minor;
-    }
-
-    public String getModified() {
-        return modified;
-    }
-
-    public void setModified(String modified) {
-        this.modified = modified;
     }
 }

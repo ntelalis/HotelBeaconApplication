@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="48dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyMemberLastName"
@@ -72,6 +72,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:text="0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="@+id/cpbLoyalty"
@@ -205,7 +206,11 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:padding="32dp"
+        app:stroke_width="16dp"
+        app:progress_color="@color/colorAccent"
+        app:progress_background_color="@color/colorPrimary"
+        app:thumb_visible="false"
+        app:marker_visible="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,13 +221,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
+        app:layout_constraintGuide_percent="0.85" />
 
 </android.support.constraint.ConstraintLayout>
