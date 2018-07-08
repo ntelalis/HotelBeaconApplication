@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 public class CheckedInFragment extends Fragment {
 

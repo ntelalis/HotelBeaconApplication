@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 import java.util.Objects;
 
@@ -27,11 +29,29 @@ public class CheckInFragment extends Fragment {
     private TextView tvDepartureDate;
     private TextView tvReservationNo;
     private Reservation reservation;
-
+    private NotificationCallbacks listener;
 
     public CheckInFragment() {
         // Required empty public constructor
     }
+
+    public static CheckInFragment newInstance() {
+        CheckInFragment fragment = new CheckInFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (NotificationCallbacks) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement NotificationCallbacks");
+        }
+    }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,7 +79,8 @@ public class CheckInFragment extends Fragment {
         btnCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BeaconApplication) Objects.requireNonNull(getActivity()).getApplication()).checkin(reservation.getId());
+//                ((BeaconApplication) Objects.requireNonNull(getActivity()).getApplication()).checkin(reservation.getId());
+                listener.checkIn(reservation.getId());
             }
         });
 

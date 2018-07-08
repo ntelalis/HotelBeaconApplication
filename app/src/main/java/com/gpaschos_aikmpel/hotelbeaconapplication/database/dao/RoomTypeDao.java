@@ -18,7 +18,6 @@ public interface RoomTypeDao {
     @Query("SELECT * FROM RoomType WHERE id = :id")
     RoomType getRoomTypeById(int id);
 
-    //TODO Maybe Adults?
     @Query("SELECT MAX(Adults) FROM RoomType")
     int getMaxAdults();
 

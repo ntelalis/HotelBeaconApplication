@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -14,6 +15,7 @@ import android.support.v4.app.TaskStackBuilder;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
@@ -21,7 +23,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -40,8 +41,9 @@ public class NotificationCreation implements JsonListener {
 
     private static String lastName;
     private static String title;
-    public static final String CHECKIN_REMINDER = "scheduledNotification";
-    public static final String CHECKIN_BEACON_NOTIFICATION = "beaconNotification";
+    public static final String CHECK_IN_NOTIFICATION = "checkInNotification";
+    public static final String CHECK_IN_REMINDER = "scheduledNotification";
+    public static final String CHECK_IN_BEACON_NOTIFICATION = "beaconNotification";
 
 
     private NotificationCreation() {
@@ -99,7 +101,7 @@ public class NotificationCreation implements JsonListener {
             UpdateStoredVariables.welcomeNotified(context);
 
             //notify the customer that they can check-in if they are eligible
-            notifyCheckin(context, CHECKIN_BEACON_NOTIFICATION);
+            notifyCheckin(context, CHECK_IN_BEACON_NOTIFICATION);
         }
 
     }
@@ -148,13 +150,13 @@ public class NotificationCreation implements JsonListener {
         if (shouldNotifyCheckin(context)) {
 
             switch (tag) {
-                case CHECKIN_BEACON_NOTIFICATION:
+                case CHECK_IN_BEACON_NOTIFICATION:
                     notificationTitle = Params.notificationCheckinTitle;
                     notificationContent = Params.notificationCheckinMsg;
                     notificationID = Params.notificationCheckinID;
 
                     break;
-                case CHECKIN_REMINDER:
+                case CHECK_IN_REMINDER:
                     notificationTitle = Params.notificationCheckinReminderTitle;
                     notificationContent = Params.notificationCheckinReminderMsg + Params.HotelName
                             + Params.notificationCheckinReminderMsg2;
@@ -168,10 +170,12 @@ public class NotificationCreation implements JsonListener {
             } else {
                 icon = R.drawable.ic_welcome_png;
             }
+            Bundle bundle = new Bundle();
+            bundle.putString(CHECK_IN_NOTIFICATION,CHECK_IN_NOTIFICATION);
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
                     , notificationContent, icon
-                    , notificationContent, CheckInActivity.class);
+                    , notificationContent, HomeActivity.class,bundle);
         }
     }
 
@@ -190,7 +194,7 @@ public class NotificationCreation implements JsonListener {
                     , Params.notificationCheckoutID, Params.notificationCheckoutTitle
                     , Params.notificationCheckoutReminder + Params.HotelCheckoutTime
                     , icon, Params.notificationCheckoutReminder + Params.HotelCheckoutTime
-                    , CheckOutActivity.class);
+                    , CheckOutActivity.class,null);
         }
     }
 
@@ -316,7 +320,7 @@ public class NotificationCreation implements JsonListener {
     //creates a notification that opens an Activity
     private static void notification(Context context, String channelID, int notificationID
             , String notificationTitle, String notificationContent, int smallIcon, String bigText
-            , Class activity) {
+            , Class activity, Bundle bundle) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
 
@@ -327,6 +331,9 @@ public class NotificationCreation implements JsonListener {
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
         Intent intent = new Intent(context, activity);
+        if(bundle!=null){
+            intent.putExtras(bundle);
+        }
         //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         //intent.setAction(Intent.ACTION_VIEW);
         //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//

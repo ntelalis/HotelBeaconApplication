@@ -16,6 +16,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 public class BookedFragment extends Fragment {
 
     private static final String RESERVATION_ID_KEY = "reservationID";
+    public static final String TAG = BookedFragment.class.getSimpleName();
     private int reservationID;
     private Button btnShowReservations;
     private ReservationCallbacks listener;
@@ -60,10 +61,12 @@ public class BookedFragment extends Fragment {
         btnShowReservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //listener.showReservations();
+                listener.showReservations();
             }
         });
         return v;
     }
+
+
 
 }

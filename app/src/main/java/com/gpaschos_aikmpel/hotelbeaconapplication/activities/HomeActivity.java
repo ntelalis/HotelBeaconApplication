@@ -25,20 +25,32 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomInactiveFragm
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.LoyaltyFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferFragment;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationCallbacks;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.CheckInFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.CheckedInFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, ReservationCallbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener {
 
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
@@ -156,6 +168,23 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationRewardsProgram);
         BottomNavigationViewHelper.removeShiftMode(bottomNavigationView);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            if(bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION)){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                CheckInFragment checkInFragment = CheckInFragment.newInstance();
+                transaction.replace(R.id.homeScreenContainer, checkInFragment);
+                transaction.commit();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
     }
 
     @Override
@@ -166,21 +195,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             reservationNewFragment.pickedDate(type, day, month, year);
         }
     }
-
-    @Override
-    public void newReservation() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.homeScreenContainer, ReservationNewFragment.newInstance())
-                .commit();
-    }
-
-    @Override
-    public void book(int roomTypeID, String arrival, String departure, int adults, int children) {
-
-    }
-
-
 
     public void myReservations() {
         List<Reservation> reservationList = RoomDB.getInstance(this).reservationDao().getAllUpcomingReservations();
@@ -231,5 +245,45 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             transaction.replace(R.id.homeScreenContainer, fragment);
             transaction.commit();
         }
+    }
+
+    @Override
+    public void checkIn(int reservationID) {
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.checkInReservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
+    }
+
+    @Override
+    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+        if (url.equals(URL.checkInUrl)) {
+            int reservationID = json.getInt(POST.checkInReservationID);
+            int roomNumber = json.getInt(POST.checkInRoomNumber);
+            String checkInDate = json.getString(POST.checkInDate);
+            int roomFloor = json.getInt(POST.checkInRoomFloor);
+            int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
+            String roomPassword = json.getString(POST.checkInRoomPassword);
+            String modified = json.getString(POST.checkInModified);
+            //update Room with the checked-in information
+            Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
+            r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
+            RoomDB.getInstance(this).reservationDao().update(r);
+
+            /*Intent intent = new Intent(this, CheckedInActivity.class);
+            intent.putExtra(CheckedInActivity.ROOM, roomNumber);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            */
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            CheckedInFragment checkedInFragment = CheckedInFragment.newInstance(reservationID);
+            transaction.replace(R.id.homeScreenContainer, checkedInFragment);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void getErrorResult(String url, String error) {
+
     }
 }

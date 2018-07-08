@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -70,6 +71,8 @@ public class BookFragment extends Fragment implements JsonListener {
     private TextView tvTotalPrice,tvPoints;
     private Group group;
 
+    private ReservationCallbacks listener;
+
     public BookFragment() {
         // Required empty public constructor
     }
@@ -97,6 +100,16 @@ public class BookFragment extends Fragment implements JsonListener {
             children = getArguments().getInt(ROOM_CHILDREN_KEY);
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ReservationCallbacks) {
+            listener = (ReservationCallbacks) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement ReservationCallbacks");
+        }
     }
 
     @Override
@@ -191,9 +204,7 @@ public class BookFragment extends Fragment implements JsonListener {
                 ScheduleNotifications.checkinNotification(getContext(), arrival);
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
 
-                Intent intent = new Intent(getContext(), BookConfirmationActivity.class);
-                intent.putExtra(BookConfirmationActivity.RESERVATION_NUMBER_KEY, resID);
-                startActivity(intent);
+                listener.showBooked(resID);
                 break;
             case URL.totalPointsUrl:
 
