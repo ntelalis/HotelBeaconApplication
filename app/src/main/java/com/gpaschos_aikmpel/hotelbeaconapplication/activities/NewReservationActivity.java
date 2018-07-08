@@ -17,6 +17,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.BookFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.BookedFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
 
@@ -82,18 +83,35 @@ public class NewReservationActivity extends AppCompatActivity implements DatePic
         }
     }
 
-
-    @Override
-    public void newReservation() {
-
-    }
-
     @Override
     public void book(int roomTypeID, String arrival, String departure, int adults, int children) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         BookFragment bookFragment = BookFragment.newInstance(roomTypeID,arrival,departure,adults,children);
         transaction.replace(R.id.reservationContainer, bookFragment);
         transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void showReservations() {
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(BookedFragment.TAG);
+        if (fragment!=null && fragment.isVisible()) {
+            finish();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void showBooked(int reservationID) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        BookedFragment bookedFragment = BookedFragment.newInstance(reservationID);
+        transaction.replace(R.id.reservationContainer,bookedFragment,BookedFragment.TAG);
         transaction.commit();
     }
 

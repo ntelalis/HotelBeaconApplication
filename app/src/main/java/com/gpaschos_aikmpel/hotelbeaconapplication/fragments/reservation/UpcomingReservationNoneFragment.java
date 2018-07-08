@@ -1,6 +1,5 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +15,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.NewReservationActi
 
 public class UpcomingReservationNoneFragment extends Fragment {
 
-    private ReservationCallbacks listener;
-    private Button btnReserve;
-
     public UpcomingReservationNoneFragment() {
         // Required empty public constructor
     }
@@ -31,34 +27,22 @@ public class UpcomingReservationNoneFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof ReservationCallbacks) {
-            listener = (ReservationCallbacks) context;
-        } else {
-            throw new ClassCastException(context.toString() + " must implement ReservationCallbacks");
-        }
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_fragment_upcoming_reservation_none, container, false);
-        btnReserve = view.findViewById(R.id.btnUpcomingReservationsNone);
+        Button btnReserve = view.findViewById(R.id.btnUpcomingReservationsNone);
         btnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // listener.newReservation();
-                Intent intent = new Intent(getContext(),NewReservationActivity.class);
+                Intent intent = new Intent(getContext(), NewReservationActivity.class);
                 startActivity(intent);
             }
         });
         return view;
 
     }
-
-
 
 
 }

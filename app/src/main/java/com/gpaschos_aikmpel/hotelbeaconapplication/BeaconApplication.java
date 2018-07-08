@@ -2,12 +2,14 @@ package com.gpaschos_aikmpel.hotelbeaconapplication;
 
 import android.app.Application;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -71,7 +73,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     public void checkin(int reservationID) {
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkinUrl, params);
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
 
     }
 
@@ -103,7 +105,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if (url.equals(URL.checkinUrl)) {
+        if (url.equals(URL.checkInUrl)) {
             int reservationID = json.getInt(POST.checkInReservationID);
             int roomNumber = json.getInt(POST.checkInRoomNumber);
             String checkInDate = json.getString(POST.checkInDate);
@@ -120,6 +122,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             intent.putExtra(CheckedInActivity.ROOM, roomNumber);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
         }
     }
 

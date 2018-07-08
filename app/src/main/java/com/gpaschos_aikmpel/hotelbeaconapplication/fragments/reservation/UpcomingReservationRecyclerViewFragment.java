@@ -1,5 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -17,6 +18,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     private RecyclerView recyclerView;
     private MyReservationsAdapter adapter;
     private BeaconApplication application;
+    private NotificationCallbacks listener;
 
     public UpcomingReservationRecyclerViewFragment() {
         // Required empty public constructor
@@ -57,6 +60,16 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (NotificationCallbacks) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement NotificationCallbacks");
+        }
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_reservation_recycler_view, container, false);
@@ -77,10 +90,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     //sends the reservationID to the server in order to check in
     @Override
     public void checkIn(MyReservationsAdapter.ReservationModel obj) {
-        int reservationID = obj.reservationID;
-        if(application!=null){
-            application.checkin(reservationID);
-        }
+        listener.checkIn(obj.reservationID);
     }
 
     @Override
