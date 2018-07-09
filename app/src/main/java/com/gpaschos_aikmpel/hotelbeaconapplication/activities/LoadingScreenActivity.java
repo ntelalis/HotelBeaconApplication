@@ -127,6 +127,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
     @Override
     public void dataSynced() {
+
         if(customer==null){
             login();
         }

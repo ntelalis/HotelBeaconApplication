@@ -7,8 +7,6 @@ import android.arch.persistence.room.Query;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 
-import org.altbeacon.beacon.Beacon;
-
 import java.util.List;
 
 @Dao
@@ -25,4 +23,7 @@ public interface BeaconRegionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<BeaconRegion> list);
+
+    @Query("DELETE FROM BeaconRegion WHERE BeaconRegion.id=:id")
+    BeaconRegion deleteRegionByID(int id);
 }

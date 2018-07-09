@@ -41,6 +41,7 @@ public class URL {
     private static final String currenciesPage = "currency.php";
     private static final String customerPage = "customer.php";
     private static final String reservationsPage = "reservations.php";
+    private static final String beaconRegionsPage = "beaconregions.php";
 
     public static final String loginUrl = serverAddress + loginPage;
     public static final String forgotUrl = serverAddress + forgotPage;
@@ -71,4 +72,5 @@ public class URL {
     public static final String currenciesUrl = serverAddress + currenciesPage;
     public static final String customerUrl = serverAddress + customerPage;
     public static final String reservationsUrl = serverAddress + reservationsPage;
+    public static final String beaconRegionsUrl = serverAddress + beaconRegionsPage;
 }

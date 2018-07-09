@@ -70,6 +70,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     break;
                 case R.id.navigationDrawerProfile:
                     break;
+                    //TODO: dont clear the tables that are irrelevant to the customer
                 case R.id.navigationDrawerLogout:
                     RoomDB.getInstance(HomeActivity.this).clearAllTables();
                     intent = new Intent(HomeActivity.this, LoginActivity.class);

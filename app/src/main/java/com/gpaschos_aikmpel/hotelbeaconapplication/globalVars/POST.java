@@ -268,5 +268,15 @@ public class POST {
     public static final String syncId = "id";
     public static final String syncModified = "modified";
 
-
+    //~~~~~~~~~~~~~~~~~beaconRegion.php~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String beaconRegionCheck = "regionsCheck";
+    //RCV
+    public static final String beaconRegionID = "id";
+    public static final String beaconRegionUUID = "uuid";
+    public static final String beaconRegionUniqueID = "uniqueID";
+    public static final String beaconRegionMajor = "major";
+    public static final String beaconRegionMinor = "minor";
+    public static final String beaconRegionModified = "modified";
+    public static final String beaconRegionsArray = "beaconRegionsArray";
 }
