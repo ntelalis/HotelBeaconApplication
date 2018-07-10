@@ -61,6 +61,7 @@ public class SyncServerData implements JsonListener {
 
     public void getDataFromServer() {
         Log.d(TAG, "GetDataFromServer");
+        getBeaconRegion();
         getTitles();
         getCountries();
         getCurrencies();
