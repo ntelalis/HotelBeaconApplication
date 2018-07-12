@@ -32,7 +32,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     private static final String TAG = LoadingScreenActivity.class.getSimpleName();
     private ProgressBar progressBar;
     private TextView tvHotelName;
-    private Customer customer = null;
+    private Customer customer;
     private int mAnimationDuration;
 
     @Override
@@ -72,26 +72,11 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
     }
 
-    public void login() {
-        customer = RoomDB.getInstance(this).customerDao().getCustomer();
-
-        if (customer != null) {
-
-            SyncServerData.getInstance(LoadingScreenActivity.this).getCustomerDataFromServer(customer);
-
-        } else {
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
-        }
-    }
-
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
 
-            try{
+            try {
                 int customerId = json.getInt(POST.loginCustomerID);
                 String firstName = json.getString(POST.loginFirstName);
                 int titleID = json.getInt(POST.loginTitleID);
@@ -105,9 +90,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 c.update(customerId, titleID, firstName, lastName, birthDate, countryID, modified);
                 roomDB.customerDao().insert(c);
 
-            }
-            catch (JSONException e){
-                Log.d(TAG,"No data modified");
+            } catch (JSONException e) {
+                Log.d(TAG, "No data modified");
             }
 
 
@@ -127,18 +111,26 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
     @Override
     public void dataSynced() {
+        customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
-        if(customer==null){
-            login();
+        if (customer != null) {
+            SyncServerData.getInstance(LoadingScreenActivity.this).getCustomerDataFromServer(customer);
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
-        else{
-            Map<String, String> params = new HashMap<>();
+    }
 
-            params.put(POST.loginEmail, customer.getEmail());
-            params.put(POST.loginPassword, customer.getPassword());
-            params.put(POST.loginModified, customer.getModified());
+    @Override
+    public void customerDataSynced() {
+        Map<String, String> params = new HashMap<>();
 
-            VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
-        }
+        params.put(POST.loginEmail, customer.getEmail());
+        params.put(POST.loginPassword, customer.getPassword());
+        params.put(POST.loginModified, customer.getModified());
+
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
     }
 }

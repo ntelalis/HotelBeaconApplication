@@ -135,6 +135,10 @@ public class LoginFragment extends Fragment implements JsonListener, SyncServerD
 
     @Override
     public void dataSynced() {
+    }
+
+    @Override
+    public void customerDataSynced() {
         listener.login();
     }
 }

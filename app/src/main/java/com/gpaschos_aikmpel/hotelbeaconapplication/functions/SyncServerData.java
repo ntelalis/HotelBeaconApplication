@@ -286,7 +286,7 @@ public class SyncServerData implements JsonListener {
                     Log.e(TAG, e.toString());
                 }
 
-                syncCallbacks.dataSynced();
+                syncCallbacks.customerDataSynced();
                 break;
             case URL.roomTypesUrl:
                 try {
@@ -370,6 +370,7 @@ public class SyncServerData implements JsonListener {
 
     public interface SyncCallbacks {
         void dataSynced();
+        void customerDataSynced();
 
     }
 
