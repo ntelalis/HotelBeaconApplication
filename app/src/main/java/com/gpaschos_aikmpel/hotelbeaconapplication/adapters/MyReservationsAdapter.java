@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 import java.util.List;
@@ -97,9 +99,11 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         @Override
         public void onClick(View view) {
             if (view.getId() == btnCheckInCheckOut.getId()) {
-                if (roomNo.equals("null")) {
+                int resID = Integer.parseInt(tvReservationID.getText().toString());
+                Reservation r = RoomDB.getInstance(view.getContext()).reservationDao().getReservationByID(resID);
+                if (!r.isCheckedIn()) {
                     clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
-                } else {
+                } else if(r.isCheckedInNotCheckedOut()) {
                     clickCallbacks.checkOut(reservationsList.get(getAdapterPosition()));
                 }
             }

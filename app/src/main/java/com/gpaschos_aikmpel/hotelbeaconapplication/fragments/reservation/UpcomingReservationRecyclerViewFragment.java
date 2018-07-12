@@ -18,6 +18,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CheckOutFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 import java.util.ArrayList;
