@@ -66,8 +66,18 @@ public class POST {
     public static final String checkInDate = "checkInDate";
     public static final String checkInRoomFloor = "roomFloor";
     public static final String checkInRoomPassword = "roomPassword";
-    public static final String checkInBeaconRegionID = "beaconRegionID";
     public static final String checkInModified = "modified";
+    //beaconRegions
+    public static final String checkInRoomBeaconRegionID = "id";
+    public static final String checkInRoomBeaconRegionUUID = "uuid";
+    public static final String checkInRoomBeaconRegionUniqueID = "uniqueID";
+    public static final String checkInRoomBeaconRegionMajor = "major";
+    public static final String checkInRoomBeaconRegionMinor = "minor";
+    public static final String checkInRoomBeaconRegionExclusive = "exclusive";
+    public static final String checkInRoomBeaconRegionBackground = "background";
+    public static final String checkInRoomBeaconRegionRegionType = "regionType";
+    public static final String checkInRoomBeaconRegionModified = "modified";
+    public static final String checkInRoomBeaconRegionArray = "roomBeaconRegionArray";
 
 
     //~~~~~~~~~~~~~~~~~~checkout.php~~~~~~~~~~~~~~~~~~
@@ -270,13 +280,23 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~beaconRegion.php~~~~~~~~~~~~~~~~~
     //SND
-    public static final String beaconRegionCheck = "regionsCheck";
+    public static final String beaconRegionCheck = "check";
+
     //RCV
     public static final String beaconRegionID = "id";
     public static final String beaconRegionUUID = "uuid";
     public static final String beaconRegionUniqueID = "uniqueID";
     public static final String beaconRegionMajor = "major";
     public static final String beaconRegionMinor = "minor";
+    public static final String beaconRegionExclusive = "exclusive";
+    public static final String beaconRegionBackground = "background";
+    public static final String beaconRegionRegionType = "regionType";
     public static final String beaconRegionModified = "modified";
-    public static final String beaconRegionsArray = "beaconRegionsArray";
+    public static final String beaconRegionsArray = "beaconRegionArray";
+
+
+    //~~~~~~~~~~~~~~~~~roombeaconregion.php~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String roomBeaconRegionReservationID = "reservationID";
+
 }

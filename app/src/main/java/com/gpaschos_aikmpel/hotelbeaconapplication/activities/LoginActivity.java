@@ -6,13 +6,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotNewPasswordFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotVerifyFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 
-public class LoginActivity extends AppCompatActivity implements LoginCallbacks {
+public class LoginActivity extends AppCompatActivity implements LoginCallbacks,SyncServerData.SyncCallbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +59,8 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks {
 
     @Override
     public void login() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
+        Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+        SyncServerData.getInstance(this).getCustomerDataFromServer(customer);
     }
 
     @Override
@@ -76,5 +78,17 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks {
         transaction.addToBackStack(null);
         transaction.replace(R.id.ForgotFragmentContainer, forgotFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void dataSynced() {
+
+    }
+
+    @Override
+    public void customerDataSynced() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

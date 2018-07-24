@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFragment extends Fragment implements JsonListener, SyncServerData.SyncCallbacks{
+public class LoginFragment extends Fragment implements JsonListener{
 
     private EditText etEmail;
     private EditText etPass;
@@ -123,7 +123,7 @@ public class LoginFragment extends Fragment implements JsonListener, SyncServerD
             if (getContext() != null)
                 LocalVariables.storeBoolean(getContext(), R.string.is_old_customer, oldCustomer);
 
-            SyncServerData.getInstance(getContext()).getCustomerDataFromServer(customer);
+            listener.login();
         }
 
     }
@@ -131,14 +131,5 @@ public class LoginFragment extends Fragment implements JsonListener, SyncServerD
     @Override
     public void getErrorResult(String url, String error) {
         Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void dataSynced() {
-    }
-
-    @Override
-    public void customerDataSynced() {
-        listener.login();
     }
 }

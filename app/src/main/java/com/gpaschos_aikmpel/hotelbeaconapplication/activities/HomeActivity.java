@@ -262,12 +262,12 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             int roomNumber = json.getInt(POST.checkInRoomNumber);
             String checkInDate = json.getString(POST.checkInDate);
             int roomFloor = json.getInt(POST.checkInRoomFloor);
-            int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
+            //int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
             String roomPassword = json.getString(POST.checkInRoomPassword);
             String modified = json.getString(POST.checkInModified);
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
-            r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
+          // r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
             RoomDB.getInstance(this).reservationDao().update(r);
 
             /*Intent intent = new Intent(this, CheckedInActivity.class);

@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -170,12 +169,10 @@ public class NotificationCreation implements JsonListener {
             } else {
                 icon = R.drawable.ic_welcome_png;
             }
-            Bundle bundle = new Bundle();
-            bundle.putString(CHECK_IN_NOTIFICATION,CHECK_IN_NOTIFICATION);
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
                     , notificationContent, icon
-                    , notificationContent, HomeActivity.class,bundle);
+                    , notificationContent, CheckInActivity.class);
         }
     }
 
@@ -194,7 +191,7 @@ public class NotificationCreation implements JsonListener {
                     , Params.notificationCheckoutID, Params.notificationCheckoutTitle
                     , Params.notificationCheckoutReminder + Params.HotelCheckoutTime
                     , icon, Params.notificationCheckoutReminder + Params.HotelCheckoutTime
-                    , CheckOutActivity.class,null);
+                    , CheckOutActivity.class);
         }
     }
 
@@ -205,6 +202,9 @@ public class NotificationCreation implements JsonListener {
 
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
+
+        //FIXME DEBUG CODE DELETE THIS
+        LocalVariables.storeBoolean(context,R.string.is_notified_Welcome,false);
 
         return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
@@ -320,7 +320,7 @@ public class NotificationCreation implements JsonListener {
     //creates a notification that opens an Activity
     private static void notification(Context context, String channelID, int notificationID
             , String notificationTitle, String notificationContent, int smallIcon, String bigText
-            , Class activity, Bundle bundle) {
+            , Class activity) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
 
@@ -331,9 +331,7 @@ public class NotificationCreation implements JsonListener {
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
 
         Intent intent = new Intent(context, activity);
-        if(bundle!=null){
-            intent.putExtras(bundle);
-        }
+
         //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         //intent.setAction(Intent.ACTION_VIEW);
         //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack~~~~~//

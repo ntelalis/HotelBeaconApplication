@@ -15,8 +15,14 @@ public interface BeaconRegionDao {
     @Query("SELECT * FROM BeaconRegion")
     List<BeaconRegion> getRegions();
 
+    @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.background=1")
+    List<BeaconRegion> getBackgroundScanningRegions();
+
     @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.id=:id")
     BeaconRegion getRegionByID(int id);
+
+    @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.regionType=:type")
+    List<BeaconRegion> getRegionByType(String type);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(BeaconRegion region);
@@ -25,5 +31,5 @@ public interface BeaconRegionDao {
     void insertAll(List<BeaconRegion> list);
 
     @Query("DELETE FROM BeaconRegion WHERE BeaconRegion.id=:id")
-    BeaconRegion deleteRegionByID(int id);
+    void deleteRegionByID(int id);
 }

@@ -21,14 +21,13 @@ public class Reservation implements SyncModel{
     private String endDate;
     private String checkIn;
     private String checkOut;
-    private int roomBeaconId;
     private String roomPassword;
     private int roomNumber;
     private int roomFloor;
     private String modified;
 
     @Ignore
-    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomBeaconId, int roomNumber, int roomFloor, String modified) {
+    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -38,7 +37,6 @@ public class Reservation implements SyncModel{
         this.endDate = endDate;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        this.roomBeaconId = roomBeaconId;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
         this.modified = modified;
@@ -55,12 +53,11 @@ public class Reservation implements SyncModel{
         this.modified = modified;
     }
 
-    public void checkIn(String checkIn, int roomNumber, int roomFloor, String roomPassword, int roomBeaconId, String modified) {
+    public void checkIn(String checkIn, int roomNumber, int roomFloor, String roomPassword, String modified) {
         this.checkIn = checkIn;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
         this.roomPassword = roomPassword;
-        this.roomBeaconId = roomBeaconId;
         this.modified = modified;
     }
 
@@ -68,7 +65,7 @@ public class Reservation implements SyncModel{
         this.checkOut = checkOut;
         this.modified = modified;
     }
-    public void update(int id, int roomTypeID, int adults, int children ,String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, int roomBeaconId, String modified){
+    public void update(int id, int roomTypeID, int adults, int children ,String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified){
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -78,7 +75,6 @@ public class Reservation implements SyncModel{
         this.endDate = endDate;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        this.roomBeaconId = roomBeaconId;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
         this.modified = modified;
@@ -171,14 +167,6 @@ public class Reservation implements SyncModel{
 
     public void setCheckOut(String checkOut) {
         this.checkOut = checkOut;
-    }
-
-    public int getRoomBeaconId() {
-        return roomBeaconId;
-    }
-
-    public void setRoomBeaconId(int roomBeaconId) {
-        this.roomBeaconId = roomBeaconId;
     }
 
     public String getRoomPassword() {

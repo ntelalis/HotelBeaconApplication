@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 import android.content.Context;
 import android.util.Log;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
@@ -15,6 +16,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoint
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
@@ -56,7 +58,7 @@ public class SyncServerData implements JsonListener {
             instance = new SyncServerData(context);
 
         }
-        return instance;
+        return new SyncServerData(context);
     }
 
     public void getDataFromServer() {
@@ -71,18 +73,40 @@ public class SyncServerData implements JsonListener {
     public void getCustomerDataFromServer(Customer customer) {
         Log.d(TAG, "GetCustomerDataFromServer");
         getReservations(customer);
+        //getRoomBeaconRegion();
     }
 
-    private void getBeaconRegion(){
-        Log.i(TAG, "Check beacon regions");
+
+    private void getBeaconRegion() {
+        Log.i(TAG, "Check BeaconRegions");
         List<BeaconRegion> regionList = roomDB.beaconRegionDao().getRegions();
-        Map<String, String> params=null;
-        if(!regionList.isEmpty()){
+        Map<String, String> params = null;
+        if (!regionList.isEmpty()) {
             params = new HashMap<>();
             String beaconRegionCheckJSON = sync(regionList);
             params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
         }
-        volleyQueue.jsonRequest(this,URL.beaconRegionsUrl, params);
+        volleyQueue.jsonRequest(this, URL.beaconRegionsUrl, params);
+    }
+
+
+    private void getRoomBeaconRegion() {
+        Log.i(TAG, "Check RoomBeaconRegions");
+        Reservation current = roomDB.reservationDao().getCurrentReservation();
+        if (current != null && current.isCheckedInNotCheckedOut()) {
+            List<BeaconRegion> roomRegionList = roomDB.beaconRegionDao().getRegionByType(Params.roomRegionType);
+            Map<String, String> params = new HashMap<>();
+            params.put(POST.roomBeaconRegionReservationID, String.valueOf(current.getId()));
+            if (!roomRegionList.isEmpty()) {
+                String beaconRegionCheckJSON = sync(roomRegionList);
+                params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
+            }
+            volleyQueue.jsonRequest(this, URL.roomBeaconRegionsUrl, params);
+        }
+        else{
+            ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
+            syncCallbacks.customerDataSynced();
+        }
     }
 
     private void getTitles() {
@@ -148,6 +172,36 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.roomTypesUrl, params);
     }
 
+    private void resolveBeaconRegionReply(JSONObject json) {
+        try {
+            JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionsArray);
+            List<BeaconRegion> beaconRegionList = new ArrayList<>();
+            for (int i = 0; i < jsonArrayBeaconRegion.length(); i++) {
+                JSONObject jsonObject = jsonArrayBeaconRegion.getJSONObject(i);
+                int id = jsonObject.getInt(POST.beaconRegionID);
+                String modified = JSONHelper.getString(jsonObject, POST.beaconRegionModified);
+                if (modified == null) {
+                    roomDB.beaconRegionDao().deleteRegionByID(id);
+                    Log.i(TAG, "BeaconRegion: " + id + " deleted");
+                    continue;
+                }
+                String uniqueID = JSONHelper.getString(jsonObject, POST.beaconRegionUniqueID);
+                String uuid = JSONHelper.getString(jsonObject, POST.beaconRegionUUID);
+                String major = JSONHelper.getString(jsonObject, POST.beaconRegionMajor);
+                String minor = JSONHelper.getString(jsonObject, POST.beaconRegionMinor);
+                boolean exclusive = jsonObject.getBoolean(POST.beaconRegionExclusive);
+                boolean background = jsonObject.getBoolean(POST.beaconRegionBackground);
+                String regionType = JSONHelper.getString(jsonObject, POST.beaconRegionRegionType);
+                beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, exclusive, background, regionType, modified));
+            }
+            roomDB.beaconRegionDao().insertAll(beaconRegionList);
+
+        } catch (JSONException e) {
+            Log.e(TAG, e.toString());
+        }
+    }
+
+
     @Override
     public void getSuccessResult(String url, JSONObject json) {
 
@@ -161,7 +215,7 @@ public class SyncServerData implements JsonListener {
                     for (int i = 0; i < jsonArrayTitle.length(); i++) {
                         JSONObject jsonObject = jsonArrayTitle.getJSONObject(i);
                         int id = jsonObject.getInt(POST.titlesID);
-                        String title = JSONHelper.getString(jsonObject,POST.titlesTitle);
+                        String title = JSONHelper.getString(jsonObject, POST.titlesTitle);
                         titleList.add(new Title(id, title));
                     }
                     roomDB.titleDao().insertAll(titleList);
@@ -175,9 +229,9 @@ public class SyncServerData implements JsonListener {
                     JSONArray jsonArrayCountries = json.getJSONArray(POST.countryArray);
                     List<Country> countryList = new ArrayList<>();
                     for (int i = 0; i < jsonArrayCountries.length(); i++) {
-                        JSONObject jsonObject =jsonArrayCountries.getJSONObject(i);
+                        JSONObject jsonObject = jsonArrayCountries.getJSONObject(i);
                         int id = jsonObject.getInt(POST.countryID);
-                        String name = JSONHelper.getString(jsonObject,POST.countryName);
+                        String name = JSONHelper.getString(jsonObject, POST.countryName);
                         countryList.add(new Country(id, name));
                     }
 
@@ -194,9 +248,9 @@ public class SyncServerData implements JsonListener {
                     for (int i = 0; i < jsonArrayCurrency.length(); i++) {
                         JSONObject jsonObject = jsonArrayCurrency.getJSONObject(i);
                         int id = jsonObject.getInt(POST.currencyID);
-                        String name = JSONHelper.getString(jsonObject,POST.currencyName);
-                        String code = JSONHelper.getString(jsonObject,POST.currencyCode);
-                        String symbol = JSONHelper.getString(jsonObject,POST.currencySymbol);
+                        String name = JSONHelper.getString(jsonObject, POST.currencyName);
+                        String code = JSONHelper.getString(jsonObject, POST.currencyCode);
+                        String symbol = JSONHelper.getString(jsonObject, POST.currencySymbol);
                         currencyList.add(new Currency(id, name, code, symbol));
                     }
                     roomDB.currencyDao().insertAll(currencyList);
@@ -208,86 +262,11 @@ public class SyncServerData implements JsonListener {
                 break;
 
             case URL.beaconRegionsUrl:
-                try{
-                    JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionsArray);
-                    List<BeaconRegion> beaconRegionList = new ArrayList<>();
-                    for(int i=0;i<jsonArrayBeaconRegion.length();i++){
-                        JSONObject jsonObject = jsonArrayBeaconRegion.getJSONObject(i);
-                        int id = jsonObject.getInt(POST.beaconRegionID);
-                        String modified = JSONHelper.getString(jsonObject,POST.beaconRegionModified);
-                        if(modified==null){
-                            roomDB.beaconRegionDao().deleteRegionByID(id);
-                            Log.i(TAG,"BeaconRegion: "+id+" deleted");
-                            continue;
-                        }
-                        String uniqueID = JSONHelper.getString(jsonObject,POST.beaconRegionUniqueID);
-                        String uuid = JSONHelper.getString(jsonObject,POST.beaconRegionUUID);
-                        String major = JSONHelper.getString(jsonObject,POST.beaconRegionMajor);
-                        String minor = JSONHelper.getString(jsonObject,POST.beaconRegionMinor);
-
-                        beaconRegionList.add(new BeaconRegion(id,uniqueID,uuid,major,minor,modified));
-                    }
-                    roomDB.beaconRegionDao().insertAll(beaconRegionList);
-                    Log.i(TAG,"BeaconRegions OK!");
-
-                }
-                catch(JSONException e ){
-                    Log.e(TAG, e.toString());
-                }
-
-            case URL.reservationsUrl:
-                try {
-                    JSONArray jsonArrayReservations = json.getJSONArray(POST.reservationArray);
-                    List<Reservation> reservationList = new ArrayList<>();
-                    for (int i = 0; i < jsonArrayReservations.length(); i++) {
-                        JSONObject jsonObject = jsonArrayReservations.getJSONObject(i);
-                        int id = jsonObject.getInt(POST.reservationReservationID);
-                        String modified = JSONHelper.getString(jsonObject,POST.reservationModified);
-
-                        if(modified == null){
-                            roomDB.reservationDao().delete(id);
-                            Log.i(TAG,"Reservation: "+id+" deleted");
-                            continue;
-                        }
-
-                        int roomTypeID = jsonObject.getInt(POST.reservationRoomTypeID);
-                        int adults = jsonObject.getInt(POST.reservationAdults);
-                        int children = jsonObject.getInt(POST.reservationChildren);
-                        String bookedDate = JSONHelper.getString(jsonObject,POST.reservationBookedDate);
-                        String arrivalDate = JSONHelper.getString(jsonObject,POST.reservationArrival);
-                        String departureDate = JSONHelper.getString(jsonObject,POST.reservationDeparture);
-                        String checkIn = JSONHelper.getString(jsonObject,POST.reservationCheckIn);
-                        String checkOut = JSONHelper.getString(jsonObject,POST.reservationCheckOut);
-                        int roomBeaconID = -1;
-                        int roomNumber = -1;
-                        int floor = -1;
-                        try {
-                            roomBeaconID = jsonObject.getInt(POST.reservationRoomBeaconID);
-                            roomNumber = jsonObject.getInt(POST.reservationRoomNumber);
-                            floor = jsonObject.getInt(POST.reservationRoomFloor);
-                        } catch (JSONException e) {
-                            Log.d(TAG, "Not checked IN");
-                        }
-
-                        Reservation r = roomDB.reservationDao().getReservationByID(id);
-                        //todo: take password issue into consideration
-                        if (r != null) {
-                            r.update(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, roomBeaconID, modified);
-                        } else {
-                            r = new Reservation(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomBeaconID, roomNumber, floor, modified);
-                        }
-                        reservationList.add(r);
-
-
-                    }
-                    roomDB.reservationDao().insertAll(reservationList);
-                    Log.i(TAG,"Reservations OK!");
-                } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
-                }
-
-                syncCallbacks.customerDataSynced();
+                Log.i(TAG, "Check BeaconRegions");
+                resolveBeaconRegionReply(json);
+                Log.i(TAG, "BeaconRegions OK!");
                 break;
+
             case URL.roomTypesUrl:
                 try {
 
@@ -296,13 +275,13 @@ public class SyncServerData implements JsonListener {
                     for (int i = 0; i < jsonArrayRoomTypes.length(); i++) {
                         JSONObject jsonObject = jsonArrayRoomTypes.getJSONObject(i);
                         int id = jsonObject.getInt(POST.roomTypeID);
-                        String name = JSONHelper.getString(jsonObject,POST.roomTypeName);
+                        String name = JSONHelper.getString(jsonObject, POST.roomTypeName);
                         int capacity = jsonObject.getInt(POST.roomTypeCapacity);
                         int adults = jsonObject.getInt(POST.roomTypeAdults);
                         boolean childrenSupported = jsonObject.getBoolean(POST.roomTypeChildrenSupported);
-                        String img = JSONHelper.getString(jsonObject,POST.roomTypeImage);
-                        String description = JSONHelper.getString(jsonObject,POST.roomTypeDescription);
-                        String modified = JSONHelper.getString(jsonObject,POST.roomTypeModified);
+                        String img = JSONHelper.getString(jsonObject, POST.roomTypeImage);
+                        String description = JSONHelper.getString(jsonObject, POST.roomTypeDescription);
+                        String modified = JSONHelper.getString(jsonObject, POST.roomTypeModified);
                         LocalVariables.storeImageFromBase64(context, name, img);
                         roomTypeList.add(new RoomType(id, name, capacity, adults, childrenSupported, name, description, modified));
                     }
@@ -360,6 +339,70 @@ public class SyncServerData implements JsonListener {
                 }
 
                 break;
+
+            case URL.reservationsUrl:
+                //todo: syncing beaconRegions for the room
+                try {
+                    JSONArray jsonArrayReservations = json.getJSONArray(POST.reservationArray);
+                    List<Reservation> reservationList = new ArrayList<>();
+                    for (int i = 0; i < jsonArrayReservations.length(); i++) {
+                        JSONObject jsonObject = jsonArrayReservations.getJSONObject(i);
+                        int id = jsonObject.getInt(POST.reservationReservationID);
+                        String modified = JSONHelper.getString(jsonObject, POST.reservationModified);
+
+                        if (modified == null) {
+                            roomDB.reservationDao().delete(id);
+                            Log.i(TAG, "Reservation: " + id + " deleted");
+                            continue;
+                        }
+
+                        int roomTypeID = jsonObject.getInt(POST.reservationRoomTypeID);
+                        int adults = jsonObject.getInt(POST.reservationAdults);
+                        int children = jsonObject.getInt(POST.reservationChildren);
+                        String bookedDate = JSONHelper.getString(jsonObject, POST.reservationBookedDate);
+                        String arrivalDate = JSONHelper.getString(jsonObject, POST.reservationArrival);
+                        String departureDate = JSONHelper.getString(jsonObject, POST.reservationDeparture);
+                        String checkIn = JSONHelper.getString(jsonObject, POST.reservationCheckIn);
+                        String checkOut = JSONHelper.getString(jsonObject, POST.reservationCheckOut);
+                        //int roomBeaconID = -1;
+                        int roomNumber = -1;
+                        int floor = -1;
+                        try {
+                            //roomBeaconID = jsonObject.getInt(POST.reservationRoomBeaconID);
+                            roomNumber = jsonObject.getInt(POST.reservationRoomNumber);
+                            floor = jsonObject.getInt(POST.reservationRoomFloor);
+                        } catch (JSONException e) {
+                            Log.d(TAG, "Not checked IN");
+                        }
+
+                        Reservation r = roomDB.reservationDao().getReservationByID(id);
+                        //todo: take password issue into consideration
+                        if (r != null) {
+                            r.update(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, modified);
+                        } else {
+                            r = new Reservation(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, modified);
+                        }
+                        reservationList.add(r);
+                    }
+                    roomDB.reservationDao().insertAll(reservationList);
+                    Log.i(TAG, "Reservations OK!");
+
+                    //sync the roombeaconRegions since the reservation syncing is finished
+                    getRoomBeaconRegion();
+                    //syncCallbacks.customerDataSynced();
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
+                break;
+
+            case URL.roomBeaconRegionsUrl:
+                resolveBeaconRegionReply(json);
+                Log.i(TAG, "RoomBeaconRegions OK!");
+                ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
+                syncCallbacks.customerDataSynced();
+                break;
+
+
         }
     }
 
@@ -370,6 +413,7 @@ public class SyncServerData implements JsonListener {
 
     public interface SyncCallbacks {
         void dataSynced();
+
         void customerDataSynced();
 
     }
@@ -390,6 +434,7 @@ public class SyncServerData implements JsonListener {
                 return "";
             }
         }
+        Log.d(TAG, "JSON to server for syncing " + jsonArray.toString());
         return jsonArray.toString();
     }
 

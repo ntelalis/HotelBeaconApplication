@@ -15,6 +15,8 @@ public class Params {
     public static final String HotelName = "HotelName";
     public static final String HotelCheckoutTime = "12:00";
 
+    //beacon region Types
+    public static final String roomRegionType = "room";
 
     //~~~~~~~~~~~~~~~~~Notifications~~~~~~~~~~~~~~~~~~~~~~
 
