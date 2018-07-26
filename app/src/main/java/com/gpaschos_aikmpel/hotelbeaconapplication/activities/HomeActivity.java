@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -49,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener {
 
@@ -250,9 +252,10 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void checkIn(int reservationID) {
-        Map<String, String> params = new HashMap<>();
+        /*Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);*/
+        ((BeaconApplication) Objects.requireNonNull(getApplication())).checkin(reservationID);
     }
 
     @Override

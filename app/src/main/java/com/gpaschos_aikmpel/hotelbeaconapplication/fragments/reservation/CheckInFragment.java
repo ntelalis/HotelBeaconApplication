@@ -79,8 +79,8 @@ public class CheckInFragment extends Fragment {
         btnCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((BeaconApplication) Objects.requireNonNull(getActivity()).getApplication()).checkin(reservation.getId());
-                //listener.checkIn(reservation.getId());
+                //((BeaconApplication) Objects.requireNonNull(getActivity()).getApplication()).checkin(reservation.getId());
+                listener.checkIn(reservation.getId());
             }
         });
 
