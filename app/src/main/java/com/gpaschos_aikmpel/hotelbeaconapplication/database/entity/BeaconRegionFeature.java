@@ -1,21 +1,27 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.database.entity;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.SyncModel;
 
+@Entity
 public class BeaconRegionFeature implements SyncModel{
 
+    @PrimaryKey
     private int id;
     private int regionID;
-    private String beaconRegionType;
+    private String regionType;
     private String modified;
 
-    public BeaconRegionFeature(int id, int regionID, String beaconRegionType, String modified) {
+    public BeaconRegionFeature(int id, int regionID, String regionType, String modified) {
         this.id = id;
         this.regionID = regionID;
-        this.beaconRegionType = beaconRegionType;
+        this.regionType = regionType;
         this.modified = modified;
     }
 
+    @Override
     public int getId() {
         return id;
     }
@@ -32,14 +38,15 @@ public class BeaconRegionFeature implements SyncModel{
         this.regionID = regionID;
     }
 
-    public String getBeaconRegionType() {
-        return beaconRegionType;
+    public String getRegionType() {
+        return regionType;
     }
 
-    public void setBeaconRegionType(String beaconRegionType) {
-        this.beaconRegionType = beaconRegionType;
+    public void setRegionType(String regionType) {
+        this.regionType = regionType;
     }
 
+    @Override
     public String getModified() {
         return modified;
     }
