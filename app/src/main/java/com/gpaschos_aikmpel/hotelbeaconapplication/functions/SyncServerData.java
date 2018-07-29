@@ -93,6 +93,7 @@ public class SyncServerData implements JsonListener {
     private void getRoomBeaconRegion() {
         Log.i(TAG, "Check RoomBeaconRegions");
         Reservation current = roomDB.reservationDao().getCurrentReservation();
+        //todo: take into consideration the remaining room regions from previous stays + fix it
         if (current != null && current.isCheckedInNotCheckedOut()) {
             List<BeaconRegion> roomRegionList = roomDB.beaconRegionDao().getRegionByType(Params.roomRegionType);
             Map<String, String> params = new HashMap<>();

@@ -73,6 +73,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     }
 
     public void checkin(int reservationID) {
+        Toast.makeText(this, ""+reservationID, Toast.LENGTH_SHORT).show();
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
