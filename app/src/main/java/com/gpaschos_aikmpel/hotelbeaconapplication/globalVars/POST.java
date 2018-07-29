@@ -299,4 +299,13 @@ public class POST {
     //SND
     public static final String roomBeaconRegionReservationID = "reservationID";
 
+
+    //~~~~~~~~~~~~~~~~~beaconregionfeature.php~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String regionIDForFeaturesArray= "beaconRegionIDJsonArray";
+    public static final String beaconRegionFeatureCheck= "check";
+
+    //RCV
+    public static final String beaconRegionFeatureArray= "beaconRegionFeatureArray";
+
 }
