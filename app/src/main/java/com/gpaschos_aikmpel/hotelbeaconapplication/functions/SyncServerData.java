@@ -174,7 +174,7 @@ public class SyncServerData implements JsonListener {
 
     private void resolveBeaconRegionReply(JSONObject json) {
         try {
-            JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionsArray);
+            JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionArray);
             List<BeaconRegion> beaconRegionList = new ArrayList<>();
             for (int i = 0; i < jsonArrayBeaconRegion.length(); i++) {
                 JSONObject jsonObject = jsonArrayBeaconRegion.getJSONObject(i);

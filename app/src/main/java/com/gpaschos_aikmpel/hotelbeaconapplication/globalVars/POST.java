@@ -292,7 +292,7 @@ public class POST {
     public static final String beaconRegionBackground = "background";
     public static final String beaconRegionRegionType = "regionType";
     public static final String beaconRegionModified = "modified";
-    public static final String beaconRegionsArray = "beaconRegionArray";
+    public static final String beaconRegionArray = "beaconRegionArray";
 
 
     //~~~~~~~~~~~~~~~~~roombeaconregion.php~~~~~~~~~~~~~~~~~

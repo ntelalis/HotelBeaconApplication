@@ -76,6 +76,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
+        //FIXME On deleting occupancy syncing has wrong info for checkin. later modified date than server
 
     }
 
