@@ -110,6 +110,20 @@ public class SyncServerData implements JsonListener {
         }
     }
 
+    private void getbeaconRegionFeature(){
+        Log.i(TAG, "Check BeaconRegionFeature");
+        List<BeaconRegion> regionList = roomDB.beaconRegionDao().getRegions();
+        Map<String, String> params = null;
+        if (!regionList.isEmpty()) {
+            params = new HashMap<>();
+            String beaconRegionCheckJSON = sync(regionList);
+            params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
+        }
+        volleyQueue.jsonRequest(this, URL.beaconRegionsUrl, params);
+    
+    }
+
+
     private void getTitles() {
         Log.i(TAG, "Check Titles");
         if (roomDB.titleDao().getTitles().isEmpty()) {
