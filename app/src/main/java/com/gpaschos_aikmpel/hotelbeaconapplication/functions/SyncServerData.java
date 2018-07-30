@@ -120,7 +120,7 @@ public class SyncServerData implements JsonListener {
             params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
         }
         volleyQueue.jsonRequest(this, URL.beaconRegionsUrl, params);
-    
+
     }
 
 
