@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
@@ -110,17 +111,23 @@ public class SyncServerData implements JsonListener {
         }
     }
 
-    private void getbeaconRegionFeature(){
+    private void getBeaconRegionFeature(){
         Log.i(TAG, "Check BeaconRegionFeature");
-        List<BeaconRegion> regionList = roomDB.beaconRegionDao().getRegions();
-        Map<String, String> params = null;
-        if (!regionList.isEmpty()) {
-            params = new HashMap<>();
-            String beaconRegionCheckJSON = sync(regionList);
-            params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
-        }
-        volleyQueue.jsonRequest(this, URL.beaconRegionsUrl, params);
+        Map<String, String> params = new HashMap<>();
 
+        List<BeaconRegion> regionList = roomDB.beaconRegionDao().getRegions();
+        JSONArray jsonArray = new JSONArray();
+        for(BeaconRegion beaconRegion :regionList){
+            jsonArray.put(beaconRegion.getId());
+        }
+        params.put(POST.beaconRegionFeatureArray, jsonArray.toString());
+
+        List<BeaconRegionFeature> regionFeatureList = roomDB.beaconRegionFeatureDao().getRegionFeatureList();
+        if (!regionFeatureList.isEmpty()) {
+            String beaconRegionFeatureCheckJSON = sync(regionFeatureList);
+            params.put(POST.beaconRegionFeatureCheck, beaconRegionFeatureCheckJSON);
+        }
+        volleyQueue.jsonRequest(this, URL.beaconRegionFeatureUrl, params);
     }
 
 
