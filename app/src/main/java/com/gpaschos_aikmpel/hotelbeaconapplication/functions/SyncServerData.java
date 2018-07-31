@@ -449,7 +449,6 @@ public class SyncServerData implements JsonListener {
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString());
                 }
-
                 Log.i(TAG, "BeaconRegionFeature OK!");
 
                 ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
