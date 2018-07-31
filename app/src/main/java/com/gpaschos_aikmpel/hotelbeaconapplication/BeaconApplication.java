@@ -124,9 +124,16 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     //update the hashmap with the features of each region within the background scanning regions list
     private void getRegionFeature(List<BeaconRegion> beaconRegionList) {
+        Log.d(TAG, "In getRegionFeature: getting featureList");
         featureListMap = new HashMap<>();
         for (BeaconRegion beaconRegion : beaconRegionList) {
             List<BeaconRegionFeature> regionFeatureList = RoomDB.getInstance(this).beaconRegionFeatureDao().getFeatureByUniqueID(beaconRegion.getUniqueID());
+            if(!regionFeatureList.isEmpty()){
+                Log.d(TAG, "UniqueID: "+beaconRegion.getUniqueID()+" Features size: "+regionFeatureList.size()+" Feature[0]: "+regionFeatureList.get(0).getRegionType());
+            }
+            else{
+                Log.d(TAG, "UniqueID: "+beaconRegion.getUniqueID()+" Features size: NULL");
+            }
             featureListMap.put(beaconRegion.getUniqueID(), regionFeatureList);
         }
     }
