@@ -96,7 +96,9 @@ public class SyncServerData implements JsonListener {
         Reservation current = roomDB.reservationDao().getCurrentReservation();
         //todo: take into consideration the remaining room regions from previous stays + fix it
         if (current != null && current.isCheckedInNotCheckedOut()) {
-            List<BeaconRegion> roomRegionList = roomDB.beaconRegionDao().getRegionByType(Params.roomRegionType);
+
+            //FIXME
+            List<BeaconRegion> roomRegionList = roomDB.beaconRegionDao().getRegionsByType(Params.roomRegionType);
             Map<String, String> params = new HashMap<>();
             params.put(POST.roomBeaconRegionReservationID, String.valueOf(current.getId()));
             if (!roomRegionList.isEmpty()) {
@@ -105,10 +107,7 @@ public class SyncServerData implements JsonListener {
             }
             volleyQueue.jsonRequest(this, URL.roomBeaconRegionsUrl, params);
         }
-        else{
-            ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
-            syncCallbacks.customerDataSynced();
-        }
+        getBeaconRegionFeature();
     }
 
     private void getBeaconRegionFeature(){
@@ -120,6 +119,7 @@ public class SyncServerData implements JsonListener {
         for(BeaconRegion beaconRegion :regionList){
             jsonArray.put(beaconRegion.getId());
         }
+        Log.d(TAG,jsonArray.toString());
         params.put(POST.regionIDForFeaturesArray, jsonArray.toString());
 
         List<BeaconRegionFeature> regionFeatureList = roomDB.beaconRegionFeatureDao().getRegionFeatureList();
@@ -194,7 +194,7 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.roomTypesUrl, params);
     }
 
-    private void resolveBeaconRegionReply(JSONObject json) {
+    private void resolveBeaconRegionReply(JSONObject json, String url) {
         try {
             JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionArray);
             List<BeaconRegion> beaconRegionList = new ArrayList<>();
@@ -213,8 +213,11 @@ public class SyncServerData implements JsonListener {
                 String minor = JSONHelper.getString(jsonObject, POST.beaconRegionMinor);
                 boolean exclusive = jsonObject.getBoolean(POST.beaconRegionExclusive);
                 boolean background = jsonObject.getBoolean(POST.beaconRegionBackground);
-                String regionType = JSONHelper.getString(jsonObject, POST.beaconRegionRegionType);
-                beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, exclusive, background, regionType, modified));
+                String type = null;
+                if(url.equalsIgnoreCase(URL.roomBeaconRegionsUrl)){
+                    type = "room";
+                }
+                beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, exclusive, background, type, modified));
             }
             roomDB.beaconRegionDao().insertAll(beaconRegionList);
 
@@ -285,7 +288,7 @@ public class SyncServerData implements JsonListener {
 
             case URL.beaconRegionsUrl:
                 Log.i(TAG, "Check BeaconRegions");
-                resolveBeaconRegionReply(json);
+                resolveBeaconRegionReply(json, URL.beaconRegionsUrl);
                 Log.i(TAG, "BeaconRegions OK!");
                 break;
 
@@ -418,13 +421,39 @@ public class SyncServerData implements JsonListener {
                 break;
 
             case URL.roomBeaconRegionsUrl:
-                resolveBeaconRegionReply(json);
+                resolveBeaconRegionReply(json, URL.roomBeaconRegionsUrl);
                 Log.i(TAG, "RoomBeaconRegions OK!");
                 ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
                 syncCallbacks.customerDataSynced();
-
                 break;
+            case URL.beaconRegionFeatureUrl:
+                try {
+                    JSONArray regionFeatureJsonArray = json.getJSONArray(POST.beaconRegionFeatureArray);
+                    List<BeaconRegionFeature> beaconRegionFeatureList = new ArrayList<>();
+                    for (int i = 0; i < regionFeatureJsonArray.length(); i++) {
+                        JSONObject jsonObject = regionFeatureJsonArray.getJSONObject(i);
+                        int id = jsonObject.getInt(POST.beaconRegionFeatureID);
+                        String modified = JSONHelper.getString(jsonObject, POST.beaconRegionFeatureModified);
+                        if (modified == null) {
+                            roomDB.beaconRegionFeatureDao().deleteRegionFeatureByID(id);
+                            Log.i(TAG, "BeaconRegionFeature: " + id + " deleted");
+                            continue;
+                        }
+                        int regionID = jsonObject.getInt(POST.beaconRegionFeatureRegionID);
+                        String regionType = JSONHelper.getString(jsonObject, POST.beaconRegionFeatureFeature);
 
+                        beaconRegionFeatureList.add(new BeaconRegionFeature(id, regionID, regionType, modified));
+                    }
+                    roomDB.beaconRegionFeatureDao().insertAll(beaconRegionFeatureList);
+
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
+                Log.i(TAG, "BeaconRegionFeature OK!");
+
+                ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
+                syncCallbacks.customerDataSynced();
+                break;
 
         }
     }

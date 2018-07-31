@@ -6,6 +6,8 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
+
 import java.util.List;
 
 @Dao
@@ -17,11 +19,11 @@ public interface BeaconRegionDao {
     @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.background=1")
     List<BeaconRegion> getBackgroundScanningRegions();
 
+    @Query("SELECT * FROM BEACONREGION WHERE BeaconRegion.type=:type")
+    List<BeaconRegion> getRegionsByType(String type);
+
     @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.id=:id")
     BeaconRegion getRegionByID(int id);
-
-    @Query("SELECT * FROM BeaconRegion WHERE BeaconRegion.regionType=:type")
-    List<BeaconRegion> getRegionByType(String type);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(BeaconRegion region);

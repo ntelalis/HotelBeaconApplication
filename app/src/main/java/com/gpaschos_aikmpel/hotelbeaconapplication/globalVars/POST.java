@@ -302,10 +302,13 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~beaconregionfeature.php~~~~~~~~~~~~~~~~~
     //SND
-    public static final String regionIDForFeaturesArray= "beaconRegionIDJsonArray";
-    public static final String beaconRegionFeatureCheck= "check";
+    public static final String regionIDForFeaturesArray = "beaconRegionIDJsonArray";
+    public static final String beaconRegionFeatureCheck = "check";
 
     //RCV
-    public static final String beaconRegionFeatureArray= "beaconRegionFeatureArray";
-
+    public static final String beaconRegionFeatureArray = "beaconRegionFeatureArray";
+    public static final String beaconRegionFeatureID = "id";
+    public static final String beaconRegionFeatureRegionID = "regionID";
+    public static final String beaconRegionFeatureFeature = "feature";
+    public static final String beaconRegionFeatureModified = "modified";
 }
