@@ -117,9 +117,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             Log.d(TAG, "region: " + beaconRegion.getUniqueID() + " " + uuidString + " " + majorString + " " + minorString);
         }
 
-        regionBootstrap = new RegionBootstrap(this, regionList);
-
         getRegionFeature(beaconRegionList);
+
+        regionBootstrap = new RegionBootstrap(this, regionList);
     }
 
     //update the hashmap with the features of each region within the background scanning regions list
