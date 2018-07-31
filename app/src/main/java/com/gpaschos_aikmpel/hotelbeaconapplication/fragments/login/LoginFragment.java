@@ -78,9 +78,6 @@ public class LoginFragment extends Fragment implements JsonListener{
 
                 VolleyQueue.getInstance(getContext()).jsonRequest(LoginFragment.this, URL.loginUrl, params);
 
-                //store notification variables and set them to false
-                //TODO maybe fix this variable mess?
-                UpdateStoredVariables.setDefaults(getContext());
             }
         });
         btnRegister = v.findViewById(R.id.btnLoginRegister);
