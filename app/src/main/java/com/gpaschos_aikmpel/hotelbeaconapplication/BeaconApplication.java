@@ -150,7 +150,6 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             int roomNumber = json.getInt(POST.checkInRoomNumber);
             String checkInDate = json.getString(POST.checkInDate);
             int roomFloor = json.getInt(POST.checkInRoomFloor);
-            //int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
             String roomPassword = json.getString(POST.checkInRoomPassword);
             String modified = json.getString(POST.checkInModified);
             //update Room with the checked-in information
@@ -165,12 +164,11 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                 String roomBeaconRegionMinor = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionMinor);
                 boolean roomBeaconRegionExclusive = roomRegionObject.getBoolean(POST.checkInRoomBeaconRegionExclusive);
                 boolean roomBeaconRegionBackground = roomRegionObject.getBoolean(POST.checkInRoomBeaconRegionBackground);
-                String roomBeaconRegionRegionType = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionRegionType);
                 String roomBeaconRegionModified = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionModified);
 
                 roomRegions.add(new BeaconRegion(roomBeaconRegionID,roomBeaconRegionUniqueID,roomBeaconRegionUUID,
                         roomBeaconRegionMajor,roomBeaconRegionMinor, roomBeaconRegionExclusive, roomBeaconRegionBackground,
-                        roomBeaconRegionRegionType, roomBeaconRegionModified));
+                        "room", roomBeaconRegionModified));
             }
 
             Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);

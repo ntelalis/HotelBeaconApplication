@@ -37,9 +37,9 @@ public class ReservationDaoTest {
         String c0 = "2018-08-03";
         String c = "2018-05-14";
         String c1 = "2018-05-15";
-        inReservation = new Reservation(1, 2, 3, c0, c, c1);
+        //inReservation = new Reservation(1, 2, 3, c0, c, c1);
         reservationDao.insert(inReservation);
-        inReservation.checkIn(c,100,1,"ASDFASDF",2);
+        //inReservation.checkIn(c,100,1,"ASDFASDF",2);
         reservationDao.insert(inReservation);
         inReservation.setCheckOut(c1);
         reservationDao.insert(inReservation);

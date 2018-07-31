@@ -161,7 +161,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         if (r != null && r.isCheckedInNotCheckedOut()) {
             Log.d(TAG, "reservation found");
             String id ="1"; //= String.valueOf(r.getRoomBeaconId());
-            final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionDao().getRegionByType("RoomDoor").get(0);
+            final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionDao().getRegionsByType("RoomDoor").get(0);
             Region region = new Region(beaconRegion.getUniqueID(), Identifier.parse(beaconRegion.getUUID()), Identifier.parse(beaconRegion.getMajor()), Identifier.parse(beaconRegion.getMinor()));
             beaconManager.addMonitorNotifier(new MonitorNotifier() {
 
