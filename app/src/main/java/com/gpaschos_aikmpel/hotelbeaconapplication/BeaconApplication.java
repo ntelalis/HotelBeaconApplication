@@ -135,7 +135,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     public void didEnterRegion(Region region) {
         Log.d(TAG, "Entered Region: " + region.getUniqueId());
         List<BeaconRegionFeature> featureList = featureListMap.get(region.getUniqueId());
-        for (BeaconRegionFeature feature : featureList) {
+        for (BeaconRegionFeature feature : featureList) { 
             switch (feature.getRegionType()) {
                 case "welcome":
                     NotificationCreation.notifyWelcome(this);
