@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.UpdateStoredVariables;
 
 public class CheckedOutFragment extends Fragment {
 
@@ -25,6 +26,9 @@ public class CheckedOutFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        UpdateStoredVariables.checkedOut(getContext());
+
     }
 
     @Override

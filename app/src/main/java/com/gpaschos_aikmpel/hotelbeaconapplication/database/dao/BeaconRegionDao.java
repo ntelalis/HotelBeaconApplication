@@ -6,7 +6,6 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
-
 import java.util.List;
 
 @Dao

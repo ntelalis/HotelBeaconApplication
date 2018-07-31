@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -17,6 +18,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
 import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
@@ -38,6 +40,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     private RegionBootstrap regionBootstrap;
     private BackgroundPowerSaver backgroundPowerSaver;
     private BeaconManager beaconManager;
+    private Map<String, List<BeaconRegionFeature>> featureListMap;
 
     public RoomDB database;
 
@@ -58,6 +61,10 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
         beaconManager.setBackgroundScanPeriod((long) 1100);
 
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                        setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+
+
 
         //Region scanning setup
         //Region region = new Region("welcomeBeacon", Identifier.parse(Params.beaconUUID), null, null);
@@ -73,7 +80,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     }
 
     public void checkin(int reservationID) {
-        Toast.makeText(this, ""+reservationID, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + reservationID, Toast.LENGTH_SHORT).show();
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
@@ -81,54 +88,66 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     }
 
-    public void registerBeaconRegion(){
+    public void registerBeaconRegion() {
         //regionList is synced, proceeding with regions creation
 
         List<BeaconRegion> beaconRegionList = RoomDB.getInstance(this).beaconRegionDao().getBackgroundScanningRegions();
         List<Region> regionList = new ArrayList<>();
-        for(BeaconRegion beaconRegion : beaconRegionList){
+        for (BeaconRegion beaconRegion : beaconRegionList) {
             String uuidString = beaconRegion.getUUID();
             Identifier uuid = null;
-            if(uuidString!=null){
+            if (uuidString != null) {
                 uuid = Identifier.parse(uuidString);
             }
 
             String majorString = beaconRegion.getMajor();
             Identifier major = null;
-            if(majorString!=null){
+            if (majorString != null) {
                 major = Identifier.parse(majorString);
 
-            }String minorString = beaconRegion.getMinor();
+            }
+            String minorString = beaconRegion.getMinor();
             Identifier minor = null;
-            if(minorString!=null){
+            if (minorString != null) {
                 minor = Identifier.parse(minorString);
             }
 
-            Region r = new Region(beaconRegion.getUniqueID(),uuid,major,minor);
+            Region r = new Region(beaconRegion.getUniqueID(), uuid, major, minor);
             regionList.add(r);
-            Log.d(TAG,"region: "+beaconRegion.getUniqueID()+" "+uuidString+" "+majorString+" "+minorString);
+            Log.d(TAG, "region: " + beaconRegion.getUniqueID() + " " + uuidString + " " + majorString + " " + minorString);
         }
 
         regionBootstrap = new RegionBootstrap(this, regionList);
+
+        getRegionFeature(beaconRegionList);
+    }
+
+    //update the hashmap with the features of each region within the background scanning regions list
+    private void getRegionFeature(List<BeaconRegion> beaconRegionList) {
+        featureListMap = new HashMap<>();
+        for (BeaconRegion beaconRegion : beaconRegionList) {
+            List<BeaconRegionFeature> regionFeatureList = RoomDB.getInstance(this).beaconRegionFeatureDao().getFeatureByUniqueID(beaconRegion.getUniqueID());
+            featureListMap.put(beaconRegion.getUniqueID(), regionFeatureList);
+        }
     }
 
     @Override
     public void didEnterRegion(Region region) {
         Log.d(TAG, "Entered Region: " + region.getUniqueId());
-
-        if (region.getUniqueId().equals("entrance")) {
-            NotificationCreation.notifyWelcome(this);
-            NotificationCreation.notifyFarewell(this);
+        List<BeaconRegionFeature> featureList = featureListMap.get(region.getUniqueId());
+        for (BeaconRegionFeature feature : featureList) {
+            switch (feature.getRegionType()) {
+                case "welcome":
+                    NotificationCreation.notifyWelcome(this);
+                    break;
+                case "farewell":
+                    NotificationCreation.notifyFarewell(this);
+                    break;
+                case "offer":
+                    //offersystem
+                    break;
+            }
         }
-        /*
-        if (region.getUniqueId().equals("restaurantBeacon")) {
-            NotificationCreation.notifyOffers(this,region.getUniqueId());
-        }*/
-        /*
-        if(region.getUniqueId().equals("hotel")){
-            NotificationCreation.notifyWelcome(this);
-        }*/
-
     }
 
     @Override
@@ -156,7 +175,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             //update Room with the checked-in information
             JSONArray roomRegionArray = json.getJSONArray(POST.checkInRoomBeaconRegionArray);
             List<BeaconRegion> roomRegions = new ArrayList<>();
-            for(int i=0;i<roomRegionArray.length();i++){
+            for (int i = 0; i < roomRegionArray.length(); i++) {
                 JSONObject roomRegionObject = roomRegionArray.getJSONObject(i);
                 int roomBeaconRegionID = roomRegionObject.getInt(POST.checkInRoomBeaconRegionID);
                 String roomBeaconRegionUniqueID = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionUniqueID);
@@ -168,8 +187,8 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                 String roomBeaconRegionRegionType = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionRegionType);
                 String roomBeaconRegionModified = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionModified);
 
-                roomRegions.add(new BeaconRegion(roomBeaconRegionID,roomBeaconRegionUniqueID,roomBeaconRegionUUID,
-                        roomBeaconRegionMajor,roomBeaconRegionMinor, roomBeaconRegionExclusive, roomBeaconRegionBackground,
+                roomRegions.add(new BeaconRegion(roomBeaconRegionID, roomBeaconRegionUniqueID, roomBeaconRegionUUID,
+                        roomBeaconRegionMajor, roomBeaconRegionMinor, roomBeaconRegionExclusive, roomBeaconRegionBackground,
                         roomBeaconRegionRegionType, roomBeaconRegionModified));
             }
 

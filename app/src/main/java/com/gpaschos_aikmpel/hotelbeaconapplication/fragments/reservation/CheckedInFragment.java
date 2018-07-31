@@ -14,6 +14,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.UpdateStoredVariables;
 
 public class CheckedInFragment extends Fragment {
 
@@ -41,6 +42,9 @@ public class CheckedInFragment extends Fragment {
             int id = getArguments().getInt(ID_KEY);
             r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(id);
         }
+
+        UpdateStoredVariables.checkedIn(getContext());
+
 
     }
 

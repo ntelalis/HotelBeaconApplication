@@ -18,6 +18,9 @@ public interface BeaconRegionFeatureDao {
     @Query("SELECT * FROM BeaconRegionFeature WHERE beaconregionfeature.regionID = :regionID")
     List<BeaconRegionFeature> getRegionFeatureListByRegionID(int regionID);
 
+    @Query("SELECT BeaconRegionFeature.* FROM BeaconRegionFeature, BeaconRegion WHERE BeaconRegionFeature.regionID=BeaconRegion.id AND BeaconRegion.uniqueID=:uniqueID")
+    List<BeaconRegionFeature> getFeatureByUniqueID(String uniqueID);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(BeaconRegionFeature region);
 

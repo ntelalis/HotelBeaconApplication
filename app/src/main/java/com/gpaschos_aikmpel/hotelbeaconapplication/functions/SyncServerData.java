@@ -120,7 +120,7 @@ public class SyncServerData implements JsonListener {
         for(BeaconRegion beaconRegion :regionList){
             jsonArray.put(beaconRegion.getId());
         }
-        params.put(POST.beaconRegionFeatureArray, jsonArray.toString());
+        params.put(POST.regionIDForFeaturesArray, jsonArray.toString());
 
         List<BeaconRegionFeature> regionFeatureList = roomDB.beaconRegionFeatureDao().getRegionFeatureList();
         if (!regionFeatureList.isEmpty()) {
@@ -422,6 +422,7 @@ public class SyncServerData implements JsonListener {
                 Log.i(TAG, "RoomBeaconRegions OK!");
                 ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
                 syncCallbacks.customerDataSynced();
+
                 break;
 
 
