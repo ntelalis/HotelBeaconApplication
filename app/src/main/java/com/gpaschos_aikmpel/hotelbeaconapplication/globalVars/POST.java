@@ -311,4 +311,37 @@ public class POST {
     public static final String beaconRegionFeatureRegionID = "regionID";
     public static final String beaconRegionFeatureFeature = "feature";
     public static final String beaconRegionFeatureModified = "modified";
+
+
+    //~~~~~~~~~~~~~~~~~~generaloffers.php~~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String generalOfferCheck = "check";
+
+    //RCV
+    public static final String generalOfferArray = "generalOfferArray";
+    public static final String generalOfferID = "id";
+    public static final String generalOfferPrice = "price";
+    public static final String generalOfferDiscount = "discount";
+    public static final String generalOfferDescription = "description";
+    public static final String generalOfferStartDate = "startDate";
+    public static final String generalOfferEndDate = "endDate";
+    public static final String generalOfferModified = "modified";
+
+
+    //~~~~~~~~~~~~~~~~~~exclusiveoffers.php~~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String exclusiveOfferCustomerID = "customerID";
+    public static final String exclusiveOfferCheck = "check";
+
+    //RCV
+    public static final String exclusiveOfferArray = "exclusiveOfferArray";
+    public static final String exclusiveOfferID = "id";
+    public static final String exclusiveOfferServiceID = "serviceID";
+    public static final String exclusiveOfferPrice = "price";
+    public static final String exclusiveOfferDiscount = "discount";
+    public static final String exclusiveOfferDescription = "description";
+    public static final String exclusiveOfferSpecial = "special";
+    public static final String exclusiveOfferStartDate = "startDate";
+    public static final String exclusiveOfferEndDate = "endDate";
+    public static final String exclusiveOfferModified = "modified";
 }

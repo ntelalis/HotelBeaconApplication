@@ -44,6 +44,8 @@ public class URL {
     private static final String beaconRegionsPage = "beaconregions.php";
     private static final String roomBeaconRegionsPage = "roombeaconregion.php";
     private static final String beaconRegionFeaturePage = "beaconregionfeature.php";
+    private static final String generalOffersPage = "generaloffers.php";
+    private static final String exclusiveOffersPage = "exclusiveoffers.php";
 
     public static final String loginUrl = serverAddress + loginPage;
     public static final String forgotUrl = serverAddress + forgotPage;
@@ -77,4 +79,6 @@ public class URL {
     public static final String beaconRegionsUrl = serverAddress + beaconRegionsPage;
     public static final String roomBeaconRegionsUrl = serverAddress + roomBeaconRegionsPage;
     public static final String beaconRegionFeatureUrl = serverAddress + beaconRegionFeaturePage;
+    public static final String generalOffersUrl = serverAddress + generalOffersPage;
+    public static final String exclusiveOffersUrl = serverAddress + exclusiveOffersPage;
 }
