@@ -10,6 +10,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionF
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.GeneralOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
@@ -110,16 +112,16 @@ public class SyncServerData implements JsonListener {
         getBeaconRegionFeature();
     }
 
-    private void getBeaconRegionFeature(){
+    private void getBeaconRegionFeature() {
         Log.i(TAG, "Check BeaconRegionFeature");
         Map<String, String> params = new HashMap<>();
 
         List<BeaconRegion> regionList = roomDB.beaconRegionDao().getRegions();
         JSONArray jsonArray = new JSONArray();
-        for(BeaconRegion beaconRegion :regionList){
+        for (BeaconRegion beaconRegion : regionList) {
             jsonArray.put(beaconRegion.getId());
         }
-        Log.d(TAG,jsonArray.toString());
+        Log.d(TAG, jsonArray.toString());
         params.put(POST.regionIDForFeaturesArray, jsonArray.toString());
 
         List<BeaconRegionFeature> regionFeatureList = roomDB.beaconRegionFeatureDao().getRegionFeatureList();
@@ -194,6 +196,31 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.roomTypesUrl, params);
     }
 
+    private void getGeneralOffers() {
+        Log.i(TAG, "Check GeneralOffers");
+        List<GeneralOffer> generalOfferList = roomDB.generalOfferDao().getGeneralOffers();
+        Map<String, String> params = null;
+        if (!generalOfferList.isEmpty()) {
+            params = new HashMap<>();
+            String generalOfferCheckJSON = sync(generalOfferList);
+            params.put(POST.generalOfferCheck, generalOfferCheckJSON);
+        }
+        volleyQueue.jsonRequest(this, URL.generalOffersUrl, params);
+    }
+
+    private void getExclusiveOffers() {
+        Log.i(TAG, "Check ExclusiveOffers");
+        List<ExclusiveOffer> exclusiveOfferList = roomDB.exclusiveOfferDao().getExclusiveOffers();
+        Map<String, String> params = new HashMap<>();
+        int customerID = roomDB.customerDao().getCustomer().getCustomerId();
+        params.put(POST.exclusiveOfferCustomerID, String.valueOf(customerID));
+        if (!exclusiveOfferList.isEmpty()) {
+            String exclusiveOfferCheckJSON = sync(exclusiveOfferList);
+            params.put(POST.exclusiveOfferCheck, exclusiveOfferCheckJSON);
+        }
+        volleyQueue.jsonRequest(this, URL.exclusiveOffersUrl, params);
+    }
+
     private void resolveBeaconRegionReply(JSONObject json, String url) {
         try {
             JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionArray);
@@ -214,7 +241,7 @@ public class SyncServerData implements JsonListener {
                 boolean exclusive = jsonObject.getBoolean(POST.beaconRegionExclusive);
                 boolean background = jsonObject.getBoolean(POST.beaconRegionBackground);
                 String type = null;
-                if(url.equalsIgnoreCase(URL.roomBeaconRegionsUrl)){
+                if (url.equalsIgnoreCase(URL.roomBeaconRegionsUrl)) {
                     type = "room";
                 }
                 beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, exclusive, background, type, modified));
@@ -423,8 +450,60 @@ public class SyncServerData implements JsonListener {
             case URL.roomBeaconRegionsUrl:
                 resolveBeaconRegionReply(json, URL.roomBeaconRegionsUrl);
                 Log.i(TAG, "RoomBeaconRegions OK!");
-                ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
+                ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
                 syncCallbacks.customerDataSynced();
+                break;
+            case URL.generalOffersUrl:
+                try {
+                    JSONArray generalOfferJsonArray = json.getJSONArray(POST.generalOfferArray);
+                    List<GeneralOffer> generalOfferList = new ArrayList<>();
+                    for (int i = 0; i < generalOfferJsonArray.length(); i++) {
+                        JSONObject jsonObject = generalOfferJsonArray.getJSONObject(i);
+                        int id = jsonObject.getInt(POST.generalOfferID);
+                        String modified = JSONHelper.getString(jsonObject, POST.generalOfferModified);
+                        if (modified == null) {
+                            roomDB.generalOfferDao().deleteGeneralOfferByID(id);
+                            Log.i(TAG, "GeneralOffer: " + id + " deleted");
+                            continue;
+                        }
+                        String price = JSONHelper.getString(jsonObject, POST.generalOfferPrice);
+                        String discount = JSONHelper.getString(jsonObject, POST.generalOfferDiscount);
+                        String description = JSONHelper.getString(jsonObject, POST.generalOfferDescription);
+                        String startDate = JSONHelper.getString(jsonObject, POST.generalOfferStartDate);
+                        String endDate = JSONHelper.getString(jsonObject, POST.generalOfferEndDate);
+                        generalOfferList.add(new GeneralOffer(id,price,discount,description,startDate,endDate,modified));
+                    }
+                    roomDB.generalOfferDao().insertAll(generalOfferList);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
+                break;
+            case URL.exclusiveOffersUrl:
+                try {
+                    JSONArray exclusiveOfferJsonArray = json.getJSONArray(POST.exclusiveOfferArray);
+                    List<ExclusiveOffer> exclusiveOfferList = new ArrayList<>();
+                    for (int i = 0; i < exclusiveOfferJsonArray.length(); i++) {
+                        JSONObject jsonObject = exclusiveOfferJsonArray.getJSONObject(i);
+                        int id = jsonObject.getInt(POST.exclusiveOfferID);
+                        String modified = JSONHelper.getString(jsonObject, POST.exclusiveOfferModified);
+                        if (modified == null) {
+                            roomDB.exclusiveOfferDao().deleteExclusiveOfferByID(id);
+                            Log.i(TAG, "ExclusiveOffer: " + id + " deleted");
+                            continue;
+                        }
+                        int serviceID = jsonObject.getInt(POST.exclusiveOfferServiceID);
+                        String price = JSONHelper.getString(jsonObject, POST.exclusiveOfferPrice);
+                        String discount = JSONHelper.getString(jsonObject, POST.exclusiveOfferDiscount);
+                        String description = JSONHelper.getString(jsonObject, POST.exclusiveOfferDescription);
+                        boolean special = jsonObject.getBoolean(POST.exclusiveOfferSpecial);
+                        String startDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferStartDate);
+                        String endDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferEndDate);
+                        exclusiveOfferList.add(new ExclusiveOffer(id,serviceID,price,discount,description,special,startDate,endDate,modified));
+                    }
+                    roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
                 break;
             case URL.beaconRegionFeatureUrl:
                 try {
@@ -451,7 +530,7 @@ public class SyncServerData implements JsonListener {
                 }
                 Log.i(TAG, "BeaconRegionFeature OK!");
 
-                ((BeaconApplication)context.getApplicationContext()).registerBeaconRegion();
+                ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
                 syncCallbacks.customerDataSynced();
                 break;
 
