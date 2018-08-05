@@ -26,6 +26,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomInactiveFragm
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.LoyaltyFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferGeneralFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.CheckInFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.CheckedInFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
@@ -36,7 +37,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 
 import org.json.JSONException;
@@ -46,10 +46,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener {
