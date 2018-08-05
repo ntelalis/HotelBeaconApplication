@@ -18,11 +18,11 @@ public class ExclusiveOffer implements SyncModel {
     private String startDate;
     private String endDate;
     private String code;
-    private boolean claimed;
+    private boolean codeClaimed;
     private String codeCreated;
     private String modified;
 
-    public ExclusiveOffer(int id, int serviceID, String price, String discount, String description, boolean special, String startDate, String endDate, String code, boolean claimed, String codeCreated, String modified) {
+    public ExclusiveOffer(int id, int serviceID, String price, String discount, String description, boolean special, String startDate, String endDate, String code, boolean codeClaimed, String codeCreated, String modified) {
         this.id = id;
         this.serviceID = serviceID;
         this.price = price;
@@ -32,7 +32,7 @@ public class ExclusiveOffer implements SyncModel {
         this.startDate = startDate;
         this.endDate = endDate;
         this.code = code;
-        this.claimed = claimed;
+        this.codeClaimed = codeClaimed;
         this.codeCreated = codeCreated;
         this.modified = modified;
     }
@@ -110,12 +110,12 @@ public class ExclusiveOffer implements SyncModel {
         this.code = code;
     }
 
-    public boolean isClaimed() {
-        return claimed;
+    public boolean isCodeClaimed() {
+        return codeClaimed;
     }
 
-    public void setClaimed(boolean claimed) {
-        this.claimed = claimed;
+    public void setCodeClaimed(boolean codeClaimed) {
+        this.codeClaimed = codeClaimed;
     }
 
     public String getCodeCreated() {
