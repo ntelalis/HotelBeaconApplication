@@ -498,7 +498,10 @@ public class SyncServerData implements JsonListener {
                         boolean special = jsonObject.getBoolean(POST.exclusiveOfferSpecial);
                         String startDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferEndDate);
-                        exclusiveOfferList.add(new ExclusiveOffer(id,serviceID,price,discount,description,special,startDate,endDate,modified));
+                        String code = JSONHelper.getString(jsonObject,POST.exclusiveOfferCode);
+                        boolean codeClaimed = jsonObject.getBoolean(POST.exclusiveOfferCodeClaimed);
+                        String codeCreated = JSONHelper.getString(jsonObject,POST.exclusiveOfferCodeCreated);
+                        exclusiveOfferList.add(new ExclusiveOffer(id,serviceID,price,discount,description,special,startDate,endDate,code, codeClaimed, codeCreated, modified));
                     }
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
                 } catch (JSONException e) {

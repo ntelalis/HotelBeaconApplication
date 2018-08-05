@@ -345,5 +345,7 @@ public class POST {
     public static final String exclusiveOfferEndDate = "endDate";
     public static final String exclusiveOfferModified = "modified";
     public static final String exclusiveOfferCode = "code";
-    public static final String exclusiveOfferCodeCreated = "CodeCreated";
+    public static final String exclusiveOfferCodeClaimed = "codeClaimed";
+    public static final String exclusiveOfferCodeCreated = "codeCreated";
+
 }
