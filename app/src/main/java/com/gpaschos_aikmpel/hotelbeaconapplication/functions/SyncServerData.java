@@ -221,6 +221,17 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.exclusiveOffersUrl, params);
     }
 
+    public void getOfferCoupon(int offerID) {
+        //int offerID = offer.getId();
+        Map<String, String> params = new HashMap<>();
+        int customerID = roomDB.customerDao().getCustomer().getCustomerId();
+        params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));
+        params.put(POST.offerCouponsOfferID, String.valueOf(offerID));
+
+        volleyQueue.jsonRequest(this, URL.offerCouponsUrl, params);
+    }
+
+
     private void resolveBeaconRegionReply(JSONObject json, String url) {
         try {
             JSONArray jsonArrayBeaconRegion = json.getJSONArray(POST.beaconRegionArray);
@@ -258,8 +269,23 @@ public class SyncServerData implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) {
 
         //TODO Overhaul ALL Syncing
-
         switch (url) {
+            case URL.offerCouponsUrl:
+                try {
+                    String couponCode = JSONHelper.getString(json, POST.offerCouponsCode);
+                    String codeCreated = JSONHelper.getString(json, POST.offerCouponsCodeCreated);
+                    boolean codeUsed = json.getBoolean (POST.offerCouponsCodeUsed);
+                    int offerID = json.getInt(POST.offerCouponsCodeUsed);
+
+                    ExclusiveOffer offer = roomDB.exclusiveOfferDao().getOfferByID(offerID);
+                    offer.updateCoupon(couponCode, codeUsed, codeCreated);
+                    roomDB.exclusiveOfferDao().insert(offer);
+                    Log.i(TAG, "offer obj. updated!");
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
+
+                break;
             case URL.titlesUrl:
                 List<Title> titleList = new ArrayList<>();
                 try {
@@ -471,7 +497,7 @@ public class SyncServerData implements JsonListener {
                         String description = JSONHelper.getString(jsonObject, POST.generalOfferDescription);
                         String startDate = JSONHelper.getString(jsonObject, POST.generalOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.generalOfferEndDate);
-                        generalOfferList.add(new GeneralOffer(id,price,discount,description,startDate,endDate,modified));
+                        generalOfferList.add(new GeneralOffer(id, price, discount, description, startDate, endDate, modified));
                     }
                     roomDB.generalOfferDao().insertAll(generalOfferList);
                 } catch (JSONException e) {
@@ -498,10 +524,10 @@ public class SyncServerData implements JsonListener {
                         boolean special = jsonObject.getBoolean(POST.exclusiveOfferSpecial);
                         String startDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferEndDate);
-                        String code = JSONHelper.getString(jsonObject,POST.exclusiveOfferCode);
-                        boolean codeClaimed = jsonObject.getBoolean(POST.exclusiveOfferCodeClaimed);
-                        String codeCreated = JSONHelper.getString(jsonObject,POST.exclusiveOfferCodeCreated);
-                        exclusiveOfferList.add(new ExclusiveOffer(id,serviceID,price,discount,description,special,startDate,endDate,code, codeClaimed, codeCreated, modified));
+                        String code = JSONHelper.getString(jsonObject, POST.exclusiveOfferCode);
+                        boolean codeUsed = jsonObject.getBoolean(POST.exclusiveOfferCodeUsed);
+                        String codeCreated = JSONHelper.getString(jsonObject, POST.exclusiveOfferCodeCreated);
+                        exclusiveOfferList.add(new ExclusiveOffer(id, serviceID, price, discount, description, special, startDate, endDate, code, codeUsed, codeCreated, modified));
                     }
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
                 } catch (JSONException e) {

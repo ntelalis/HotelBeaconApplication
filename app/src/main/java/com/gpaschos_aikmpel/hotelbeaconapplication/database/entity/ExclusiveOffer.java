@@ -18,11 +18,11 @@ public class ExclusiveOffer implements SyncModel {
     private String startDate;
     private String endDate;
     private String code;
-    private boolean claimed;
+    private boolean codeUsed;
     private String codeCreated;
     private String modified;
 
-    public ExclusiveOffer(int id, int serviceID, String price, String discount, String description, boolean special, String startDate, String endDate, String code, boolean claimed, String codeCreated, String modified) {
+    public ExclusiveOffer(int id, int serviceID, String price, String discount, String description, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
         this.id = id;
         this.serviceID = serviceID;
         this.price = price;
@@ -32,7 +32,7 @@ public class ExclusiveOffer implements SyncModel {
         this.startDate = startDate;
         this.endDate = endDate;
         this.code = code;
-        this.claimed = claimed;
+        this.codeUsed = codeUsed;
         this.codeCreated = codeCreated;
         this.modified = modified;
     }
@@ -44,6 +44,12 @@ public class ExclusiveOffer implements SyncModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void updateCoupon(String code, boolean codeUsed, String codeCreated) {
+        this.code = code;
+        this.codeUsed = codeUsed;
+        this.codeCreated = codeCreated;
     }
 
     public int getServiceID() {
@@ -110,12 +116,12 @@ public class ExclusiveOffer implements SyncModel {
         this.code = code;
     }
 
-    public boolean isClaimed() {
-        return claimed;
+    public boolean isCodeUsed() {
+        return codeUsed;
     }
 
-    public void setClaimed(boolean claimed) {
-        this.claimed = claimed;
+    public void setCodeUsed(boolean codeUsed) {
+        this.codeUsed = codeUsed;
     }
 
     public String getCodeCreated() {
