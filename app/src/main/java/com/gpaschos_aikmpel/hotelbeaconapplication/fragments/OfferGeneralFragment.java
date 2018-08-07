@@ -21,7 +21,7 @@ import java.util.List;
 
 public class OfferGeneralFragment extends Fragment {
 
-    List<GeneralOffer> generalOfferList;
+    private List<GeneralOffer> generalOfferList;
 
     public OfferGeneralFragment() {
         // Required empty public constructor
@@ -47,7 +47,7 @@ public class OfferGeneralFragment extends Fragment {
         RecyclerView recyclerView = v.findViewById(R.id.rvOfferGeneral);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new GeneralOfferAdapter(generalOfferList));
-        Toast.makeText(getContext(), ""+generalOfferList.size(), Toast.LENGTH_SHORT).show();
+
         return v;
     }
 
