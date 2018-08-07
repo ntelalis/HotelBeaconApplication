@@ -76,6 +76,7 @@ public class SyncServerData implements JsonListener {
 
     public void getCustomerDataFromServer(Customer customer) {
         Log.d(TAG, "GetCustomerDataFromServer");
+        getExclusiveOffers(customer);
         getReservations(customer);
         //getRoomBeaconRegion();
     }
@@ -209,11 +210,11 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.generalOffersUrl, params);
     }
 
-    private void getExclusiveOffers() {
+    private void getExclusiveOffers(Customer customer) {
         Log.i(TAG, "Check ExclusiveOffers");
         List<ExclusiveOffer> exclusiveOfferList = roomDB.exclusiveOfferDao().getExclusiveOffers();
         Map<String, String> params = new HashMap<>();
-        int customerID = roomDB.customerDao().getCustomer().getCustomerId();
+        int customerID = customer.getCustomerId();
         params.put(POST.exclusiveOfferCustomerID, String.valueOf(customerID));
         if (!exclusiveOfferList.isEmpty()) {
             String exclusiveOfferCheckJSON = sync(exclusiveOfferList);
