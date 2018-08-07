@@ -345,7 +345,17 @@ public class POST {
     public static final String exclusiveOfferEndDate = "endDate";
     public static final String exclusiveOfferModified = "modified";
     public static final String exclusiveOfferCode = "code";
-    public static final String exclusiveOfferCodeClaimed = "codeClaimed";
+    public static final String exclusiveOfferCodeUsed = "codeUsed";
     public static final String exclusiveOfferCodeCreated = "codeCreated";
+
+
+    //~~~~~~~~~~~~~~~~~~~offercoupons.php~~~~~~~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String  offerCouponsOfferID= "offerID";
+    public static final String offerCouponsCustomerID = "customerID";
+    //RCV
+    public static final String offerCouponsCode = "code";
+    public static final String offerCouponsCodeCreated= "codeCreated";
+    public static final String offerCouponsCodeUsed= "codeUsed";
 
 }
