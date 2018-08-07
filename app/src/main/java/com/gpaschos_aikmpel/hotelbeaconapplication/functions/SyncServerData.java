@@ -70,6 +70,7 @@ public class SyncServerData implements JsonListener {
         getTitles();
         getCountries();
         getCurrencies();
+        getGeneralOffers();
         getRoomTypes();
     }
 
