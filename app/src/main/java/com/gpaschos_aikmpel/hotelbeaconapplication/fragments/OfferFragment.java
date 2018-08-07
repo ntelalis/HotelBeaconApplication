@@ -56,7 +56,7 @@ public class OfferFragment extends Fragment {
                 case 0:
                     return OfferGeneralFragment.newInstance();
                 case 1:
-                    return OfferExclusiveFragment.newInstance();
+                    //return OfferExclusiveFragment.newInstance();
                 default:
                     return null;
             }
