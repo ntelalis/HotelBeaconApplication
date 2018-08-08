@@ -11,9 +11,9 @@ public class ExclusiveOffer implements SyncModel {
     @PrimaryKey
     private int id;
     private int serviceID;
-    private String price;
-    private String discount;
+    private String priceDiscount;
     private String description;
+    private String details;
     private boolean special;
     private String startDate;
     private String endDate;
@@ -22,12 +22,12 @@ public class ExclusiveOffer implements SyncModel {
     private String codeCreated;
     private String modified;
 
-    public ExclusiveOffer(int id, int serviceID, String price, String discount, String description, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
+    public ExclusiveOffer(int id, int serviceID, String priceDiscount, String description, String details, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
         this.id = id;
         this.serviceID = serviceID;
-        this.price = price;
-        this.discount = discount;
+        this.priceDiscount = priceDiscount;
         this.description = description;
+        this.details = details;
         this.special = special;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -35,6 +35,12 @@ public class ExclusiveOffer implements SyncModel {
         this.codeUsed = codeUsed;
         this.codeCreated = codeCreated;
         this.modified = modified;
+    }
+
+    public void updateCoupon(String code, boolean codeUsed, String codeCreated) {
+        this.code = code;
+        this.codeUsed = codeUsed;
+        this.codeCreated = codeCreated;
     }
 
     @Override
@@ -46,12 +52,6 @@ public class ExclusiveOffer implements SyncModel {
         this.id = id;
     }
 
-    public void updateCoupon(String code, boolean codeUsed, String codeCreated) {
-        this.code = code;
-        this.codeUsed = codeUsed;
-        this.codeCreated = codeCreated;
-    }
-
     public int getServiceID() {
         return serviceID;
     }
@@ -60,20 +60,12 @@ public class ExclusiveOffer implements SyncModel {
         this.serviceID = serviceID;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPriceDiscount() {
+        return priceDiscount;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setPriceDiscount(String priceDiscount) {
+        this.priceDiscount = priceDiscount;
     }
 
     public String getDescription() {
@@ -82,6 +74,14 @@ public class ExclusiveOffer implements SyncModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public boolean isSpecial() {

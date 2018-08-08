@@ -12,6 +12,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -99,12 +100,7 @@ public class OfferExclusiveFragment extends Fragment {
 
             public void bind(int position){
                 ExclusiveOffer offer = offersList.get(position);
-                if(offer.getDiscount()==null){
-                    tvDiscountPrice.setText(offer.getPrice());
-                }
-                else{
-                    tvDiscountPrice.setText(offer.getDiscount());
-                }
+                tvDiscountPrice.setText(offer.getPriceDiscount());
                 tvTitle.setText(offer.getDescription());
 
             }
