@@ -10,24 +10,22 @@ public class GeneralOffer implements SyncModel {
 
     @PrimaryKey
     private int id;
-    private String price;
-    private String discount;
+    private String priceDiscount;
     private String description;
+    private String details;
     private String startDate;
     private String endDate;
     private String modified;
 
-    public GeneralOffer(int id, String price, String discount, String description, String startDate, String endDate, String modified) {
+    public GeneralOffer(int id, String priceDiscount, String description, String details, String startDate, String endDate, String modified) {
         this.id = id;
-        this.price = price;
-        this.discount = discount;
+        this.priceDiscount = priceDiscount;
         this.description = description;
+        this.details = details;
         this.startDate = startDate;
         this.endDate = endDate;
         this.modified = modified;
     }
-
-
 
     @Override
     public int getId() {
@@ -38,20 +36,12 @@ public class GeneralOffer implements SyncModel {
         this.id = id;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPriceDiscount() {
+        return priceDiscount;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(String discount) {
-        this.discount = discount;
+    public void setPriceDiscount(String priceDiscount) {
+        this.priceDiscount = priceDiscount;
     }
 
     public String getDescription() {
@@ -60,6 +50,14 @@ public class GeneralOffer implements SyncModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getStartDate() {

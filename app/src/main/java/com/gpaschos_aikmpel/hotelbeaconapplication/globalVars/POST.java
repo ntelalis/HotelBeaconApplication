@@ -320,9 +320,9 @@ public class POST {
     //RCV
     public static final String generalOfferArray = "generalOfferArray";
     public static final String generalOfferID = "id";
-    public static final String generalOfferPrice = "price";
-    public static final String generalOfferDiscount = "discount";
+    public static final String generalOfferPriceDiscount = "priceDiscount";
     public static final String generalOfferDescription = "description";
+    public static final String generalOfferDetails = "details";
     public static final String generalOfferStartDate = "startDate";
     public static final String generalOfferEndDate = "endDate";
     public static final String generalOfferModified = "modified";
@@ -339,7 +339,9 @@ public class POST {
     public static final String exclusiveOfferServiceID = "serviceID";
     public static final String exclusiveOfferPrice = "price";
     public static final String exclusiveOfferDiscount = "discount";
+    public static final String exclusiveOfferPriceDiscount = "priceDiscount";
     public static final String exclusiveOfferDescription = "description";
+    public static final String exclusiveOfferDetails = "details";
     public static final String exclusiveOfferSpecial = "special";
     public static final String exclusiveOfferStartDate = "startDate";
     public static final String exclusiveOfferEndDate = "endDate";
@@ -357,5 +359,4 @@ public class POST {
     public static final String offerCouponsCode = "code";
     public static final String offerCouponsCodeCreated= "codeCreated";
     public static final String offerCouponsCodeUsed= "codeUsed";
-
 }

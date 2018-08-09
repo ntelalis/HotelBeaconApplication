@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/ivOfferImage"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:text="15% Off Dining at Restaurant for Saturday"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivOfferImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,6 +39,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvOfferTitle"
@@ -47,7 +48,7 @@
     <ImageView
         android:id="@+id/ivOfferBackgroundDiscountPrice"
         android:layout_width="0dp"
-        android:layout_height="25dp"
+        android:layout_height="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivOfferImage"
         app:layout_constraintEnd_toEndOf="@+id/ivOfferImage"
         app:layout_constraintHorizontal_bias="0.6"

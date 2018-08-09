@@ -71,7 +71,7 @@ public class OfferGeneralFragment extends Fragment {
         public void onBindViewHolder(@NonNull GeneralOfferAdapter.GeneralOfferViewHolder holder, int position) {
             GeneralOffer generalOffer = generalOfferList.get(position);
             holder.tvOfferTitle.setText(generalOffer.getDescription());
-            holder.tvOfferDiscountPrice.setText(generalOffer.getPrice() != null ? generalOffer.getPrice() : generalOffer.getDiscount());
+            holder.tvOfferDiscountPrice.setText(generalOffer.getPriceDiscount());
         }
 
         @Override

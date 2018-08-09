@@ -56,7 +56,6 @@ public class OfferExclusiveFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         RecyclerView.Adapter myAdapter = new MyExclusiveOffersAdapter(offersList);
         recyclerView.setAdapter(myAdapter);
-
         return view;
     }
 
@@ -90,11 +89,13 @@ public class OfferExclusiveFragment extends Fragment {
         class MyExclusiveOffersViewHolder extends RecyclerView.ViewHolder{
 
             TextView tvTitle;
+            TextView tvDetails;
             TextView tvDiscountPrice;
 
             public MyExclusiveOffersViewHolder(View itemView) {
                 super(itemView);
                 tvTitle = itemView.findViewById(R.id.tvOfferTitle);
+                tvDetails = itemView.findViewById(R.id.tvOfferDetails);
                 tvDiscountPrice = itemView.findViewById(R.id.tvOfferDiscountPrice);
             }
 
@@ -102,7 +103,7 @@ public class OfferExclusiveFragment extends Fragment {
                 ExclusiveOffer offer = offersList.get(position);
                 tvDiscountPrice.setText(offer.getPriceDiscount());
                 tvTitle.setText(offer.getDescription());
-
+                tvDetails.setText(offer.getDetails());
             }
         }
     }

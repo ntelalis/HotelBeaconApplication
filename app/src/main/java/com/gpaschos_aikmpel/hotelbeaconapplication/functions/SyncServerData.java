@@ -494,12 +494,12 @@ public class SyncServerData implements JsonListener {
                             Log.i(TAG, "GeneralOffer: " + id + " deleted");
                             continue;
                         }
-                        String price = JSONHelper.getString(jsonObject, POST.generalOfferPrice);
-                        String discount = JSONHelper.getString(jsonObject, POST.generalOfferDiscount);
+                        String priceDiscount = JSONHelper.getString(jsonObject, POST.generalOfferPriceDiscount);
                         String description = JSONHelper.getString(jsonObject, POST.generalOfferDescription);
+                        String details = JSONHelper.getString(jsonObject, POST.generalOfferDetails);
                         String startDate = JSONHelper.getString(jsonObject, POST.generalOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.generalOfferEndDate);
-                        generalOfferList.add(new GeneralOffer(id, price, discount, description, startDate, endDate, modified));
+                        generalOfferList.add(new GeneralOffer(id, priceDiscount, description, details, startDate, endDate, modified));
                     }
                     roomDB.generalOfferDao().insertAll(generalOfferList);
                 } catch (JSONException e) {
@@ -520,18 +520,19 @@ public class SyncServerData implements JsonListener {
                             continue;
                         }
                         int serviceID = jsonObject.getInt(POST.exclusiveOfferServiceID);
-                        String price = JSONHelper.getString(jsonObject, POST.exclusiveOfferPrice);
-                        String discount = JSONHelper.getString(jsonObject, POST.exclusiveOfferDiscount);
+                        String priceDiscount = JSONHelper.getString(jsonObject, POST.exclusiveOfferPriceDiscount);
                         String description = JSONHelper.getString(jsonObject, POST.exclusiveOfferDescription);
+                        String details = JSONHelper.getString(jsonObject, POST.exclusiveOfferDetails);
                         boolean special = jsonObject.getBoolean(POST.exclusiveOfferSpecial);
                         String startDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferEndDate);
                         String code = JSONHelper.getString(jsonObject, POST.exclusiveOfferCode);
                         boolean codeUsed = jsonObject.getBoolean(POST.exclusiveOfferCodeUsed);
                         String codeCreated = JSONHelper.getString(jsonObject, POST.exclusiveOfferCodeCreated);
-                        exclusiveOfferList.add(new ExclusiveOffer(id, serviceID, price, discount, description, special, startDate, endDate, code, codeUsed, codeCreated, modified));
+                        exclusiveOfferList.add(new ExclusiveOffer(id, serviceID, priceDiscount, description, details, special, startDate, endDate, code, codeUsed, codeCreated, modified));
                     }
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
+                    Log.i(TAG, "ExclusiveOffers OK!");
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString());
                 }
