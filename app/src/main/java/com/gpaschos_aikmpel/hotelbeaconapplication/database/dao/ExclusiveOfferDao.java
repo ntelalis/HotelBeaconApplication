@@ -12,11 +12,11 @@ import java.util.List;
 @Dao
 public interface ExclusiveOfferDao {
 
-    @Query("SELECT * FROM ExclusiveOffer WHERE Special=0 ORDER BY Code DESC")
+    @Query("SELECT * FROM ExclusiveOffer")
     List<ExclusiveOffer> getExclusiveOffers();
 
-    @Query("SELECT * FROM ExclusiveOffer WHERE Special=1 AND Code IS NOT NULL")
-    List<ExclusiveOffer> getExclusiveSpecialOffers();
+    @Query("SELECT * FROM ExclusiveOffer WHERE Special=0 OR Special=1 AND Code IS NOT NULL ORDER BY Special DESC, Code DESC")
+    List<ExclusiveOffer> getExclusiveOffersForRecyclerView();
 
     @Query("SELECT * FROM ExclusiveOffer WHERE ExclusiveOffer.id=:id")
     ExclusiveOffer getOfferByID(int id);

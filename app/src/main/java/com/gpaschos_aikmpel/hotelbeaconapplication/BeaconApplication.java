@@ -9,8 +9,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckedInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
@@ -32,8 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener {
+public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener, BeaconApplication.CouponCallback {
 
     private static final String TAG = BeaconApplication.class.getSimpleName();
 
@@ -52,30 +56,25 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         //Create notification channel
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
+        getPermissions();
+
         //BeaconManager and BackgroundPowerSaver init
         beaconManager = BeaconManager.getInstanceForApplication(this);
         backgroundPowerSaver = new BackgroundPowerSaver(this);
 
         //Scanning Settings
         //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
-        beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
-        beaconManager.setBackgroundScanPeriod((long) 1100);
+        //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
+        beaconManager.setBackgroundBetweenScanPeriod((long) 150);
+        beaconManager.setBackgroundScanPeriod((long) 1001);
 
+        //Also detect iBeacons
         beaconManager.getBeaconParsers().add(new BeaconParser().
-                        setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
+    }
 
-
-        //Region scanning setup
-        //Region region = new Region("welcomeBeacon", Identifier.parse(Params.beaconUUID), null, null);
-        //Region restaurant = new Region("restaurantBeacon", Identifier.parse(Params.beaconUUID), null, null);
-
-
-        //ADD NEW REGIONS HERE
-        //Region region1 = new Region("roomBeacon",Identifier.parse(Params.beaconUUID),null,null);
-
-
-        //regionBootstrap.addRegion(region1);
+    private void getPermissions() {
 
     }
 
@@ -128,11 +127,10 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         featureListMap = new HashMap<>();
         for (BeaconRegion beaconRegion : beaconRegionList) {
             List<BeaconRegionFeature> regionFeatureList = RoomDB.getInstance(this).beaconRegionFeatureDao().getFeatureByUniqueID(beaconRegion.getUniqueID());
-            if(!regionFeatureList.isEmpty()){
-                Log.d(TAG, "UniqueID: "+beaconRegion.getUniqueID()+" Features size: "+regionFeatureList.size()+" Feature[0]: "+regionFeatureList.get(0).getRegionType());
-            }
-            else{
-                Log.d(TAG, "UniqueID: "+beaconRegion.getUniqueID()+" Features size: NULL");
+            if (!regionFeatureList.isEmpty()) {
+                Log.d(TAG, "UniqueID: " + beaconRegion.getUniqueID() + " Features size: " + regionFeatureList.size() + " Feature[0]: " + regionFeatureList.get(0).getRegionType());
+            } else {
+                Log.d(TAG, "UniqueID: " + beaconRegion.getUniqueID() + " Features size: NULL");
             }
             featureListMap.put(beaconRegion.getUniqueID(), regionFeatureList);
         }
@@ -140,9 +138,11 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void didEnterRegion(Region region) {
-        Log.d(TAG, "Entered Region: " + region.getUniqueId());
+        Log.d("WTF", "Entered Region: " + region.getUniqueId());
         List<BeaconRegionFeature> featureList = featureListMap.get(region.getUniqueId());
+        Log.d("WTF", "FeatureList size: " + featureList.size());
         for (BeaconRegionFeature feature : featureList) {
+            Log.d("WTF", "Feature " + feature.getRegionType());
             switch (feature.getRegionType()) {
                 case "welcome":
                     NotificationCreation.notifyWelcome(this);
@@ -151,17 +151,46 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                     NotificationCreation.notifyFarewell(this);
                     break;
                 case "offer":
-                    //offersystem
+                    Log.d("WTF", "DidEnterRegion");
+                    selectOffer(region.getUniqueId());
                     break;
             }
         }
     }
 
+    private void selectOffer(String regionUniqueID) {
+        List<OfferBeaconRegion> offerBeaconRegionList = RoomDB.getInstance(this).offerBeaconRegionDao().getOfferBeaconRegionByUniqueID(regionUniqueID);
+        List<ExclusiveOffer> specialOfferList = new ArrayList<>();
+        List<ExclusiveOffer> exclusiveOfferList = new ArrayList<>();
+        ExclusiveOffer selectedExclusiveOffer = null;
+
+        for (OfferBeaconRegion offerBeaconRegion : offerBeaconRegionList) {
+            ExclusiveOffer exclusiveOffer = RoomDB.getInstance(this).exclusiveOfferDao().getOfferByID(offerBeaconRegion.getOfferID());
+            if (exclusiveOffer.isSpecial() && exclusiveOffer.getCode() == null) {
+                specialOfferList.add(exclusiveOffer);
+                continue;
+            }
+            if (exclusiveOffer.getCode() == null) {
+                exclusiveOfferList.add(exclusiveOffer);
+            }
+        }
+
+        if (specialOfferList.size() > 0) {
+            selectedExclusiveOffer = specialOfferList.get(new Random().nextInt(specialOfferList.size()));
+        } else if (exclusiveOfferList.size() > 0) {
+            selectedExclusiveOffer = exclusiveOfferList.get(new Random().nextInt(exclusiveOfferList.size()));
+        }
+
+        if (selectedExclusiveOffer != null) {
+            Log.d("WTF", "offer is ready to receive coupon");
+            getCoupon(this,selectedExclusiveOffer.getId());
+        }
+    }
+
     @Override
     public void didExitRegion(Region region) {
-        if (region.getUniqueId().equals("welcomeBeacon")) {
-            Log.d(TAG, "Exited from Region" + region.getUniqueId());
-        }
+
+        Log.d("WTF", "Exited from Region " + region.getUniqueId());
     }
 
     @Override
@@ -209,6 +238,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             startActivity(intent);
 
         }
+        else if(url.equals(URL.offerCouponsUrl)){
+
+        }
     }
 
     @Override
@@ -216,4 +248,21 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
     }
 
+    public void getCoupon(CouponCallback couponCallback, int offerID) {
+        Map<String, String> params = new HashMap<>();
+        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
+        params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));
+        params.put(POST.offerCouponsOfferID, String.valueOf(offerID));
+
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.offerCouponsUrl, params);
+    }
+
+    @Override
+    public void onCouponCreated(ExclusiveOffer exclusiveOffer) {
+        NotificationCreation.notifyOffer(this,exclusiveOffer);
+    }
+
+    public interface CouponCallback{
+        void onCouponCreated(ExclusiveOffer exclusiveOffer);
+    }
 }

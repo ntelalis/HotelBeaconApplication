@@ -60,6 +60,6 @@ public class Params {
             "Just remember that check-out time is ";
 
     //OFFERS messages
-    //public static final
+    public static final int notificationOfferID = 6;
 
 }

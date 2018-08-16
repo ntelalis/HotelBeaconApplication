@@ -10,6 +10,7 @@ import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.util.Log;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
@@ -17,8 +18,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 
@@ -26,12 +30,14 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class NotificationCreation implements JsonListener {
+public class NotificationCreation{
 
 
     private static final String TAG = NotificationCreation.class.getSimpleName();
@@ -56,13 +62,32 @@ public class NotificationCreation implements JsonListener {
 
     }
 
-    public static void notifyOffers(Context context, String regionUniqueID){
+    public static void notifyOffer(Context context, ExclusiveOffer exclusiveOffer) {
+
         Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
 
-        switch(regionUniqueID){
-            case "restaurantBeacon":
+        String notificationTitle, notificationContent;
 
+        if (exclusiveOffer.isSpecial()) {
+            notificationTitle = "Special offer just for you!";
+        } else {
+            notificationTitle = "Here is an exclusive offer";
         }
+        notificationContent = exclusiveOffer.getDescription();
+
+        int icon;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            icon = R.drawable.ic_welcome;
+
+        } else {
+            icon = R.drawable.ic_welcome_png;
+        }
+        Log.d("WTF","Notification PreCreation");
+        notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationFarewellID,
+                notificationTitle, notificationContent, icon,
+                notificationContent, HomeActivity.class);
+
     }
 
 
@@ -102,7 +127,6 @@ public class NotificationCreation implements JsonListener {
             //notify the customer that they can check-in if they are eligible
             notifyCheckin(context, CHECK_IN_BEACON_NOTIFICATION);
         }
-
     }
 
 
@@ -204,7 +228,7 @@ public class NotificationCreation implements JsonListener {
         long currentTime = System.currentTimeMillis();
 
         //FIXME DEBUG CODE DELETE THIS
-        LocalVariables.storeBoolean(context,R.string.is_notified_Welcome,false);
+        LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
 
         return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
@@ -293,8 +317,7 @@ public class NotificationCreation implements JsonListener {
                 e.printStackTrace();
                 throw new RuntimeException("shouldNotifyCheckout exception");
             }
-        }
-        else
+        } else
             return false;
 
 
@@ -310,8 +333,7 @@ public class NotificationCreation implements JsonListener {
             NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
-            }
-            else{
+            } else {
                 throw new RuntimeException("problem getting notificationManager");
             }
         }
@@ -383,13 +405,4 @@ public class NotificationCreation implements JsonListener {
         notificationManagerCompat.notify(notificationID, builder.build());
     }
 
-    @Override
-    public void getSuccessResult(String url, JSONObject json) {
-
-    }
-
-    @Override
-    public void getErrorResult(String url, String error) {
-
-    }
 }

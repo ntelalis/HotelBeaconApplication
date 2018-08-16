@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -63,7 +62,7 @@ public class OfferGeneralFragment extends Fragment {
         @Override
         public GeneralOfferAdapter.GeneralOfferViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            View view = inflater.inflate(R.layout.viewholder_offers, parent, false);
+            View view = inflater.inflate(R.layout.viewholder_offers_general, parent, false);
             return new GeneralOfferViewHolder(view);
         }
 
@@ -87,9 +86,9 @@ public class OfferGeneralFragment extends Fragment {
 
             public GeneralOfferViewHolder(View itemView) {
                 super(itemView);
-                tvOfferTitle = itemView.findViewById(R.id.tvOfferTitle);
-                tvOfferDetails = itemView.findViewById(R.id.tvOfferDetails);
-                tvOfferDiscountPrice = itemView.findViewById(R.id.tvOfferDiscountPrice);
+                tvOfferTitle = itemView.findViewById(R.id.tvOfferGeneralTitle);
+                tvOfferDetails = itemView.findViewById(R.id.tvOfferGeneralDetails);
+                tvOfferDiscountPrice = itemView.findViewById(R.id.tvOfferGeneralDiscountPrice);
             }
         }
     }

@@ -5,8 +5,9 @@ public class URL {
     private static final String serverProtocol = "http";
 
     //private static final String serverHost = "ntelalis.dyndns-home.com";
-    private static final String serverHost = "192.168.1.101";
+    //private static final String serverHost = "192.168.1.101";
     //private static final String serverHost = "https://hotelbeaconapp.000webhostapp.com/";
+    private static final String serverHost = "192.168.2.7";
 
     //private static final String serverPort = "8642";
     private static final String serverPort = "80";
@@ -48,6 +49,7 @@ public class URL {
     private static final String generalOffersPage = "generaloffers.php";
     private static final String exclusiveOffersPage = "exclusiveoffers.php";
     private static final String offerCouponsPage = "offercoupons.php";
+    private static final String offerBeaconRegionPage = "offerbeaconregion.php";
 
     public static final String loginUrl = serverAddress + loginPage;
     public static final String forgotUrl = serverAddress + forgotPage;
@@ -84,4 +86,5 @@ public class URL {
     public static final String generalOffersUrl = serverAddress + generalOffersPage;
     public static final String exclusiveOffersUrl = serverAddress + exclusiveOffersPage;
     public static final String offerCouponsUrl = serverAddress + offerCouponsPage;
+    public static final String offerBeaconRegionUrl = serverAddress + offerBeaconRegionPage;
 }

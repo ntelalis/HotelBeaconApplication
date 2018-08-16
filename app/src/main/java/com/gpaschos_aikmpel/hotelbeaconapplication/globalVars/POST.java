@@ -302,7 +302,7 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~beaconregionfeature.php~~~~~~~~~~~~~~~~~
     //SND
-    public static final String regionIDForFeaturesArray = "beaconRegionIDJsonArray";
+    public static final String beaconRegionIDFeatureArray = "beaconRegionIDJsonArray";
     public static final String beaconRegionFeatureCheck = "check";
 
     //RCV
@@ -353,10 +353,21 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~~offercoupons.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String  offerCouponsOfferID= "offerID";
+    public static final String offerCouponsOfferID = "offerID";
     public static final String offerCouponsCustomerID = "customerID";
     //RCV
     public static final String offerCouponsCode = "code";
-    public static final String offerCouponsCodeCreated= "codeCreated";
-    public static final String offerCouponsCodeUsed= "codeUsed";
+    public static final String offerCouponsCodeCreated = "codeCreated";
+    public static final String offerCouponsCodeUsed = "codeUsed";
+
+    //~~~~~~~~~~~~~~~~~~~offerbeaconregion.php~~~~~~~~~~~~~~~~~~~~~~~
+    //SND
+    public static final String offerBeaconRegionOfferIDArray = "offerIDJsonArray";
+    public static final String offerBeaconRegionCheck = "check";
+    //RCV
+    public static final String offerBeaconRegionArray = "offerBeaconRegionArray";
+    public static final String offerBeaconRegionID = "id";
+    public static final String offerBeaconRegionRegionID = "regionID";
+    public static final String offerBeaconRegionOfferID = "offerID";
+    public static final String offerBeaconRegionModified = "modified";
 }
