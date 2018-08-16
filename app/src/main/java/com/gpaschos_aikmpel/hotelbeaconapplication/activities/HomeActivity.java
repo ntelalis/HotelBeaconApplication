@@ -6,6 +6,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -102,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     break;
                 case R.id.bottomNavigationOffers:
                     OfferFragment offerFragment = OfferFragment.newInstance();
-                    transaction.replace(R.id.homeScreenContainer, offerFragment);
+                    transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
                     transaction.commit();
                     break;
                 case R.id.bottomNavigationMyRoom:
@@ -300,6 +302,16 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     @Override
     public void couponCreated(ExclusiveOffer exclusiveOffer) {
         //getSupportFragmentManager().findFragmentById(R.id.homeScreenContainer).getChildFragmentManager().findFragmentById(R.id.)
+        OfferFragment offerFragment = (OfferFragment)getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
+        if(offerFragment!=null){
+            ViewPager viewPager = offerFragment.getViewpager();
+            PagerAdapter pagerAdapter = viewPager.getAdapter();
+            if(pagerAdapter!=null){
+                OfferExclusiveFragment offerExclusiveFragment = (OfferExclusiveFragment)pagerAdapter.instantiateItem(viewPager,OfferFragment.OFFER_EXCLUSIVE);
+                offerExclusiveFragment.refreshData();
+            }
+        }
+
 
     }
 }

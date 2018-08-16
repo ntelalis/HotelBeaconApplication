@@ -18,6 +18,15 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
  */
 public class OfferFragment extends Fragment {
 
+    public static final String TAG = "OfferFragment";
+    private ViewPager viewPager;
+    public static final int OFFER_GENERAL = 0;
+    public static final int OFFER_EXCLUSIVE = 1;
+
+    public ViewPager getViewpager(){
+        return viewPager;
+    }
+
     public OfferFragment() {
         // Required empty public constructor
     }
@@ -34,7 +43,7 @@ public class OfferFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_offer, container, false);
-        ViewPager viewPager = v.findViewById(R.id.vpOffer);
+        viewPager = v.findViewById(R.id.vpOffer);
         TabLayout tabLayout = v.findViewById(R.id.tlOffer);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(new OfferPagerAdapter(getFragmentManager()));
@@ -53,9 +62,9 @@ public class OfferFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:
+                case OFFER_GENERAL:
                     return OfferGeneralFragment.newInstance();
-                case 1:
+                case OFFER_EXCLUSIVE:
                     return OfferExclusiveFragment.newInstance();
                 default:
                     return null;
@@ -70,9 +79,9 @@ public class OfferFragment extends Fragment {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 0:
+                case OFFER_GENERAL:
                     return "General";
-                case 1:
+                case OFFER_EXCLUSIVE:
                     return "Exclusive";
                 default:
                     return "";

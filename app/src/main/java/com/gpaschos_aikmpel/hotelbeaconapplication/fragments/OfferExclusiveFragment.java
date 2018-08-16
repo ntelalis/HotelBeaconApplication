@@ -71,10 +71,11 @@ public class OfferExclusiveFragment extends Fragment  {
         return view;
     }
 
-    /*offersList = RoomDB.getInstance(getContext()).exclusiveOfferDao().getExclusiveOffersForRecyclerView();
+    public void refreshData(){
+        offersList = RoomDB.getInstance(getContext()).exclusiveOfferDao().getExclusiveOffersForRecyclerView();
         recyclerView.setAdapter(new ExclusiveOfferAdapter(offersList));
         recyclerView.getAdapter().notifyDataSetChanged();
-     */
+    }
 
     private class ExclusiveOfferAdapter extends RecyclerView.Adapter<ExclusiveOfferAdapter.ExclusiveOfferViewHolder> {
 
