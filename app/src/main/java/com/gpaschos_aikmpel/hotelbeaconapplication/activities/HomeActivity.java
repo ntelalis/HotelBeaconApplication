@@ -301,7 +301,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void couponCreated(ExclusiveOffer exclusiveOffer) {
-        //getSupportFragmentManager().findFragmentById(R.id.homeScreenContainer).getChildFragmentManager().findFragmentById(R.id.)
         OfferFragment offerFragment = (OfferFragment)getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
         if(offerFragment!=null){
             ViewPager viewPager = offerFragment.getViewpager();
