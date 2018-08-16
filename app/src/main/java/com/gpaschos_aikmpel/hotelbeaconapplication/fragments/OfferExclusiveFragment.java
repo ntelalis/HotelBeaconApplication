@@ -7,36 +7,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class OfferExclusiveFragment extends Fragment  {
 
     private static final String TAG = OfferExclusiveFragment.class.getSimpleName();
