@@ -1,9 +1,15 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +21,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert.NoInternetDialog;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -27,7 +34,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoadingScreenActivity extends AppCompatActivity implements JsonListener, SyncServerData.SyncCallbacks {
+public class LoadingScreenActivity extends AppCompatActivity implements JsonListener, SyncServerData.SyncCallbacks, NoInternetDialog.NoInternetDialogListener {
 
     private static final String TAG = LoadingScreenActivity.class.getSimpleName();
     private ProgressBar progressBar;
@@ -62,14 +69,28 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 .setDuration(4000)
                 .setListener(null);
 
+        initApp();
+    }
+
+    public void initApp(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //TODO DataSyncing on Login. Is this a good choice?
-                SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
+                ConnectivityManager cm =
+                        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+                if (isConnected) {
+                    SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
+                } else {
+                    NoInternetDialog dialog = NoInternetDialog.newInstance();
+                    dialog.show(getSupportFragmentManager(),"NoInternetDialog");
+                }
             }
         }, 3000);
-
     }
 
     @Override
@@ -132,5 +153,15 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         params.put(POST.loginModified, customer.getModified());
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        initApp();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        finishAffinity();
     }
 }

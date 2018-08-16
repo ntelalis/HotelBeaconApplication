@@ -63,9 +63,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         backgroundPowerSaver = new BackgroundPowerSaver(this);
 
         //Scanning Settings
-        //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
+        beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
         //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
-        beaconManager.setBackgroundBetweenScanPeriod((long) 150);
+        //beaconManager.setBackgroundBetweenScanPeriod((long) 150);
         beaconManager.setBackgroundScanPeriod((long) 1001);
 
         //Also detect iBeacons

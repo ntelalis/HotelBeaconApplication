@@ -295,7 +295,7 @@ public class SyncServerData implements JsonListener {
                     String couponCode = JSONHelper.getString(json, POST.offerCouponsCode);
                     String codeCreated = JSONHelper.getString(json, POST.offerCouponsCodeCreated);
                     boolean codeUsed = json.getBoolean (POST.offerCouponsCodeUsed);
-                    int offerID = json.getInt(POST.offerCouponsCodeUsed);
+                    int offerID = json.getInt(POST.offerCouponsOfferID);
 
                     ExclusiveOffer offer = roomDB.exclusiveOfferDao().getOfferByID(offerID);
                     offer.updateCoupon(couponCode, codeUsed, codeCreated);
