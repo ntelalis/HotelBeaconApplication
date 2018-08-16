@@ -246,7 +246,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
     }
 
-    /*public void getCoupon(CouponCallback couponCallback, int offerID) {
+    /*public void getCoupon(int offerID) {
         Map<String, String> params = new HashMap<>();
         int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
         params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));

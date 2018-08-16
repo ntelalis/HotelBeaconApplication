@@ -39,6 +39,7 @@ import java.util.Objects;
  */
 public class OfferExclusiveFragment extends Fragment  {
 
+    private FragmentCallbacks fragmentCallbacks;
     private static final String TAG = OfferExclusiveFragment.class.getSimpleName();
     private List<ExclusiveOffer> offersList;
     private RecyclerView recyclerView;
@@ -228,5 +229,8 @@ public class OfferExclusiveFragment extends Fragment  {
             }
         }
 
+    }
+    public interface FragmentCallbacks{
+        void couponObtained();
     }
 }

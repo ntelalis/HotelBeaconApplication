@@ -25,6 +25,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomActiveFragmen
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomInactiveFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.LoyaltyFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferExclusiveFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferGeneralFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.CheckInFragment;
@@ -50,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener, OfferExclusiveFragment.FragmentCallbacks {
 
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
@@ -286,6 +287,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void getErrorResult(String url, String error) {
+
+    }
+
+    @Override
+    public void couponObtained() {
 
     }
 }
