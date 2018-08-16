@@ -37,7 +37,7 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OfferExclusiveFragment extends Fragment implements BeaconApplication.CouponCallback {
+public class OfferExclusiveFragment extends Fragment  {
 
     private static final String TAG = OfferExclusiveFragment.class.getSimpleName();
     private List<ExclusiveOffer> offersList;
@@ -76,12 +76,10 @@ public class OfferExclusiveFragment extends Fragment implements BeaconApplicatio
         return view;
     }
 
-    @Override
-    public void onCouponCreated(ExclusiveOffer exclusiveOffer) {
-        offersList = RoomDB.getInstance(getContext()).exclusiveOfferDao().getExclusiveOffersForRecyclerView();
+    /*offersList = RoomDB.getInstance(getContext()).exclusiveOfferDao().getExclusiveOffersForRecyclerView();
         recyclerView.setAdapter(new ExclusiveOfferAdapter(offersList));
         recyclerView.getAdapter().notifyDataSetChanged();
-    }
+     */
 
     private class ExclusiveOfferAdapter extends RecyclerView.Adapter<ExclusiveOfferAdapter.ExclusiveOfferViewHolder> {
 
@@ -149,7 +147,7 @@ public class OfferExclusiveFragment extends Fragment implements BeaconApplicatio
                         btnCode.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ((BeaconApplication)getActivity().getApplication()).getCoupon(OfferExclusiveFragment.this,offerID);
+                                // TODO SHIT
                             }
                         });
                         break;

@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener, BeaconApplication.CouponCallback {
+public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener{
 
     private static final String TAG = BeaconApplication.class.getSimpleName();
 
@@ -151,8 +151,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                     NotificationCreation.notifyFarewell(this);
                     break;
                 case "offer":
-                    Log.d("WTF", "DidEnterRegion");
-                    selectOffer(region.getUniqueId());
+                    //Log.d("WTF", "DidEnterRegion");
+                    //selectOffer(region.getUniqueId());
+                    //NotificationCreation.notifyOffer(this,exclusiveOffer);
                     break;
             }
         }
@@ -183,7 +184,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
         if (selectedExclusiveOffer != null) {
             Log.d("WTF", "offer is ready to receive coupon");
-            getCoupon(this,selectedExclusiveOffer.getId());
+            //getCoupon(this,selectedExclusiveOffer.getId());
         }
     }
 
@@ -238,9 +239,6 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             startActivity(intent);
 
         }
-        else if(url.equals(URL.offerCouponsUrl)){
-
-        }
     }
 
     @Override
@@ -248,21 +246,15 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
     }
 
-    public void getCoupon(CouponCallback couponCallback, int offerID) {
+    /*public void getCoupon(CouponCallback couponCallback, int offerID) {
         Map<String, String> params = new HashMap<>();
         int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
         params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));
         params.put(POST.offerCouponsOfferID, String.valueOf(offerID));
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.offerCouponsUrl, params);
-    }
+    }*/
 
-    @Override
-    public void onCouponCreated(ExclusiveOffer exclusiveOffer) {
-        NotificationCreation.notifyOffer(this,exclusiveOffer);
-    }
 
-    public interface CouponCallback{
-        void onCouponCreated(ExclusiveOffer exclusiveOffer);
-    }
+
 }
