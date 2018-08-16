@@ -41,6 +41,7 @@ public class SyncServerData implements JsonListener {
 
     private final Context context;
     private SyncCallbacks syncCallbacks;
+    private CouponCallbacks couponCallbacks;
     private RoomDB roomDB;
     private VolleyQueue volleyQueue;
 
@@ -48,8 +49,11 @@ public class SyncServerData implements JsonListener {
         if (context instanceof SyncCallbacks) {
             syncCallbacks = (SyncCallbacks) context;
         }
+        else if (context instanceof  CouponCallbacks){
+            couponCallbacks = (CouponCallbacks) context;
+        }
         else {
-            throw new ClassCastException("interface SyncCallbacks or CouponCallbacks must be implemented");
+            throw new ClassCastException("interface SyncCallbacks must be implemented");
         }
         this.context = context.getApplicationContext();
         this.roomDB = RoomDB.getInstance(context);
@@ -271,12 +275,37 @@ public class SyncServerData implements JsonListener {
         }
     }
 
+    public void getCoupon(int offerID) {
+        Map<String, String> params = new HashMap<>();
+        int customerID = roomDB.customerDao().getCustomer().getCustomerId();
+        params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));
+        params.put(POST.offerCouponsOfferID, String.valueOf(offerID));
+
+        volleyQueue.jsonRequest(this, URL.offerCouponsUrl, params);
+    }
+
 
     @Override
     public void getSuccessResult(String url, JSONObject json) {
 
         //TODO Overhaul ALL Syncing
         switch (url) {
+            case URL.offerCouponsUrl:
+                try {
+                    String couponCode = JSONHelper.getString(json, POST.offerCouponsCode);
+                    String codeCreated = JSONHelper.getString(json, POST.offerCouponsCodeCreated);
+                    boolean codeUsed = json.getBoolean (POST.offerCouponsCodeUsed);
+                    int offerID = json.getInt(POST.offerCouponsCodeUsed);
+
+                    ExclusiveOffer offer = roomDB.exclusiveOfferDao().getOfferByID(offerID);
+                    offer.updateCoupon(couponCode, codeUsed, codeCreated);
+                    roomDB.exclusiveOfferDao().insert(offer);
+                    Log.i(TAG, "offer obj. updated!");
+                    couponCallbacks.couponCreated(offer);
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
+                break;
             case URL.titlesUrl:
                 List<Title> titleList = new ArrayList<>();
                 try {
@@ -591,6 +620,10 @@ public class SyncServerData implements JsonListener {
 
         void customerDataSynced();
 
+    }
+
+    public interface CouponCallbacks{
+        void couponCreated(ExclusiveOffer exclusiveOffer);
     }
 
     private static <T extends SyncModel> String sync(List<T> tList) {

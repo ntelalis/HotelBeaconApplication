@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener{
+public class BeaconApplication extends Application implements BootstrapNotifier, JsonListener, SyncServerData.CouponCallbacks{
 
     private static final String TAG = BeaconApplication.class.getSimpleName();
 
@@ -151,9 +151,8 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                     NotificationCreation.notifyFarewell(this);
                     break;
                 case "offer":
-                    //Log.d("WTF", "DidEnterRegion");
-                    //selectOffer(region.getUniqueId());
-                    //NotificationCreation.notifyOffer(this,exclusiveOffer);
+                    Log.d("WTF", "DidEnterRegion");
+                    selectOffer(region.getUniqueId());
                     break;
             }
         }
@@ -184,7 +183,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
         if (selectedExclusiveOffer != null) {
             Log.d("WTF", "offer is ready to receive coupon");
-            //getCoupon(this,selectedExclusiveOffer.getId());
+            SyncServerData.getInstance(this).getCoupon(selectedExclusiveOffer.getId());
         }
     }
 
@@ -246,15 +245,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
     }
 
-    /*public void getCoupon(int offerID) {
-        Map<String, String> params = new HashMap<>();
-        int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
-        params.put(POST.offerCouponsCustomerID, String.valueOf(customerID));
-        params.put(POST.offerCouponsOfferID, String.valueOf(offerID));
 
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.offerCouponsUrl, params);
-    }*/
-
-
-
+    @Override
+    public void couponCreated(ExclusiveOffer exclusiveOffer) {
+        NotificationCreation.notifyOffer(this,exclusiveOffer);
+    }
 }
