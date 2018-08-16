@@ -268,19 +268,12 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             int roomNumber = json.getInt(POST.checkInRoomNumber);
             String checkInDate = json.getString(POST.checkInDate);
             int roomFloor = json.getInt(POST.checkInRoomFloor);
-            //int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
             String roomPassword = json.getString(POST.checkInRoomPassword);
             String modified = json.getString(POST.checkInModified);
             //update Room with the checked-in information
             Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
-          // r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
             RoomDB.getInstance(this).reservationDao().update(r);
 
-            /*Intent intent = new Intent(this, CheckedInActivity.class);
-            intent.putExtra(CheckedInActivity.ROOM, roomNumber);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            */
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             CheckedInFragment checkedInFragment = CheckedInFragment.newInstance(reservationID);
@@ -301,7 +294,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void couponCreated(ExclusiveOffer exclusiveOffer) {
-        //getSupportFragmentManager().findFragmentById(R.id.homeScreenContainer).getChildFragmentManager().findFragmentById(R.id.)
+
         OfferFragment offerFragment = (OfferFragment)getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
         if(offerFragment!=null){
             ViewPager viewPager = offerFragment.getViewpager();
@@ -311,7 +304,5 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 offerExclusiveFragment.refreshData();
             }
         }
-
-
     }
 }
