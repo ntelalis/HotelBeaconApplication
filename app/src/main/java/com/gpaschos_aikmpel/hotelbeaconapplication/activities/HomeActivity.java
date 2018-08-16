@@ -19,6 +19,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomActiveFragment;
@@ -33,6 +34,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.Checked
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
@@ -51,7 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener, OfferExclusiveFragment.FragmentCallbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks {
 
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
@@ -291,7 +293,13 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     }
 
     @Override
-    public void couponObtained() {
+    public void getCoupon(int offerID) {
+        SyncServerData.getInstance(this).getCoupon(offerID);
+    }
+
+    @Override
+    public void couponCreated(ExclusiveOffer exclusiveOffer) {
+        //getSupportFragmentManager().findFragmentById(R.id.homeScreenContainer).getChildFragmentManager().findFragmentById(R.id.)
 
     }
 }

@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +38,17 @@ public class OfferExclusiveFragment extends Fragment  {
         OfferExclusiveFragment fragment = new OfferExclusiveFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentCallbacks) {
+            fragmentCallbacks = (FragmentCallbacks) context;
+        }
+        else {
+            throw new ClassCastException("interface FragmentCallbacks must be implemented");
+        }
     }
 
     @Override
@@ -130,7 +142,8 @@ public class OfferExclusiveFragment extends Fragment  {
                         btnCode.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                // TODO SHIT
+                                // TODO
+                                fragmentCallbacks.getCoupon(offerID);
                             }
                         });
                         break;
@@ -213,6 +226,6 @@ public class OfferExclusiveFragment extends Fragment  {
 
     }
     public interface FragmentCallbacks{
-        void couponObtained();
+        void getCoupon(int offerID);
     }
 }
