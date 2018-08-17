@@ -56,7 +56,7 @@ public abstract class RoomDB extends RoomDatabase {
     public abstract ReservationDao reservationDao();
 
     public abstract LoyaltyDao loyaltyDao();
-    
+
     public abstract RoomTypeDao roomTypeDao();
 
     public abstract CountryDao countryDao();
