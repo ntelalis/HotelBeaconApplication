@@ -201,7 +201,7 @@ public class BookFragment extends Fragment implements JsonListener {
 
                 RoomDB.getInstance(getContext()).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrival, departure, modified));
 
-                ScheduleNotifications.checkinNotification(getContext(), arrival);
+                ScheduleNotifications.checkinNotification(getContext(), resID);
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
 
                 listener.showBooked(resID);

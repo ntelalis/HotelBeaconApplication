@@ -17,8 +17,7 @@
         app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
-        app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesFloor"
-        app:layout_constraintVertical_bias="0.3"
+        app:layout_constraintTop_toBottomOf="@+id/tvCustomerServicesFloorLabel"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
@@ -43,7 +42,7 @@
         android:text="@string/roomServiceBtn"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:theme="@style/PrimaryButton"
-        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesReview"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesRoomControl"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,6 +135,19 @@
         app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomControl" />
+
+    <Button
+        android:id="@+id/btnCustomerServicesRoomControl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Room Control"
+        android:textAllCaps="false"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesReview"
+        app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesUnlockDoor"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesUnlockDoor"
         app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomService" />
 
 </android.support.constraint.ConstraintLayout>

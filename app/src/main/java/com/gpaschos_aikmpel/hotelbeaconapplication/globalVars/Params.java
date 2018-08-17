@@ -12,7 +12,7 @@ public class Params {
     public static final String beaconUUID = "3d8f1dc0-1b23-42f5-9fc1-849f161b2c0e";
 
     //hotel name
-    public static final String HotelName = "HotelName";
+    public static final String HotelName = "My Hotel";
     public static final String HotelCheckoutTime = "12:00";
 
     //beacon region Types
@@ -61,5 +61,12 @@ public class Params {
 
     //OFFERS messages
     public static final int notificationOfferID = 6;
+
+    //Features
+    public static final String DOOR_UNLOCK = "doorUnlock";
+    public static final String WELCOME = "welcome";
+    public static final String FAREWELL = "farewell";
+    public static final String OFFER = "offer";
+    public static final String ROOM = "room";
 
 }

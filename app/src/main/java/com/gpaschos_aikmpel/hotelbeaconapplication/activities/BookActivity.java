@@ -220,7 +220,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener/*, U
 
                 RoomDB.getInstance(this).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrivalSQLString, departureSQLString,modified));
 
-                ScheduleNotifications.checkinNotification(this, arrivalSQLString);
+                ScheduleNotifications.checkinNotification(this, resID);
                 ScheduleNotifications.checkoutNotification(this, departureSQLString);
 
                 Intent intent = new Intent(this, BookConfirmationActivity.class);

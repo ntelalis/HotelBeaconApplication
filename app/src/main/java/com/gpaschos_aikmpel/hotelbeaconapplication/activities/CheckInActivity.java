@@ -38,7 +38,6 @@ public class CheckInActivity extends AppCompatActivity {
         tvReservationNo.setText(String.valueOf(reservationID));
         tvArrivalDate.setText(reservationStartDate);
         tvDepartureDate.setText(reservationEndDate);
-        //Toast.makeText(this, "meow "+reservationID, Toast.LENGTH_LONG).show();
 
         if(RoomDB.getInstance(this).reservationDao().getCurrentReservation().getCheckIn()!=null){
             btnCheckIn.setEnabled(false);
@@ -49,6 +48,6 @@ public class CheckInActivity extends AppCompatActivity {
 
     public void checkIn(View view){
         Toast.makeText(this, ""+reservationID, Toast.LENGTH_SHORT).show();
-        ((BeaconApplication)getApplication()).checkin(reservationID);
+        //((BeaconApplication)getApplication()).checkin(reservationID);
     }
 }

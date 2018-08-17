@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.notifications;
 
 import android.content.Context;
+import android.os.Bundle;
 
 import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
@@ -9,6 +10,8 @@ import com.firebase.jobdispatcher.Job;
 import com.firebase.jobdispatcher.Lifetime;
 import com.firebase.jobdispatcher.RetryStrategy;
 import com.firebase.jobdispatcher.Trigger;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,18 +19,22 @@ import java.util.Locale;
 
 public class ScheduleNotifications {
 
+    public static final String RESERVATION_ID = "reservationID";
+
     private static final String TAG = ScheduleNotifications.class.getSimpleName();
 
     public static final String CHECKIN_TAG= "CheckInNotification";
     public static final String CHECKOUT_TAG= "CheckOutNotification";
 
-    public static void checkinNotification(Context context, String triggerDate){
+    public static void checkinNotification(Context context, int resID){
+
+        Reservation r = RoomDB.getInstance(context).reservationDao().getReservationByID(resID);
 
         int windowStart=0;
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
-            long formattedTriggerDate = simpleDateFormat.parse(triggerDate).getTime();
+            long formattedTriggerDate = simpleDateFormat.parse(r.getStartDate()).getTime();
             windowStart = (int)(formattedTriggerDate-currentTime);
             if(windowStart<0)
                 windowStart=0;
@@ -35,13 +42,15 @@ public class ScheduleNotifications {
             e.printStackTrace();
         }
 
+        Bundle bundle = new Bundle();
+        bundle.putInt(RESERVATION_ID,resID);
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
         Job checkInJob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(NotificationJobService.class)
                 //A unique tag
-                .setTag(CHECKIN_TAG+triggerDate)
+                .setTag(CHECKIN_TAG+r.getStartDate())
                 //One time job
                 .setRecurring(false)
                 //Persist reboot
@@ -55,7 +64,7 @@ public class ScheduleNotifications {
                 //Some constraints
                 .setConstraints(Constraint.ON_ANY_NETWORK)
                 //Bundle
-                //.setExtras()
+                .setExtras(bundle)
                 .build();
         dispatcher.mustSchedule(checkInJob);
     }

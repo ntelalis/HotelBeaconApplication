@@ -11,7 +11,8 @@ public class NotificationJobService extends JobService {
     public boolean onStartJob(JobParameters params) {
 
         if(params.getTag().contains(ScheduleNotifications.CHECKIN_TAG)){
-            NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECK_IN_REMINDER);
+            int reservationID = params.getExtras().getInt(ScheduleNotifications.RESERVATION_ID);
+            NotificationCreation.notifyCheckin(getApplicationContext(),NotificationCreation.CHECK_IN_REMINDER,reservationID);
         }
         else if(params.getTag().contains(ScheduleNotifications.CHECKOUT_TAG)){
             NotificationCreation.notifyCheckout(getApplicationContext());

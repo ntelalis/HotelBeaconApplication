@@ -27,6 +27,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
@@ -36,6 +37,7 @@ import org.json.JSONObject;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -80,6 +82,9 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         //fabDoorUnlock = findViewById(R.id.fabDoorUnlock);
 
         beaconManager = BeaconManager.getInstanceForApplication(this);
+        //Also detect iBeacons
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         fabDoorUnlock = findViewById(R.id.fabDoorUnlock);
@@ -134,7 +139,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             } else {
                 Toast.makeText(this, "Please get in 1 meter range from your door", Toast.LENGTH_SHORT).show();
             }
-
         } else {
             Toast.makeText(this, "No active reservation found!", Toast.LENGTH_SHORT).show();
         }
@@ -143,8 +147,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     @Override
     public void getSuccessResult(String url, JSONObject json) {
         Toast.makeText(this, "Unlocked!", Toast.LENGTH_SHORT).show();
-        //beaconManager.removeAllMonitorNotifiers();
-        //beaconManager.removeAllRangeNotifiers();
     }
 
     @Override
@@ -160,8 +162,8 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         Log.d(TAG, "check if reservation");
         if (r != null && r.isCheckedInNotCheckedOut()) {
             Log.d(TAG, "reservation found");
-            String id ="1"; //= String.valueOf(r.getRoomBeaconId());
-            final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionDao().getRegionsByType("RoomDoor").get(0);
+            final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionFeatureDao().getRegionByFeature(Params.DOOR_UNLOCK);
+            Toast.makeText(this, beaconRegion.getUniqueID()+" "+beaconRegion.getMajor()+" "+beaconRegion.getMinor(), Toast.LENGTH_SHORT).show();
             Region region = new Region(beaconRegion.getUniqueID(), Identifier.parse(beaconRegion.getUUID()), Identifier.parse(beaconRegion.getMajor()), Identifier.parse(beaconRegion.getMinor()));
             beaconManager.addMonitorNotifier(new MonitorNotifier() {
 
@@ -196,8 +198,9 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             beaconManager.addRangeNotifier(new RangeNotifier() {
                 @Override
                 public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
-                    Log.d(TAG, "range before region notifier");
+                    //Log.d(TAG, "range before region notifier");
                     if (region.getUniqueId().equals(beaconRegion.getUniqueID())) {
+                        Log.d(TAG, "What? "+collection.size());
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
@@ -210,7 +213,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                     }
                 }
             });
-            RangedBeacon.setSampleExpirationMilliseconds(2000);
+            RangedBeacon.setSampleExpirationMilliseconds(5000);
             try {
                 beaconManager.startRangingBeaconsInRegion(region);
                 Log.d(TAG, "ranging started");

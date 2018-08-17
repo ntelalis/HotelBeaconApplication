@@ -198,7 +198,10 @@ public class SyncServerData implements JsonListener {
             }
             volleyQueue.jsonRequest(this, URL.roomBeaconRegionsUrl, params);
         }
-        getBeaconRegionFeature();
+        else{
+            getBeaconRegionFeature();
+        }
+
     }
 
     private void getBeaconRegionFeature() {
@@ -519,8 +522,8 @@ public class SyncServerData implements JsonListener {
             case URL.roomBeaconRegionsUrl:
                 resolveBeaconRegionReply(json, URL.roomBeaconRegionsUrl);
                 Log.i(TAG, "RoomBeaconRegions OK!");
-                ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
-                syncCallbacks.customerDataSynced();
+                getBeaconRegionFeature();
+
                 break;
             case URL.generalOffersUrl:
                 try {

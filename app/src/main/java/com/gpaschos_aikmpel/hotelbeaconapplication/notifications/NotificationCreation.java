@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
@@ -37,7 +38,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class NotificationCreation{
+public class NotificationCreation {
 
 
     private static final String TAG = NotificationCreation.class.getSimpleName();
@@ -83,7 +84,6 @@ public class NotificationCreation{
         } else {
             icon = R.drawable.ic_welcome_png;
         }
-        Log.d("WTF","Notification PreCreation");
         notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationFarewellID,
                 notificationTitle, notificationContent, icon,
                 notificationContent, HomeActivity.class);
@@ -125,7 +125,10 @@ public class NotificationCreation{
             UpdateStoredVariables.welcomeNotified(context);
 
             //notify the customer that they can check-in if they are eligible
-            notifyCheckin(context, CHECK_IN_BEACON_NOTIFICATION);
+            Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+            if(r!=null){
+                notifyCheckin(context, CHECK_IN_BEACON_NOTIFICATION,r.getId());
+            }
         }
     }
 
@@ -161,7 +164,7 @@ public class NotificationCreation{
 
     //notify the customer that he can check-in(the same day of the reservation's startDate and
     // when passing by the front door beacon-after the welcomingNotification)
-    public static void notifyCheckin(Context context, String tag) {
+    public static void notifyCheckin(Context context, String tag, int resID) {
 
 
         String notificationTitle = null;
@@ -193,10 +196,18 @@ public class NotificationCreation{
             } else {
                 icon = R.drawable.ic_welcome_png;
             }
+            /*notification(context, Params.NOTIFICATION_CHANNEL_ID
+                    , notificationID, notificationTitle
+                    , notificationContent, icon
+                    , notificationContent, CheckInActivity.class);*/
+
+            Bundle bundle = new Bundle();
+            bundle.putString(NotificationCreation.CHECK_IN_NOTIFICATION, NotificationCreation.CHECK_IN_NOTIFICATION );
+            bundle.putInt(ScheduleNotifications.RESERVATION_ID, resID);
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
                     , notificationContent, icon
-                    , notificationContent, CheckInActivity.class);
+                    , notificationContent, HomeActivity.class, bundle);
         }
     }
 
@@ -337,6 +348,72 @@ public class NotificationCreation{
                 throw new RuntimeException("problem getting notificationManager");
             }
         }
+    }
+
+    //create notification that open activity and insert some data with it
+    private static void notification(Context context, String channelID, int notificationID,
+                                     String notificationTitle, String notificationContent,
+                                     int smallIcon, String bigText,
+                                     Class activity, Bundle bundle) {
+
+        //NotificationBuilder
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
+
+        //Set a small Icon
+        builder.setSmallIcon(smallIcon);
+        //Set the title
+        builder.setContentTitle(notificationTitle);
+        //Set the content
+        builder.setContentText(notificationContent);
+        //Set the expandable content
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
+        //Set the sound
+        builder.setDefaults(Notification.DEFAULT_SOUND);
+
+
+        //Make the intent to pass on the notification for opening an activity
+        Intent intent = new Intent(context, activity);
+
+        if(bundle!=null){
+            intent.putExtras(bundle);
+        }
+
+        //~~~Create the TaskStackBuilder and add the intent, which inflates the back stack
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(intent);
+
+        // Get the PendingIntent containing the entire back stack
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(new Random().nextInt(20) + 100, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        //If necessary, you can add arguments to Intent objects in the stack by calling
+        // TaskStackBuilder.editIntentAt().
+        //stackBuilder.editIntentAt()
+
+        //Because a "special activity" started from a notification doesn't need a back stack, you can create the PendingIntent
+        // by calling getActivity(), but you should also be sure you've defined the appropriate task options in the manifest
+        //PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        //Add the pending intent to notification builder
+        builder.setContentIntent(resultPendingIntent);
+
+        //automatically removes the notification when the user taps it
+        builder.setAutoCancel(true);
+
+        //Build Notification
+        Notification notification = builder.build();
+
+        //Oreo Notification Code
+        /*NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,NOTIFICATION_CHANNEL_NAME,NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }*/
+
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+
+        //notification id is a unique int for each notification
+        notificationManagerCompat.notify(notificationID, notification);
+
     }
 
     //creates a notification that opens an Activity

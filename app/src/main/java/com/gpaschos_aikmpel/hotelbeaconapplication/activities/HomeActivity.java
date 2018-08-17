@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -36,14 +38,18 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.Checked
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,17 +57,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks,  SyncServerData.CouponCallbacks {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
+    private boolean needsRefresh = false;
 
     private NavigationView.OnNavigationItemSelectedListener navigationDrawerListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -177,10 +188,14 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-            if(bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION)){
+            Log.d("WTF","WT22F");
+            if(bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION) && bundle.containsKey(ScheduleNotifications.RESERVATION_ID)){
+                Log.d("WTF","WaaTF");
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                CheckInFragment checkInFragment = CheckInFragment.newInstance();
+                int reservationID = bundle.getInt(ScheduleNotifications.RESERVATION_ID);
+                CheckInFragment checkInFragment = CheckInFragment.newInstance(reservationID);
+                Log.d("WTF",""+reservationID);
                 transaction.replace(R.id.homeScreenContainer, checkInFragment);
                 transaction.commit();
             }
@@ -188,9 +203,20 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        needsRefresh = true;
+
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
-        bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+        if(needsRefresh){
+            bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+            needsRefresh=false;
+        }
     }
 
     @Override
@@ -253,38 +279,30 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         }
     }
 
+    //TODO ROLLBACK FOR CHECKIN
+    /*@Override
+    public void checkIn(int reservationID) {
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.checkInReservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
+        ((BeaconApplication) Objects.requireNonNull(getApplication())).checkin(reservationID);
+    }*/
+
     @Override
     public void checkIn(int reservationID) {
-        /*Map<String, String> params = new HashMap<>();
-        params.put(POST.checkInReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);*/
-        ((BeaconApplication) Objects.requireNonNull(getApplication())).checkin(reservationID);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CheckInFragment fragment = CheckInFragment.newInstance(reservationID);
+        transaction.replace(R.id.homeScreenContainer, fragment);
+        transaction.commit();
+
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if (url.equals(URL.checkInUrl)) {
-            int reservationID = json.getInt(POST.checkInReservationID);
-            int roomNumber = json.getInt(POST.checkInRoomNumber);
-            String checkInDate = json.getString(POST.checkInDate);
-            int roomFloor = json.getInt(POST.checkInRoomFloor);
-            String roomPassword = json.getString(POST.checkInRoomPassword);
-            String modified = json.getString(POST.checkInModified);
-            //update Room with the checked-in information
-            Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
-            RoomDB.getInstance(this).reservationDao().update(r);
-
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CheckedInFragment checkedInFragment = CheckedInFragment.newInstance(reservationID);
-            transaction.replace(R.id.homeScreenContainer, checkedInFragment);
-            transaction.commit();
-        }
-    }
-
-    @Override
-    public void getErrorResult(String url, String error) {
-
+    public void checkedIn(int reservationID) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CheckedInFragment fragment = CheckedInFragment.newInstance(reservationID);
+        transaction.replace(R.id.homeScreenContainer, fragment);
+        transaction.commit();
     }
 
     @Override

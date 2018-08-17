@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface BeaconRegionFeatureDao {
 
     @Query("SELECT BeaconRegionFeature.* FROM BeaconRegionFeature, BeaconRegion WHERE BeaconRegionFeature.regionID=BeaconRegion.id AND BeaconRegion.uniqueID=:uniqueID")
     List<BeaconRegionFeature> getFeatureByUniqueID(String uniqueID);
+
+    @Query("SELECT BeaconRegion.* FROM BeaconRegion, BeaconRegionFeature WHERE BeaconRegionFeature.regionID=BeaconRegion.id AND BeaconRegionFeature.feature=:feature LIMIT 1")
+    BeaconRegion getRegionByFeature(String feature);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(BeaconRegionFeature region);

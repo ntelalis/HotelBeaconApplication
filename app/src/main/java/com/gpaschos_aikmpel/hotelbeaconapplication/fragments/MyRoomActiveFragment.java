@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
@@ -32,6 +33,7 @@ public class MyRoomActiveFragment extends Fragment {
     private Button btnRoomService;
     private Button btnCheckOut;
     private Button btnReview;
+    private Button btnRoomControl;
     private TextView tvReservationID;
     private TextView tvRoomNo;
     private TextView tvRoomFloor;
@@ -111,6 +113,14 @@ public class MyRoomActiveFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ReviewActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnDoorUnlock = view.findViewById(R.id.btnCustomerServicesRoomControl);
+        btnDoorUnlock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "This feature is not supported yet", Toast.LENGTH_SHORT).show();
             }
         });
 

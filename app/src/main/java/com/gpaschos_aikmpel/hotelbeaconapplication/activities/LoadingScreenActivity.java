@@ -76,7 +76,6 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                //TODO DataSyncing on Login. Is this a good choice?
                 ConnectivityManager cm =
                         (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 

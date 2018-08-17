@@ -102,7 +102,9 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                 int resID = Integer.parseInt(tvReservationID.getText().toString());
                 Reservation r = RoomDB.getInstance(view.getContext()).reservationDao().getReservationByID(resID);
                 if (!r.isCheckedIn()) {
-                    clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
+                    //clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
+                    int reservationID = reservationsList.get(getAdapterPosition()).reservationID;
+                    clickCallbacks.checkIn(reservationID);
                 } else if(r.isCheckedInNotCheckedOut()) {
                     clickCallbacks.checkOut(reservationsList.get(getAdapterPosition()));
                 }
@@ -160,7 +162,8 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
     public interface ClickCallbacks {
         void checkOut(ReservationModel obj);
 
-        void checkIn(ReservationModel obj);
+        //void checkIn(ReservationModel obj);
+        void checkIn(int reservationID);
     }
 
     public static class ReservationModel implements Parcelable{
