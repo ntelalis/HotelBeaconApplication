@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/ivNavigationDrawerHeader"
         android:layout_width="0dp"
         android:layout_height="157dp"
         android:cropToPadding="false"
@@ -15,4 +16,66 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hotel_navigation_drawer_image" />
 
+    <TextView
+        android:id="@+id/tvNavigationDrawerFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivNavigationDrawerHeader"
+        app:layout_constraintStart_toStartOf="@+id/ivNavigationDrawerHeader"
+        app:layout_constraintTop_toTopOf="@+id/ivNavigationDrawerHeader"
+        app:layout_constraintVertical_bias="0.13999999"
+        tools:text="Kate" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="@+id/tvNavigationDrawerFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/tvNavigationDrawerFirstName"
+        tools:text="Mpelmezou" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerAccountNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivNavigationDrawerHeader"
+        tools:text="12515" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerAccountNumberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:text="Account Number:"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvNavigationDrawerAccountNumber"
+        app:layout_constraintEnd_toStartOf="@+id/tvNavigationDrawerAccountNumber" />
 </android.support.constraint.ConstraintLayout>

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
@@ -23,6 +24,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -168,9 +170,18 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         drawerLayout = findViewById(R.id.homeDrawerLayout);
         bottomNavigationView = findViewById(R.id.bnvHomeScreen);
         navigationView = findViewById(R.id.appNavigationDrawer);
+        Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+        View hView =  navigationView.getHeaderView(0);
+        TextView tvFName = hView.findViewById(R.id.tvNavigationDrawerFirstName);
+        TextView tvLName = hView.findViewById(R.id.tvNavigationDrawerLastName);
+        TextView tvAccNumber = hView.findViewById(R.id.tvNavigationDrawerAccountNumber);
+        tvFName.setText(customer.getFirstName());
+        tvLName.setText(customer.getLastName());
+        tvAccNumber.setText(String.valueOf(customer.getCustomerId()));
         toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
