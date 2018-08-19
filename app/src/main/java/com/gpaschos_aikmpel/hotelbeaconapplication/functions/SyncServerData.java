@@ -12,6 +12,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.GeneralOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -48,11 +49,9 @@ public class SyncServerData implements JsonListener {
     private SyncServerData(Context context) {
         if (context instanceof SyncCallbacks) {
             syncCallbacks = (SyncCallbacks) context;
-        }
-        else if (context instanceof  CouponCallbacks){
+        } else if (context instanceof CouponCallbacks) {
             couponCallbacks = (CouponCallbacks) context;
-        }
-        else {
+        } else {
             throw new ClassCastException("interface SyncCallbacks must be implemented");
         }
         this.context = context.getApplicationContext();
@@ -78,6 +77,7 @@ public class SyncServerData implements JsonListener {
         Log.d(TAG, "GetCustomerDataFromServer");
         getExclusiveOffers(customer);
         getReservations(customer);
+        getLoyalty(customer);
         //getRoomBeaconRegion();
     }
 
@@ -182,6 +182,17 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.exclusiveOffersUrl, params);
     }
 
+    private void getLoyalty(Customer customer) {
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.loyaltyProgramCustomerID, String.valueOf(customer.getCustomerId()));
+        Loyalty loyalty = roomDB.loyaltyDao().getLoyalty();
+        if(loyalty!=null){
+            params.put(POST.loyaltyProgramModified,loyalty.getModified());
+        }
+        volleyQueue.jsonRequest(this, URL.loyaltyPointsURL, params);
+
+    }
+
     private void getRoomBeaconRegion() {
         Log.i(TAG, "Check RoomBeaconRegions");
         Reservation current = roomDB.reservationDao().getCurrentReservation();
@@ -197,8 +208,10 @@ public class SyncServerData implements JsonListener {
                 params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
             }
             volleyQueue.jsonRequest(this, URL.roomBeaconRegionsUrl, params);
+        } else {
+            getBeaconRegionFeature();
         }
-        getBeaconRegionFeature();
+
     }
 
     private void getBeaconRegionFeature() {
@@ -294,7 +307,7 @@ public class SyncServerData implements JsonListener {
                 try {
                     String couponCode = JSONHelper.getString(json, POST.offerCouponsCode);
                     String codeCreated = JSONHelper.getString(json, POST.offerCouponsCodeCreated);
-                    boolean codeUsed = json.getBoolean (POST.offerCouponsCodeUsed);
+                    boolean codeUsed = json.getBoolean(POST.offerCouponsCodeUsed);
                     int offerID = json.getInt(POST.offerCouponsOfferID);
 
                     ExclusiveOffer offer = roomDB.exclusiveOfferDao().getOfferByID(offerID);
@@ -339,6 +352,22 @@ public class SyncServerData implements JsonListener {
                     Log.e(TAG, e.toString());
                 }
                 break;
+            case URL.loyaltyPointsURL:
+                try {
+                    if (json.has(POST.loyaltyProgramCustomerID)) {
+                        int customerID = json.getInt(POST.loyaltyProgramCustomerID);
+                        int points = json.getInt(POST.loyaltyProgramPoints);
+                        String tierName = JSONHelper.getString(json, POST.loyaltyProgramTierName);
+                        int tierPoints = json.getInt(POST.loyaltyProgramTierPoints);
+                        String nextTierName = JSONHelper.getString(json, POST.loyaltyProgramNextTierName);
+                        int nextTierPoints = json.getInt(POST.loyaltyProgramNextTierPoints);
+                        String modified = JSONHelper.getString(json, POST.loyaltyProgramModified);
+                        roomDB.loyaltyDao().insert(new Loyalty(customerID, points, tierName, tierPoints, nextTierName, nextTierPoints, modified));
+                    }
+                    break;
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
             case URL.currenciesUrl:
                 try {
                     JSONArray jsonArrayCurrency = json.getJSONArray(POST.currencyArray);
@@ -519,8 +548,8 @@ public class SyncServerData implements JsonListener {
             case URL.roomBeaconRegionsUrl:
                 resolveBeaconRegionReply(json, URL.roomBeaconRegionsUrl);
                 Log.i(TAG, "RoomBeaconRegions OK!");
-                ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
-                syncCallbacks.customerDataSynced();
+                getBeaconRegionFeature();
+
                 break;
             case URL.generalOffersUrl:
                 try {
@@ -623,7 +652,7 @@ public class SyncServerData implements JsonListener {
 
     }
 
-    public interface CouponCallbacks{
+    public interface CouponCallbacks {
         void couponCreated(ExclusiveOffer exclusiveOffer);
     }
 

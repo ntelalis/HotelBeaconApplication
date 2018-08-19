@@ -90,14 +90,13 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
 
     //sends the reservationID to the server in order to check in
     @Override
-    public void checkIn(MyReservationsAdapter.ReservationModel obj) {
-        listener.checkIn(obj.reservationID);
+    public void checkIn(int reservationID) {
+        listener.checkIn(reservationID);
     }
 
     @Override
     public void checkOut(MyReservationsAdapter.ReservationModel obj) {
         Intent intent = new Intent(getContext(), CheckInActivity.class);
         startActivity(intent);
-
     }
 }

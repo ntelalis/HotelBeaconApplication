@@ -15,6 +15,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -78,14 +79,13 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     }
 
-    public void checkin(int reservationID) {
-        Toast.makeText(this, "" + reservationID, Toast.LENGTH_SHORT).show();
+    /*public void checkin(int reservationID) {
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
         //FIXME On deleting occupancy syncing has wrong info for checkin. later modified date than server
 
-    }
+    }*/
 
     public void registerBeaconRegion() {
         //regionList is synced, proceeding with regions creation
@@ -127,31 +127,24 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         featureListMap = new HashMap<>();
         for (BeaconRegion beaconRegion : beaconRegionList) {
             List<BeaconRegionFeature> regionFeatureList = RoomDB.getInstance(this).beaconRegionFeatureDao().getFeatureByUniqueID(beaconRegion.getUniqueID());
-            if (!regionFeatureList.isEmpty()) {
-                Log.d(TAG, "UniqueID: " + beaconRegion.getUniqueID() + " Features size: " + regionFeatureList.size() + " Feature[0]: " + regionFeatureList.get(0).getRegionType());
-            } else {
-                Log.d(TAG, "UniqueID: " + beaconRegion.getUniqueID() + " Features size: NULL");
-            }
             featureListMap.put(beaconRegion.getUniqueID(), regionFeatureList);
         }
     }
 
     @Override
     public void didEnterRegion(Region region) {
-        Log.d("WTF", "Entered Region: " + region.getUniqueId());
         List<BeaconRegionFeature> featureList = featureListMap.get(region.getUniqueId());
-        Log.d("WTF", "FeatureList size: " + featureList.size());
+
+        //FIXME WHAT CRASHES THINGS HERE??
         for (BeaconRegionFeature feature : featureList) {
-            Log.d("WTF", "Feature " + feature.getRegionType());
-            switch (feature.getRegionType()) {
-                case "welcome":
+            switch (feature.getFeature()) {
+                case Params.WELCOME:
                     NotificationCreation.notifyWelcome(this);
                     break;
-                case "farewell":
+                case Params.FAREWELL:
                     NotificationCreation.notifyFarewell(this);
                     break;
-                case "offer":
-                    Log.d("WTF", "DidEnterRegion");
+                case Params.OFFER:
                     selectOffer(region.getUniqueId());
                     break;
             }
@@ -182,15 +175,12 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         }
 
         if (selectedExclusiveOffer != null) {
-            Log.d("WTF", "offer is ready to receive coupon");
             SyncServerData.getInstance(this).getCoupon(selectedExclusiveOffer.getId());
         }
     }
 
     @Override
     public void didExitRegion(Region region) {
-
-        Log.d("WTF", "Exited from Region " + region.getUniqueId());
     }
 
     @Override
@@ -242,7 +232,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + "" + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
     }
 
 

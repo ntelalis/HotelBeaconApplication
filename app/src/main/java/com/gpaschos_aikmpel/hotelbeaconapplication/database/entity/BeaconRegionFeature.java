@@ -11,13 +11,13 @@ public class BeaconRegionFeature implements SyncModel{
     @PrimaryKey
     private int id;
     private int regionID;
-    private String regionType;
+    private String feature;
     private String modified;
 
-    public BeaconRegionFeature(int id, int regionID, String regionType, String modified) {
+    public BeaconRegionFeature(int id, int regionID, String feature, String modified) {
         this.id = id;
         this.regionID = regionID;
-        this.regionType = regionType;
+        this.feature = feature;
         this.modified = modified;
     }
 
@@ -38,12 +38,12 @@ public class BeaconRegionFeature implements SyncModel{
         this.regionID = regionID;
     }
 
-    public String getRegionType() {
-        return regionType;
+    public String getFeature() {
+        return feature;
     }
 
-    public void setRegionType(String regionType) {
-        this.regionType = regionType;
+    public void setFeature(String feature) {
+        this.feature = feature;
     }
 
     @Override

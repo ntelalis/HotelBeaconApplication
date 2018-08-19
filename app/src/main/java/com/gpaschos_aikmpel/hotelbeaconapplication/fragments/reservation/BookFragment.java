@@ -2,7 +2,6 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.BookConfirmationActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -136,7 +134,7 @@ public class BookFragment extends Fragment implements JsonListener {
                 int customerID = RoomDB.getInstance(getContext()).customerDao().getCustomer().getCustomerId();
 
                 Map<String, String> params = new HashMap<>();
-                params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
+                params.put(POST.loyaltyProgramCustomerID, String.valueOf(customerID));
                 VolleyQueue.getInstance(getContext()).jsonRequest(BookFragment.this, URL.totalPointsUrl, params);
             }
         });
@@ -201,7 +199,7 @@ public class BookFragment extends Fragment implements JsonListener {
 
                 RoomDB.getInstance(getContext()).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrival, departure, modified));
 
-                ScheduleNotifications.checkinNotification(getContext(), arrival);
+                ScheduleNotifications.checkinNotification(getContext(), resID);
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
 
                 listener.showBooked(resID);

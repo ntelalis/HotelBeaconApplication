@@ -4,11 +4,11 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -35,7 +36,9 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoyaltyFragment extends Fragment implements JsonListener {
+public class LoyaltyFragment extends Fragment{
+
+    public static final String TAG = LoyaltyFragment.class.getSimpleName();
 
     private int customerID;
     private String firstName, lastName;
@@ -45,7 +48,9 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
     private String nextTierName;
     private int nextTierPoints;
 
-    private TextView tvCustomerID, tvPoints, tvRewardsMember, tvFirstName, tvLastName, tvNextTierPoints, tvNextTier, tvNextTierUnlockLabel, tvNextTierAtLabel, tvNextTierPointsLabel;
+    private TextView tvCustomerID, tvPoints, tvRewardsMember, tvFirstName, tvLastName,
+            tvNextTierPoints, tvNextTier, tvNextTierUnlockLabel, tvNextTierAtLabel,
+            tvNextTierPointsLabel;
     private HoloCircularProgressBar hcpb;
 
 
@@ -63,10 +68,19 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Customer customer = RoomDB.getInstance(getContext()).customerDao().getCustomer();
+        Loyalty loyalty = RoomDB.getInstance(getContext()).loyaltyDao().getLoyalty();
+
         customerID = customer.getCustomerId();
         firstName = customer.getFirstName();
         lastName = customer.getLastName();
+        points = loyalty.getCurrentPoints();
+        tierName = loyalty.getCurrentTierName();
+        tierPoints = loyalty.getCurrentTierPoints();
+        nextTierName = loyalty.getNextTierName();
+        nextTierPoints = loyalty.getNextTierPoints();
+
     }
 
     @Override
@@ -85,34 +99,10 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
         tvNextTierAtLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierAtLabel);
         tvNextTierPointsLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierPointsLabel);
         hcpb = v.findViewById(R.id.cpbLoyalty);
-        getLoyalty();
+
+        updateUI();
 
         return v;
-    }
-
-    @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        switch (url) {
-            case URL.loyaltyPointsURL:
-                points = json.getInt(POST.loyaltyProgramPoints);
-                tierName = json.getString(POST.loyaltyProgramTierName);
-                tierPoints = json.getInt(POST.loyaltyProgramTierPoints);
-                nextTierName = json.getString(POST.loyaltyProgramNextTierName);
-                nextTierPoints = json.getInt(POST.loyaltyProgramNextTierPoints);
-                JSONArray benefitsArray = json.getJSONArray(POST.loyaltyProgramBenefits);
-                ArrayList<String> tierBenefits = new ArrayList<>();
-                for (int i = 0; i < benefitsArray.length(); i++) {
-                    tierBenefits.add(benefitsArray.getString(i));
-                }
-                updateUI();
-
-                break;
-        }
-    }
-
-    @Override
-    public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
     }
 
     private void updateUI() {
@@ -149,15 +139,6 @@ public class LoyaltyFragment extends Fragment implements JsonListener {
         });
         valueAnimator.start();
 
-    }
-
-    public void getLoyalty() {
-        if (getContext() == null)
-            return;
-        Map<String, String> params = new HashMap<>();
-
-        params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
-        VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.loyaltyPointsURL, params);
     }
 
     private void animate(final HoloCircularProgressBar progressBar, final Animator.AnimatorListener listener,

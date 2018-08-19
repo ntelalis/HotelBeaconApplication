@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -12,16 +13,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomActiveFragment;
@@ -36,14 +42,19 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.Checked
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,17 +62,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, JsonListener, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks,  SyncServerData.CouponCallbacks {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
     private NavigationView navigationView;
     private Toolbar toolbar;
+
+    private boolean needsRefresh = false;
 
     private NavigationView.OnNavigationItemSelectedListener navigationDrawerListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -83,6 +99,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     startActivity(intent);
                     finish();
                     break;
+                case R.id.navigationDrawerContact:
+                    intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+ Params.TELEPHONE));
+                    startActivity(intent);
+                    break;
+                case R.id.navigationDrawerHome:
+                    drawerLayout.closeDrawers();
+                    break;
+
             }
             return true;
         }
@@ -98,14 +123,20 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     myReservations();
                     break;
                 case R.id.bottomNavigationRewardsProgram:
-                    LoyaltyFragment loyaltyFragment = new LoyaltyFragment();
-                    transaction.replace(R.id.homeScreenContainer, loyaltyFragment);
-                    transaction.commit();
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag(LoyaltyFragment.TAG);
+                    if(fragment == null){
+                        LoyaltyFragment loyaltyFragment = new LoyaltyFragment();
+                        transaction.replace(R.id.homeScreenContainer, loyaltyFragment, LoyaltyFragment.TAG);
+                        transaction.commit();
+                    }
                     break;
                 case R.id.bottomNavigationOffers:
-                    OfferFragment offerFragment = OfferFragment.newInstance();
-                    transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
-                    transaction.commit();
+                    Fragment fragment1 = getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
+                    if(fragment1 == null){
+                        OfferFragment offerFragment = OfferFragment.newInstance();
+                        transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
+                        transaction.commit();
+                    }
                     break;
                 case R.id.bottomNavigationMyRoom:
                     Reservation r = RoomDB.getInstance(HomeActivity.this).reservationDao().getCurrentReservation();
@@ -157,9 +188,21 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         drawerLayout = findViewById(R.id.homeDrawerLayout);
         bottomNavigationView = findViewById(R.id.bnvHomeScreen);
         navigationView = findViewById(R.id.appNavigationDrawer);
+        Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+        Loyalty loyalty = RoomDB.getInstance(this).loyaltyDao().getLoyalty();
+        View hView =  navigationView.getHeaderView(0);
+        TextView tvFName = hView.findViewById(R.id.tvNavigationDrawerFirstName);
+        TextView tvLName = hView.findViewById(R.id.tvNavigationDrawerLastName);
+        TextView tvAccNumber = hView.findViewById(R.id.tvNavigationDrawerAccountNumber);
+        TextView tvTier = hView.findViewById(R.id.tvNavigationDrawerTier);
+        tvFName.setText(customer.getFirstName());
+        tvLName.setText(customer.getLastName());
+        tvTier.setText(loyalty.getCurrentTierName());
+        tvAccNumber.setText(String.valueOf(customer.getCustomerId()));
         toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -177,10 +220,14 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-            if(bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION)){
+            Log.d("WTF","WT22F");
+            if(bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION) && bundle.containsKey(ScheduleNotifications.RESERVATION_ID)){
+                Log.d("WTF","WaaTF");
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                CheckInFragment checkInFragment = CheckInFragment.newInstance();
+                int reservationID = bundle.getInt(ScheduleNotifications.RESERVATION_ID);
+                CheckInFragment checkInFragment = CheckInFragment.newInstance(reservationID);
+                Log.d("WTF",""+reservationID);
                 transaction.replace(R.id.homeScreenContainer, checkInFragment);
                 transaction.commit();
             }
@@ -188,9 +235,20 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        needsRefresh = true;
+
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
-        bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+        if(needsRefresh){
+            bottomNavigationView.setSelectedItemId(bottomNavigationView.getSelectedItemId());
+            needsRefresh=false;
+        }
     }
 
     @Override
@@ -253,45 +311,30 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         }
     }
 
+    //TODO ROLLBACK FOR CHECKIN
+    /*@Override
+    public void checkIn(int reservationID) {
+        Map<String, String> params = new HashMap<>();
+        params.put(POST.checkInReservationID, String.valueOf(reservationID));
+        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);
+        ((BeaconApplication) Objects.requireNonNull(getApplication())).checkin(reservationID);
+    }*/
+
     @Override
     public void checkIn(int reservationID) {
-        /*Map<String, String> params = new HashMap<>();
-        params.put(POST.checkInReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.checkInUrl, params);*/
-        ((BeaconApplication) Objects.requireNonNull(getApplication())).checkin(reservationID);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CheckInFragment fragment = CheckInFragment.newInstance(reservationID);
+        transaction.replace(R.id.homeScreenContainer, fragment);
+        transaction.commit();
+
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if (url.equals(URL.checkInUrl)) {
-            int reservationID = json.getInt(POST.checkInReservationID);
-            int roomNumber = json.getInt(POST.checkInRoomNumber);
-            String checkInDate = json.getString(POST.checkInDate);
-            int roomFloor = json.getInt(POST.checkInRoomFloor);
-            //int beaconRegionID = json.getInt(POST.checkInBeaconRegionID);
-            String roomPassword = json.getString(POST.checkInRoomPassword);
-            String modified = json.getString(POST.checkInModified);
-            //update Room with the checked-in information
-            Reservation r = RoomDB.getInstance(this).reservationDao().getReservationByID(reservationID);
-          // r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, beaconRegionID, modified);
-            RoomDB.getInstance(this).reservationDao().update(r);
-
-            /*Intent intent = new Intent(this, CheckedInActivity.class);
-            intent.putExtra(CheckedInActivity.ROOM, roomNumber);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            */
-
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            CheckedInFragment checkedInFragment = CheckedInFragment.newInstance(reservationID);
-            transaction.replace(R.id.homeScreenContainer, checkedInFragment);
-            transaction.commit();
-        }
-    }
-
-    @Override
-    public void getErrorResult(String url, String error) {
-
+    public void checkedIn(int reservationID) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        CheckedInFragment fragment = CheckedInFragment.newInstance(reservationID);
+        transaction.replace(R.id.homeScreenContainer, fragment);
+        transaction.commit();
     }
 
     @Override
@@ -301,6 +344,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void couponCreated(ExclusiveOffer exclusiveOffer) {
+
         OfferFragment offerFragment = (OfferFragment)getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
         if(offerFragment!=null){
             ViewPager viewPager = offerFragment.getViewpager();
@@ -310,7 +354,5 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 offerExclusiveFragment.refreshData();
             }
         }
-
-
     }
 }

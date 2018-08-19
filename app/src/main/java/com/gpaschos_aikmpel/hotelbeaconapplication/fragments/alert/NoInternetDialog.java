@@ -45,15 +45,14 @@ public class NoInternetDialog extends DialogFragment {
                 .setMessage("An active connection to the internet is required")
                 .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        listener.onDialogPositiveClick(NoInternetDialog.this);
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        getActivity().finishAffinity();
+                        listener.onDialogNegativeClick(NoInternetDialog.this);
                     }
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 

@@ -2,12 +2,13 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <ImageView
-        android:layout_width="0dp"
-        android:layout_height="157dp"
+        android:id="@+id/ivNavigationDrawerHeader"
+        android:layout_width="304dp"
+        android:layout_height="171dp"
         android:cropToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -15,4 +16,96 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/hotel_navigation_drawer_image" />
 
+    <TextView
+        android:id="@+id/tvNavigationDrawerFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvNavigationDrawerLastName"
+        app:layout_constraintStart_toStartOf="@+id/ivNavigationDrawerHeader"
+        tools:text="Kate" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvNavigationDrawerTier"
+        app:layout_constraintStart_toStartOf="@+id/tvNavigationDrawerFirstName"
+        tools:text="Mpelmezou" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerAccountNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/ivNavigationDrawerHeader"
+        app:layout_constraintTop_toTopOf="@+id/ivNavigationDrawerHeader"
+        tools:text="12515" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerAccountNumberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:text="Account Number:"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvNavigationDrawerAccountNumber"
+        app:layout_constraintEnd_toStartOf="@+id/tvNavigationDrawerAccountNumber" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerTierLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:text="@string/tvNavigationDrawerTier"
+        android:textColor="@android:color/white"
+        android:textStyle="bold|italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvNavigationDrawerTier"
+        app:layout_constraintStart_toEndOf="@+id/tvNavigationDrawerTier" />
+
+    <TextView
+        android:id="@+id/tvNavigationDrawerTier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2.5"
+        android:shadowDy="2.3"
+        android:shadowRadius="3.6"
+        android:textColor="@android:color/white"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/ivNavigationDrawerHeader"
+        app:layout_constraintStart_toStartOf="@+id/tvNavigationDrawerFirstName"
+        tools:text="Gold" />
 </android.support.constraint.ConstraintLayout>
