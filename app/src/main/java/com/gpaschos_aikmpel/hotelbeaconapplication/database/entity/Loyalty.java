@@ -8,19 +8,21 @@ public class Loyalty {
 
     @PrimaryKey
     private int customerID;
-    private String currentTier;
-    private String nextTier;
     private int currentPoints;
+    private String currentTierName;
     private int currentTierPoints;
+    private String nextTierName;
     private int nextTierPoints;
+    private String modified;
 
-    public Loyalty(int customerID, String currentTier, String nextTier, int currentPoints, int currentTierPoints, int nextTierPoints) {
+    public Loyalty(int customerID, int currentPoints, String currentTierName, int currentTierPoints, String nextTierName, int nextTierPoints, String modified) {
         this.customerID = customerID;
-        this.currentTier = currentTier;
-        this.nextTier = nextTier;
         this.currentPoints = currentPoints;
+        this.currentTierName = currentTierName;
         this.currentTierPoints = currentTierPoints;
+        this.nextTierName = nextTierName;
         this.nextTierPoints = nextTierPoints;
+        this.modified = modified;
     }
 
     public int getCustomerID() {
@@ -31,28 +33,20 @@ public class Loyalty {
         this.customerID = customerID;
     }
 
-    public String getCurrentTier() {
-        return currentTier;
-    }
-
-    public void setCurrentTier(String currentTier) {
-        this.currentTier = currentTier;
-    }
-
-    public String getNextTier() {
-        return nextTier;
-    }
-
-    public void setNextTier(String nextTier) {
-        this.nextTier = nextTier;
-    }
-
     public int getCurrentPoints() {
         return currentPoints;
     }
 
     public void setCurrentPoints(int currentPoints) {
         this.currentPoints = currentPoints;
+    }
+
+    public String getCurrentTierName() {
+        return currentTierName;
+    }
+
+    public void setCurrentTierName(String currentTierName) {
+        this.currentTierName = currentTierName;
     }
 
     public int getCurrentTierPoints() {
@@ -63,12 +57,28 @@ public class Loyalty {
         this.currentTierPoints = currentTierPoints;
     }
 
+    public String getNextTierName() {
+        return nextTierName;
+    }
+
+    public void setNextTierName(String nextTierName) {
+        this.nextTierName = nextTierName;
+    }
+
     public int getNextTierPoints() {
         return nextTierPoints;
     }
 
     public void setNextTierPoints(int nextTierPoints) {
         this.nextTierPoints = nextTierPoints;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 }
 

@@ -69,4 +69,5 @@ public class Params {
     public static final String OFFER = "offer";
     public static final String ROOM = "room";
 
+    public static final String TELEPHONE = "0123456789";
 }

@@ -197,15 +197,15 @@ public class POST {
 
 
     //~~~~~~~~~~~~~~~~~~loyaltypoints.php~~~~~~~~~~~~~~~~~~
-    //SND
-    public static final String loyaltyPointsCustomerID = "customerID";
+    //SND&RCV
+    public static final String loyaltyProgramCustomerID = "customerID";
     //RCV
     public static final String loyaltyProgramPoints = "points";
     public static final String loyaltyProgramTierName = "tierName";
     public static final String loyaltyProgramTierPoints = "tierPoints";
     public static final String loyaltyProgramNextTierName = "nextTierName";
     public static final String loyaltyProgramNextTierPoints = "nextTierPoints";
-    public static final String loyaltyProgramBenefits = "tierBenefits";
+    public static final String loyaltyProgramModified = "modified";
 
     //~~~~~~~~~~~~~~~~~~roomtype.php~~~~~~~~~~~~~~~~~~
     //SND
@@ -370,4 +370,5 @@ public class POST {
     public static final String offerBeaconRegionRegionID = "regionID";
     public static final String offerBeaconRegionOfferID = "offerID";
     public static final String offerBeaconRegionModified = "modified";
+
 }

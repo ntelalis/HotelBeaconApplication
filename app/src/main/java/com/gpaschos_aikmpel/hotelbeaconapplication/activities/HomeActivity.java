@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -26,6 +27,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.MyRoomActiveFragment;
@@ -43,6 +45,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.Upcomin
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
@@ -96,6 +99,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     startActivity(intent);
                     finish();
                     break;
+                case R.id.navigationDrawerContact:
+                    intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+ Params.TELEPHONE));
+                    startActivity(intent);
+                    break;
+                case R.id.navigationDrawerHome:
+                    drawerLayout.closeDrawers();
+                    break;
+
             }
             return true;
         }
@@ -111,14 +123,20 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     myReservations();
                     break;
                 case R.id.bottomNavigationRewardsProgram:
-                    LoyaltyFragment loyaltyFragment = new LoyaltyFragment();
-                    transaction.replace(R.id.homeScreenContainer, loyaltyFragment);
-                    transaction.commit();
+                    Fragment fragment = getSupportFragmentManager().findFragmentByTag(LoyaltyFragment.TAG);
+                    if(fragment == null){
+                        LoyaltyFragment loyaltyFragment = new LoyaltyFragment();
+                        transaction.replace(R.id.homeScreenContainer, loyaltyFragment, LoyaltyFragment.TAG);
+                        transaction.commit();
+                    }
                     break;
                 case R.id.bottomNavigationOffers:
-                    OfferFragment offerFragment = OfferFragment.newInstance();
-                    transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
-                    transaction.commit();
+                    Fragment fragment1 = getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
+                    if(fragment1 == null){
+                        OfferFragment offerFragment = OfferFragment.newInstance();
+                        transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
+                        transaction.commit();
+                    }
                     break;
                 case R.id.bottomNavigationMyRoom:
                     Reservation r = RoomDB.getInstance(HomeActivity.this).reservationDao().getCurrentReservation();
@@ -175,12 +193,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         bottomNavigationView = findViewById(R.id.bnvHomeScreen);
         navigationView = findViewById(R.id.appNavigationDrawer);
         Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+        Loyalty loyalty = RoomDB.getInstance(this).loyaltyDao().getLoyalty();
         View hView =  navigationView.getHeaderView(0);
         TextView tvFName = hView.findViewById(R.id.tvNavigationDrawerFirstName);
         TextView tvLName = hView.findViewById(R.id.tvNavigationDrawerLastName);
         TextView tvAccNumber = hView.findViewById(R.id.tvNavigationDrawerAccountNumber);
+        TextView tvTier = hView.findViewById(R.id.tvNavigationDrawerTier);
         tvFName.setText(customer.getFirstName());
         tvLName.setText(customer.getLastName());
+        tvTier.setText(loyalty.getCurrentTierName());
         tvAccNumber.setText(String.valueOf(customer.getCustomerId()));
         toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);

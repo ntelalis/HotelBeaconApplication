@@ -42,6 +42,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     private Customer customer;
     private int mAnimationDuration;
 
+    private boolean finishedSyncing = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +86,15 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                         activeNetwork.isConnectedOrConnecting();
                 if (isConnected) {
                     SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(!finishedSyncing){
+                                NoInternetDialog dialog = NoInternetDialog.newInstance();
+                                dialog.show(getSupportFragmentManager(),"NoInternetDialog");
+                            }
+                        }
+                    }, 12000);
                 } else {
                     NoInternetDialog dialog = NoInternetDialog.newInstance();
                     dialog.show(getSupportFragmentManager(),"NoInternetDialog");
@@ -95,6 +106,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
+
+            finishedSyncing = true;
 
             try {
                 int customerId = json.getInt(POST.loginCustomerID);

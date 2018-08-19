@@ -57,11 +57,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.LoyaltyProgramActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity
             android:name=".activities.ReviewActivity"
             android:parentActivityName=".activities.HomeActivity"
             android:screenOrientation="portrait"
@@ -124,7 +119,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.NewReservationActivity" />
-
+        <activity android:name=".activities.PlaceHolderActivity"></activity>
     </application>
 
 </manifest>

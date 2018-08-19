@@ -168,6 +168,11 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_asdf">asdf</string>
+    <string name="tvNavigationDrawerTier">Member</string>
+    <string name="NavigationDrawerProfile">Profile</string>
+    <string name="NavigationDrawerNewReservation">Make a new Reservation</string>
+    <string name="NavigationDrawerContact">Contact us</string>
+    <string name="navigationDrawerHome">Home</string>
 
 
 </resources>

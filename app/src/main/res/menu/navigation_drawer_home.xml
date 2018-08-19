@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/navigationDrawerReservations"
-        android:icon="@drawable/ic_date_range_black_png"
-        android:title="Make a new Reservation" />
-    <item
-        android:id="@+id/navigationDrawerProfile"
-        android:icon="@drawable/ic_person_black_png"
-        android:title="Profile" />
-    <item
-        android:id="@+id/navigationDrawerLogout"
-        android:icon="@drawable/ic_logout_black_png"
-        android:title="@string/btnHomeLogout" />
+    <group android:id="@+id/menu_top">
+        <item
+            android:id="@+id/navigationDrawerReservations"
+            android:icon="@drawable/ic_date_range_black_png"
+            android:title="@string/NavigationDrawerNewReservation" />
+
+        <item
+            android:id="@+id/navigationDrawerHome"
+            android:icon="@drawable/ic_main_screen_png"
+            android:title="@string/navigationDrawerHome" />
+        <item
+            android:id="@+id/navigationDrawerProfile"
+            android:icon="@drawable/ic_person_black_png"
+            android:title="@string/NavigationDrawerProfile" />
+    </group>
+
+
+    <group android:id="@+id/menu_bot">
+        <item
+            android:id="@+id/navigationDrawerContact"
+            android:icon="@drawable/ic_contact_png"
+            android:title="@string/NavigationDrawerContact" />
+
+        <item
+            android:id="@+id/navigationDrawerLogout"
+            android:icon="@drawable/ic_logout_black_png"
+            android:title="@string/btnHomeLogout" />
+    </group>
 </menu>

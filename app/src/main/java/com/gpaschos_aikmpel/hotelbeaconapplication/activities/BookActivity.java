@@ -256,7 +256,7 @@ public class BookActivity extends AppCompatActivity implements JsonListener/*, U
         int customerID = RoomDB.getInstance(this).customerDao().getCustomer().getCustomerId();
 
         Map<String, String> params = new HashMap<>();
-        params.put(POST.loyaltyPointsCustomerID, String.valueOf(customerID));
+        params.put(POST.loyaltyProgramCustomerID, String.valueOf(customerID));
         VolleyQueue.getInstance(this).jsonRequest(this, URL.totalPointsUrl, params);
     }
 

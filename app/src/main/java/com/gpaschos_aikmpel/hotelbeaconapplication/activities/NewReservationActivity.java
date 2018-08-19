@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -12,14 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.BookFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.BookedFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationNewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 public class NewReservationActivity extends AppCompatActivity implements DatePickerFragment.DateSelected,ReservationCallbacks{
 
@@ -46,6 +51,14 @@ public class NewReservationActivity extends AppCompatActivity implements DatePic
                     startActivity(intent);
                     finish();
                     break;
+                case R.id.navigationDrawerContact:
+                    intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+ Params.TELEPHONE));
+                    startActivity(intent);
+                    break;
+                case R.id.navigationDrawerHome:
+                    finish();
+                    break;
             }
             return true;
         }
@@ -58,6 +71,17 @@ public class NewReservationActivity extends AppCompatActivity implements DatePic
 
         drawerLayout = findViewById(R.id.reservationDrawerLayout);
         navigationView = findViewById(R.id.appNavigationDrawer);
+        Customer customer = RoomDB.getInstance(this).customerDao().getCustomer();
+        Loyalty loyalty = RoomDB.getInstance(this).loyaltyDao().getLoyalty();
+        View hView =  navigationView.getHeaderView(0);
+        TextView tvFName = hView.findViewById(R.id.tvNavigationDrawerFirstName);
+        TextView tvLName = hView.findViewById(R.id.tvNavigationDrawerLastName);
+        TextView tvAccNumber = hView.findViewById(R.id.tvNavigationDrawerAccountNumber);
+        TextView tvTier = hView.findViewById(R.id.tvNavigationDrawerTier);
+        tvFName.setText(customer.getFirstName());
+        tvLName.setText(customer.getLastName());
+        tvTier.setText(loyalty.getCurrentTierName());
+        tvAccNumber.setText(String.valueOf(customer.getCustomerId()));
         navigationView.setNavigationItemSelectedListener(navigationDrawerListener);
         toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);

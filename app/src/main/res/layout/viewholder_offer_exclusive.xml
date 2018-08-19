@@ -56,9 +56,8 @@
             android:layout_marginTop="4dp"
             android:textSize="12sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@+id/tvCode"
+            app:layout_constraintStart_toStartOf="@+id/tvOfferExclusiveTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvOfferExclusiveTitle"
-            tools:layout_editor_absoluteX="84dp"
             tools:text="The offer starts from 2pm until 11pm" />
 
         <ImageView
