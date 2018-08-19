@@ -15,9 +15,6 @@ public interface GeneralOfferDao {
     @Query("SELECT * FROM GeneralOffer")
     List<GeneralOffer> getGeneralOffers();
 
-    @Query("SELECT * FROM GeneralOffer WHERE GeneralOffer.id=:id")
-    GeneralOffer getOfferByID(int id);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(GeneralOffer offer);
 

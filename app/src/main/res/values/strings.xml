@@ -70,9 +70,9 @@
     <string name="tvUpcomingReservationsDeparture">Departure Date</string>
     <string name="tvUpcomingReservationsRoomTitle">Room Type</string>
     <string name="btn_view_reservations">My Reservations</string>
-    <string name="tv_loyalty_accountnumber">Account Number</string>
+    <string name="tv_loyalty_account_number">Account Number</string>
     <string name="tv_loyalty_total_points">Points</string>
-    <string name="tvLoyalty_rewardsmember_label">MEMBER</string>
+    <string name="tvLoyalty_rewards_member_label">MEMBER</string>
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
     <string name="title_activity_cccccccccccccccccc">cccccccccccccccccc</string>
     <string name="roomServiceConfirmationOrder">Your order is sent!</string>
@@ -91,7 +91,7 @@
     <string name="tvcheckedinmsg2">Your room number is</string>
     <string name="tvViewHmyReservationsCheckInInstructionsTRUE">You can check in now!</string>
     <string name="tvViewHmyReservationsCheckInInstructionsFALSE">You can\'t Check in yet.</string>
-    <string name="tvviewHUpcomingreservationsRoomlbl">Room number</string>
+    <string name="tvVHUpcomingReservationsRoomNumberLabel">Room number</string>
     <string name="btnUpcomingReservationsCheckout">Check out</string>
     <string name="tvUpcomingReservationsInstructionsCheckIn">You can\'t check in yet</string>
     <string name="tvUpcomingReservationsInstructionsCheckOut">You can\'t check out yet</string>
@@ -101,7 +101,7 @@
     <string name="tvViewHCheckoutCurrency">€</string>
     <string name="tvCheckoutTotalPriceLabel">Total price</string>
     <string name="btnCheckoutConfirm">Confirm and Checkout</string>
-    <string name="tvcheckedoutmsg">You have successfully Checked out!</string>
+    <string name="tvCheckedOutMessage">You have successfully Checked out!</string>
     <string name="LoyaltyPointsLabel">Points</string>
     <string name="tvLoyaltyPointsNextTierPointsLabel">Unlock</string>
     <string name="tvLoyaltyPointsNextTierAtLabel">at:</string>
@@ -111,7 +111,7 @@
     <string name="tvRoomMultiply">x</string>
     <string name="tvRoomEquals">=</string>
     <string name="btnRoomDetails">Details</string>
-    <string name="btnCheckInCheckin">Check-in!</string>
+    <string name="btnCheckInCheckIn">Check-in!</string>
     <string name="tvCheckInRoomLabel">Room Number</string>
     <string name="tvCheckInInform">You have successfully checked-in!</string>
     <string name="tvCheckInReservationNoLabel">Reservation Number</string>
@@ -141,7 +141,7 @@
     <string name="tvUpcomingReservationNoneFragmentNEW">You have no upcoming reservations.</string>
     <string name="tvUsePointsTotalPoints">Total Points</string>
     <string name="tvUsePointsDays">Days</string>
-    <string name="tvUsePointsPointsDIvider">/</string>
+    <string name="tvUsePointsPointsDivider">/</string>
     <string name="tvUsePointsCurrency">€</string>
     <string name="tvUsePointsDaysDivider">/</string>
     <string name="tvCustomerServicesRoomNoLabel">Room</string>
@@ -173,6 +173,35 @@
     <string name="NavigationDrawerNewReservation">Make a new Reservation</string>
     <string name="NavigationDrawerContact">Contact us</string>
     <string name="navigationDrawerHome">Home</string>
+    <string name="loyaltyStartingPoints">0</string>
+    <string name="bottomNavigationBook">Book</string>
+    <string name="bottomNavigationLoyalty">Loyalty Club</string>
+    <string name="bottomNavigationOffers">Offers</string>
+    <string name="bottomNavigationOffersMyRoom">My Room</string>
+    <string name="doorUnlockUnlockMessage">Please approach the door and place your mobile near the lock and press the key to unlock</string>
+    <string name="registerCountryHint">Country</string>
+    <string name="registerTitleHint">Title</string>
+    <string name="registerPhoneHint">Phone</string>
+    <string name="contactCityHint">City</string>
+    <string name="contactPhoneHint">Phone</string>
+    <string name="contactAddress2Hint">Address 2 (Optional)</string>
+    <string name="contactAddress1Hint">Address 1</string>
+    <string name="contactPostHint">Postal</string>
+    <string name="creditCardNameHint">Holder\'s Name</string>
+    <string name="creditCardCardNumberHint">Credit Card</string>
+    <string name="creditCardCVVHint">CVV</string>
+    <string name="tvCreditCardTitle">Credit Card Information</string>
+    <string name="btnHomeRoomControl">Room Control</string>
+    <string name="tvUsePointsFreeNightText">Points for a FREE Night</string>
+    <string name="tvUserPointsCashPointsText"><![CDATA[for a Cash&Points Night]]></string>
+    <string name="tvUsePointsSelectedTotalDefaultText">0</string>
+    <string name="tvUsePointsSelectedTotalLabel">Points Needed:</string>
+    <string name="tvUsePointsSelectedDaysDefault">0</string>
+    <string name="tvNavigationDrawerAccountNumberLabel">Account Number:</string>
+    <string name="tvUsePointsCashPointsLabel1">Points +</string>
+    <string name="btnOfferExclusiveCode">Get Code</string>
+    <string name="tvOfferExclusiveCodeLabel">Exclusive Code:</string>
+    <string name="tvOfferSpecialCodeLabel">Exclusive Code:</string>
 
 
 </resources>

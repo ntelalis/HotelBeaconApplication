@@ -15,31 +15,28 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 import java.util.List;
 
-public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
 
     private List<ModelRoomView> roomList;
     private ClickCallbacks clickCallbacks;
 
-    public MyRoomsAdapter(ClickCallbacks clickCallbacks, List<ModelRoomView> roomList) {
+    public RoomAdapter(ClickCallbacks clickCallbacks, List<ModelRoomView> roomList) {
         this.roomList = roomList;
         this.clickCallbacks = clickCallbacks;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         int layoutId = R.layout.viewholder_room_choose;
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View view = inflater.inflate(layoutId, parent, false);
-
-        return new MyViewHolder(view);
+        return new RoomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         holder.bind(position);
     }
 
@@ -49,7 +46,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class RoomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView ivRoomImage;
         private TextView tvRoomTitle;
@@ -61,7 +58,7 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         private Button btnRoomBook;
         private Button btnRoomDetails;
 
-        MyViewHolder(View itemView) {
+        RoomViewHolder(View itemView) {
             super(itemView);
             btnRoomBook = itemView.findViewById(R.id.btnRoomBook);
             btnRoomDetails = itemView.findViewById(R.id.btnRoomDetails);
@@ -115,8 +112,8 @@ public class MyRoomsAdapter extends RecyclerView.Adapter<MyRoomsAdapter.MyViewHo
         public int price;
         public Bitmap img;
         public String imgFileName;
-        public int days;
-        public int persons;
+        int days;
+        int persons;
 
         public ModelRoomView(int roomTypeID, String title, String description, int price, int days, int persons, Bitmap img, String imgFileName) {
             this.roomTypeID = roomTypeID;

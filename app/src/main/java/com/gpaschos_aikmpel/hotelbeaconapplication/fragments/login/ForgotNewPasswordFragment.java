@@ -25,9 +25,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ForgotNewPasswordFragment extends Fragment implements JsonListener {
 
     public static final String email_KEY = "email";
@@ -101,8 +98,7 @@ public class ForgotNewPasswordFragment extends Fragment implements JsonListener 
                     } else {
                         Toast.makeText(getContext(), "Passwords don't match", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), "Please enter a valid password", Toast.LENGTH_SHORT).show();
                     tietPass.setError("Please enter a valid password");
                 }

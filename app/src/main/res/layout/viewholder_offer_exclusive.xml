@@ -38,7 +38,6 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="15% Off Dining at Restaurant for Saturday"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/tvOfferExclusiveDetails"
@@ -46,7 +45,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/ivOfferExclusiveImage"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread_inside" />
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:text="15% Off Dining at Restaurant for Saturday" />
 
         <TextView
             android:id="@+id/tvOfferExclusiveDetails"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:text="Get Code"
+            android:text="@string/btnOfferExclusiveCode"
             android:theme="@style/PrimaryButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -118,7 +118,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Exclusive Code:"
+            android:text="@string/tvOfferExclusiveCodeLabel"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvOfferExclusiveCode"
             app:layout_constraintEnd_toStartOf="@+id/tvOfferExclusiveCode" />
 

@@ -4,10 +4,10 @@ public class Params {
 
     public static final int maxReservationDateInYears = 1;
     public static final int daysForCheckInUnlock=0;
-    public static final int eligibleForCheckin=2;
-    public static final int NOTeligibleForCheckin=1;
-    public static final int eligibleForCheckout=4;
-    public static final int NOTeligibleForCheckout=3;
+    public static final int eligibleForCheckIn =2;
+    public static final int notEligibleForCheckIn =1;
+    public static final int eligibleForCheckOut =4;
+    public static final int notEligibleForCheckOut =3;
     public static final int CheckedOut=5;
     public static final String beaconUUID = "3d8f1dc0-1b23-42f5-9fc1-849f161b2c0e";
 
@@ -43,17 +43,17 @@ public class Params {
     public static final String notificationFarewellGreeting1 = "We thank you for your stay and hope " +
             "that you had an enjoyable experience.";
 
-    //checkin messages
-    public static final int notificationCheckinID = 3;
-    public static final int notificationCheckinReminderID = 1;
-    public static final String notificationCheckinReminderTitle = "Reminder for Check-in";
-    public static final String notificationCheckinTitle = "Check-in";
-    public static final String notificationCheckinReminderMsg = "You can check in for your reservation at ";
-    public static final String notificationCheckinReminderMsg2 = " whenever you are ready";
-    public static final String notificationCheckinMsg = "You can check-in using your smartphone to get" +
+    //checkIn messages
+    public static final int notificationCheckInID = 3;
+    public static final int notificationCheckInReminderID = 1;
+    public static final String notificationCheckInReminderTitle = "Reminder for Check-in";
+    public static final String notificationCheckInTitle = "Check-in";
+    public static final String notificationCheckInReminderMsg = "You can check in for your reservation at ";
+    public static final String notificationCheckInReminderMsg2 = " whenever you are ready";
+    public static final String notificationCheckInMsg = "You can check-in using your smartphone to get" +
             " your room number and key";
 
-    //checkout messages
+    //checkOut messages
     public static final int notificationCheckoutID = 4;
     public static final String notificationCheckoutTitle = "Reminder for Check-out";
     public static final String notificationCheckoutReminder = "You can check-out using your smartphone." +

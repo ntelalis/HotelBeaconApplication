@@ -12,11 +12,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MySpinnerAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.SpinnerAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.Validation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -25,7 +23,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.EditTextSpinner;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -52,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     private int targetAge = 30;
     private int maxAge = 100;
 
-    private String email, pass, firstName, lastName, birthDate, phone;
+    private String birthDate;
     private int titleID, countryID;
 
     private SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -123,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
         List<Title> titleList = RoomDB.getInstance(this).titleDao().getTitles();
         List<Country> countryList = RoomDB.getInstance(this).countryDao().getCountries();
 
-        etsTitle.setAdapter(new MySpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
+        etsTitle.setAdapter(new SpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, titleList));
         etsTitle.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Title>() {
             @Override
             public void onItemSelectedListener(Title item, int selectedIndex) {
@@ -133,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
             }
         });
 
-        etsCountry.setAdapter(new MySpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
+        etsCountry.setAdapter(new SpinnerAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
         etsCountry.setOnItemSelectedListener(new EditTextSpinner.OnItemSelectedListener<Country>() {
             @Override
             public void onItemSelectedListener(Country item, int selectedIndex) {
@@ -147,12 +144,12 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
 
     public void register(View view) {
 
-        email = etEmail.getText().toString().trim();
-        pass = etPass.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String pass = etPass.getText().toString().trim();
         String passConf = etPassConf.getText().toString().trim();
-        firstName = etFirstName.getText().toString().trim();
-        lastName = etLastName.getText().toString().trim();
-        phone = etPhone.getText().toString().trim();
+        String firstName = etFirstName.getText().toString().trim();
+        String lastName = etLastName.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
 
 
         boolean flag = true;
@@ -227,7 +224,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         switch (url) {
             case URL.registerUrl:
                 Intent intent = new Intent(this, LoginActivity.class);

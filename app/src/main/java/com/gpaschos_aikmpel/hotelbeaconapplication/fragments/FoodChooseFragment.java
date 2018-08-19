@@ -26,9 +26,9 @@ public class FoodChooseFragment extends DialogFragment {
 
     private static final String PARCEL_KEY = "name_kEY";
 
-    private TextView tvName,tvPrice,tvTotalPrice,tvDesc,tvQuantity;
-    private ImageView ivMinusButton,ivPlusButton;
-    private FloatingActionButton fab;
+    private TextView tvPrice;
+    private TextView tvTotalPrice;
+    private TextView tvQuantity;
 
     private RoomServiceActivity.RoomServiceModel.FoodModel parcelable;
     private FragmentCallBack listener;
@@ -37,10 +37,10 @@ public class FoodChooseFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static FoodChooseFragment newInstance(RoomServiceActivity.RoomServiceModel.FoodModel foodModel){
+    public static FoodChooseFragment newInstance(RoomServiceActivity.RoomServiceModel.FoodModel foodModel) {
         FoodChooseFragment foodChooseFragment = new FoodChooseFragment();
         Bundle args = new Bundle();
-        args.putParcelable(PARCEL_KEY,foodModel);
+        args.putParcelable(PARCEL_KEY, foodModel);
         foodChooseFragment.setArguments(args);
         return foodChooseFragment;
     }
@@ -63,28 +63,27 @@ public class FoodChooseFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView =inflater.inflate(R.layout.fragment_food_choose, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_food_choose, container, false);
 
         tvQuantity = rootView.findViewById(R.id.tvChooseFoodQuantity);
-        tvName = rootView.findViewById(R.id.tvChooseFoodName);
+        TextView tvName = rootView.findViewById(R.id.tvChooseFoodName);
         tvPrice = rootView.findViewById(R.id.tvChooseFoodPrice);
-        tvDesc = rootView.findViewById(R.id.tvChooseFoodDescription);
+        TextView tvDesc = rootView.findViewById(R.id.tvChooseFoodDescription);
         tvTotalPrice = rootView.findViewById(R.id.tvChooseFoodTotalPrice);
-        ivMinusButton = rootView.findViewById(R.id.ivChooseFoodMinusButton);
-        ivPlusButton = rootView.findViewById(R.id.ivChooseFoodPlusButton);
-        fab = rootView.findViewById(R.id.fabChooseFood);
+        ImageView ivMinusButton = rootView.findViewById(R.id.ivChooseFoodMinusButton);
+        ImageView ivPlusButton = rootView.findViewById(R.id.ivChooseFoodPlusButton);
+        FloatingActionButton fab = rootView.findViewById(R.id.fabChooseFood);
 
         ivMinusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString());
 
-                if(quantity>1){
+                if (quantity > 1) {
                     tvQuantity.setText(String.valueOf(--quantity));
                     double price = Double.parseDouble(tvPrice.getText().toString());
-                    tvTotalPrice.setText(String.valueOf(Math.round(price*quantity*100)/100.0));
+                    tvTotalPrice.setText(String.valueOf(Math.round(price * quantity * 100) / 100.0));
                 }
-
 
 
             }
@@ -95,10 +94,10 @@ public class FoodChooseFragment extends DialogFragment {
             public void onClick(View v) {
                 int quantity = Integer.parseInt(tvQuantity.getText().toString());
 
-                if(quantity<10){
+                if (quantity < 10) {
                     tvQuantity.setText(String.valueOf(++quantity));
                     double price = Double.parseDouble(tvPrice.getText().toString());
-                    tvTotalPrice.setText(String.valueOf(Math.round(price*quantity*100)/100.0));
+                    tvTotalPrice.setText(String.valueOf(Math.round(price * quantity * 100) / 100.0));
                 }
             }
         });
@@ -106,19 +105,19 @@ public class FoodChooseFragment extends DialogFragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.receiveFoodQuantity(parcelable,Integer.parseInt(tvQuantity.getText().toString()));
+                listener.receiveFoodQuantity(parcelable, Integer.parseInt(tvQuantity.getText().toString()));
                 dismiss();
             }
         });
         tvName.setText(parcelable.getName());
         tvDesc.setText(parcelable.getDescription());
-        tvPrice.setText(String.format(Locale.getDefault(),"%.2f",parcelable.getPrice()));
-        tvTotalPrice.setText(String.format(Locale.getDefault(),"%.2f",parcelable.getPrice()));
+        tvPrice.setText(String.format(Locale.getDefault(), "%.2f", parcelable.getPrice()));
+        tvTotalPrice.setText(String.format(Locale.getDefault(), "%.2f", parcelable.getPrice()));
 
         return rootView;
     }
 
-    public interface FragmentCallBack{
+    public interface FragmentCallBack {
         void receiveFoodQuantity(RoomServiceActivity.RoomServiceModel.FoodModel foodModel, int quantity);
     }
 

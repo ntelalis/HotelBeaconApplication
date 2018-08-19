@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CheckedInActivity">
+    tools:context=".fragments.reservation.CheckInFragment">
 
     <TextView
         android:id="@+id/tvcheckedinmsg2"
@@ -14,8 +14,8 @@
         android:layout_marginTop="8dp"
         android:text="@string/tvcheckedinmsg2"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/tvcheckedoutmsg"
-        app:layout_constraintTop_toBottomOf="@+id/tvcheckedoutmsg"
+        app:layout_constraintStart_toStartOf="@+id/tvCheckedOutMessage"
+        app:layout_constraintTop_toBottomOf="@+id/tvCheckedOutMessage"
         app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
@@ -26,7 +26,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/tvcheckedoutmsg"
+        android:id="@+id/tvCheckedOutMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -49,7 +49,7 @@
         android:layout_marginStart="8dp"
         android:text="@string/btnUpcomingReservationsCheckedOut"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvcheckedinmsg2"
-        app:layout_constraintEnd_toEndOf="@+id/tvcheckedoutmsg"
+        app:layout_constraintEnd_toEndOf="@+id/tvCheckedOutMessage"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvcheckedinmsg2"
         tools:text="101" />

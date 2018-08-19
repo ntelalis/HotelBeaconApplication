@@ -37,7 +37,6 @@ import org.json.JSONObject;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -45,9 +44,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
     private static final String TAG = DoorUnlockActivity.class.getSimpleName();
 
-    private static final String roomBeaconUniqueID = "roomBeacon";
-
-    private BluetoothAdapter bluetoothAdapter;
     private BeaconManager beaconManager;
     private Handler handler;
     private Runnable runnable;
@@ -86,7 +82,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         fabDoorUnlock = findViewById(R.id.fabDoorUnlock);
         if (bluetoothAdapter == null) {
             throw new RuntimeException("Cannot Find Bluetooth");
@@ -163,7 +159,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         if (r != null && r.isCheckedInNotCheckedOut()) {
             Log.d(TAG, "reservation found");
             final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionFeatureDao().getRegionByFeature(Params.DOOR_UNLOCK);
-            Toast.makeText(this, beaconRegion.getUniqueID()+" "+beaconRegion.getMajor()+" "+beaconRegion.getMinor(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, beaconRegion.getUniqueID() + " " + beaconRegion.getMajor() + " " + beaconRegion.getMinor(), Toast.LENGTH_SHORT).show();
             Region region = new Region(beaconRegion.getUniqueID(), Identifier.parse(beaconRegion.getUUID()), Identifier.parse(beaconRegion.getMajor()), Identifier.parse(beaconRegion.getMinor()));
             beaconManager.addMonitorNotifier(new MonitorNotifier() {
 
@@ -200,7 +196,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                 public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
                     //Log.d(TAG, "range before region notifier");
                     if (region.getUniqueId().equals(beaconRegion.getUniqueID())) {
-                        Log.d(TAG, "What? "+collection.size());
+                        Log.d(TAG, "What? " + collection.size());
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
@@ -223,20 +219,5 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             }
 
         }
-
-        //TODO implement this in database
-        /*Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-        if (r != null && r.isCheckedInNotCheckedOut()) {
-            int id =r.getRoomBeaconId();
-            com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Beacon beacon = RoomDB.getInstance(this).beaconDao().getBeacon(id);
-            Region region = new Region(roomBeaconUniqueID,Identifier.parse(beacon.getUUID()),Identifier.parse(beacon.getMajor()),Identifier.parse(beacon.getMinor()));
-            Region region = new Region("roomBeacon", Identifier.parse(Params.beaconUUID), Identifier.parse("580"), Identifier.parse(""));
-
-            try {
-                beaconManager.startRangingBeaconsInRegion();
-            }
-        }*/
-
     }
-
 }

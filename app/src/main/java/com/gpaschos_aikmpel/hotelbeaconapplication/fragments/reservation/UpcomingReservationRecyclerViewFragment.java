@@ -3,7 +3,6 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,38 +12,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyReservationsAdapter;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CheckOutFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.ReservationsAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
-public class UpcomingReservationRecyclerViewFragment extends Fragment implements MyReservationsAdapter.ClickCallbacks {
+public class UpcomingReservationRecyclerViewFragment extends Fragment implements ReservationsAdapter.ClickCallbacks {
 
     private static final String ARG_PARAM1 = "ReservationModel_Parcelable";
 
-    private ArrayList<MyReservationsAdapter.ReservationModel> list;
-    private RecyclerView recyclerView;
-    private MyReservationsAdapter adapter;
-    private BeaconApplication application;
+    private ArrayList<ReservationsAdapter.ReservationModel> list;
+    private ReservationsAdapter adapter;
     private NotificationCallbacks listener;
 
     public UpcomingReservationRecyclerViewFragment() {
         // Required empty public constructor
     }
 
-    public static UpcomingReservationRecyclerViewFragment newInstance(List<MyReservationsAdapter.ReservationModel> list) {
+    public static UpcomingReservationRecyclerViewFragment newInstance(List<ReservationsAdapter.ReservationModel> list) {
         UpcomingReservationRecyclerViewFragment fragment = new UpcomingReservationRecyclerViewFragment();
         Bundle args = new Bundle();
-        if(list instanceof ArrayList){
-            args.putParcelableArrayList(ARG_PARAM1, (ArrayList<MyReservationsAdapter.ReservationModel>) list);
+        if (list instanceof ArrayList) {
+            args.putParcelableArrayList(ARG_PARAM1, (ArrayList<ReservationsAdapter.ReservationModel>) list);
         }
         fragment.setArguments(args);
         return fragment;
@@ -56,7 +49,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
         if (getArguments() != null) {
             list = getArguments().getParcelableArrayList(ARG_PARAM1);
         }
-        adapter = new MyReservationsAdapter(this, list);
+        adapter = new ReservationsAdapter(this, list);
 
     }
 
@@ -74,7 +67,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_reservation_recycler_view, container, false);
-        recyclerView = view.findViewById(R.id.rvFragmentUpcomingRevervation);
+        RecyclerView recyclerView = view.findViewById(R.id.rvFragmentUpcomingReservation);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -85,7 +78,6 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.application = ((BeaconApplication) Objects.requireNonNull(getActivity()).getApplication());
     }
 
     //sends the reservationID to the server in order to check in
@@ -95,8 +87,8 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     }
 
     @Override
-    public void checkOut(MyReservationsAdapter.ReservationModel obj) {
-        Intent intent = new Intent(getContext(), CheckInActivity.class);
+    public void checkOut(ReservationsAdapter.ReservationModel obj) {
+        Intent intent = new Intent(getContext(), CheckOutActivity.class);
         startActivity(intent);
     }
 }

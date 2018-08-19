@@ -1,17 +1,15 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -24,6 +22,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert.NoInternetDialog;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
+import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
@@ -37,10 +36,7 @@ import java.util.Map;
 public class LoadingScreenActivity extends AppCompatActivity implements JsonListener, SyncServerData.SyncCallbacks, NoInternetDialog.NoInternetDialogListener {
 
     private static final String TAG = LoadingScreenActivity.class.getSimpleName();
-    private ProgressBar progressBar;
-    private TextView tvHotelName;
     private Customer customer;
-    private int mAnimationDuration;
 
     private boolean finishedSyncing = false;
 
@@ -48,9 +44,10 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_screen);
-        progressBar = findViewById(R.id.pbLoadingScreen);
-        tvHotelName = findViewById(R.id.tvLoadingScreenHotelName);
-        mAnimationDuration = 3000;
+        ProgressBar progressBar = findViewById(R.id.pbLoadingScreen);
+        TextView tvHotelName = findViewById(R.id.tvLoadingScreenHotelName);
+        tvHotelName.setText(Params.HotelName);
+        int mAnimationDuration = 3000;
         tvHotelName.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
 
@@ -74,37 +71,40 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         initApp();
     }
 
-    public void initApp(){
+    public void initApp() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ConnectivityManager cm =
                         (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnectedOrConnecting();
-                if (isConnected) {
-                    SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(!finishedSyncing){
-                                NoInternetDialog dialog = NoInternetDialog.newInstance();
-                                dialog.show(getSupportFragmentManager(),"NoInternetDialog");
+                NetworkInfo activeNetwork;
+                if (cm != null) {
+                    activeNetwork = cm.getActiveNetworkInfo();
+                    boolean isConnected = activeNetwork != null &&
+                            activeNetwork.isConnectedOrConnecting();
+                    if (isConnected) {
+                        SyncServerData.getInstance(LoadingScreenActivity.this).getDataFromServer();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!finishedSyncing) {
+                                    NoInternetDialog dialog = NoInternetDialog.newInstance();
+                                    dialog.show(getSupportFragmentManager(), "NoInternetDialog");
+                                }
                             }
-                        }
-                    }, 12000);
-                } else {
-                    NoInternetDialog dialog = NoInternetDialog.newInstance();
-                    dialog.show(getSupportFragmentManager(),"NoInternetDialog");
+                        }, 12000);
+                    } else {
+                        NoInternetDialog dialog = NoInternetDialog.newInstance();
+                        dialog.show(getSupportFragmentManager(), "NoInternetDialog");
+                    }
                 }
             }
         }, 3000);
     }
 
     @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
+    public void getSuccessResult(String url, JSONObject json) {
         if (url.equals(URL.loginUrl)) {
 
             finishedSyncing = true;

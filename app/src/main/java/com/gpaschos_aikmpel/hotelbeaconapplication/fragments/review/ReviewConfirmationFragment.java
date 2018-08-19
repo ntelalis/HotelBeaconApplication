@@ -13,7 +13,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 public class ReviewConfirmationFragment extends Fragment {
 
 
-
     public ReviewConfirmationFragment() {
         // Required empty public constructor
     }
@@ -24,7 +23,6 @@ public class ReviewConfirmationFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
 
     @Override

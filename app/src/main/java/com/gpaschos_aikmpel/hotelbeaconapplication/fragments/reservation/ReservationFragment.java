@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyRoomsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.RoomAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
@@ -47,9 +47,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class ReservationNewFragment extends Fragment implements JsonListener, MyRoomsAdapter.ClickCallbacks {
+public class ReservationFragment extends Fragment implements JsonListener, RoomAdapter.ClickCallbacks {
 
-    private static final String TAG = ReservationNewFragment.class.getSimpleName();
+    private static final String TAG = ReservationFragment.class.getSimpleName();
 
     private EditText etArrivalDate;
     private EditText etDepartureDate;
@@ -61,13 +61,13 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
     private ReservationCallbacks listener;
 
 
-    public ReservationNewFragment() {
+    public ReservationFragment() {
         // Required empty public constructor
     }
 
-    public static ReservationNewFragment newInstance() {
+    public static ReservationFragment newInstance() {
 
-        ReservationNewFragment fragment = new ReservationNewFragment();
+        ReservationFragment fragment = new ReservationFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -83,7 +83,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_reservation_new, container, false);
+        View v = inflater.inflate(R.layout.fragment_reservation, container, false);
 
         etArrivalDate = v.findViewById(R.id.tietReservationArrival);
         etDepartureDate = v.findViewById(R.id.etReservationDeparture);
@@ -198,7 +198,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
             case URL.availabilityUrl:
                 pbLoading.setVisibility(View.GONE);
 
-                List<MyRoomsAdapter.ModelRoomView> roomList = new ArrayList<>();
+                List<RoomAdapter.ModelRoomView> roomList = new ArrayList<>();
 
                 JSONArray availabilityResults = json.getJSONArray(POST.availabilityResultsArray);
                 for (int i = 0; i < availabilityResults.length(); i++) {
@@ -221,8 +221,8 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
                     String imageName = rt.getImage();
 
 
-                    MyRoomsAdapter.ModelRoomView roomType =
-                            new MyRoomsAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, adults, imageBitmap, imageName);
+                    RoomAdapter.ModelRoomView roomType =
+                            new RoomAdapter.ModelRoomView(roomTypeID, title, description, price, reservationDays, adults, imageBitmap, imageName);
 
                     roomList.add(roomType);
                 }
@@ -243,8 +243,8 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
         Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_LONG).show();
     }
 
-    public void fillRecyclerView(List<MyRoomsAdapter.ModelRoomView> list) {
-        RecyclerView.Adapter adapter = new MyRoomsAdapter(this, list);
+    public void fillRecyclerView(List<RoomAdapter.ModelRoomView> list) {
+        RecyclerView.Adapter adapter = new RoomAdapter(this, list);
         recyclerView.setAdapter(adapter);
     }
 
@@ -257,7 +257,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
 
         //Empty availability results after choosing new date either for arrival or departure
         if (recyclerView.getAdapter() != null) {
-            fillRecyclerView(new ArrayList<MyRoomsAdapter.ModelRoomView>());
+            fillRecyclerView(new ArrayList<RoomAdapter.ModelRoomView>());
         }
 
 
@@ -298,7 +298,7 @@ public class ReservationNewFragment extends Fragment implements JsonListener, My
     }
 
     @Override
-    public void bookRoom(MyRoomsAdapter.ModelRoomView room) {
+    public void bookRoom(RoomAdapter.ModelRoomView room) {
 
         String arrivalDateSQL, departureDateSQL;
 

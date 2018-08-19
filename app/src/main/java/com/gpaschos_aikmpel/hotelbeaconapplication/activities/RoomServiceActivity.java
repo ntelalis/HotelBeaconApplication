@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -42,25 +41,15 @@ import java.util.Map;
 
 public class RoomServiceActivity extends AppCompatActivity implements JsonListener, OnClickAddToBasket, FoodChooseFragment.FragmentCallBack {
 
-    private List<Categories> categoriesList;
-
-    private RoomServiceAdapter roomServiceAdapter;
-
 
     //Viewpager
     private ViewPager viewpager;
-    private TabLayout tabLayout;
-
-    //BottomSheet
-    private BottomSheetBehavior bottomSheetBehavior;
 
 
     //Views
     private TextView orderTotalCount, orderTotalPrice;
     private EditText etComments;
 
-    //RecyclerView
-    private RecyclerView recyclerView;
     private FoodAdapter recyclerAdapter;
 
     @Override
@@ -69,16 +58,16 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
         setContentView(R.layout.activity_room_service);
 
         viewpager = findViewById(R.id.vpRoomService);
-        tabLayout = findViewById(R.id.tlRoomService);
+        TabLayout tabLayout = findViewById(R.id.tlRoomService);
         tabLayout.setupWithViewPager(viewpager);
         View bottomSheet = findViewById(R.id.roomServiceBottomSheet);
         orderTotalCount = bottomSheet.findViewById(R.id.tvBottomSheetCount);
         orderTotalPrice = bottomSheet.findViewById(R.id.tvBottomSheetTotalPrice);
         etComments = bottomSheet.findViewById(R.id.etBottomSheetComments);
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        //BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
 
-        recyclerView = bottomSheet.findViewById(R.id.rvFoodFragmentRecycler);
+        RecyclerView recyclerView = bottomSheet.findViewById(R.id.rvFoodFragmentRecycler);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
         recyclerAdapter = new FoodAdapter();
@@ -141,7 +130,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 break;
             case URL.roomServiceTimeCategoriesUrl:
                 JSONArray jsonArray = json.getJSONArray(POST.roomServiceTimeCategory);
-                categoriesList = new ArrayList<>();
+                List<Categories> categoriesList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     int id = jsonObject.getInt(POST.roomServiceCategoriesID);
@@ -158,17 +147,17 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 now.set(Calendar.SECOND, Calendar.getInstance().get(Calendar.SECOND));
                 boolean flag = true;
                 for (Categories cat : categoriesList) {
-                    String[] timefrom = cat.from.split(":");
+                    String[] timeFrom = cat.from.split(":");
                     Calendar from = Calendar.getInstance();
-                    from.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timefrom[0]));
-                    from.set(Calendar.MINUTE, Integer.parseInt(timefrom[1]));
-                    from.set(Calendar.SECOND, Integer.parseInt(timefrom[2]));
+                    from.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeFrom[0]));
+                    from.set(Calendar.MINUTE, Integer.parseInt(timeFrom[1]));
+                    from.set(Calendar.SECOND, Integer.parseInt(timeFrom[2]));
 
-                    String[] timeto = cat.to.split(":");
+                    String[] timeTo = cat.to.split(":");
                     Calendar to = Calendar.getInstance();
-                    to.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeto[0]));
-                    to.set(Calendar.MINUTE, Integer.parseInt(timeto[1]));
-                    to.set(Calendar.SECOND, Integer.parseInt(timeto[2]));
+                    to.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeTo[0]));
+                    to.set(Calendar.MINUTE, Integer.parseInt(timeTo[1]));
+                    to.set(Calendar.SECOND, Integer.parseInt(timeTo[2]));
                     if (now.after(from) && now.before(to)) {
                         getFood(cat.getName());
                         flag = false;
@@ -209,7 +198,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
                     roomServiceModelList.add(new RoomServiceModel(category, foodList));
                 }
-                roomServiceAdapter = new RoomServiceAdapter(getSupportFragmentManager(), roomServiceModelList);
+                RoomServiceAdapter roomServiceAdapter = new RoomServiceAdapter(getSupportFragmentManager(), roomServiceModelList);
                 viewpager.setAdapter(roomServiceAdapter);
                 break;
         }
@@ -242,7 +231,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
         private List<RoomServiceModel> modelList;
 
-        public RoomServiceAdapter(FragmentManager fm, List<RoomServiceModel> modelList) {
+        RoomServiceAdapter(FragmentManager fm, List<RoomServiceModel> modelList) {
             super(fm);
             this.modelList = modelList;
         }
@@ -268,7 +257,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
         List<FoodModel> foodList = new ArrayList<>();
 
 
-        public RoomServiceModel(String type, List<FoodModel> foodList) {
+        RoomServiceModel(String type, List<FoodModel> foodList) {
             this.type = type;
             this.foodList = foodList;
         }
@@ -314,14 +303,14 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
             String description;
             double price;
 
-            public FoodModel(int id, String name, String description, double price) {
+            FoodModel(int id, String name, String description, double price) {
                 this.id = id;
                 this.name = name;
                 this.description = description;
                 this.price = price;
             }
 
-            protected FoodModel(Parcel in) {
+            FoodModel(Parcel in) {
                 id = in.readInt();
                 name = in.readString();
                 description = in.readString();

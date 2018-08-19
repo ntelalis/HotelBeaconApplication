@@ -10,7 +10,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.utility.SyncModel;
 //@Entity(foreignKeys = {@ForeignKey(entity = RoomType.class, parentColumns = "id", childColumns = "roomTypeID"),
 //        @ForeignKey(entity = Beacon.class, parentColumns = "id", childColumns = "roomBeaconId")})
 @Entity
-public class Reservation implements SyncModel{
+public class Reservation implements SyncModel {
     @PrimaryKey
     private int id;
     private int roomTypeID;
@@ -42,7 +42,7 @@ public class Reservation implements SyncModel{
         this.modified = modified;
     }
 
-    public Reservation(int id, int roomTypeID, int adults, int children , String bookDate, String startDate, String endDate, String modified) {
+    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -61,11 +61,12 @@ public class Reservation implements SyncModel{
         this.modified = modified;
     }
 
-    public void checkOut(String checkOut, String modified){
+    public void checkOut(String checkOut, String modified) {
         this.checkOut = checkOut;
         this.modified = modified;
     }
-    public void update(int id, int roomTypeID, int adults, int children ,String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified){
+
+    public void update(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -89,11 +90,11 @@ public class Reservation implements SyncModel{
         return checkOut != null;
     }
 
-    public boolean isCheckedInNotCheckedOut(){
+    public boolean isCheckedInNotCheckedOut() {
         return isCheckedIn() && !isCheckedOut();
     }
 
-    public boolean isCheckedInCheckedOut(){
+    public boolean isCheckedInCheckedOut() {
         return isCheckedIn() && isCheckedOut();
     }
 

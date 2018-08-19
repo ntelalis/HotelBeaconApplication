@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,13 +13,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 
 public class BookedFragment extends Fragment {
 
     private static final String RESERVATION_ID_KEY = "reservationID";
     public static final String TAG = BookedFragment.class.getSimpleName();
     private int reservationID;
-    private Button btnShowReservations;
     private ReservationCallbacks listener;
 
     public BookedFragment() {
@@ -49,15 +51,16 @@ public class BookedFragment extends Fragment {
         if (getArguments() != null) {
             reservationID = getArguments().getInt(RESERVATION_ID_KEY);
         }
+        // SyncServerData.getInstance(getContext()).getLoyalty(RoomDB.getInstance(getContext()).customerDao().getCustomer());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_booked, container, false);
         TextView tvReservationID = v.findViewById(R.id.tvBookConfirmReservationNumber);
         tvReservationID.setText(String.valueOf(reservationID));
-        btnShowReservations = v.findViewById(R.id.btnBookConfirmReservation);
+        Button btnShowReservations = v.findViewById(R.id.btnBookConfirmReservation);
         btnShowReservations.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +69,6 @@ public class BookedFragment extends Fragment {
         });
         return v;
     }
-
 
 
 }

@@ -72,7 +72,7 @@ public class VolleyQueue {
 
                     }
                 });
-        request.setRetryPolicy(new DefaultRetryPolicy(25000,3,1f));
+        request.setRetryPolicy(new DefaultRetryPolicy(25000, 3, 1f));
         requestQueue.add(request);
     }
 

@@ -11,37 +11,28 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.util.Log;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckInActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.HomeActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
-import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 public class NotificationCreation {
 
 
-    private static final String TAG = NotificationCreation.class.getSimpleName();
+    public static final String TAG = NotificationCreation.class.getSimpleName();
 
     private static NotificationCreation instance = null;
 
@@ -65,7 +56,7 @@ public class NotificationCreation {
 
     public static void notifyOffer(Context context, ExclusiveOffer exclusiveOffer) {
 
-        Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
+        //Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
 
         String notificationTitle, notificationContent;
 
@@ -126,8 +117,8 @@ public class NotificationCreation {
 
             //notify the customer that they can check-in if they are eligible
             Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
-            if(r!=null){
-                notifyCheckin(context, CHECK_IN_BEACON_NOTIFICATION,r.getId());
+            if (r != null) {
+                notifyCheckIn(context, CHECK_IN_BEACON_NOTIFICATION, r.getId());
             }
         }
     }
@@ -135,8 +126,8 @@ public class NotificationCreation {
 
     public static void notifyFarewell(Context context) {
 
-        String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
-        boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
+        //String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
+        //boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
                 && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
@@ -164,7 +155,7 @@ public class NotificationCreation {
 
     //notify the customer that he can check-in(the same day of the reservation's startDate and
     // when passing by the front door beacon-after the welcomingNotification)
-    public static void notifyCheckin(Context context, String tag, int resID) {
+    public static void notifyCheckIn(Context context, String tag, int resID) {
 
 
         String notificationTitle = null;
@@ -173,20 +164,20 @@ public class NotificationCreation {
         int icon;
 
 
-        if (shouldNotifyCheckin(context)) {
+        if (shouldNotifyCheckIn(context)) {
 
             switch (tag) {
                 case CHECK_IN_BEACON_NOTIFICATION:
-                    notificationTitle = Params.notificationCheckinTitle;
-                    notificationContent = Params.notificationCheckinMsg;
-                    notificationID = Params.notificationCheckinID;
+                    notificationTitle = Params.notificationCheckInTitle;
+                    notificationContent = Params.notificationCheckInMsg;
+                    notificationID = Params.notificationCheckInID;
 
                     break;
                 case CHECK_IN_REMINDER:
-                    notificationTitle = Params.notificationCheckinReminderTitle;
-                    notificationContent = Params.notificationCheckinReminderMsg + Params.HotelName
-                            + Params.notificationCheckinReminderMsg2;
-                    notificationID = Params.notificationCheckinReminderID;
+                    notificationTitle = Params.notificationCheckInReminderTitle;
+                    notificationContent = Params.notificationCheckInReminderMsg + Params.HotelName
+                            + Params.notificationCheckInReminderMsg2;
+                    notificationID = Params.notificationCheckInReminderID;
                     break;
             }
 
@@ -202,7 +193,7 @@ public class NotificationCreation {
                     , notificationContent, CheckInActivity.class);*/
 
             Bundle bundle = new Bundle();
-            bundle.putString(NotificationCreation.CHECK_IN_NOTIFICATION, NotificationCreation.CHECK_IN_NOTIFICATION );
+            bundle.putString(NotificationCreation.CHECK_IN_NOTIFICATION, NotificationCreation.CHECK_IN_NOTIFICATION);
             bundle.putInt(ScheduleNotifications.RESERVATION_ID, resID);
             notification(context, Params.NOTIFICATION_CHANNEL_ID
                     , notificationID, notificationTitle
@@ -245,8 +236,8 @@ public class NotificationCreation {
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
-    //then notifyCheckin
-    private static boolean shouldNotifyCheckin(Context context) {
+    //then notifyCheckIn
+    private static boolean shouldNotifyCheckIn(Context context) {
 
         Reservation currentReservation = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
         return currentReservation != null && currentReservation.getCheckIn() == null;
@@ -374,7 +365,7 @@ public class NotificationCreation {
         //Make the intent to pass on the notification for opening an activity
         Intent intent = new Intent(context, activity);
 
-        if(bundle!=null){
+        if (bundle != null) {
             intent.putExtras(bundle);
         }
 

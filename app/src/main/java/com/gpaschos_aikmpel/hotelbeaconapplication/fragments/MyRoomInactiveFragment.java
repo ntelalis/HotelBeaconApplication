@@ -17,6 +17,8 @@ public class MyRoomInactiveFragment extends Fragment {
 
     public static MyRoomInactiveFragment newInstance() {
         MyRoomInactiveFragment fragment = new MyRoomInactiveFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 

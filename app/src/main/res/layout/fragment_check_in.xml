@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CheckInActivity">
+    tools:context=".fragments.reservation.CheckInFragment">
 
     <Button
-        android:theme="@style/PrimaryButton"
-        android:id="@+id/btnCheckInCheckin"
+        android:id="@+id/btnCheckInCheckIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:text="@string/btnCheckInCheckin"
+        android:text="@string/btnCheckInCheckIn"
+        android:theme="@style/PrimaryButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvCheckInReservationDepartureLabel" />
@@ -52,7 +52,6 @@
         android:id="@+id/tvCheckInReservationArrival"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCheckInReservationArrivalLabel"
         app:layout_constraintStart_toStartOf="@+id/tvCheckInReservationDeparture"
         tools:text="12-09-1985" />
@@ -62,7 +61,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCheckInReservationDepartureLabel"
         app:layout_constraintStart_toEndOf="@+id/tvCheckInReservationDepartureLabel"
         tools:text="14-09-1985" />

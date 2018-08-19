@@ -12,23 +12,17 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 import java.util.List;
 
-public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.MyViewHolder> {
+public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.CheckOutViewHolder> {
 
     private List<ChargeModel> pricesList;
-    private ClickCallbacks clickCallbacks;
 
-    public MyCheckoutAdapter(ClickCallbacks clickCallbacks, List<ChargeModel> pricesList) {
-        this.clickCallbacks = clickCallbacks;
-        this.pricesList = pricesList;
-    }
-
-    public MyCheckoutAdapter(List<ChargeModel> pricesList) {
+    public CheckOutAdapter(List<ChargeModel> pricesList) {
         this.pricesList = pricesList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CheckOutViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
         int layoutId = R.layout.viewholder_checkout;
@@ -36,11 +30,11 @@ public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.My
 
         View view = inflater.inflate(layoutId, parent, false);
 
-        return new MyViewHolder(view);
+        return new CheckOutViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CheckOutViewHolder holder, int position) {
         holder.bind(position);
     }
 
@@ -49,13 +43,13 @@ public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.My
         return pricesList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CheckOutViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tvService;
         private TextView tvPrice;
 
 
-        MyViewHolder(View itemView) {
+        CheckOutViewHolder(View itemView) {
             super(itemView);
 
             tvService = itemView.findViewById(R.id.tvVieHCheckoutService);
@@ -74,11 +68,6 @@ public class MyCheckoutAdapter extends RecyclerView.Adapter<MyCheckoutAdapter.My
 
         }
 
-    }
-
-    public interface ClickCallbacks {
-        void checkOut(ChargeModel obj);
-        void checkIn(ChargeModel obj);
     }
 
     public static class ChargeModel {

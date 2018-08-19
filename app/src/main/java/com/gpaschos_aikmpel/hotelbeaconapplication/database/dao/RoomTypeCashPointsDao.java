@@ -13,7 +13,7 @@ import java.util.List;
 public interface RoomTypeCashPointsDao {
 
     @Query("SELECT * FROM RoomTypeCashPoints WHERE RoomTypeID=:roomTypeID AND Adults=:adults AND CurrencyID=:currencyID")
-    RoomTypeCashPoints getRoomTypeCashPoints(int roomTypeID,int adults, int currencyID);
+    RoomTypeCashPoints getRoomTypeCashPoints(int roomTypeID, int adults, int currencyID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<RoomTypeCashPoints> roomTypePointsAndCashList);

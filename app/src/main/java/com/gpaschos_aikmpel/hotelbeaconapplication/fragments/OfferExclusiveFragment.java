@@ -20,10 +20,10 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffe
 
 import java.util.List;
 
-public class OfferExclusiveFragment extends Fragment  {
+public class OfferExclusiveFragment extends Fragment {
 
     private FragmentCallbacks fragmentCallbacks;
-    private static final String TAG = OfferExclusiveFragment.class.getSimpleName();
+    public static final String TAG = OfferExclusiveFragment.class.getSimpleName();
     private List<ExclusiveOffer> offersList;
     private RecyclerView recyclerView;
 
@@ -45,8 +45,7 @@ public class OfferExclusiveFragment extends Fragment  {
         super.onAttach(context);
         if (context instanceof FragmentCallbacks) {
             fragmentCallbacks = (FragmentCallbacks) context;
-        }
-        else {
+        } else {
             throw new ClassCastException("interface FragmentCallbacks must be implemented");
         }
     }
@@ -58,7 +57,7 @@ public class OfferExclusiveFragment extends Fragment  {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_offer_exclusive, container, false);
@@ -71,7 +70,7 @@ public class OfferExclusiveFragment extends Fragment  {
         return view;
     }
 
-    public void refreshData(){
+    public void refreshData() {
         offersList = RoomDB.getInstance(getContext()).exclusiveOfferDao().getExclusiveOffersForRecyclerView();
         recyclerView.setAdapter(new ExclusiveOfferAdapter(offersList));
         recyclerView.getAdapter().notifyDataSetChanged();
@@ -81,7 +80,7 @@ public class OfferExclusiveFragment extends Fragment  {
 
         private List<ExclusiveOffer> offerList;
 
-        public ExclusiveOfferAdapter(List<ExclusiveOffer> offerList) {
+        ExclusiveOfferAdapter(List<ExclusiveOffer> offerList) {
             this.offerList = offerList;
         }
 
@@ -130,7 +129,7 @@ public class OfferExclusiveFragment extends Fragment  {
             private int offerID;
             private Button btnCode;
 
-            public ExclusiveOfferViewHolder(View itemView, int offerType) {
+            ExclusiveOfferViewHolder(View itemView, int offerType) {
                 super(itemView);
                 switch (offerType) {
                     case 0:
@@ -158,7 +157,7 @@ public class OfferExclusiveFragment extends Fragment  {
                 }
             }
 
-            public void setTitle1(String title) {
+            void setTitle1(String title) {
                 tvTitle.setText(title);
             }
 
@@ -166,11 +165,11 @@ public class OfferExclusiveFragment extends Fragment  {
                 tvDetails.setText(details);
             }
 
-            public void setDiscountPrice(String discountPrice) {
+            void setDiscountPrice(String discountPrice) {
                 tvDiscountPrice.setText(discountPrice);
             }
 
-            public void setOfferID(int offerID) {
+            void setOfferID(int offerID) {
                 this.offerID = offerID;
             }
 
@@ -195,28 +194,11 @@ public class OfferExclusiveFragment extends Fragment  {
                 tvCodeLabel.setVisibility(visibility);
             }
 
-
-            public String getTitle1() {
-                return tvTitle.getText().toString();
-            }
-
-            public String getDetails() {
-                return tvDetails.getText().toString();
-            }
-
-            public String getDiscountPrice() {
-                return tvDiscountPrice.getText().toString();
-            }
-
-            public int getOfferID() {
-                return this.offerID;
-            }
-
             public String getCode() {
                 return tvCode.getText().toString();
             }
 
-            public void setData(String title, String details, String discountPrice, String code, int offerID) {
+            void setData(String title, String details, String discountPrice, String code, int offerID) {
                 setTitle1(title);
                 setDetails(details);
                 setDiscountPrice(discountPrice);
@@ -226,7 +208,8 @@ public class OfferExclusiveFragment extends Fragment  {
         }
 
     }
-    public interface FragmentCallbacks{
+
+    public interface FragmentCallbacks {
         void getCoupon(int offerID);
     }
 }

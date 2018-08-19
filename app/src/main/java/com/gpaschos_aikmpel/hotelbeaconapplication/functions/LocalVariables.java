@@ -96,8 +96,8 @@ public class LocalVariables {
     }
 
     public static Bitmap readImage(Context context, String filename) {
-        byte[] imageData = readFile(context,filename);
-        return BitmapFactory.decodeByteArray(imageData,0,imageData.length);
+        byte[] imageData = readFile(context, filename);
+        return BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
     }
 
 }

@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,37 +16,26 @@ import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
 
     private List<FoodOrderView> foodList;
-    private ClickCallbacks clickCallbacks;
-
-    public FoodAdapter(ClickCallbacks clickCallbacks, List<FoodOrderView> foodList) {
-        this.foodList = foodList;
-        this.clickCallbacks = clickCallbacks;
-    }
 
     public FoodAdapter() {
         this.foodList = new ArrayList<>();
     }
 
-    public void addFood(FoodOrderView foodOrderView){
+    public void addFood(FoodOrderView foodOrderView) {
         this.foodList.add(foodOrderView);
         notifyDataSetChanged();
     }
 
-    public void removeFood(FoodOrderView foodOrderView){
-        this.foodList.remove(foodOrderView);
-        notifyDataSetChanged();
-    }
-
-    public List<FoodOrderView> getFoodList(){
+    public List<FoodOrderView> getFoodList() {
         return foodList;
     }
 
-    public double totalCost(){
+    public double totalCost() {
         double total = 0;
-        for(FoodOrderView foodOrderView: foodList){
-            total+=Math.round(foodOrderView.price *foodOrderView.quantity*100.0)/100.0;
+        for (FoodOrderView foodOrderView : foodList) {
+            total += Math.round(foodOrderView.price * foodOrderView.quantity * 100.0) / 100.0;
         }
-        return Math.round(total*100.0)/100.0;
+        return Math.round(total * 100.0) / 100.0;
     }
 
     @NonNull
@@ -73,7 +61,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         return foodList.size();
     }
 
-    public class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class FoodViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvFoodOrderTitle;
         private TextView tvFoodOrderQuantity;
@@ -91,23 +79,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
             tvFoodOrderQuantity.setText(String.valueOf(foodList.get(position).quantity));
             tvFoodOrderPrice.setText(String.valueOf(foodList.get(position).price));
         }
-
-        @Override
-        public void onClick(View view) {
-            /*if (view.getId() == ivRoomImage.getId()) {
-                BitmapDrawable drawable = (BitmapDrawable) ((ImageView) view).getDrawable();
-                clickCallbacks.imgClicked(drawable.getBitmap());
-            } else if (view.getId() == btnRoomBook.getId()) {
-                int positionInList = getAdapterPosition();
-                clickCallbacks.bookRoom(foodList.get(positionInList));
-            }*/
-        }
-    }
-
-    public interface ClickCallbacks {
-        void imgClicked(Bitmap bitmap);
-
-        void bookRoom(MyRoomsAdapter.ModelRoomView obj);
     }
 
     public static class FoodOrderView {
@@ -117,7 +88,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         public int quantity;
         public double price;
 
-        public FoodOrderView(int id,String title, int quantity, double price) {
+        public FoodOrderView(int id, String title, int quantity, double price) {
             this.id = id;
             this.title = title;
             this.quantity = quantity;

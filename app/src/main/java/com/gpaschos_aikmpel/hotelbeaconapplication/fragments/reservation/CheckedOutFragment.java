@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
 import android.os.Bundle;
@@ -20,8 +20,11 @@ public class CheckedOutFragment extends Fragment {
 
     public static CheckedOutFragment newInstance() {
         CheckedOutFragment fragment = new CheckedOutFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -17,8 +17,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRe
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -182,12 +182,12 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.exclusiveOffersUrl, params);
     }
 
-    private void getLoyalty(Customer customer) {
+    public void getLoyalty(Customer customer) {
         Map<String, String> params = new HashMap<>();
         params.put(POST.loyaltyProgramCustomerID, String.valueOf(customer.getCustomerId()));
         Loyalty loyalty = roomDB.loyaltyDao().getLoyalty();
-        if(loyalty!=null){
-            params.put(POST.loyaltyProgramModified,loyalty.getModified());
+        if (loyalty != null) {
+            params.put(POST.loyaltyProgramModified, loyalty.getModified());
         }
         volleyQueue.jsonRequest(this, URL.loyaltyPointsURL, params);
 
@@ -537,7 +537,7 @@ public class SyncServerData implements JsonListener {
                     roomDB.reservationDao().insertAll(reservationList);
                     Log.i(TAG, "Reservations OK!");
 
-                    //sync the roombeaconRegions since the reservation syncing is finished
+                    //sync the roomBeaconRegions since the reservation syncing is finished
                     getRoomBeaconRegion();
                     //syncCallbacks.customerDataSynced();
                 } catch (JSONException e) {

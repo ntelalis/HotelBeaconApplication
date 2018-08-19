@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity"
-    android:background="@drawable/hotel_image">
+    android:background="@drawable/hotel_image"
+    tools:context=".activities.LoginActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/glForgotLeft"
@@ -22,11 +22,11 @@
         app:layout_constraintGuide_percent="0.9" />
 
     <FrameLayout
-        android:animateLayoutChanges="true"
-        android:background="@drawable/rrr"
         android:id="@+id/ForgotFragmentContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:background="@drawable/login_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glForgotRight"
         app:layout_constraintStart_toStartOf="@+id/glForgotLeft"

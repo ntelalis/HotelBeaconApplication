@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -22,7 +21,7 @@ public class HoloCircularProgressBar extends View {
     /**
      * TAG constant for logging
      */
-    private static final String TAG = HoloCircularProgressBar.class.getSimpleName();
+    public static final String TAG = HoloCircularProgressBar.class.getSimpleName();
 
     /**
      * used to save the super state on configuration change
@@ -82,7 +81,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * The gravity of the view. Where should the Circle be drawn within the given bounds
-     *
+     * <p>
      * {@link #computeInsets(int, int)}
      */
     private int mGravity = Gravity.CENTER;
@@ -146,7 +145,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * Radius of the circle
-     *
+     * <p>
      * <p> Note: (Re)calculated in {@link #onMeasure(int, int)}. </p>
      */
     private float mRadius;
@@ -158,7 +157,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * The Thumb pos x.
-     *
+     * <p>
      * Care. the position is not the position of the rotated thumb. The position is only calculated
      * in {@link #onMeasure(int, int)}
      */
@@ -166,7 +165,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * The Thumb pos y.
-     *
+     * <p>
      * Care. the position is not the position of the rotated thumb. The position is only calculated
      * in {@link #onMeasure(int, int)}
      */
@@ -545,7 +544,7 @@ public class HoloCircularProgressBar extends View {
 
     /**
      * Compute insets.
-     *
+     * <p>
      * <pre>
      *  ______________________
      * |_________dx/2_________|
@@ -561,9 +560,7 @@ public class HoloCircularProgressBar extends View {
     @SuppressLint("NewApi")
     private void computeInsets(final int dx, final int dy) {
         int absoluteGravity = mGravity;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            absoluteGravity = Gravity.getAbsoluteGravity(mGravity, getLayoutDirection());
-        }
+        absoluteGravity = Gravity.getAbsoluteGravity(mGravity, getLayoutDirection());
 
         switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
             case Gravity.START:

@@ -73,7 +73,7 @@
         android:shadowDx="2.5"
         android:shadowDy="2.3"
         android:shadowRadius="3.6"
-        android:text="Account Number:"
+        android:text="@string/tvNavigationDrawerAccountNumberLabel"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvNavigationDrawerAccountNumber"

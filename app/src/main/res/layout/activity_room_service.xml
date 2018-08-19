@@ -63,5 +63,5 @@
 
     <include
         android:id="@+id/roomServiceBottomSheet"
-        layout="@layout/bottomsheet_food_order" />
+        layout="@layout/bottom_sheet_food_order" />
 </android.support.design.widget.CoordinatorLayout>

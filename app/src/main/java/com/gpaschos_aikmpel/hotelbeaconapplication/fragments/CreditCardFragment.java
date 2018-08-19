@@ -47,7 +47,7 @@ public class CreditCardFragment extends Fragment {
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(arrayAdapter);
 
-        EditText etCreditCard = v.findViewById(R.id.etCrediCardCard);
+        EditText etCreditCard = v.findViewById(R.id.etCreditCardCard);
         etCreditCard.addTextChangedListener(new FourDigitCardFormatWatcher());
         return v;
     }

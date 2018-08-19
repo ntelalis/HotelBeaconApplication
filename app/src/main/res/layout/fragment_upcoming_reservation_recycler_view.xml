@@ -6,7 +6,7 @@
     tools:context=".fragments.reservation.UpcomingReservationRecyclerViewFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvFragmentUpcomingRevervation"
+        android:id="@+id/rvFragmentUpcomingReservation"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

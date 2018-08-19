@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.database.dao;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -31,8 +30,10 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation r1 WHERE r1.id=:id")
     Reservation getReservationByID(int id);
 
+    /*
     @Query("SELECT * FROM Reservation r1 WHERE r1.StartDate >= :startDate AND r1.endDate <= :endDate")
     Reservation getReservationWithinDate(String startDate, String endDate);
+    */
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Reservation reservation);

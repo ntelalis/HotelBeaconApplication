@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
-import com.gpaschos_aikmpel.hotelbeaconapplication.activities.NewReservationActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.activities.ReservationActivity;
 
 
 public class UpcomingReservationNoneFragment extends Fragment {
@@ -31,12 +31,12 @@ public class UpcomingReservationNoneFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.new_fragment_upcoming_reservation_none, container, false);
+        View view = inflater.inflate(R.layout.fragment_upcoming_reservation_none, container, false);
         Button btnReserve = view.findViewById(R.id.btnUpcomingReservationsNone);
         btnReserve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), NewReservationActivity.class);
+                Intent intent = new Intent(getContext(), ReservationActivity.class);
                 startActivity(intent);
             }
         });

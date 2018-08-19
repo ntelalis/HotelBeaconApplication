@@ -16,9 +16,9 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.LoyaltyDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.OfferBeaconRegionDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.ReservationDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeCashDao;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeCashPointsDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypePointsDao;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.RoomTypeCashPointsDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.TitleDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
@@ -32,8 +32,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRe
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashPoints;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 
 @Database(entities = {Customer.class, Reservation.class, RoomType.class, Country.class, Loyalty.class, RoomTypeCash.class, RoomTypePoints.class, RoomTypeCashPoints.class, Currency.class, Title.class, BeaconRegion.class, BeaconRegionFeature.class, GeneralOffer.class, ExclusiveOffer.class, OfferBeaconRegion.class}, version = 1, exportSchema = false)
@@ -44,12 +44,11 @@ public abstract class RoomDB extends RoomDatabase {
 
     public static RoomDB getInstance(Context context) {
         if (dbInstance == null) {
-            //FIXME dont use allowMainThreadQueries
+            //FIXME don't use allowMainThreadQueries
             dbInstance = Room.databaseBuilder(context.getApplicationContext(), RoomDB.class, DB_NAME).allowMainThreadQueries().build();
         }
         return dbInstance;
     }
-    
 
     public abstract CustomerDao customerDao();
 

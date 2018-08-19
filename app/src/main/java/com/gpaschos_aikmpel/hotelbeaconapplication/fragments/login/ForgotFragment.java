@@ -32,7 +32,6 @@ public class ForgotFragment extends Fragment implements JsonListener {
     private LoginCallbacks listener;
 
     private TextInputEditText tietEmail;
-    private Button btnReset;
 
     public ForgotFragment() {
         // Required empty public constructor
@@ -62,7 +61,7 @@ public class ForgotFragment extends Fragment implements JsonListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_forgot, container, false);
         tietEmail = v.findViewById(R.id.tietForgotEmail);
-        btnReset = v.findViewById(R.id.btnForgotReset);
+        Button btnReset = v.findViewById(R.id.btnForgotReset);
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override

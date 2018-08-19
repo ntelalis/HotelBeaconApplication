@@ -24,10 +24,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ForgotVerifyFragment extends Fragment implements JsonListener {
 
     private static final String email_KEY = "email";
@@ -36,7 +32,6 @@ public class ForgotVerifyFragment extends Fragment implements JsonListener {
     private String code;
 
     private TextInputEditText tietVerify;
-    private Button btnVerify;
 
     private LoginCallbacks listener;
 
@@ -78,7 +73,7 @@ public class ForgotVerifyFragment extends Fragment implements JsonListener {
 
         View v = inflater.inflate(R.layout.fragment_forgot_verify, container, false);
         tietVerify = v.findViewById(R.id.tietForgotVerifyCode);
-        btnVerify = v.findViewById(R.id.btnForgotVerifyConfirm);
+        Button btnVerify = v.findViewById(R.id.btnForgotVerifyConfirm);
 
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
