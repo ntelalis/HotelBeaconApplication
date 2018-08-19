@@ -69,9 +69,9 @@ public class NotificationCreation{
         String notificationTitle, notificationContent;
 
         if (exclusiveOffer.isSpecial()) {
-            notificationTitle = "Special offer just for you!";
+            notificationTitle = "Exclusive offer";
         } else {
-            notificationTitle = "Here is an exclusive offer";
+            notificationTitle = "Offer reminder";
         }
         notificationContent = exclusiveOffer.getDescription();
 

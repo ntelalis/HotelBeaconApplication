@@ -107,7 +107,7 @@ public class OfferExclusiveFragment extends Fragment  {
         @Override
         public void onBindViewHolder(@NonNull ExclusiveOfferViewHolder holder, int position) {
             ExclusiveOffer offer = offerList.get(position);
-            holder.setData(offer.getDescription(), offer.getDetails(), offer.getPriceDiscount(), offer.getCode(), offer.getId());
+            holder.setData(offer.getTitle(), offer.getDescription(), offer.getDetails(), offer.getPriceDiscount(), offer.getCode(), offer.getId());
         }
 
         @Override
@@ -123,6 +123,7 @@ public class OfferExclusiveFragment extends Fragment  {
         class ExclusiveOfferViewHolder extends RecyclerView.ViewHolder {
 
             private TextView tvTitle;
+            private TextView tvDescription;
             private TextView tvDetails;
             private TextView tvDiscountPrice;
             private TextView tvCode;
@@ -162,6 +163,11 @@ public class OfferExclusiveFragment extends Fragment  {
                 tvTitle.setText(title);
             }
 
+            public void setDescription1(String description) {
+                tvDetails.setText(description);
+            }
+
+
             public void setDetails(String details) {
                 tvDetails.setText(details);
             }
@@ -200,6 +206,11 @@ public class OfferExclusiveFragment extends Fragment  {
                 return tvTitle.getText().toString();
             }
 
+
+            public String getDescription1() {
+                return tvTitle.getText().toString();
+            }
+
             public String getDetails() {
                 return tvDetails.getText().toString();
             }
@@ -216,8 +227,9 @@ public class OfferExclusiveFragment extends Fragment  {
                 return tvCode.getText().toString();
             }
 
-            public void setData(String title, String details, String discountPrice, String code, int offerID) {
+            public void setData(String title, String description, String details, String discountPrice, String code, int offerID) {
                 setTitle1(title);
+                setDescription1(description);
                 setDetails(details);
                 setDiscountPrice(discountPrice);
                 setCode(code);

@@ -340,6 +340,7 @@ public class POST {
     public static final String exclusiveOfferPrice = "price";
     public static final String exclusiveOfferDiscount = "discount";
     public static final String exclusiveOfferPriceDiscount = "priceDiscount";
+    public static final String exclusiveOfferTitle = "title";
     public static final String exclusiveOfferDescription = "description";
     public static final String exclusiveOfferDetails = "details";
     public static final String exclusiveOfferSpecial = "special";
