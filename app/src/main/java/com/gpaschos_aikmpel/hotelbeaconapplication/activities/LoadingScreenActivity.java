@@ -93,13 +93,14 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                             public void run() {
                                 if (!finishedSyncing) {
                                     NoInternetDialog dialog = NoInternetDialog.newInstance();
-                                    dialog.show(getSupportFragmentManager(), "NoInternetDialog");
+                                    getSupportFragmentManager().beginTransaction().add(dialog,NoInternetDialog.TAG).commitAllowingStateLoss();
                                 }
                             }
                         }, 15000);
                     } else {
                         NoInternetDialog dialog = NoInternetDialog.newInstance();
-                        dialog.show(getSupportFragmentManager(), "NoInternetDialog");
+                        getSupportFragmentManager().beginTransaction().add(dialog,NoInternetDialog.TAG).commitAllowingStateLoss();
+                        //dialog.show(getSupportFragmentManager(), "NoInternetDialog");
                     }
                 }
             }
@@ -112,6 +113,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
             finishedSyncing = true;
 
+            Log.d("WTF","WTF!");
             try {
                 int customerId = json.getInt(POST.loginCustomerID);
                 String title = JSONHelper.getString(json,POST.loginTitle);
@@ -127,13 +129,16 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
                 String modified = JSONHelper.getString(json,POST.loginModified);
 
+                Log.d("WTF",address1);
                 RoomDB roomDB = RoomDB.getInstance(this);
                 Customer c = roomDB.customerDao().getCustomer();
                 c.update(customerId,title,firstName,lastName,birthDate,country,phone,address1,address2,city,postalCode,oldCustomer,modified);
+                Log.d("WTF",c.getAddress1());
                 roomDB.customerDao().insert(c);
+                Log.d("WTF",RoomDB.getInstance(this).customerDao().getCustomer().getAddress1());
 
             } catch (JSONException e) {
-                Log.d(TAG, "No data modified");
+                Log.e("WTF", e.toString());
             }
 
 
@@ -171,6 +176,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
         params.put(POST.loginEmail, customer.getEmail());
         params.put(POST.loginPassword, customer.getPassword());
+        Log.d("WTF!!", customer.getModified());
         params.put(POST.loginModified, customer.getModified());
 
         VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);

@@ -13,6 +13,7 @@ import java.util.Objects;
 
 public class NoInternetDialog extends DialogFragment {
 
+    public static final String TAG = NoInternetDialog.class.getSimpleName();
     private NoInternetDialogListener listener;
 
     @Override

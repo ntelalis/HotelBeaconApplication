@@ -34,11 +34,11 @@ public class POST {
     public static final String loginLastName = "lastName";
     public static final String loginBirthDate = "birthDate";
     public static final String loginCountry = "country";
+    public static final String loginPhone = "phone";
     public static final String loginAddress1 = "address1";
     public static final String loginAddress2 = "address2";
     public static final String loginCity = "city";
     public static final String loginPostalCode = "postalCode";
-    public static final String loginPhone = "phone";
     public static final String loginOldCustomer = "oldCustomer";
     public static final String loginModified = "modified";
 
