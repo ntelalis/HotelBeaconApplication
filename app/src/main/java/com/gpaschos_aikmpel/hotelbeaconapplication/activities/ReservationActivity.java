@@ -65,7 +65,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_reservation);
+        setContentView(R.layout.activity_reservation);
 
         drawerLayout = findViewById(R.id.reservationDrawerLayout);
         NavigationView navigationView = findViewById(R.id.appNavigationDrawer);
