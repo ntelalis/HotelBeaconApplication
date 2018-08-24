@@ -592,6 +592,7 @@ public class SyncServerData implements JsonListener {
                         int serviceID = jsonObject.getInt(POST.exclusiveOfferServiceID);
                         String priceDiscount = JSONHelper.getString(jsonObject, POST.exclusiveOfferPriceDiscount);
                         String description = JSONHelper.getString(jsonObject, POST.exclusiveOfferDescription);
+                        String title = JSONHelper.getString(jsonObject, POST.exclusiveOfferTitle);
                         String details = JSONHelper.getString(jsonObject, POST.exclusiveOfferDetails);
                         boolean special = jsonObject.getBoolean(POST.exclusiveOfferSpecial);
                         String startDate = JSONHelper.getString(jsonObject, POST.exclusiveOfferStartDate);
@@ -599,7 +600,7 @@ public class SyncServerData implements JsonListener {
                         String code = JSONHelper.getString(jsonObject, POST.exclusiveOfferCode);
                         boolean codeUsed = jsonObject.getBoolean(POST.exclusiveOfferCodeUsed);
                         String codeCreated = JSONHelper.getString(jsonObject, POST.exclusiveOfferCodeCreated);
-                        exclusiveOfferList.add(new ExclusiveOffer(id, serviceID, priceDiscount, description, details, special, startDate, endDate, code, codeUsed, codeCreated, modified));
+                        exclusiveOfferList.add(new ExclusiveOffer(id, serviceID, priceDiscount, title, description, details, special, startDate, endDate, code, codeUsed, codeCreated, modified));
                     }
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
                     Log.i(TAG, "ExclusiveOffers OK!");

@@ -13,6 +13,7 @@ public class ExclusiveOffer implements SyncModel {
     private int serviceID;
     private String priceDiscount;
     private String description;
+    private String title;
     private String details;
     private boolean special;
     private String startDate;
@@ -22,11 +23,19 @@ public class ExclusiveOffer implements SyncModel {
     private String codeCreated;
     private String modified;
 
-    public ExclusiveOffer(int id, int serviceID, String priceDiscount, String description, String details, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
+
+    public void updateCoupon(String code, boolean codeUsed, String codeCreated) {
+        this.code = code;
+        this.codeUsed = codeUsed;
+        this.codeCreated = codeCreated;
+    }
+
+    public ExclusiveOffer(int id, int serviceID, String priceDiscount, String title, String description, String details, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
         this.id = id;
         this.serviceID = serviceID;
         this.priceDiscount = priceDiscount;
         this.description = description;
+        this.title = title;
         this.details = details;
         this.special = special;
         this.startDate = startDate;
@@ -35,12 +44,6 @@ public class ExclusiveOffer implements SyncModel {
         this.codeUsed = codeUsed;
         this.codeCreated = codeCreated;
         this.modified = modified;
-    }
-
-    public void updateCoupon(String code, boolean codeUsed, String codeCreated) {
-        this.code = code;
-        this.codeUsed = codeUsed;
-        this.codeCreated = codeCreated;
     }
 
     @Override
@@ -74,6 +77,14 @@ public class ExclusiveOffer implements SyncModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDetails() {

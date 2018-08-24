@@ -21,7 +21,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,16 +46,18 @@
             app:layout_constraintStart_toEndOf="@+id/ivOfferExclusiveImage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            tools:text="15% Off Dining at Restaurant for Saturday" />
+            tools:text="Lobster &amp; Champagne" />
 
         <TextView
             android:id="@+id/tvOfferExclusiveDetails"
             android:layout_width="187dp"
-            android:layout_height="wrap_content"
+            android:layout_height="29dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:textSize="12sp"
             android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/ivOfferExclusiveImage"
             app:layout_constraintStart_toStartOf="@+id/tvOfferExclusiveTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvOfferExclusiveTitle"
             tools:text="The offer starts from 2pm until 11pm" />

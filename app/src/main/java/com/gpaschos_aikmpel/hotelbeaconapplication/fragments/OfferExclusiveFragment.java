@@ -5,18 +5,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert.ViewOfferDetailsFragment;
 
 import java.util.List;
 
@@ -106,7 +110,7 @@ public class OfferExclusiveFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ExclusiveOfferViewHolder holder, int position) {
             ExclusiveOffer offer = offerList.get(position);
-            holder.setData(offer.getDescription(), offer.getDetails(), offer.getPriceDiscount(), offer.getCode(), offer.getId());
+            holder.setData(offer.getTitle(), offer.getDescription(), offer.getDetails(), offer.getPriceDiscount(), offer.getCode(), offer.getId());
         }
 
         @Override
@@ -119,17 +123,19 @@ public class OfferExclusiveFragment extends Fragment {
             return offerList.size();
         }
 
-        class ExclusiveOfferViewHolder extends RecyclerView.ViewHolder {
+        class ExclusiveOfferViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             private TextView tvTitle;
+           // private TextView tvDescription;
             private TextView tvDetails;
             private TextView tvDiscountPrice;
             private TextView tvCode;
             private TextView tvCodeLabel;
             private int offerID;
+            private String description;
             private Button btnCode;
 
-            ExclusiveOfferViewHolder(View itemView, int offerType) {
+            public ExclusiveOfferViewHolder(View itemView, int offerType) {
                 super(itemView);
                 switch (offerType) {
                     case 0:
@@ -155,11 +161,18 @@ public class OfferExclusiveFragment extends Fragment {
                         tvCodeLabel = itemView.findViewById(R.id.tvOfferSpecialCodeLabel);
                         break;
                 }
+                //MEGALES ALLAGES!!!!!!!!!!!
+                itemView.setOnClickListener(this);
             }
 
             void setTitle1(String title) {
                 tvTitle.setText(title);
             }
+
+            public void setDescription1(String description) {
+                this.description = description;
+            }
+
 
             public void setDetails(String details) {
                 tvDetails.setText(details);
@@ -194,16 +207,51 @@ public class OfferExclusiveFragment extends Fragment {
                 tvCodeLabel.setVisibility(visibility);
             }
 
+
+            public String getTitle1() {
+                return tvTitle.getText().toString();
+            }
+
+
+            public String getDescription1() {
+                return description;
+            }
+
+            public String getDetails() {
+                return tvDetails.getText().toString();
+            }
+
+            public String getDiscountPrice() {
+                return tvDiscountPrice.getText().toString();
+            }
+
+            public int getOfferID() {
+                return this.offerID;
+            }
+
             public String getCode() {
                 return tvCode.getText().toString();
             }
 
-            void setData(String title, String details, String discountPrice, String code, int offerID) {
+            void setData(String title, String description, String details, String discountPrice, String code, int offerID) {
                 setTitle1(title);
+                setDescription1(description);
                 setDetails(details);
                 setDiscountPrice(discountPrice);
                 setCode(code);
                 setOfferID(offerID);
+            }
+
+            @Override
+            public void onClick(View v) {
+                Log.d("offer tittle: ", getTitle1());
+                DialogFragment descriptionFragment = ViewOfferDetailsFragment.newInstance(description, getTitle1());
+                if(getFragmentManager() !=null) {
+                    descriptionFragment.show(getFragmentManager(), ViewOfferDetailsFragment.TAG);
+                }
+                else{
+                    Log.e(TAG,"SupportFragmentManager is null");
+                }
             }
         }
 
