@@ -20,7 +20,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,7 +33,6 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
     private RatingBar ratingBar;
     private TextView tvRatingName;
     private EditText etRatingComment;
-    private Button btnRatingSubmit;
 
     private OnReviewInteraction listener;
 
@@ -77,7 +75,7 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
         ratingBar = view.findViewById(R.id.rbReview);
         tvRatingName = view.findViewById(R.id.tvReviewRatingName);
         etRatingComment = view.findViewById(R.id.etReviewComments);
-        btnRatingSubmit = view.findViewById(R.id.btnReviewSubmit);
+        Button btnRatingSubmit = view.findViewById(R.id.btnReviewSubmit);
 
         btnRatingSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +108,7 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) {
         switch (url) {
             case URL.reviewURL:
-            listener.completeReview();
+                listener.completeReview();
         }
     }
 
@@ -119,7 +117,7 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
         Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
     }
 
-    public static String reviewString(float rating){
+    public static String reviewString(float rating) {
         if (rating <= 1.0) {
             return "Poor";
         }

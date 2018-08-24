@@ -16,21 +16,16 @@ import android.widget.TextView;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 
 import java.util.List;
 
-public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAdapter.MyViewHolder> {
+public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapter.MyViewHolder> {
 
     private List<ReservationModel> reservationsList;
     private ClickCallbacks clickCallbacks;
 
-    public MyReservationsAdapter(ClickCallbacks clickCallbacks, List<ReservationModel> reservationsList) {
+    public ReservationsAdapter(ClickCallbacks clickCallbacks, List<ReservationModel> reservationsList) {
         this.clickCallbacks = clickCallbacks;
-        this.reservationsList = reservationsList;
-    }
-
-    public MyReservationsAdapter(List<ReservationModel> reservationsList) {
         this.reservationsList = reservationsList;
     }
 
@@ -65,9 +60,9 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         private TextView tvDeparture;
         private TextView tvAdults;
         private Button btnCheckInCheckOut;
-        private TextView tvCheckedinRoomLabel;
-        private TextView tvCheckedinRoom;
-        private TextView tvCheckinCheckoutInstructions;
+        private TextView tvCheckedInRoomLabel;
+        private TextView tvCheckedInRoom;
+        private TextView tvCheckInCheckOutInstructions;
         private String roomNo;
 
 
@@ -78,10 +73,10 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
-            btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckinCheckOut);
-            tvCheckinCheckoutInstructions = itemView.findViewById(R.id.tvUpcomingReservationsInstructions);
-            tvCheckedinRoomLabel = itemView.findViewById(R.id.tvViewHmyReservationsRoomNoLabel);
-            tvCheckedinRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
+            btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckInCheckOut);
+            tvCheckInCheckOutInstructions = itemView.findViewById(R.id.tvUpcomingReservationsInstructions);
+            tvCheckedInRoomLabel = itemView.findViewById(R.id.tvVHUpcomingReservationsRoomNumberLabel);
+            tvCheckedInRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
             btnCheckInCheckOut.setOnClickListener(this);
         }
 
@@ -105,56 +100,56 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
                     //clickCallbacks.checkIn(reservationsList.get(getAdapterPosition()));
                     int reservationID = reservationsList.get(getAdapterPosition()).reservationID;
                     clickCallbacks.checkIn(reservationID);
-                } else if(r.isCheckedInNotCheckedOut()) {
+                } else if (r.isCheckedInNotCheckedOut()) {
                     clickCallbacks.checkOut(reservationsList.get(getAdapterPosition()));
                 }
             }
         }
 
-        public void buttonAndTextViewsHandler(int reservationStatus, String room) {
+        void buttonAndTextViewsHandler(int reservationStatus, String room) {
             Context context = itemView.getContext();
             switch (reservationStatus) {
                 case ReservationModel.CANNOT_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
-                    tvCheckedinRoom.setVisibility(View.INVISIBLE);
-                    tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
-                    tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
+                    tvCheckedInRoom.setVisibility(View.INVISIBLE);
+                    tvCheckedInRoomLabel.setVisibility(View.INVISIBLE);
+                    tvCheckInCheckOutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(true);
-                    tvCheckedinRoom.setVisibility(View.INVISIBLE);
-                    tvCheckedinRoomLabel.setVisibility(View.INVISIBLE);
-                    tvCheckinCheckoutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
+                    tvCheckedInRoom.setVisibility(View.INVISIBLE);
+                    tvCheckedInRoomLabel.setVisibility(View.INVISIBLE);
+                    tvCheckInCheckOutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
                     break;
                 case ReservationModel.CANNOT_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(false);
-                    TextViewCompat.setTextAppearance(btnCheckInCheckOut,R.style.PrimaryButtonDisabled);
-                    tvCheckedinRoom.setText(room);
-                    tvCheckedinRoom.setVisibility(View.VISIBLE);
-                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
-                    tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
+                    TextViewCompat.setTextAppearance(btnCheckInCheckOut, R.style.PrimaryButtonDisabled);
+                    tvCheckedInRoom.setText(room);
+                    tvCheckedInRoom.setVisibility(View.VISIBLE);
+                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(true);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                    tvCheckedinRoom.setText(room);
-                    tvCheckedinRoom.setVisibility(View.VISIBLE);
-                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
-                    tvCheckinCheckoutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
+                    tvCheckedInRoom.setText(room);
+                    tvCheckedInRoom.setVisibility(View.VISIBLE);
+                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
                     break;
                 case ReservationModel.IS_CHECKED_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
-                    tvCheckedinRoom.setText(room);
-                    tvCheckedinRoom.setVisibility(View.VISIBLE);
-                    tvCheckedinRoomLabel.setVisibility(View.VISIBLE);
-                    tvCheckinCheckoutInstructions.setVisibility(View.INVISIBLE);
+                    tvCheckedInRoom.setText(room);
+                    tvCheckedInRoom.setVisibility(View.VISIBLE);
+                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
+                    tvCheckInCheckOutInstructions.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -166,7 +161,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
         void checkIn(int reservationID);
     }
 
-    public static class ReservationModel implements Parcelable{
+    public static class ReservationModel implements Parcelable {
 
         public static final int CAN_CHECK_IN = 2;
         public static final int CANNOT_CHECK_IN = 1;
@@ -210,7 +205,7 @@ public class MyReservationsAdapter extends RecyclerView.Adapter<MyReservationsAd
             dest.writeInt(this.reservationStatus);
         }
 
-        protected ReservationModel(Parcel in) {
+        ReservationModel(Parcel in) {
             this.adults = in.readInt();
             this.roomTitle = in.readString();
             this.reservationID = in.readInt();

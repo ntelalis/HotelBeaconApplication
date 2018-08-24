@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".fragments.LoyaltyFragment">
 
     <TextView
         android:id="@+id/tvLoyaltyMemberFirstName"
@@ -35,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="@string/tv_loyalty_accountnumber"
+        android:text="@string/tv_loyalty_account_number"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyCustomerID"
         app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyCustomerID" />
 
@@ -71,7 +72,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="0"
+        android:text="@string/loyaltyStartingPoints"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="@+id/cpbLoyalty"
@@ -100,7 +101,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:textStyle="bold|italic"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsNextTierUnlockLabel"
         app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPointsNextTierAtLabel"
@@ -151,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/tvLoyalty_rewardsmember_label"
+        android:text="@string/tvLoyalty_rewards_member_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyRewardsMember"
         app:layout_constraintStart_toEndOf="@+id/tvLoyaltyRewardsMember" />
@@ -171,7 +172,6 @@
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="rewards"
         android:text="@string/btnLoyaltyRewardsSystem"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -179,7 +179,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/ivLoyaltyborder"
+        android:id="@+id/ivLoyaltyBorder"
         android:layout_width="0dp"
         android:layout_height="1dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLoyaltyRewardsSystem"
@@ -188,14 +188,15 @@
         app:srcCompat="@android:color/darker_gray" />
 
     <ImageView
-        android:id="@+id/ivLoyaltyborder2"
+        android:id="@+id/ivLoyaltyBorder2"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:color/darker_gray" />
+        app:srcCompat="@android:color/darker_gray"
+        />
 
     <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
         android:id="@+id/cpbLoyalty"
@@ -205,15 +206,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:stroke_width="16dp"
-        app:progress_color="@color/colorAccent"
-        app:progress_background_color="@color/colorPrimary"
-        app:thumb_visible="false"
-        app:marker_visible="false"
         app:layout_constraintBottom_toTopOf="@+id/guideline5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:marker_visible="false"
+        app:progress_background_color="@color/colorPrimary"
+        app:progress_color="@color/colorAccent"
+        app:stroke_width="16dp"
+        app:thumb_visible="false" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"

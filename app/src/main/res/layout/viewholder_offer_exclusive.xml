@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:text="Get Code"
+            android:text="@string/btnOfferExclusiveCode"
             android:theme="@style/PrimaryButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Exclusive Code:"
+            android:text="@string/tvOfferExclusiveCodeLabel"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvOfferExclusiveCode"
             app:layout_constraintEnd_toStartOf="@+id/tvOfferExclusiveCode" />
 

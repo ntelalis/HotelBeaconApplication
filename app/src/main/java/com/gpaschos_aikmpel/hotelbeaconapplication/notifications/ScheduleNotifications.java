@@ -21,42 +21,42 @@ public class ScheduleNotifications {
 
     public static final String RESERVATION_ID = "reservationID";
 
-    private static final String TAG = ScheduleNotifications.class.getSimpleName();
+    public static final String TAG = ScheduleNotifications.class.getSimpleName();
 
-    public static final String CHECKIN_TAG= "CheckInNotification";
-    public static final String CHECKOUT_TAG= "CheckOutNotification";
+    public static final String CHECK_IN_TAG = "CheckInNotification";
+    public static final String CHECK_OUT_TAG = "CheckOutNotification";
 
-    public static void checkinNotification(Context context, int resID){
+    public static void checkInNotification(Context context, int resID) {
 
         Reservation r = RoomDB.getInstance(context).reservationDao().getReservationByID(resID);
 
-        int windowStart=0;
+        int windowStart = 0;
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
             long formattedTriggerDate = simpleDateFormat.parse(r.getStartDate()).getTime();
-            windowStart = (int)(formattedTriggerDate-currentTime);
-            if(windowStart<0)
-                windowStart=0;
+            windowStart = (int) (formattedTriggerDate - currentTime);
+            if (windowStart < 0)
+                windowStart = 0;
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         Bundle bundle = new Bundle();
-        bundle.putInt(RESERVATION_ID,resID);
+        bundle.putInt(RESERVATION_ID, resID);
 
         FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
         Job checkInJob = dispatcher.newJobBuilder()
                 //What service to call
                 .setService(NotificationJobService.class)
                 //A unique tag
-                .setTag(CHECKIN_TAG+r.getStartDate())
+                .setTag(CHECK_IN_TAG + r.getStartDate())
                 //One time job
                 .setRecurring(false)
                 //Persist reboot
                 .setLifetime(Lifetime.FOREVER)
                 //start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(windowStart,windowStart+30))
+                .setTrigger(Trigger.executionWindow(windowStart, windowStart + 30))
                 //Do not overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 //Retry strategy
@@ -69,17 +69,17 @@ public class ScheduleNotifications {
         dispatcher.mustSchedule(checkInJob);
     }
 
-    public static void checkoutNotification(Context context, String triggerDate){
+    public static void checkoutNotification(Context context, String triggerDate) {
 
 
-        int windowStart=0;
+        int windowStart = 0;
         long currentTime = System.currentTimeMillis();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {
             long formattedTriggerDate = simpleDateFormat.parse(triggerDate).getTime();
-            windowStart = (int)(formattedTriggerDate-currentTime);
-            if(windowStart<0)
-                windowStart=0;
+            windowStart = (int) (formattedTriggerDate - currentTime);
+            if (windowStart < 0)
+                windowStart = 0;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -90,13 +90,13 @@ public class ScheduleNotifications {
                 //What service to call
                 .setService(NotificationJobService.class)
                 //A unique tag
-                .setTag(CHECKOUT_TAG+triggerDate)
+                .setTag(CHECK_OUT_TAG + triggerDate)
                 //One time job
                 .setRecurring(false)
                 //Persist reboot
                 .setLifetime(Lifetime.FOREVER)
                 //start between 0 and 60 seconds from now
-                .setTrigger(Trigger.executionWindow(windowStart,windowStart+5))
+                .setTrigger(Trigger.executionWindow(windowStart, windowStart + 5))
                 //Do not overwrite an existing job with the same tag
                 .setReplaceCurrent(true)
                 //Retry strategy

@@ -71,8 +71,7 @@
             app:layout_constraintEnd_toEndOf="@+id/tvFoodItemCurrency"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/tvFoodItemName"
-            app:layout_constraintTop_toBottomOf="@+id/tvFoodItemName"
-            tools:text="sdfsfsafd  fsd fds fdsf  as dfas dfas dfas fasd fas dfas df" />
+            app:layout_constraintTop_toBottomOf="@+id/tvFoodItemName" />
 
         <TextView
             android:id="@+id/tvFoodItemCurrency"

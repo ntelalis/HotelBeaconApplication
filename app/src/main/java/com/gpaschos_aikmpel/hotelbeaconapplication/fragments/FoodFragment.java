@@ -22,7 +22,6 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
 
     private static final String listKEY = "model_KEY";
 
-    private RecyclerView recyclerView;
     private List<RoomServiceActivity.RoomServiceModel.FoodModel> foodList;
     private OnClickAddToBasket listener;
 
@@ -59,7 +58,7 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_food, container, false);
-        recyclerView = v.findViewById(R.id.rvFoodFragmentRecycler);
+        RecyclerView recyclerView = v.findViewById(R.id.rvFoodFragmentRecycler);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(llm);
         FoodAdapter foodAdapter = new FoodAdapter(foodList, this);
@@ -78,7 +77,7 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
         private List<RoomServiceActivity.RoomServiceModel.FoodModel> foodModelList;
         private OnClickAddToBasket listener;
 
-        public FoodAdapter(List<RoomServiceActivity.RoomServiceModel.FoodModel> foodModelList, OnClickAddToBasket listener) {
+        FoodAdapter(List<RoomServiceActivity.RoomServiceModel.FoodModel> foodModelList, OnClickAddToBasket listener) {
             this.foodModelList = foodModelList;
             this.listener = listener;
         }
@@ -107,7 +106,7 @@ public class FoodFragment extends Fragment implements OnClickAddToBasket {
 
             TextView price, name, description;
 
-            public FoodViewHolder(View itemView) {
+            FoodViewHolder(View itemView) {
                 super(itemView);
                 name = itemView.findViewById(R.id.tvFoodItemName);
                 description = itemView.findViewById(R.id.tvFoodItemDescription);

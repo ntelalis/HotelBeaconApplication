@@ -4,6 +4,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Display;
@@ -39,16 +40,19 @@ public class ImageViewFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_image_view, container, false);
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
 
-        String imgFileName = getArguments().getString(image_KEY);
+        String imgFileName = null;
+        if (getArguments() != null) {
+            imgFileName = getArguments().getString(image_KEY);
+        }
 
         Bitmap imgBitmap = LocalVariables.readImage(getActivity(), imgFileName);
 
@@ -59,7 +63,7 @@ public class ImageViewFragment extends DialogFragment {
             return;
         }
 
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
         int imgHeight = imgBitmap.getHeight();

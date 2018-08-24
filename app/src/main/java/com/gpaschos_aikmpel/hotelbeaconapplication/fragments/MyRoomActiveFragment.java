@@ -22,32 +22,23 @@ public class MyRoomActiveFragment extends Fragment {
     //private static final String CHECK_IN_DATE = "date";
     private static final String RESERVATION_ID = "ID";
     private static final String ROOM_NO = "Room Number";
-    private static final String FLOOR = "Rοom Floor";
+    private static final String FLOOR = "Room Floor";
 
     //private String checkInDate;
     private int reservationID;
     private int floor;
     private int roomNo;
 
-    private Button btnDoorUnlock;
-    private Button btnRoomService;
-    private Button btnCheckOut;
-    private Button btnReview;
-    private Button btnRoomControl;
-    private TextView tvReservationID;
-    private TextView tvRoomNo;
-    private TextView tvRoomFloor;
-
 
     public MyRoomActiveFragment() {
     }
 
-    public static MyRoomActiveFragment newInstance(int reservID,
+    public static MyRoomActiveFragment newInstance(int reservationID,
                                                    int roomNumber, int roomFloor) {
         MyRoomActiveFragment fragment = new MyRoomActiveFragment();
         Bundle args = new Bundle();
         //args.putString(CHECK_IN_DATE, date);
-        args.putInt(RESERVATION_ID, reservID);
+        args.putInt(RESERVATION_ID, reservationID);
         args.putInt(FLOOR, roomFloor);
         args.putInt(ROOM_NO, roomNumber);
         fragment.setArguments(args);
@@ -71,16 +62,16 @@ public class MyRoomActiveFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_room, container, false);
 
         //tvCheckInDate = view.findViewById(R.id.tvCustomerServicesCheckedIn);
-        tvReservationID = view.findViewById(R.id.tvCustomerServicesReservationID);
-        tvRoomFloor = view.findViewById(R.id.tvCustomerServicesFloor);
-        tvRoomNo = view.findViewById(R.id.tvCustomerServicesRoomNo);
+        TextView tvReservationID = view.findViewById(R.id.tvCustomerServicesReservationID);
+        TextView tvRoomFloor = view.findViewById(R.id.tvCustomerServicesFloor);
+        TextView tvRoomNo = view.findViewById(R.id.tvCustomerServicesRoomNo);
 
         //tvCheckInDate.setText(checkInDate);
         tvReservationID.setText(String.valueOf(reservationID));
         tvRoomNo.setText(String.valueOf(roomNo));
         tvRoomFloor.setText(String.valueOf(floor));
 
-        btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
+        Button btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +80,7 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        btnRoomService = view.findViewById(R.id.btnCustomerServicesRoomService);
+        Button btnRoomService = view.findViewById(R.id.btnCustomerServicesRoomService);
         btnRoomService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +89,7 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        btnDoorUnlock = view.findViewById(R.id.btnCustomerServicesUnlockDoor);
+        Button btnDoorUnlock = view.findViewById(R.id.btnCustomerServicesUnlockDoor);
         btnDoorUnlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +98,7 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        btnReview = view.findViewById(R.id.btnCustomerServicesReview);
+        Button btnReview = view.findViewById(R.id.btnCustomerServicesReview);
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,8 +107,8 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        btnDoorUnlock = view.findViewById(R.id.btnCustomerServicesRoomControl);
-        btnDoorUnlock.setOnClickListener(new View.OnClickListener() {
+        Button btnRoomControl = view.findViewById(R.id.btnCustomerServicesRoomControl);
+        btnRoomControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "This feature is not supported yet", Toast.LENGTH_SHORT).show();

@@ -10,8 +10,8 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 
 public class UseLoyaltyPointsFragment extends DialogFragment {
 
@@ -38,7 +38,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static UseLoyaltyPointsFragment newInstance(int totalPoints, int freeNightPoints, int cashPoints, int cashPrice,int days) {
+    public static UseLoyaltyPointsFragment newInstance(int totalPoints, int freeNightPoints, int cashPoints, int cashPrice, int days) {
         Bundle args = new Bundle();
         args.putInt(TOTAL_POINTS, totalPoints);
         args.putInt(POINTS_FREE, freeNightPoints);
@@ -93,7 +93,6 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         pnCashValue = v.findViewById(R.id.pnUsePointsCashAndPoints);
 
 
-
         int maxFreeNightsByPoints = (totalPoints / freePoints);
         pnFreeValue.setMaxValue(maxFreeNightsByPoints < totalDays ? maxFreeNightsByPoints : totalDays);
         int maxCashNightsByPoints = (totalPoints / cashPoints);
@@ -102,14 +101,14 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         pnFreeValue.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
             @Override
             public void onValueChanged(int oldValue, int newValue) {
-                setValues(newValue,pnCashValue.getValue());
+                setValues(newValue, pnCashValue.getValue());
             }
         });
 
         pnCashValue.setOnValueChangedListener(new PickNumber.OnValueChangedListener() {
             @Override
             public void onValueChanged(int oldValue, int newValue) {
-                setValues(pnFreeValue.getValue(),newValue);
+                setValues(pnFreeValue.getValue(), newValue);
             }
         });
 
@@ -119,7 +118,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (getTargetFragment() != null) {
-                    ((BookFragment)getTargetFragment()).onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedTotal.getText().toString()));
+                    ((BookFragment) getTargetFragment()).onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedTotal.getText().toString()));
                 }
             }
         });
@@ -129,9 +128,9 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
 
     }
 
-    private void setValues(int freeValue, int cashValue){
+    private void setValues(int freeValue, int cashValue) {
 
-        tvSelectedDays.setText(String.valueOf(freeValue+cashValue));
+        tvSelectedDays.setText(String.valueOf(freeValue + cashValue));
 
         int freeTotal = freeValue * freePoints;
         int cashTotal = cashValue * cashPoints;

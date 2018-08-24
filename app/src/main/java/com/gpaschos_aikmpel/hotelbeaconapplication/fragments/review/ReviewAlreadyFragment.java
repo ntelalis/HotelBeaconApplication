@@ -23,10 +23,6 @@ public class ReviewAlreadyFragment extends Fragment {
     private double rating;
     private String comments;
 
-    private RatingBar rbRating;
-    private TextView tvRating;
-    private EditText etComments;
-
     public ReviewAlreadyFragment() {
         // Required empty public constructor
     }
@@ -54,12 +50,12 @@ public class ReviewAlreadyFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review_already, container, false);
-        rbRating = view.findViewById(R.id.rbReviewAlreadyRating);
+        RatingBar rbRating = view.findViewById(R.id.rbReviewAlreadyRating);
         rbRating.setRating((float) rating);
         rbRating.setIsIndicator(true);
-        tvRating = view.findViewById(R.id.tvReviewAlreadyRating);
+        TextView tvRating = view.findViewById(R.id.tvReviewAlreadyRating);
         tvRating.setText(ReviewWriteFragment.reviewString((float) rating));
-        etComments = view.findViewById(R.id.etReviewAlreadyComments);
+        EditText etComments = view.findViewById(R.id.etReviewAlreadyComments);
         etComments.setText(comments);
         etComments.setKeyListener(null);
         return view;

@@ -8,14 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
-import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotNewPasswordFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.ForgotVerifyFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login.LoginFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 
-public class LoginActivity extends AppCompatActivity implements LoginCallbacks,SyncServerData.SyncCallbacks {
+public class LoginActivity extends AppCompatActivity implements LoginCallbacks, SyncServerData.SyncCallbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks,S
     @Override
     public void finishedForgot(String email) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in,android.R.anim.fade_out);
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
         ForgotVerifyFragment forgotVerifyFragment = ForgotVerifyFragment.newInstance(email);
         transaction.addToBackStack(null);
         transaction.replace(R.id.ForgotFragmentContainer, forgotVerifyFragment);
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks,S
     @Override
     public void finishedVerify(String email, String code) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in,android.R.anim.fade_out);
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
         ForgotNewPasswordFragment forgotNewPasswordFragment = ForgotNewPasswordFragment.newInstance(email, code);
         transaction.addToBackStack(null);
         transaction.replace(R.id.ForgotFragmentContainer, forgotNewPasswordFragment);
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoginCallbacks,S
     public void showForgot() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ForgotFragment forgotFragment = ForgotFragment.newInstance();
-        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in,android.R.anim.fade_out);
+        transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out, android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.addToBackStack(null);
         transaction.replace(R.id.ForgotFragmentContainer, forgotFragment);
         transaction.commit();

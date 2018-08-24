@@ -90,7 +90,7 @@ public class ReviewCheckFragment extends Fragment implements JsonListener {
             double rating = json.getDouble(POST.reviewCheckRating);
             String comments = json.getString(POST.reviewCheckComments);
 
-            listener.checkReview(rating,comments);
+            listener.checkReview(rating, comments);
             pbReviewCheck.setVisibility(View.VISIBLE);
             tvReviewCheckMessage.setVisibility(View.INVISIBLE);
 

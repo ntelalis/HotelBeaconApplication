@@ -40,7 +40,7 @@ public class OfferGeneralFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_offer_general, container, false);
         RecyclerView recyclerView = v.findViewById(R.id.rvOfferGeneral);
@@ -54,7 +54,7 @@ public class OfferGeneralFragment extends Fragment {
 
         private List<GeneralOffer> generalOfferList;
 
-        public GeneralOfferAdapter(List<GeneralOffer> generalOfferList) {
+        GeneralOfferAdapter(List<GeneralOffer> generalOfferList) {
             this.generalOfferList = generalOfferList;
         }
 
@@ -80,11 +80,11 @@ public class OfferGeneralFragment extends Fragment {
 
         class GeneralOfferViewHolder extends RecyclerView.ViewHolder {
 
-            public TextView tvOfferTitle;
-            public TextView tvOfferDetails;
-            public TextView tvOfferDiscountPrice;
+            TextView tvOfferTitle;
+            TextView tvOfferDetails;
+            TextView tvOfferDiscountPrice;
 
-            public GeneralOfferViewHolder(View itemView) {
+            GeneralOfferViewHolder(View itemView) {
                 super(itemView);
                 tvOfferTitle = itemView.findViewById(R.id.tvOfferGeneralTitle);
                 tvOfferDetails = itemView.findViewById(R.id.tvOfferGeneralDetails);

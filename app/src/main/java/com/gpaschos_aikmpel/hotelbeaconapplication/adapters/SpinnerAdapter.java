@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MySpinnerAdapter<T> extends ArrayAdapter<T> implements android.widget.SpinnerAdapter {
+public class SpinnerAdapter<T> extends ArrayAdapter<T> implements android.widget.SpinnerAdapter {
 
-    public MySpinnerAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
+    public SpinnerAdapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
         super(context, resource, objects);
     }
 

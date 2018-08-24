@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.login;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginFragment extends Fragment implements JsonListener{
+public class LoginFragment extends Fragment implements JsonListener {
 
     private EditText etEmail;
     private EditText etPass;
-    private Button btnLogin, btnRegister, btnForgot;
 
     private LoginCallbacks listener;
 
@@ -57,12 +57,12 @@ public class LoginFragment extends Fragment implements JsonListener{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         etEmail = v.findViewById(R.id.etLoginEmail);
         etPass = v.findViewById(R.id.etLoginPassword);
-        btnLogin = v.findViewById(R.id.btnLoginLogin);
+        Button btnLogin = v.findViewById(R.id.btnLoginLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +78,14 @@ public class LoginFragment extends Fragment implements JsonListener{
 
             }
         });
-        btnRegister = v.findViewById(R.id.btnLoginRegister);
+        Button btnRegister = v.findViewById(R.id.btnLoginRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.register();
             }
         });
-        btnForgot = v.findViewById(R.id.btnLoginForgot);
+        Button btnForgot = v.findViewById(R.id.btnLoginForgot);
         btnForgot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

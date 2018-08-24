@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
-import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.MyCheckoutAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.CheckOutAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
@@ -33,24 +33,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CheckOutFragment extends Fragment implements JsonListener {
 
     private RecyclerView recyclerView;
-    private MyCheckoutAdapter adapter;
     private TextView totalPrice;
     private Button btnConfirmCheckout;
     private int reservationID;
 
-    public static CheckOutFragment newInstance(){
+    public CheckOutFragment() {
+    }
+
+    public static CheckOutFragment newInstance() {
         CheckOutFragment fragment = new CheckOutFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
-    public CheckOutFragment() {
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -81,18 +80,18 @@ public class CheckOutFragment extends Fragment implements JsonListener {
     }
 
 
-    private void getCharges(int reservationID){
+    private void getCharges(int reservationID) {
 
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkoutReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.checkoutUrl, params);
     }
 
-    private void fillRecyclerViewAndTextView(List<MyCheckoutAdapter.ChargeModel> list, double totalPrice) {
-        adapter = new MyCheckoutAdapter(list);
+    private void fillRecyclerViewAndTextView(List<CheckOutAdapter.ChargeModel> list, double totalPrice) {
+        CheckOutAdapter adapter = new CheckOutAdapter(list);
         recyclerView.setAdapter(adapter);
         this.totalPrice.setText(String.valueOf(totalPrice));
-        if(RoomDB.getInstance(getActivity()).reservationDao().getCurrentReservation().getCheckIn()!=null){
+        if (RoomDB.getInstance(getActivity()).reservationDao().getCurrentReservation().getCheckIn() != null) {
             btnConfirmCheckout.setEnabled(true);
         }
     }
@@ -100,27 +99,27 @@ public class CheckOutFragment extends Fragment implements JsonListener {
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         JSONArray response;
-        switch (url){
+        switch (url) {
             case URL.checkoutUrl:
                 double totalPrice = json.getDouble(POST.checkoutTotalPrice);
                 response = json.getJSONArray(POST.checkoutChargeDetails);
 
-                List<MyCheckoutAdapter.ChargeModel> charges = new ArrayList<>();
+                List<CheckOutAdapter.ChargeModel> charges = new ArrayList<>();
 
                 for (int i = 0; i < response.length(); i++) {
                     String service = response.getJSONObject(i).getString(POST.checkoutService);
                     double price = response.getJSONObject(i).getDouble(POST.checkoutServicePrice);
 
-                    charges.add(new MyCheckoutAdapter.ChargeModel(service, price));
+                    charges.add(new CheckOutAdapter.ChargeModel(service, price));
                 }
-                fillRecyclerViewAndTextView(charges,totalPrice);
+                fillRecyclerViewAndTextView(charges, totalPrice);
                 break;
             case URL.checkoutConfirmationUrl:
                 String checkoutDate = json.getString(POST.checkoutConfirmDate);
                 String modified = json.getString(POST.checkoutConfirmModified);
                 //update Room with the checked-out information
                 Reservation r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(reservationID);
-                r.checkOut(checkoutDate,modified);
+                r.checkOut(checkoutDate, modified);
                 RoomDB.getInstance(getContext()).reservationDao().update(r);
 
                 ((CheckOutActivity) Objects.requireNonNull(getActivity())).checkedOutConfirmation();

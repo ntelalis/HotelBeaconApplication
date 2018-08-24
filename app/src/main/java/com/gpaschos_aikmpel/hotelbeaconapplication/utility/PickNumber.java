@@ -1,12 +1,9 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.utility;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -56,7 +53,6 @@ public class PickNumber extends ConstraintLayout {
         tvLabel = rootView.findViewById(R.id.tvPickNumberLabel);
         View btnMinus = rootView.findViewById(R.id.ivPickNumberMinus);
         View btnPlus = rootView.findViewById(R.id.ivPickNumberPlus);
-
 
 
         int minValue = typedArray.getInt(R.styleable.PickNumber_minValue, DEFAULT_MIN_VALUE);

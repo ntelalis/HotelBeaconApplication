@@ -2,6 +2,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,9 +14,6 @@ import android.view.ViewGroup;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class OfferFragment extends Fragment {
 
     public static final String TAG = "OfferFragment";
@@ -23,7 +21,7 @@ public class OfferFragment extends Fragment {
     public static final int OFFER_GENERAL = 0;
     public static final int OFFER_EXCLUSIVE = 1;
 
-    public ViewPager getViewpager(){
+    public ViewPager getViewpager() {
         return viewPager;
     }
 
@@ -40,7 +38,7 @@ public class OfferFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_offer, container, false);
         viewPager = v.findViewById(R.id.vpOffer);
@@ -55,7 +53,7 @@ public class OfferFragment extends Fragment {
 
         private final int NUM_PAGES = 2;
 
-        public OfferPagerAdapter(FragmentManager fm) {
+        OfferPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

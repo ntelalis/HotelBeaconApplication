@@ -22,7 +22,7 @@
         <android.support.constraint.ConstraintLayout
             android:id="@+id/clRegisterNested"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/tilRegisterFirstName"
@@ -163,7 +163,8 @@
                     android:drawableStart="@drawable/ic_cake_black_png"
                     android:focusable="false"
                     android:hint="@string/tietRegisterBirthDate"
-                    android:longClickable="false" />
+                    android:longClickable="false"
+                    tools:ignore="KeyboardInaccessibleWidget" />
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -196,7 +197,7 @@
                     android:drawableEnd="@drawable/ic_arrow_drop_down_black_png"
                     android:drawablePadding="8dp"
                     android:drawableStart="@drawable/ic_flag_black_png"
-                    android:hint="Country" />
+                    android:hint="@string/registerCountryHint" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -218,7 +219,7 @@
                     android:drawableEnd="@drawable/ic_arrow_drop_down_black_png"
                     android:drawablePadding="8dp"
                     android:drawableStart="@drawable/ic_person_black_png"
-                    android:hint="Title" />
+                    android:hint="@string/registerTitleHint" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -236,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="8dp"
                     android:drawableStart="@drawable/ic_phone_black_png"
-                    android:hint="Phone"
+                    android:hint="@string/registerPhoneHint"
                     android:inputType="phone" />
             </android.support.design.widget.TextInputLayout>
 

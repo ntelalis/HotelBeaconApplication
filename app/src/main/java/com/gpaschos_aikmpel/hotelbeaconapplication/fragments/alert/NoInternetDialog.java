@@ -7,20 +7,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class NoInternetDialog extends DialogFragment {
 
     private NoInternetDialogListener listener;
@@ -68,6 +58,7 @@ public class NoInternetDialog extends DialogFragment {
 
     public interface NoInternetDialogListener {
         void onDialogPositiveClick(DialogFragment dialog);
+
         void onDialogNegativeClick(DialogFragment dialog);
     }
 

@@ -66,7 +66,7 @@ public class BookFragment extends Fragment implements JsonListener {
     private int freeNights = 0, cashNights = 0;
 
     private Button btnBook;
-    private TextView tvTotalPrice,tvPoints;
+    private TextView tvTotalPrice, tvPoints;
     private Group group;
 
     private ReservationCallbacks listener;
@@ -199,7 +199,7 @@ public class BookFragment extends Fragment implements JsonListener {
 
                 RoomDB.getInstance(getContext()).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrival, departure, modified));
 
-                ScheduleNotifications.checkinNotification(getContext(), resID);
+                ScheduleNotifications.checkInNotification(getContext(), resID);
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
 
                 listener.showBooked(resID);
@@ -233,7 +233,7 @@ public class BookFragment extends Fragment implements JsonListener {
     public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
         this.freeNights = freeNights;
         this.cashNights = cashNights;
-        int price = roomPrice*days - roomPrice * freeNights + cashNights * (cashPrice - roomPrice);
+        int price = roomPrice * days - roomPrice * freeNights + cashNights * (cashPrice - roomPrice);
         tvTotalPrice.setText(String.valueOf(price));
         tvPoints.setText(String.valueOf(totalPoints));
         if (totalPoints > 0) {
@@ -252,7 +252,7 @@ public class BookFragment extends Fragment implements JsonListener {
                 throw new RuntimeException("Fragment is not found");
             }
 
-            EditText etCreditCard = fragmentView.findViewById(R.id.etCrediCardCard);
+            EditText etCreditCard = fragmentView.findViewById(R.id.etCreditCardCard);
             EditText etHoldersName = fragmentView.findViewById(R.id.etCreditCardHoldersName);
             EditText etCVV = fragmentView.findViewById(R.id.etCreditCardCVV);
 

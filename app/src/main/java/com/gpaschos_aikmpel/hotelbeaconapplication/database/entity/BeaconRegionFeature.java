@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.SyncModel;
 
 @Entity
-public class BeaconRegionFeature implements SyncModel{
+public class BeaconRegionFeature implements SyncModel {
 
     @PrimaryKey
     private int id;
