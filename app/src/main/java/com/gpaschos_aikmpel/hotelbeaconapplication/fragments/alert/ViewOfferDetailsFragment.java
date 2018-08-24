@@ -45,7 +45,7 @@ public class ViewOfferDetailsFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.Theme_AppCompat_Dialog_Alert);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         //View view = View.inflate(getContext(), R.layout.fragment_exclusive_offer_description, null);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, null);
@@ -56,6 +56,7 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         builder.setMessage(getArguments().getString(DESCRIPTION));
         // builder.getContext().getTheme().applyStyle(R.style.MyAlertDialog, true);
         builder.setTitle(getArguments().getString(TITLE));
+        builder.setPositiveButton("OK",null);
         //builder.setView(view);
 
         AlertDialog dialog = builder.create();
@@ -71,9 +72,9 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-       // window.setLayout((int)(size.x*0.85), WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout((int)(size.x*0.85), WindowManager.LayoutParams.WRAP_CONTENT);
         //window.setLayout((int)(size.y*0.75), WindowManager.LayoutParams.WRAP_CONTENT);
-       // window.setGravity(Gravity.CENTER);
+        window.setGravity(Gravity.CENTER);
 
         super.onResume();
     }
