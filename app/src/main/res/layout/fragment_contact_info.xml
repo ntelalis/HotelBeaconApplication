@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background_rectangle_black"
     tools:context=".fragments.ContactInfoFragment">
 
 
@@ -11,10 +12,12 @@
         android:id="@+id/tilContactPostal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/glContact"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tilContactCity"
         app:layout_constraintTop_toBottomOf="@+id/tilContactCity">
 
         <android.support.design.widget.TextInputEditText
@@ -25,7 +28,7 @@
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_location_city_black_png"
             android:hint="@string/contactPostHint"
-            android:inputType="text|phone" />
+            android:inputType="text|textPostalAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -33,11 +36,10 @@
         android:id="@+id/tilContactCity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toStartOf="@+id/glContact"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tilContactAddress2"
         app:layout_constraintTop_toBottomOf="@+id/tilContactAddress2">
 
         <android.support.design.widget.TextInputEditText
@@ -48,7 +50,7 @@
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_location_city_black_png"
             android:hint="@string/contactCityHint"
-            android:inputType="text|phone" />
+            android:inputType="text|textPostalAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -56,15 +58,15 @@
         android:id="@+id/tilContactPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/glContact"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tvContactInfoTitle">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/tietRegisterPhone"
+            android:id="@+id/tietContactPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
@@ -77,12 +79,10 @@
         android:id="@+id/tilContactAddress2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tilContactAddress1"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tilContactAddress1"
         app:layout_constraintTop_toBottomOf="@+id/tilContactAddress1">
 
         <android.support.design.widget.TextInputEditText
@@ -93,20 +93,19 @@
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_location_city_black_png"
             android:hint="@string/contactAddress2Hint"
-            android:inputType="text|phone" />
+            android:inputType="textPostalAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilContactAddress1"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tilContactPhone"
         app:layout_constraintTop_toBottomOf="@+id/tilContactPhone">
 
         <android.support.design.widget.TextInputEditText
@@ -117,7 +116,7 @@
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_location_city_black_png"
             android:hint="@string/contactAddress1Hint"
-            android:inputType="text|phone" />
+            android:inputType="textPostalAddress" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -126,6 +125,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="250dp" />
+        app:layout_constraintGuide_percent="0.75" />
+
+    <TextView
+        android:id="@+id/tvContactInfoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Contact Info"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -20,6 +20,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert.NoInternetDialog;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
@@ -48,8 +49,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         TextView tvHotelName = findViewById(R.id.tvLoadingScreenHotelName);
         tvHotelName.setText(Params.HotelName);
         int mAnimationDuration = 3000;
-        tvHotelName.setVisibility(View.GONE);
-        progressBar.setVisibility(View.GONE);
+        //tvHotelName.setVisibility(View.GONE);
+        //progressBar.setVisibility(View.GONE);
 
         tvHotelName.setAlpha(0f);
         tvHotelName.setVisibility(View.VISIBLE);
@@ -70,6 +71,8 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
         initApp();
     }
+
+
 
     public void initApp() {
         new Handler().postDelayed(new Runnable() {
@@ -93,7 +96,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                                     dialog.show(getSupportFragmentManager(), "NoInternetDialog");
                                 }
                             }
-                        }, 12000);
+                        }, 15000);
                     } else {
                         NoInternetDialog dialog = NoInternetDialog.newInstance();
                         dialog.show(getSupportFragmentManager(), "NoInternetDialog");
@@ -111,16 +114,22 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
             try {
                 int customerId = json.getInt(POST.loginCustomerID);
-                String firstName = json.getString(POST.loginFirstName);
-                int titleID = json.getInt(POST.loginTitleID);
-                String lastName = json.getString(POST.loginLastName);
-                String birthDate = json.getString(POST.loginBirthDate);
-                int countryID = json.getInt(POST.loginCountryID);
-                String modified = json.getString(POST.loginModified);
+                String title = JSONHelper.getString(json,POST.loginTitle);
+                String firstName = JSONHelper.getString(json,POST.loginFirstName);
+                String lastName = JSONHelper.getString(json,POST.loginLastName);
+                String birthDate = JSONHelper.getString(json,POST.loginBirthDate);
+                String country = JSONHelper.getString(json,POST.loginCountry);
+                String phone = JSONHelper.getString(json,POST.loginPhone);
+                String address1 = JSONHelper.getString(json,POST.loginAddress1);
+                String address2 = JSONHelper.getString(json,POST.loginAddress2);
+                String city = JSONHelper.getString(json,POST.loginCity);
+                String postalCode = JSONHelper.getString(json,POST.loginPostalCode);
+                boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
+                String modified = JSONHelper.getString(json,POST.loginModified);
 
                 RoomDB roomDB = RoomDB.getInstance(this);
                 Customer c = roomDB.customerDao().getCustomer();
-                c.update(customerId, titleID, firstName, lastName, birthDate, countryID, modified);
+                c.update(customerId,title,firstName,lastName,birthDate,country,phone,address1,address2,city,postalCode,oldCustomer,modified);
                 roomDB.customerDao().insert(c);
 
             } catch (JSONException e) {

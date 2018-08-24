@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_rectangle_black"
     tools:context=".fragments.CreditCardFragment">
@@ -20,19 +20,19 @@
             android:id="@+id/etCreditCardHoldersName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/creditCardNameHint"
-            android:drawableStart="@drawable/ic_person_black_png"
             android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_person_black_png"
+            android:hint="@string/creditCardNameHint"
             android:inputType="textCapCharacters"
-            android:text="Alexis Johnson"/>
+            android:text="Alexis Johnson" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilCreditCardCard"
-        android:layout_width="wrap_content"
-        android:layout_height="53dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -45,12 +45,12 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:digits="0123456789 "
-            android:drawableStart="@drawable/ic_credit_card_black_png"
             android:drawablePadding="8dp"
+            android:drawableStart="@drawable/ic_credit_card_black_png"
             android:hint="@string/creditCardCardNumberHint"
             android:inputType="number"
             android:maxLength="19"
-            android:text="4277 0853 1466 1124"/>
+            android:text="4277 0853 1466 1124" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -70,9 +70,11 @@
             android:id="@+id/etCreditCardCVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawablePadding="8dp"
+            android:drawableStart="@drawable/credit_card_cvv"
             android:hint="@string/creditCardCVVHint"
             android:inputType="textCapCharacters"
-            android:text="888"
+            android:text="999"
             android:textAlignment="textStart" />
     </android.support.design.widget.TextInputLayout>
 
@@ -127,13 +129,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.63" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.35234898" />
 
 </android.support.constraint.ConstraintLayout>

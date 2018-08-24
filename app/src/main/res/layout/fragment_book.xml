@@ -176,7 +176,6 @@
 
         <fragment
             android:id="@+id/fmBookCreditCard"
-
             android:name="com.gpaschos_aikmpel.hotelbeaconapplication.fragments.CreditCardFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

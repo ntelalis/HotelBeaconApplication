@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
@@ -99,20 +100,26 @@ public class LoginFragment extends Fragment implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.loginUrl)) {
 
-            int customerId = json.getInt(POST.loginCustomerID);
-            String firstName = json.getString(POST.loginFirstName);
-            int titleID = json.getInt(POST.loginTitleID);
-            String lastName = json.getString(POST.loginLastName);
-            boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
-            String birthDate = json.getString(POST.loginBirthDate);
-            int countryID = json.getInt(POST.loginCountryID);
-            String modified = json.getString(POST.loginModified);
             String email = etEmail.getText().toString().trim();
             String password = etPass.getText().toString().trim();
 
+            int customerId = json.getInt(POST.loginCustomerID);
+            String title = JSONHelper.getString(json,POST.loginTitle);
+            String firstName = JSONHelper.getString(json,POST.loginFirstName);
+            String lastName = JSONHelper.getString(json,POST.loginLastName);
+            String birthDate = JSONHelper.getString(json,POST.loginBirthDate);
+            String country = JSONHelper.getString(json,POST.loginCountry);
+            String phone = JSONHelper.getString(json,POST.loginPhone);
+            String address1 = JSONHelper.getString(json,POST.loginAddress1);
+            String address2 = JSONHelper.getString(json,POST.loginAddress2);
+            String city = JSONHelper.getString(json,POST.loginCity);
+            String postalCode = JSONHelper.getString(json,POST.loginPostalCode);
+            boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
+            String modified = JSONHelper.getString(json,POST.loginModified);
+
             //TODO Implement OAUTH2 Token Maybe??
 
-            Customer customer = new Customer(customerId, titleID, firstName, lastName, birthDate, countryID, email, password, modified);
+            Customer customer = new Customer(customerId, email, password, title, firstName, lastName, birthDate, country, phone, address1, address2, city, postalCode, oldCustomer, modified);
             RoomDB.getInstance(getContext()).customerDao().insert(customer);
 
             if (getContext() != null)

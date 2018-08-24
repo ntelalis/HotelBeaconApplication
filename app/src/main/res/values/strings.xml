@@ -186,7 +186,7 @@
     <string name="contactPhoneHint">Phone</string>
     <string name="contactAddress2Hint">Address 2 (Optional)</string>
     <string name="contactAddress1Hint">Address 1</string>
-    <string name="contactPostHint">Postal</string>
+    <string name="contactPostHint">Postal Code</string>
     <string name="creditCardNameHint">Holder\'s Name</string>
     <string name="creditCardCardNumberHint">Credit Card</string>
     <string name="creditCardCVVHint">CVV</string>

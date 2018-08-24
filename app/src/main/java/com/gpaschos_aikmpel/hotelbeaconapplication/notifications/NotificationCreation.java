@@ -87,18 +87,23 @@ public class NotificationCreation {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
 
             lastName = customer.getLastName();
-            title = RoomDB.getInstance(context).titleDao().getTitleByID(customer.getTitleID()).getTitle();
-
+            title = customer.getTitle();
 
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
                     + Params.notificationWelcomeGreeting3;
             String notificationTitle;
-            if (!LocalVariables.readBoolean(context, R.string.is_old_customer)) {
+            if(customer.isOldCustomer()){
+                notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
+            }
+            else{
+                notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
+            }
+            /*if (!LocalVariables.readBoolean(context, R.string.is_old_customer)) {
                 notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
 
             } else {
                 notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
-            }
+            }*/
 
             int icon;
 
@@ -132,7 +137,7 @@ public class NotificationCreation {
                 && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
             lastName = customer.getLastName();
-            title = RoomDB.getInstance(context).titleDao().getTitleByID(customer.getTitleID()).getTitle();
+            title = customer.getTitle();
 
             int icon;
 

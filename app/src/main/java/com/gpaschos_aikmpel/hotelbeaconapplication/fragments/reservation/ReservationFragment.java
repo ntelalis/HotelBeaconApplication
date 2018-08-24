@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.RoomAdapter;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.DatePickerFragment;
@@ -59,7 +60,7 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
     private ProgressBar pbLoading;
     private int reservationDays;
     private ReservationCallbacks listener;
-
+    private Customer customer;
 
     public ReservationFragment() {
         // Required empty public constructor
@@ -78,6 +79,7 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
         super.onCreate(savedInstanceState);
         localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         mySQLFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        customer = RoomDB.getInstance(getContext()).customerDao().getCustomer();
     }
 
     @Override

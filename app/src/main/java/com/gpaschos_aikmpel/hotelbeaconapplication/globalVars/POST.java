@@ -29,16 +29,18 @@ public class POST {
     public static final String loginPassword = "pass";
     //RCV
     public static final String loginCustomerID = "customerID";
+    public static final String loginTitle = "title";
     public static final String loginFirstName = "firstName";
     public static final String loginLastName = "lastName";
-    public static final String loginTitleID = "titleID";
-    public static final String loginCountryID = "countryID";
     public static final String loginBirthDate = "birthDate";
-    public static final String loginModified = "modified";
+    public static final String loginCountry = "country";
+    public static final String loginAddress1 = "address1";
+    public static final String loginAddress2 = "address2";
+    public static final String loginCity = "city";
+    public static final String loginPostalCode = "postalCode";
+    public static final String loginPhone = "phone";
     public static final String loginOldCustomer = "oldCustomer";
-
-    public static final String loginIsCheckedIn = "isCheckedIn";
-    public static final String loginIsCheckedOut = "isCheckedOut";
+    public static final String loginModified = "modified";
 
 
     //~~~~~~~~~~~~~~~~~~forgot.php~~~~~~~~~~~~~~~~~~
@@ -371,4 +373,9 @@ public class POST {
     public static final String offerBeaconRegionOfferID = "offerID";
     public static final String offerBeaconRegionModified = "modified";
 
+    public static final String bookRoomPhone = "phone";
+    public static final String bookRoomAddress1 = "address1";
+    public static final String bookRoomAddress2 = "address2";
+    public static final String bookRoomCity = "city";
+    public static final String bookRoomPostalCode = "postalCode";
 }

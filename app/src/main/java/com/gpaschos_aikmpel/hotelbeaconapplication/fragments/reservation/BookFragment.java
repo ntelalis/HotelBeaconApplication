@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -246,39 +247,78 @@ public class BookFragment extends Fragment implements JsonListener {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            View fragmentView = getChildFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
+            View creditCardView = getChildFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
 
-            if (fragmentView == null) {
-                throw new RuntimeException("Fragment is not found");
+            View contactInfoView = getChildFragmentManager().findFragmentById(R.id.fmBookContactInfo).getView();
+
+            if (creditCardView == null || contactInfoView == null) {
+                throw new RuntimeException("One of the fragments is not found");
             }
 
-            EditText etCreditCard = fragmentView.findViewById(R.id.etCreditCardCard);
-            EditText etHoldersName = fragmentView.findViewById(R.id.etCreditCardHoldersName);
-            EditText etCVV = fragmentView.findViewById(R.id.etCreditCardCVV);
 
-            Spinner spMonth = fragmentView.findViewById(R.id.spCreditCardExpMonth);
-            Spinner spYear = fragmentView.findViewById(R.id.spCreditCardExpYear);
+            EditText etCreditCard = creditCardView.findViewById(R.id.etCreditCardCard);
+            EditText etHoldersName = creditCardView.findViewById(R.id.etCreditCardHoldersName);
+            EditText etCVV = creditCardView.findViewById(R.id.etCreditCardCVV);
+            Spinner spMonth = creditCardView.findViewById(R.id.spCreditCardExpMonth);
+            Spinner spYear = creditCardView.findViewById(R.id.spCreditCardExpYear);
+
+            TextInputEditText tietPhone = contactInfoView.findViewById(R.id.tietContactPhone);
+            TextInputEditText tietAddress1 = contactInfoView.findViewById(R.id.tietContactAddress1);
+            TextInputEditText tietAddress2 = contactInfoView.findViewById(R.id.tietContactAddress2);
+            TextInputEditText tietCity = contactInfoView.findViewById(R.id.tietContactCity);
+            TextInputEditText tietPostalCode = contactInfoView.findViewById(R.id.tietContactPostal);
 
             etCreditCard.setError(null);
             etHoldersName.setError(null);
+            etCVV.setError(null);
+            tietPhone.setError(null);
+            tietAddress1.setError(null);
+            tietCity.setError(null);
+            tietPostalCode.setError(null);
             boolean flag = false;
 
             String creditCard = etCreditCard.getText().toString().replaceAll("\\s", "");
             String holdersName = etHoldersName.getText().toString();
+            String month = String.valueOf(spMonth.getSelectedItem());
+            String year = String.valueOf(spYear.getSelectedItem());
+            String cvv = etCVV.getText().toString();
+
+            String phone = tietPhone.getText().toString();
+            String address1 = tietAddress1.getText().toString();
+            String address2 = tietAddress2.getText().toString();
+            String city = tietCity.getText().toString();
+            String postalCode = tietPostalCode.getText().toString();
+
             if (!Validation.checkCreditCard(creditCard)) {
                 etCreditCard.setError("Please enter a valid card");
                 flag = true;
             }
-
             if (!Validation.checkLength(holdersName, 4, null)) {
                 etHoldersName.setError("Please enter a valid name");
                 flag = true;
             }
+            if (!Validation.checkLength(cvv, 3, null)) {
+                etCVV.setError("Please enter a CVV");
+                flag = true;
+            }
+            if (!Validation.checkLength(phone, 5, null)) {
+                tietPhone.setError("Please enter a valid phone");
+                flag = true;
+            }
+            if (!Validation.checkLength(address1, 3, null)) {
+                tietAddress1.setError("Please enter a valid address");
+                flag = true;
+            }
+            if (!Validation.checkLength(city, 2, null)) {
+                tietCity.setError("Please enter a valid city");
+                flag = true;
+            }
+            if (!Validation.checkLength(postalCode, 3, null)) {
+                tietPostalCode.setError("Please enter a valid Postal Code");
+                flag = true;
+            }
             if (flag) return;
 
-            String month = String.valueOf(spMonth.getSelectedItem());
-            String year = String.valueOf(spYear.getSelectedItem());
-            String cvv = etCVV.getText().toString();
 
             Map<String, String> values = new HashMap<>();
 
@@ -295,6 +335,12 @@ public class BookFragment extends Fragment implements JsonListener {
             values.put(POST.bookRoomExpMonth, month);
             values.put(POST.bookRoomExpYear, year);
             values.put(POST.bookRoomCVV, cvv);
+
+            values.put(POST.bookRoomPhone, phone);
+            values.put(POST.bookRoomAddress1, address1);
+            values.put(POST.bookRoomAddress2, address2);
+            values.put(POST.bookRoomCity, city);
+            values.put(POST.bookRoomPostalCode, postalCode);
 
             int customerID = RoomDB.getInstance(getContext()).customerDao().getCustomer().getCustomerId();
 
