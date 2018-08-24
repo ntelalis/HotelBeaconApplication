@@ -30,7 +30,7 @@ public class ExclusiveOffer implements SyncModel {
         this.codeCreated = codeCreated;
     }
 
-    public ExclusiveOffer(int id, int serviceID, String priceDiscount, String description, String title, String details, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
+    public ExclusiveOffer(int id, int serviceID, String priceDiscount, String title, String description, String details, boolean special, String startDate, String endDate, String code, boolean codeUsed, String codeCreated, String modified) {
         this.id = id;
         this.serviceID = serviceID;
         this.priceDiscount = priceDiscount;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+     <TextView
+         android:id="@+id/tvExclusiveOfferDescription"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginBottom="16dp"
+         android:layout_marginEnd="16dp"
+         android:layout_marginStart="16dp"
+         android:layout_marginTop="16dp"
+         android:text="TextView"
+         app:layout_constrainedWidth="true"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent"
+         tools:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly female audience. Our Gentleman’s afternoon tea draws on the traditions of the club house and appeals to those with a love for tea with less of sweet tooth. A selection of sandwiches accompany a Goosnargh duck Scotch egg, Gentleman’s relish &amp; toast, sausage roll and Lancashire bomb rarebit &amp; English crumpet followed by cheese scones and Eccles cakes." />
+</android.support.constraint.ConstraintLayout>
