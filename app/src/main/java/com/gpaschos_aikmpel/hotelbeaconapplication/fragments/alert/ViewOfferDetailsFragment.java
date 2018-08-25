@@ -4,6 +4,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,14 +51,19 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         //View view = View.inflate(getContext(), R.layout.fragment_exclusive_offer_description, null);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, null);
 
-       // TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
+        TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
+        //TextView tvTitle =new TextView(getContext());
         Log.d("OnCreateDialog/TITLE ", TITLE);
-        //tvDescription.setText(getArguments().getString(DESCRIPTION));
-        builder.setMessage(getArguments().getString(DESCRIPTION));
+        tvDescription.setText(getArguments().getString(DESCRIPTION));
+        //tvTitle.setText(getArguments().getString(TITLE));
+        //tvTitle.setTypeface(Typeface.DEFAULT_BOLD);
+        //builder.setMessage(getArguments().getString(DESCRIPTION));
         // builder.getContext().getTheme().applyStyle(R.style.MyAlertDialog, true);
+
         builder.setTitle(getArguments().getString(TITLE));
-        builder.setPositiveButton("OK",null);
-        //builder.setView(view);
+        //builder.setCustomTitle(tvTitle);
+        builder.setPositiveButton("OK", null);
+        builder.setView(view);
 
         AlertDialog dialog = builder.create();
         return dialog;
@@ -72,7 +78,7 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        window.setLayout((int)(size.x*0.85), WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout((int) (size.x * 0.97), (int) (size.x * 0.75));
         //window.setLayout((int)(size.y*0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
 
