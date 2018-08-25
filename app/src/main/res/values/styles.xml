@@ -48,7 +48,7 @@
     </style>
 
     <style name="PrimaryFlatButton">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
@@ -60,4 +60,5 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
 </resources>

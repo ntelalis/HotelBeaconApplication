@@ -52,7 +52,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks,CheckedInFragment.Callbacks {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -188,6 +188,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         tvAccNumber.setText(String.valueOf(customer.getCustomerId()));
         Toolbar toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(Params.HotelName);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -328,5 +329,10 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 offerExclusiveFragment.refreshData();
             }
         }
+    }
+
+    @Override
+    public void openMyRoom() {
+        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMyRoom);
     }
 }

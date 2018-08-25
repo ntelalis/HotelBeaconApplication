@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCash;
@@ -207,7 +208,8 @@ public class BookFragment extends Fragment implements JsonListener {
                 break;
             case URL.totalPointsUrl:
 
-                int totalPoints = json.getInt(POST.totalPoints);
+                Loyalty loyalty = RoomDB.getInstance(getContext()).loyaltyDao().getLoyalty();
+                int totalPoints = loyalty.getCurrentPoints();
 
                 RoomDB roomDB = RoomDB.getInstance(getContext());
                 RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, adults);
@@ -215,6 +217,7 @@ public class BookFragment extends Fragment implements JsonListener {
 
                 RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults, 1);
                 int cashPoints = roomTypePointsAndCash.getPoints();
+
                 cashPrice = roomTypePointsAndCash.getCash();
 
                 DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPoints, freeNightPoints, cashPoints, cashPrice, this.days);

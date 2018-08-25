@@ -83,6 +83,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         navigationView.setNavigationItemSelectedListener(navigationDrawerListener);
         Toolbar toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(Params.HotelName);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

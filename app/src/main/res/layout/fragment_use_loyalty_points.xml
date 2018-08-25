@@ -108,7 +108,7 @@
         android:id="@+id/tvUsePointsSelectedTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/tvUsePointsSelectedTotalDefaultText"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsPointsDivider"
@@ -170,7 +170,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/tvUsePointsPointsDivider"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvUsePointsTotalPoints"
         app:layout_constraintEnd_toStartOf="@+id/tvUsePointsTotalPoints" />
 

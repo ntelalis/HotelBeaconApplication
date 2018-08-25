@@ -9,4 +9,4 @@
     android:minHeight="?attr/actionBarSize"
     android:theme="?attr/actionBarTheme"
     app:navigationIcon="@drawable/ic_menu_white_png"
-    app:title="My Hotel" />
+    app:title="" />
