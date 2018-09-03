@@ -48,7 +48,7 @@
     </style>
 
     <style name="PrimaryFlatButton">
-        <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
@@ -69,4 +69,5 @@
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
+
 </resources>

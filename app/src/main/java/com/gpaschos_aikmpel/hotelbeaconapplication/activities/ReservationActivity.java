@@ -65,7 +65,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_reservation);
+        setContentView(R.layout.activity_reservation);
 
         drawerLayout = findViewById(R.id.reservationDrawerLayout);
         NavigationView navigationView = findViewById(R.id.appNavigationDrawer);
@@ -83,6 +83,7 @@ public class ReservationActivity extends AppCompatActivity implements DatePicker
         navigationView.setNavigationItemSelectedListener(navigationDrawerListener);
         Toolbar toolbar = findViewById(R.id.appToolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(Params.HotelName);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
