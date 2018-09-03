@@ -133,8 +133,8 @@ public class NotificationCreation {
 
         //String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
         //boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
-        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell)
-                && LocalVariables.readBoolean(context, R.string.is_checked_out)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell,false)
+                && LocalVariables.readBoolean(context, R.string.is_checked_out,false)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
             lastName = customer.getLastName();
             title = customer.getTitle();
@@ -237,7 +237,7 @@ public class NotificationCreation {
         //FIXME DEBUG CODE DELETE THIS
         LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
 
-        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
+        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome,false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
@@ -296,7 +296,7 @@ public class NotificationCreation {
             long lFormattedDate = formattedDate.getTime();
             long currentTime = Calendar.getInstance().getTime().getTime();
 
-            return !LocalVariables.readBoolean(context, checkerVariable) && (lFormattedDate <= currentTime)
+            return !LocalVariables.readBoolean(context, checkerVariable,false) && (lFormattedDate <= currentTime)
                     && (r != null);
 
         } catch (ParseException e) {
@@ -319,7 +319,7 @@ public class NotificationCreation {
                 long lFormattedEndDate = formattedEndDate.getTime();
                 long currentTime = Calendar.getInstance().getTime().getTime();
 
-                return !LocalVariables.readBoolean(context, R.string.is_checked_out) && (lFormattedEndDate <= currentTime);
+                return !LocalVariables.readBoolean(context, R.string.is_checked_out,false) && (lFormattedEndDate <= currentTime);
             } catch (ParseException e) {
                 e.printStackTrace();
                 throw new RuntimeException("shouldNotifyCheckout exception");

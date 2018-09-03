@@ -2,12 +2,12 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cvFoodItemView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/clFoodItemView"
@@ -34,7 +34,7 @@
             app:layout_constraintStart_toEndOf="@+id/ivFoodItemImage"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            tools:text="Φέτα λαδορίγανη g g g g g g g g @s" />
+            tools:text="Φέτα λαδορίγανη" />
 
         <ImageView
             android:id="@+id/ivFoodItemImage"

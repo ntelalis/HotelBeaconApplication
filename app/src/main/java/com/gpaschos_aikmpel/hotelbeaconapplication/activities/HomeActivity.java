@@ -1,9 +1,14 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -11,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +24,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.ReservationsAdapter;
@@ -38,11 +45,13 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.Checked
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.ReservationFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationNoneFragment;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation.UpcomingReservationRecyclerViewFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
+import com.gpaschos_aikmpel.hotelbeaconapplication.reworkRequest.RequestCallback;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 
 import java.text.ParseException;
@@ -52,9 +61,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks,CheckedInFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, RequestCallback, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks, CheckedInFragment.Callbacks {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
+
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
@@ -73,8 +84,10 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     drawerLayout.closeDrawers();
                     break;
                 case R.id.navigationDrawerProfile:
+                    drawerLayout.closeDrawers();
                     break;
                 //TODO: don't clear the tables that are irrelevant to the customer
+
                 case R.id.navigationDrawerLogout:
                     RoomDB.getInstance(HomeActivity.this).clearAllTables();
                     intent = new Intent(HomeActivity.this, LoginActivity.class);
@@ -216,6 +229,56 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 transaction.commit();
             }
         }
+
+        checkBeaconPermission();
+    }
+
+    private void checkBeaconPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                //Permission is not granted. Should we show explanation?
+                if (this.shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    //Show explanation if needed
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("This app needs location access");
+                    builder.setMessage("Please grant location access so this app can detect beacons in order to be able to unlock your room door, receive special offers etc.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                        @RequiresApi(api = Build.VERSION_CODES.M)
+                        public void onDismiss(DialogInterface dialog) {
+                            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                        }
+                    });
+                    builder.show();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Coarse location permission granted");
+                    LocalVariables.storeBoolean(this, R.string.beaconsEnabled, true);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    Log.d(TAG, "Coarse location permission denied and never asked again");
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.show();
+                    Log.d(TAG, "Coarse location permission denied");
+                    LocalVariables.storeBoolean(this, R.string.beaconsEnabled, false);
+                }
+            }
+        }
     }
 
     @Override
@@ -334,5 +397,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     @Override
     public void openMyRoom() {
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMyRoom);
+    }
+
+    @Override
+    public void success() {
+        Toast.makeText(this, "Meow", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void fail() {
+        Toast.makeText(this, "Not Meow", Toast.LENGTH_SHORT).show();
     }
 }

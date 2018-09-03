@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -32,6 +34,9 @@ public class LoginFragment extends Fragment implements JsonListener {
 
     private EditText etEmail;
     private EditText etPass;
+
+    private Button btnRegister, btnForgot, btnLogin;
+    private ProgressBar pbLoading;
 
     private LoginCallbacks listener;
 
@@ -63,10 +68,33 @@ public class LoginFragment extends Fragment implements JsonListener {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         etEmail = v.findViewById(R.id.etLoginEmail);
         etPass = v.findViewById(R.id.etLoginPassword);
-        Button btnLogin = v.findViewById(R.id.btnLoginLogin);
+
+        btnRegister = v.findViewById(R.id.btnLoginRegister);
+        btnForgot = v.findViewById(R.id.btnLoginForgot);
+        btnLogin = v.findViewById(R.id.btnLoginLogin);
+
+        pbLoading = v.findViewById(R.id.pbLogin);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.register();
+            }
+        });
+
+        btnForgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.showForgot();
+            }
+        });
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                setupUIForRequest(true);
+
                 String email = etEmail.getText().toString().trim();
                 String pass = etPass.getText().toString().trim();
 
@@ -79,21 +107,24 @@ public class LoginFragment extends Fragment implements JsonListener {
 
             }
         });
-        Button btnRegister = v.findViewById(R.id.btnLoginRegister);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.register();
-            }
-        });
-        Button btnForgot = v.findViewById(R.id.btnLoginForgot);
-        btnForgot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.showForgot();
-            }
-        });
         return v;
+    }
+
+    private void setupUIForRequest(boolean isRequesting){
+        if(getActivity()!=null){
+            if(isRequesting){
+                btnForgot.setEnabled(false);
+                btnLogin.setEnabled(false);
+                btnRegister.setEnabled(false);
+                pbLoading.setVisibility(View.VISIBLE);
+            }
+            else{
+                btnForgot.setEnabled(true);
+                btnLogin.setEnabled(true);
+                btnRegister.setEnabled(true);
+                pbLoading.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @Override
@@ -132,6 +163,7 @@ public class LoginFragment extends Fragment implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Cannot communicate with server. Please try again later.", Toast.LENGTH_SHORT).show();
+        setupUIForRequest(false);
     }
 }

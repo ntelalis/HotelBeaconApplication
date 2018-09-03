@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tvBookRoomPriceCurrency"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookRoomPrice"
             app:layout_constraintStart_toEndOf="@+id/tvBookRoomPrice" />
 
@@ -35,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookRoomPriceLabel"
             app:layout_constraintStart_toEndOf="@+id/barrierBookRight"
             tools:text="40" />
@@ -75,6 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookAdultsLabel"
             app:layout_constraintStart_toEndOf="@+id/barrierBookLeft"
             tools:text="3" />
@@ -85,7 +88,7 @@
             android:layout_height="150dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="@+id/tvBookRoomTitle"
             app:layout_constraintStart_toStartOf="@+id/tvBookRoomTitle"
             app:layout_constraintTop_toBottomOf="@+id/tvBookRoomTitle" />
@@ -94,6 +97,7 @@
             android:id="@+id/tvBookCheckOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckOutLabel"
             app:layout_constraintStart_toStartOf="@+id/tvBookRoomPrice"
             tools:text="2018-03-28" />
@@ -103,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/tvAdultsLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivBookRoomImage" />
@@ -112,6 +116,7 @@
             android:id="@+id/tvBookCheckIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold|italic"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookCheckInLabel"
             app:layout_constraintStart_toStartOf="@+id/tvBookRoomPrice"
             tools:text="2018-03-21" />
@@ -181,7 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvBookCheckOutLabel"
@@ -200,6 +205,7 @@
             android:id="@+id/tvBookDays"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookDaysLabel"
             app:layout_constraintStart_toStartOf="@+id/tvBookAdults"
             tools:text="2" />
@@ -209,7 +215,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/btnBookLoyalty"
             android:theme="@style/PrimaryButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +267,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_percent="0.45" />
 
         <fragment
             android:id="@+id/fmBookContactInfo"
@@ -288,6 +294,7 @@
             android:id="@+id/tvBookChildren"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/tvBookChildrenLabel"
             app:layout_constraintStart_toStartOf="@+id/tvBookAdults"
             tools:text="3" />
@@ -305,6 +312,18 @@
             android:layout_height="wrap_content"
             app:barrierDirection="end"
             app:constraint_referenced_ids="tvBookRoomPriceLabel,tvBookCheckInLabel,tvBookCheckOutLabel" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="per day"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/tvBookRoomPrice"
+            app:layout_constraintStart_toEndOf="@+id/tvBookRoomPriceCurrency"
+            app:layout_constraintTop_toTopOf="@+id/tvBookRoomPrice" />
 
     </android.support.constraint.ConstraintLayout>
 

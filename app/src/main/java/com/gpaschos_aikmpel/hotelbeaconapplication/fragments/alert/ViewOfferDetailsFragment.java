@@ -47,17 +47,18 @@ public class ViewOfferDetailsFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        //View view = View.inflate(getContext(), R.layout.fragment_exclusive_offer_description, null);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, null);
+        View view = View.inflate(getContext(), R.layout.fragment_exclusive_offer_description, null);
+        //View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, false);
 
-       // TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
+        // TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
         Log.d("OnCreateDialog/TITLE ", TITLE);
         //tvDescription.setText(getArguments().getString(DESCRIPTION));
-        builder.setMessage(getArguments().getString(DESCRIPTION));
+        //builder.setMessage(getArguments().getString(DESCRIPTION));
+        //builder.setMessage("The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly female audience. Our Gentleman’s afternoon tea draws on the traditions of the club house and appeals to those with a love for tea with less of sweet tooth. A selection of sandwiches accompany a Goosnargh duck Scotch egg, Gentleman’s relish &amp; toast, sausage roll and Lancashire bomb rarebit &amp; English crumpet followed by cheese scones and Eccles cakes.");
         // builder.getContext().getTheme().applyStyle(R.style.MyAlertDialog, true);
         builder.setTitle(getArguments().getString(TITLE));
         builder.setPositiveButton("OK",null);
-        //builder.setView(view);
+        builder.setView(view);
 
         AlertDialog dialog = builder.create();
         return dialog;
@@ -72,7 +73,7 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        window.setLayout((int)(size.x*0.85), WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setLayout((int)(size.x*0.85), (int)(size.y*0.5));
         //window.setLayout((int)(size.y*0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
 

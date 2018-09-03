@@ -8,6 +8,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.OfferBeaconRegion;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
@@ -30,6 +31,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
     private static final String TAG = BeaconApplication.class.getSimpleName();
 
+    private boolean beaconsEnabled;
     private RegionBootstrap regionBootstrap;
     private BackgroundPowerSaver backgroundPowerSaver;
     private BeaconManager beaconManager;
@@ -42,58 +44,64 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
     public void onCreate() {
         super.onCreate();
 
+        beaconsEnabled = LocalVariables.readBoolean(this, R.string.beaconsEnabled, true);
+
         //Create notification channel
         NotificationCreation.channel(this, "basic_channel", "default channel");
 
-        //BeaconManager and BackgroundPowerSaver init
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        backgroundPowerSaver = new BackgroundPowerSaver(this);
+        if (beaconsEnabled) {
+            //BeaconManager and BackgroundPowerSaver init
+            beaconManager = BeaconManager.getInstanceForApplication(this);
+            backgroundPowerSaver = new BackgroundPowerSaver(this);
 
-        //Scanning Settings
-        beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
-        //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
-        //beaconManager.setBackgroundBetweenScanPeriod((long) 150);
-        beaconManager.setBackgroundScanPeriod((long) 1001);
+            //Scanning Settings
+            beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
+            //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
+            //beaconManager.setBackgroundBetweenScanPeriod((long) 150);
+            beaconManager.setBackgroundScanPeriod((long) 1001);
 
-        //Also detect iBeacons
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+            //Also detect iBeacons
+            beaconManager.getBeaconParsers().add(new BeaconParser().
+                    setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        }
 
     }
 
 
     public void registerBeaconRegion() {
-        //regionList is synced, proceeding with regions creation
+        if(beaconsEnabled){
+            //regionList is synced, proceeding with regions creation
 
-        List<BeaconRegion> beaconRegionList = RoomDB.getInstance(this).beaconRegionDao().getBackgroundScanningRegions();
-        List<Region> regionList = new ArrayList<>();
-        for (BeaconRegion beaconRegion : beaconRegionList) {
-            String uuidString = beaconRegion.getUUID();
-            Identifier uuid = null;
-            if (uuidString != null) {
-                uuid = Identifier.parse(uuidString);
+            List<BeaconRegion> beaconRegionList = RoomDB.getInstance(this).beaconRegionDao().getBackgroundScanningRegions();
+            List<Region> regionList = new ArrayList<>();
+            for (BeaconRegion beaconRegion : beaconRegionList) {
+                String uuidString = beaconRegion.getUUID();
+                Identifier uuid = null;
+                if (uuidString != null) {
+                    uuid = Identifier.parse(uuidString);
+                }
+
+                String majorString = beaconRegion.getMajor();
+                Identifier major = null;
+                if (majorString != null) {
+                    major = Identifier.parse(majorString);
+
+                }
+                String minorString = beaconRegion.getMinor();
+                Identifier minor = null;
+                if (minorString != null) {
+                    minor = Identifier.parse(minorString);
+                }
+
+                Region r = new Region(beaconRegion.getUniqueID(), uuid, major, minor);
+                regionList.add(r);
+                Log.d(TAG, "region: " + beaconRegion.getUniqueID() + " " + uuidString + " " + majorString + " " + minorString);
             }
 
-            String majorString = beaconRegion.getMajor();
-            Identifier major = null;
-            if (majorString != null) {
-                major = Identifier.parse(majorString);
+            getRegionFeature(beaconRegionList);
 
-            }
-            String minorString = beaconRegion.getMinor();
-            Identifier minor = null;
-            if (minorString != null) {
-                minor = Identifier.parse(minorString);
-            }
-
-            Region r = new Region(beaconRegion.getUniqueID(), uuid, major, minor);
-            regionList.add(r);
-            Log.d(TAG, "region: " + beaconRegion.getUniqueID() + " " + uuidString + " " + majorString + " " + minorString);
+            regionBootstrap = new RegionBootstrap(this, regionList);
         }
-
-        getRegionFeature(beaconRegionList);
-
-        regionBootstrap = new RegionBootstrap(this, regionList);
     }
 
     //update the hashmap with the features of each region within the background scanning regions list

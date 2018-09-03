@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clDoorUnlock"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.DoorUnlockActivity">
@@ -17,9 +18,8 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="unlockDoor"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:backgroundTint="@color/colorPrimary"
-        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,15 +27,82 @@
         app:srcCompat="@drawable/room_key" />
 
     <TextView
-        android:id="@+id/tvDoorUnlockPrompt"
+        android:id="@+id/tvDoorUnlockInstructions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
         android:text="@string/doorUnlockUnlockMessage"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDoorUnlockRoomLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/tvDoorUnlockRoomLabel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/fabDoorUnlock"
+        app:layout_constraintEnd_toStartOf="@+id/tvDoorUnlockRoom"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDoorUnlockRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDoorUnlockRoomLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvDoorUnlockRoomLabel"
+        tools:text="101" />
+
+    <TextView
+        android:id="@+id/tvDoorUnlockFloorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/tvDoorUnlockFloorLabel"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvDoorUnlockFloor"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDoorUnlockRoomLabel" />
+
+    <TextView
+        android:id="@+id/tvDoorUnlockFloor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvDoorUnlockFloorLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvDoorUnlockFloorLabel"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/tvDoorUnlockPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/tvDoorUnlockPrompt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/fabDoorUnlock"
+        app:layout_constraintStart_toStartOf="@+id/fabDoorUnlock"
         app:layout_constraintTop_toBottomOf="@+id/fabDoorUnlock" />
 
 </android.support.constraint.ConstraintLayout>

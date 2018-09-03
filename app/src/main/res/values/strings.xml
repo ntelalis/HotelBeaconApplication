@@ -45,6 +45,7 @@
     <string name="saved_firstName" translatable="false">firstName_KEY</string>
     <string name="saved_lastName" translatable="false">lastName_KEY</string>
     <string name="saved_title" translatable="false">title_KEY</string>
+    <string name="beaconsEnabled" translatable="false">beacon_permission_KEY</string>
     <string name="is_checked_in" translatable="false">checkedIn_KEY</string>
     <string name="is_checked_out" translatable="false">checkedOut_KEY</string>
     <string name="is_notified_Welcome" translatable="false">notifiedWelcome_KEY</string>
@@ -178,7 +179,7 @@
     <string name="bottomNavigationLoyalty">Loyalty Club</string>
     <string name="bottomNavigationOffers">Offers</string>
     <string name="bottomNavigationOffersMyRoom">My Room</string>
-    <string name="doorUnlockUnlockMessage">Please approach the door and place your mobile near the lock and press the key to unlock</string>
+    <string name="doorUnlockUnlockMessage">Place your mobile near the lock and press the key to unlock when the button turns orange</string>
     <string name="registerCountryHint">Country</string>
     <string name="registerTitleHint">Title</string>
     <string name="registerPhoneHint">Phone</string>
@@ -203,6 +204,14 @@
     <string name="tvOfferExclusiveCodeLabel">Exclusive Code:</string>
     <string name="tvOfferSpecialCodeLabel">Exclusive Code:</string>
     <string name="btnCheckedInMyRoom">My Room</string>
+    <string name="tvDoorUnlockRoomLabel">Room</string>
+    <string name="tvDoorUnlockFloorLabel">Floor</string>
+    <string name="tvDoorUnlockPrompt">Touch to Unlock</string>
+    <string name="tvBottomSheetTitle">My cart</string>
+    <string name="tvBottomSheetTotal">Total</string>
+    <string name="tvBottomSheetTotalPrice">0</string>
+    <string name="tvBottomSheetCount">0</string>
+    <string name="etBottomSheetCommentsHint">Comments...</string>
 
 
 </resources>

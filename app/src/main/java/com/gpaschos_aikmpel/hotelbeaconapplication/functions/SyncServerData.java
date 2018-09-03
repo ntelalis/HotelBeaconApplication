@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
@@ -59,8 +60,19 @@ public class SyncServerData implements JsonListener {
         this.volleyQueue = VolleyQueue.getInstance(context);
     }
 
+    private SyncServerData(Context context, Fragment fragment){
+        this(context);
+        if(fragment instanceof CouponCallbacks){
+            couponCallbacks = (CouponCallbacks) context;
+        }
+    }
+
     public static SyncServerData getInstance(Context context) {
         return new SyncServerData(context);
+    }
+
+    public static SyncServerData getInstance(Context context, Fragment fragment){
+        return new SyncServerData(context,fragment);
     }
 
     public void getDataFromServer() {

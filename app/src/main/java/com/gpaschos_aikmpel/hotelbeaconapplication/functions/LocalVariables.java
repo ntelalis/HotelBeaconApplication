@@ -54,9 +54,9 @@ public class LocalVariables {
 
     }
 
-    public static boolean readBoolean(Context context, int key) {
+    public static boolean readBoolean(Context context, int key, boolean defaultValue) {
         SharedPreferences sharedPref = context.getSharedPreferences(context.getString(R.string.spfile), Context.MODE_PRIVATE);
-        return sharedPref.getBoolean(context.getString(key), false);
+        return sharedPref.getBoolean(context.getString(key), defaultValue);
 
     }
 

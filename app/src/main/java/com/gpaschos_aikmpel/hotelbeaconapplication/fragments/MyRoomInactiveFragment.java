@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 
@@ -30,7 +33,12 @@ public class MyRoomInactiveFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_my_room_inactive, container, false);
+        View v = inflater.inflate(R.layout.fragment_my_room_inactive, container, false);
+        TextView msg =  v.findViewById(R.id.tvCustomerServicesNoReservation);
+        Animation animation = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+        animation.setDuration(1000);
+        msg.setAnimation(animation);
+        return v;
     }
 
 }
