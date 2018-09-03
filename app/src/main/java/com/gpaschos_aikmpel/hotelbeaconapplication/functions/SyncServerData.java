@@ -1,6 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.functions;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.BeaconApplication;
@@ -42,17 +43,23 @@ public class SyncServerData implements JsonListener {
 
     private final Context context;
     private SyncCallbacks syncCallbacks;
+    private SyncCallbacksSwipeRefresh syncCallbacksSwipeRefresh;
     private CouponCallbacks couponCallbacks;
     private RoomDB roomDB;
     private VolleyQueue volleyQueue;
+
+    private SyncServerData(Fragment fragment, Context context){
+        this(context);
+        if (fragment instanceof SyncCallbacksSwipeRefresh){
+            syncCallbacksSwipeRefresh = (SyncCallbacksSwipeRefresh) fragment;
+        }
+    }
 
     private SyncServerData(Context context) {
         if (context instanceof SyncCallbacks) {
             syncCallbacks = (SyncCallbacks) context;
         } else if (context instanceof CouponCallbacks) {
             couponCallbacks = (CouponCallbacks) context;
-        } else {
-            throw new ClassCastException("interface SyncCallbacks must be implemented");
         }
         this.context = context.getApplicationContext();
         this.roomDB = RoomDB.getInstance(context);
@@ -61,6 +68,11 @@ public class SyncServerData implements JsonListener {
 
     public static SyncServerData getInstance(Context context) {
         return new SyncServerData(context);
+    }
+
+
+    public static SyncServerData getInstance(Fragment fragment, Context context) {
+        return new SyncServerData(fragment, context);
     }
 
     public void getDataFromServer() {
@@ -169,7 +181,7 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.generalOffersUrl, params);
     }
 
-    private void getExclusiveOffers(Customer customer) {
+    public void getExclusiveOffers(Customer customer) {
         Log.i(TAG, "Check ExclusiveOffers");
         List<ExclusiveOffer> exclusiveOfferList = roomDB.exclusiveOfferDao().getExclusiveOffersForRecyclerView();
         Map<String, String> params = new HashMap<>();
@@ -605,6 +617,11 @@ public class SyncServerData implements JsonListener {
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
                     Log.i(TAG, "ExclusiveOffers OK!");
                     getOfferBeaconRegion();
+                    Log.d(TAG, (syncCallbacksSwipeRefresh==null)+" ");
+                    if (syncCallbacksSwipeRefresh != null) {
+                        Log.i(TAG, "wtf");
+                        syncCallbacksSwipeRefresh.syncingFinished();
+                    }
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString());
                 }
@@ -656,6 +673,11 @@ public class SyncServerData implements JsonListener {
         void couponCreated(ExclusiveOffer exclusiveOffer);
     }
 
+
+    public interface SyncCallbacksSwipeRefresh {
+        void syncingFinished();
+    }
+
     private static <T extends SyncModel> String sync(List<T> tList) {
         JSONArray jsonArray = new JSONArray();
         for (T t : tList) {
@@ -675,6 +697,5 @@ public class SyncServerData implements JsonListener {
         Log.d(TAG, "JSON to server for syncing " + jsonArray.toString());
         return jsonArray.toString();
     }
-
 
 }

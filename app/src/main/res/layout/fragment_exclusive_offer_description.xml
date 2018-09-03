@@ -20,16 +20,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@color/colorPrimaryDark" />
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <Button
+        android:id="@+id/btnDFOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="close"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/sv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/ivLine">
 
@@ -38,12 +55,12 @@
             android:id="@+id/tvExclusiveOfferDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:textSize="16sp"
 
 
-            tools:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly female audience. Our Gentleman’s afternoon tea draws on the traditions of the club house and appeals to those with a love for tea with less of sweet tooth. A selection of sandwiches accompany a Goosnargh duck Scotch egg, Gentleman’s relish &amp; toast, sausage roll and Lancashire bomb rarebit &amp; English crumpet followed by cheese scones and Eccles cakes." />
+            tools:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly " />
 
 
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

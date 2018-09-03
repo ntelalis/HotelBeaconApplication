@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,15 +22,17 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.alert.ViewOfferDetailsFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 
 import java.util.List;
 
-public class OfferExclusiveFragment extends Fragment {
+public class OfferExclusiveFragment extends Fragment implements SyncServerData.SyncCallbacksSwipeRefresh{
 
     private FragmentCallbacks fragmentCallbacks;
     public static final String TAG = OfferExclusiveFragment.class.getSimpleName();
     private List<ExclusiveOffer> offersList;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public OfferExclusiveFragment() {
         // Required empty public constructor
@@ -71,7 +74,20 @@ public class OfferExclusiveFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         RecyclerView.Adapter myAdapter = new ExclusiveOfferAdapter(offersList);
         recyclerView.setAdapter(myAdapter);
+
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "onRefresh called from SwipeRefreshLayout");
+                myUpdateOperation();
+            }
+        });
         return view;
+    }
+
+    private void myUpdateOperation(){
+        SyncServerData.getInstance(this, getContext()).getExclusiveOffers(RoomDB.getInstance(getContext()).customerDao().getCustomer());
     }
 
     public void refreshData() {
@@ -79,6 +95,14 @@ public class OfferExclusiveFragment extends Fragment {
         recyclerView.setAdapter(new ExclusiveOfferAdapter(offersList));
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
+    @Override
+    public void syncingFinished() {
+        Log.d(TAG,"syncing done");
+        swipeRefreshLayout.setRefreshing(false);
+        refreshData();
+    }
+
 
     private class ExclusiveOfferAdapter extends RecyclerView.Adapter<ExclusiveOfferAdapter.ExclusiveOfferViewHolder> {
 
@@ -256,6 +280,7 @@ public class OfferExclusiveFragment extends Fragment {
         }
 
     }
+
 
     public interface FragmentCallbacks {
         void getCoupon(int offerID);

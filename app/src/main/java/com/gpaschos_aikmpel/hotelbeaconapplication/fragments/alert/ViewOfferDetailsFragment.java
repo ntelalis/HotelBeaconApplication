@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -52,20 +53,37 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, null);
 
         TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
+        Button btnOk = view.findViewById(R.id.btnDFOK);
+
+
+
         //TextView tvTitle =new TextView(getContext());
         Log.d("OnCreateDialog/TITLE ", TITLE);
-        tvDescription.setText(getArguments().getString(DESCRIPTION));
+        if (getArguments() != null && getArguments().containsKey(DESCRIPTION) && getArguments().containsKey(TITLE)) {
+            tvDescription.setText(getArguments().getString(DESCRIPTION));
+            builder.setTitle(getArguments().getString(TITLE));
+        }
         //tvTitle.setText(getArguments().getString(TITLE));
         //tvTitle.setTypeface(Typeface.DEFAULT_BOLD);
         //builder.setMessage(getArguments().getString(DESCRIPTION));
         // builder.getContext().getTheme().applyStyle(R.style.MyAlertDialog, true);
 
-        builder.setTitle(getArguments().getString(TITLE));
         //builder.setCustomTitle(tvTitle);
-        builder.setPositiveButton("OK", null);
+        //builder.setPositiveButton("OK", null);
+
         builder.setView(view);
 
-        AlertDialog dialog = builder.create();
+        final AlertDialog dialog = builder.create();
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
         return dialog;
     }
 
@@ -78,7 +96,7 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         Display display = window.getWindowManager().getDefaultDisplay();
         display.getSize(size);
 
-        window.setLayout((int) (size.x * 0.97), (int) (size.x * 0.75));
+        window.setLayout((int) (size.x * 0.97), (int) (size.x * 0.65));
         //window.setLayout((int)(size.y*0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
 
