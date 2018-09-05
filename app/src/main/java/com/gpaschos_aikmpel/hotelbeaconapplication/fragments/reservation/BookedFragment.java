@@ -51,7 +51,7 @@ public class BookedFragment extends Fragment {
         if (getArguments() != null) {
             reservationID = getArguments().getInt(RESERVATION_ID_KEY);
         }
-        // SyncServerData.getInstance(getContext()).getLoyalty(RoomDB.getInstance(getContext()).customerDao().getCustomer());
+        SyncServerData.getInstance(getContext()).getLoyalty(RoomDB.getInstance(getContext()).customerDao().getCustomer());
     }
 
     @Override

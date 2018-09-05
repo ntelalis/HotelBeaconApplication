@@ -5,9 +5,8 @@ public class URL {
     private static final String serverProtocol = "http";
 
     //private static final String serverHost = "ntelalis.dyndns-home.com";
-    //private static final String serverHost = "192.168.1.101";
+    private static final String serverHost = "192.168.1.101";
     //private static final String serverHost = "https://hotelbeaconapp.000webhostapp.com/";
-    private static final String serverHost = "192.168.2.7";
 
     //private static final String serverPort = "8642";
     private static final String serverPort = "80";
