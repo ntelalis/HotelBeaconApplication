@@ -323,6 +323,7 @@ public class POST {
     public static final String generalOfferArray = "generalOfferArray";
     public static final String generalOfferID = "id";
     public static final String generalOfferPriceDiscount = "priceDiscount";
+    public static final String generalOfferTitle = "title";
     public static final String generalOfferDescription = "description";
     public static final String generalOfferDetails = "details";
     public static final String generalOfferStartDate = "startDate";
@@ -379,4 +380,5 @@ public class POST {
     public static final String bookRoomAddress2 = "address2";
     public static final String bookRoomCity = "city";
     public static final String bookRoomPostalCode = "postalCode";
+
 }

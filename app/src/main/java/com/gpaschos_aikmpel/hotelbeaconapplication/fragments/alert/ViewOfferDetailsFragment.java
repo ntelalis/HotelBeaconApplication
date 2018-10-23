@@ -38,7 +38,6 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         Bundle args = new Bundle();
         args.putString(DESCRIPTION, description);
         args.putString(TITLE, title);
-        //Log.d("-InDialogFragment-title", title);
         ViewOfferDetailsFragment fragment = new ViewOfferDetailsFragment();
         fragment.setArguments(args);
         return fragment;
@@ -50,18 +49,19 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         //View view = View.inflate(getContext(), R.layout.fragment_exclusive_offer_description, null);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_exclusive_offer_description, null);
 
-        TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
-        Button btnOk = view.findViewById(R.id.btnDFOK);
+        //TextView tvDescription = view.findViewById(R.id.tvExclusiveOfferDescription);
+        //Button btnOk = view.findViewById(R.id.btnDFOK);
 
 
 
         //TextView tvTitle =new TextView(getContext());
-        Log.d("OnCreateDialog/TITLE ", TITLE);
+        //Log.d("OnCreateDialog/TITLE ", TITLE);
         if (getArguments() != null && getArguments().containsKey(DESCRIPTION) && getArguments().containsKey(TITLE)) {
-            tvDescription.setText(getArguments().getString(DESCRIPTION));
+            //tvDescription.setText(getArguments().getString(DESCRIPTION));
             builder.setTitle(getArguments().getString(TITLE));
+            builder.setMessage(getArguments().getString(DESCRIPTION));
+            builder.setPositiveButton("OK", null);
         }
         //tvTitle.setText(getArguments().getString(TITLE));
         //tvTitle.setTypeface(Typeface.DEFAULT_BOLD);
@@ -71,34 +71,32 @@ public class ViewOfferDetailsFragment extends DialogFragment {
         //builder.setCustomTitle(tvTitle);
         //builder.setPositiveButton("OK", null);
 
-        builder.setView(view);
+        //builder.setView(view);
 
-        final AlertDialog dialog = builder.create();
-
-        btnOk.setOnClickListener(new View.OnClickListener() {
+        /*btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
             }
-        });
+        });*/
 
-        return dialog;
+        return builder.create();
     }
 
     @Override
     public void onResume() {
 
-        Window window = getDialog().getWindow();
-        Point size = new Point();
+        //Window window = getDialog().getWindow();
+        //Point size = new Point();
 
-        Display display = window.getWindowManager().getDefaultDisplay();
-        display.getSize(size);
+        //Display display = window.getWindowManager().getDefaultDisplay();
+        //display.getSize(size);
 
-        window.setLayout((int) (size.x * 0.97), (int) (size.x * 0.65));
+        //window.setLayout((int) (size.x * 0.97), (int) (size.x * 0.65));
         //window.setLayout((int)(size.y*0.75), WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.CENTER);
+        //window.setGravity(Gravity.CENTER);
 
         super.onResume();
     }

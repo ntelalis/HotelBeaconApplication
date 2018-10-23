@@ -169,7 +169,7 @@ public class SyncServerData implements JsonListener {
         volleyQueue.jsonRequest(this, URL.roomTypesUrl, params);
     }
 
-    private void getGeneralOffers() {
+    public void getGeneralOffers() {
         Log.i(TAG, "Check GeneralOffers");
         List<GeneralOffer> generalOfferList = roomDB.generalOfferDao().getGeneralOffers();
         Map<String, String> params = null;
@@ -577,13 +577,17 @@ public class SyncServerData implements JsonListener {
                             continue;
                         }
                         String priceDiscount = JSONHelper.getString(jsonObject, POST.generalOfferPriceDiscount);
+                        String title = JSONHelper.getString(jsonObject, POST.generalOfferTitle);
                         String description = JSONHelper.getString(jsonObject, POST.generalOfferDescription);
                         String details = JSONHelper.getString(jsonObject, POST.generalOfferDetails);
                         String startDate = JSONHelper.getString(jsonObject, POST.generalOfferStartDate);
                         String endDate = JSONHelper.getString(jsonObject, POST.generalOfferEndDate);
-                        generalOfferList.add(new GeneralOffer(id, priceDiscount, description, details, startDate, endDate, modified));
+                        generalOfferList.add(new GeneralOffer(id, priceDiscount, title, description, details, startDate, endDate, modified));
                     }
                     roomDB.generalOfferDao().insertAll(generalOfferList);
+                    if (syncCallbacksSwipeRefresh != null) {
+                        syncCallbacksSwipeRefresh.syncingFinished();
+                    }
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString());
                 }
@@ -617,9 +621,7 @@ public class SyncServerData implements JsonListener {
                     roomDB.exclusiveOfferDao().insertAll(exclusiveOfferList);
                     Log.i(TAG, "ExclusiveOffers OK!");
                     getOfferBeaconRegion();
-                    Log.d(TAG, (syncCallbacksSwipeRefresh==null)+" ");
                     if (syncCallbacksSwipeRefresh != null) {
-                        Log.i(TAG, "wtf");
                         syncCallbacksSwipeRefresh.syncingFinished();
                     }
                 } catch (JSONException e) {

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -75,19 +74,15 @@ public class OfferExclusiveFragment extends Fragment implements SyncServerData.S
         RecyclerView.Adapter myAdapter = new ExclusiveOfferAdapter(offersList);
         recyclerView.setAdapter(myAdapter);
 
-        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout = view.findViewById(R.id.srOfferExclusive);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener(){
             @Override
             public void onRefresh() {
                 Log.i(TAG, "onRefresh called from SwipeRefreshLayout");
-                myUpdateOperation();
+                SyncServerData.getInstance(OfferExclusiveFragment.this, getContext()).getExclusiveOffers(RoomDB.getInstance(getContext()).customerDao().getCustomer());
             }
         });
         return view;
-    }
-
-    private void myUpdateOperation(){
-        SyncServerData.getInstance(this, getContext()).getExclusiveOffers(RoomDB.getInstance(getContext()).customerDao().getCustomer());
     }
 
     public void refreshData() {
@@ -185,7 +180,6 @@ public class OfferExclusiveFragment extends Fragment implements SyncServerData.S
                         tvCodeLabel = itemView.findViewById(R.id.tvOfferSpecialCodeLabel);
                         break;
                 }
-                //MEGALES ALLAGES!!!!!!!!!!!
                 itemView.setOnClickListener(this);
             }
 
@@ -268,7 +262,7 @@ public class OfferExclusiveFragment extends Fragment implements SyncServerData.S
 
             @Override
             public void onClick(View v) {
-                Log.d("offer tittle: ", getTitle1());
+                //Log.d("offer tittle: ", getTitle1());
                 DialogFragment descriptionFragment = ViewOfferDetailsFragment.newInstance(description, getTitle1());
                 if(getFragmentManager() !=null) {
                     descriptionFragment.show(getFragmentManager(), ViewOfferDetailsFragment.TAG);

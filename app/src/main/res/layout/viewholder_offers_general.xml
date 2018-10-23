@@ -54,7 +54,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvOfferGeneralTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvOfferGeneralTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvOfferGeneralTitle"
+            tools:text="The offer starts from 2pm until 11pm" />
 
         <ImageView
             android:id="@+id/ivOfferGeneralBackgroundDiscountPrice"

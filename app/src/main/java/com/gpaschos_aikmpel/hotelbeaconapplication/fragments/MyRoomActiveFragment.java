@@ -3,6 +3,7 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,9 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.DoorUnlockActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.ReviewActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.RoomServiceActivity;
+import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.ReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 
 public class MyRoomActiveFragment extends Fragment {
 
@@ -71,12 +75,19 @@ public class MyRoomActiveFragment extends Fragment {
         tvRoomNo.setText(String.valueOf(roomNo));
         tvRoomFloor.setText(String.valueOf(floor));
 
-        Button btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
+        final Button btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CheckOutActivity.class);
-                startActivity(intent);
+
+                Reservation r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(reservationID);
+                if(ReservationsAdapter.getReservationStatus(r) == ReservationsAdapter.ReservationModel.CAN_CHECK_OUT){
+                    Intent intent = new Intent(getActivity(), CheckOutActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Snackbar.make(v,"You cannot checkout yet", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 

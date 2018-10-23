@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <ImageView
@@ -28,7 +28,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="close"
+        android:text="CLOSE"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:theme="@style/PrimaryButton"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -48,6 +48,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        android:fillViewport="true"
         app:layout_constraintTop_toTopOf="@+id/ivLine">
 
 
@@ -55,10 +56,11 @@
             android:id="@+id/tvExclusiveOfferDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  "
+
+
             android:textSize="16sp"
-
-
-            tools:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly " />
+            tools:text="The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  The tradition of afternoon tea began in the nineteenth century, created by the Duchess of Bedford for a mainly  " />
 
 
     </ScrollView>

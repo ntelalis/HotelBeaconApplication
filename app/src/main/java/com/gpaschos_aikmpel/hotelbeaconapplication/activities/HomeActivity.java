@@ -318,37 +318,14 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         } else {
             List<ReservationsAdapter.ReservationModel> reservationModelList = new ArrayList<>();
             for (Reservation r : reservationList) {
-                try {
-                    RoomType rt = RoomDB.getInstance(this).roomTypeDao().getRoomTypeById(r.getRoomTypeID());
 
-                    SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                    long currentTime = Calendar.getInstance().getTimeInMillis();
-                    long startDate = sqlFormat.parse(r.getStartDate()).getTime();
-                    long endDate = sqlFormat.parse(r.getEndDate()).getTime();
+                RoomType rt = RoomDB.getInstance(this).roomTypeDao().getRoomTypeById(r.getRoomTypeID());
 
-                    int reservationStatus;
+                int reservationStatus = ReservationsAdapter.getReservationStatus(r);
 
-                    if (!r.isCheckedIn())
-                        if (currentTime < startDate)
-                            reservationStatus = ReservationsAdapter.ReservationModel.CANNOT_CHECK_IN;
-                        else
-                            reservationStatus = ReservationsAdapter.ReservationModel.CAN_CHECK_IN;
-
-                    else {
-                        if (!r.isCheckedOut())
-                            if (currentTime < endDate)
-                                reservationStatus = ReservationsAdapter.ReservationModel.CANNOT_CHECK_OUT;
-                            else
-                                reservationStatus = ReservationsAdapter.ReservationModel.CAN_CHECK_OUT;
-                        else
-                            reservationStatus = ReservationsAdapter.ReservationModel.IS_CHECKED_OUT;
-                    }
-                    reservationModelList.add(new ReservationsAdapter.ReservationModel(r.getAdults(),
-                            rt.getName(), r.getId(), r.getStartDate(), r.getEndDate(),
-                            reservationStatus, r.getRoomNumber()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                reservationModelList.add(new ReservationsAdapter.ReservationModel(r.getAdults(),
+                        rt.getName(), r.getId(), r.getStartDate(), r.getEndDate(),
+                        reservationStatus, r.getRoomNumber()));
             }
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

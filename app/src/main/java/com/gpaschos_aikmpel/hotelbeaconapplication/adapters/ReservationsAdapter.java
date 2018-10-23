@@ -17,7 +17,11 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapter.MyViewHolder> {
 
@@ -50,6 +54,39 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
     @Override
     public int getItemCount() {
         return reservationsList.size();
+    }
+
+    public static int getReservationStatus(Reservation r)  {
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long startDate = 0;
+        long endDate = 0;
+        try {
+            startDate = sqlFormat.parse(r.getStartDate()).getTime();
+            endDate = sqlFormat.parse(r.getEndDate()).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int reservationStatus;
+
+        if (!r.isCheckedIn())
+            if (currentTime < startDate)
+                reservationStatus = ReservationsAdapter.ReservationModel.CANNOT_CHECK_IN;
+            else
+                reservationStatus = ReservationsAdapter.ReservationModel.CAN_CHECK_IN;
+
+        else {
+            if (!r.isCheckedOut())
+                if (currentTime < endDate)
+                    reservationStatus = ReservationsAdapter.ReservationModel.CANNOT_CHECK_OUT;
+                else
+                    reservationStatus = ReservationsAdapter.ReservationModel.CAN_CHECK_OUT;
+            else
+                reservationStatus = ReservationsAdapter.ReservationModel.IS_CHECKED_OUT;
+        }
+
+        return reservationStatus;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -152,6 +189,8 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
                     tvCheckInCheckOutInstructions.setVisibility(View.INVISIBLE);
             }
         }
+
+
     }
 
     public interface ClickCallbacks {
