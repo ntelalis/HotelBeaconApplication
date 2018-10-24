@@ -22,6 +22,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     }
 
     public void addFood(FoodOrderView foodOrderView) {
+
+        for(int i=0; i< foodList.size(); i++){
+            if(foodOrderView.id == foodList.get(i).id){
+                foodList.get(i).quantity += foodOrderView.quantity;
+                notifyDataSetChanged();
+                return;
+            }
+        }
         this.foodList.add(foodOrderView);
         notifyDataSetChanged();
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -116,7 +117,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
             params.put(POST.roomServiceOrderComments, etComments.getText().toString());
             VolleyQueue.getInstance(this).jsonRequest(this, URL.orderUrl, params);
         } else {
-            Toast.makeText(this, "Please select some items first!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(etComments,"Please select some items first!", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -220,7 +221,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
     public void receiveFoodQuantity(RoomServiceModel.FoodModel foodModel, int quantity) {
 
         recyclerAdapter.addFood(new FoodAdapter.FoodOrderView(foodModel.getId(), foodModel.getName(), quantity, foodModel.getPrice()));
-        int i = Integer.parseInt(orderTotalCount.getText().toString()) + 1;
+        int i = Integer.parseInt(orderTotalCount.getText().toString()) + quantity;
         orderTotalCount.setText(String.valueOf(i));
         orderTotalPrice.setText(String.valueOf(recyclerAdapter.totalCost()));
 

@@ -53,6 +53,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCre
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
 import com.gpaschos_aikmpel.hotelbeaconapplication.reworkRequest.RequestCallback;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
+import com.gpaschos_aikmpel.hotelbeaconapplication.utility.LimitedUniqueQueue;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,6 +71,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     private Fragment fragmentToSet = null;
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomNavigationView;
+    private LimitedUniqueQueue<Fragment> fragmentLimitedUniqueQueue;
 
     private boolean needsRefresh = false;
 
@@ -109,6 +111,9 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         }
     };
 
+
+    //TODO Back button correct implementation
+
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavigationListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -123,6 +128,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     if (fragment == null) {
                         LoyaltyFragment loyaltyFragment = new LoyaltyFragment();
                         transaction.replace(R.id.homeScreenContainer, loyaltyFragment, LoyaltyFragment.TAG);
+                        fragmentLimitedUniqueQueue.add(loyaltyFragment);
                         transaction.commit();
                     }
                     break;
@@ -131,6 +137,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     if (fragment1 == null) {
                         OfferFragment offerFragment = OfferFragment.newInstance();
                         transaction.replace(R.id.homeScreenContainer, offerFragment, OfferFragment.TAG);
+                        fragmentLimitedUniqueQueue.add(offerFragment);
                         transaction.commit();
                     }
                     break;
@@ -139,10 +146,12 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     if (r != null && r.isCheckedInNotCheckedOut()) {
                         MyRoomActiveFragment myRoomActiveFragment = MyRoomActiveFragment.newInstance(r.getId(), r.getRoomNumber(), r.getRoomFloor());
                         transaction.replace(R.id.homeScreenContainer, myRoomActiveFragment);
+                        fragmentLimitedUniqueQueue.add(myRoomActiveFragment);
                         transaction.commit();
                     } else {
                         MyRoomInactiveFragment customerServicesFragment = new MyRoomInactiveFragment();
                         transaction.replace(R.id.homeScreenContainer, customerServicesFragment);
+                        fragmentLimitedUniqueQueue.add(customerServicesFragment);
                         transaction.commit();
                     }
 
@@ -209,6 +218,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             }
         });
 
+        fragmentLimitedUniqueQueue = new LimitedUniqueQueue<>(bottomNavigationView.getMenu().size());
         drawerLayout.addDrawerListener(drawerListener);
         navigationView.setNavigationItemSelectedListener(navigationDrawerListener);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavigationListener);
@@ -217,14 +227,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Log.d("WTF", "WT22F");
             if (bundle.containsKey(NotificationCreation.CHECK_IN_NOTIFICATION) && bundle.containsKey(ScheduleNotifications.RESERVATION_ID)) {
-                Log.d("WTF", "WaaTF");
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 int reservationID = bundle.getInt(ScheduleNotifications.RESERVATION_ID);
                 CheckInFragment checkInFragment = CheckInFragment.newInstance(reservationID);
-                Log.d("WTF", "" + reservationID);
                 transaction.replace(R.id.homeScreenContainer, checkInFragment);
                 transaction.commit();
             }
@@ -307,6 +314,28 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(fragmentLimitedUniqueQueue.size()>1){
+            fragmentLimitedUniqueQueue.removeLast();
+            Fragment previousFragment = fragmentLimitedUniqueQueue.getLast();
+            if(previousFragment instanceof UpcomingReservationRecyclerViewFragment){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
+            }
+            else if(previousFragment instanceof LoyaltyFragment){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationRewardsProgram);
+            }
+            else if(previousFragment instanceof OfferFragment){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationOffers);
+            }
+            else if(previousFragment instanceof MyRoomActiveFragment || previousFragment instanceof MyRoomInactiveFragment){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMyRoom);
+            }
+        }
+        else
+            super.onBackPressed();
+    }
+
     public void myReservations() {
         List<Reservation> reservationList = RoomDB.getInstance(this).reservationDao().getAllUpcomingReservations();
 
@@ -331,6 +360,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             UpcomingReservationRecyclerViewFragment fragment = UpcomingReservationRecyclerViewFragment.newInstance(reservationModelList);
             transaction.replace(R.id.homeScreenContainer, fragment);
+            fragmentLimitedUniqueQueue.add(fragment);
             transaction.commit();
         }
     }

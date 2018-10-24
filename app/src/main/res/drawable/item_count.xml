@@ -3,13 +3,13 @@
     android:shape="rectangle">
     <corners android:radius="8dp" />
 
-    <solid android:color="#f20000" />
+    <solid android:color="@color/colorPrimary" />
 
     <stroke
 
         android:width="2dip"
 
-        android:color="#FFF" />
+        android:color="#FFFF" />
 
     <padding
 

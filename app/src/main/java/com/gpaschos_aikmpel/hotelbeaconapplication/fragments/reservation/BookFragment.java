@@ -1,11 +1,13 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
+import android.arch.persistence.room.util.StringUtil;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -231,7 +233,8 @@ public class BookFragment extends Fragment implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
+        Snackbar.make(tvPoints, error, Toast.LENGTH_SHORT).show();
+
     }
 
     public void onLoyaltyPicked(int freeNights, int cashNights, int totalPoints) {
