@@ -36,10 +36,10 @@
         android:id="@+id/tvCheckoutTotalPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvCheckoutTotalPriceLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvCheckoutCurrency"
         tools:text="102" />
 
     <TextView
@@ -59,4 +59,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.6" />
+
+    <TextView
+        android:id="@+id/tvCheckoutCurrency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/tvCheckoutCurrency"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvCheckoutTotalPrice"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>

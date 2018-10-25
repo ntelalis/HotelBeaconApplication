@@ -212,6 +212,8 @@
     <string name="tvBottomSheetTotalPrice">0</string>
     <string name="tvBottomSheetCount">0</string>
     <string name="etBottomSheetCommentsHint">Comments...</string>
+    <string name="btnCustomerServicesBookService">Book a service</string>
+    <string name="tvCheckoutCurrency">€</string>
 
 
 </resources>

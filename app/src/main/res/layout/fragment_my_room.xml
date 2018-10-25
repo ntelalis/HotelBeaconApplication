@@ -7,6 +7,19 @@
     tools:context=".activities.CustomerServicesActivity">
 
     <Button
+        android:id="@+id/btnCustomerServicesBookService"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btnCustomerServicesBookService"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:theme="@style/PrimaryButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesCheckOut"
+        app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesReview" />
+
+    <Button
         android:id="@+id/btnCustomerServicesUnlockDoor"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -24,14 +37,16 @@
         android:id="@+id/btnCustomerServicesCheckOut"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="@string/btnCustomerServicesCheckOut"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:theme="@style/PrimaryButton"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
-        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesReview" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesBookService" />
 
     <Button
         android:id="@+id/btnCustomerServicesRoomService"
@@ -129,11 +144,11 @@
         android:text="@string/btnHomeReview"
         android:textAllCaps="false"
         android:theme="@style/PrimaryButton"
-        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesCheckOut"
         app:layout_constraintEnd_toEndOf="@+id/btnCustomerServicesRoomService"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/btnCustomerServicesRoomService"
-        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomControl" />
+        app:layout_constraintTop_toBottomOf="@+id/btnCustomerServicesRoomControl"
+        app:layout_constraintBottom_toTopOf="@+id/btnCustomerServicesBookService"/>
 
     <Button
         android:id="@+id/btnCustomerServicesRoomControl"

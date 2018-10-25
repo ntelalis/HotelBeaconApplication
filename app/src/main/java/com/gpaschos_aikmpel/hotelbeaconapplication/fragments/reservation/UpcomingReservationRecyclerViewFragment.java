@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +17,27 @@ import android.view.ViewGroup;
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.activities.CheckOutActivity;
 import com.gpaschos_aikmpel.hotelbeaconapplication.adapters.ReservationsAdapter;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
+import com.gpaschos_aikmpel.hotelbeaconapplication.fragments.OfferExclusiveFragment;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class UpcomingReservationRecyclerViewFragment extends Fragment implements ReservationsAdapter.ClickCallbacks {
+public class UpcomingReservationRecyclerViewFragment extends Fragment implements ReservationsAdapter.ClickCallbacks,SyncServerData.SyncCallbacksSwipeRefresh {
 
     private static final String ARG_PARAM1 = "ReservationModel_Parcelable";
+    private static final String TAG = UpcomingReservationRecyclerViewFragment.class.getSimpleName();
 
     private ArrayList<ReservationsAdapter.ReservationModel> list;
     private ReservationsAdapter adapter;
     private NotificationCallbacks listener;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public UpcomingReservationRecyclerViewFragment() {
         // Required empty public constructor
@@ -67,12 +77,43 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_upcoming_reservation_recycler_view, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.rvFragmentUpcomingReservation);
+        recyclerView = view.findViewById(R.id.rvFragmentUpcomingReservation);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
+        swipeRefreshLayout = view.findViewById(R.id.srUpcomingReservation);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.i(TAG, "onRefresh called from SwipeRefreshLayout");
+                SyncServerData.getInstance(UpcomingReservationRecyclerViewFragment.this, getContext()).getReservations(RoomDB.getInstance(getContext()).customerDao().getCustomer());
+            }
+        });
         return view;
+    }
+
+    public void refreshData() {
+        List<Reservation> reservationList = RoomDB.getInstance(getContext()).reservationDao().getAllUpcomingReservations();
+        List<ReservationsAdapter.ReservationModel> reservationModelList = new ArrayList<>();
+        for (Reservation r : reservationList) {
+
+            RoomType rt = RoomDB.getInstance(getContext()).roomTypeDao().getRoomTypeById(r.getRoomTypeID());
+
+            int reservationStatus = ReservationsAdapter.getReservationStatus(r);
+
+            reservationModelList.add(new ReservationsAdapter.ReservationModel(r.getAdults(),
+                    rt.getName(), r.getId(), r.getStartDate(), r.getEndDate(),
+                    reservationStatus, r.getRoomNumber()));
+            recyclerView.setAdapter(new ReservationsAdapter(this, reservationModelList));
+            recyclerView.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void syncingFinished() {
+        Log.d(TAG, "syncing done");
+        swipeRefreshLayout.setRefreshing(false);
+        refreshData();
     }
 
     @Override

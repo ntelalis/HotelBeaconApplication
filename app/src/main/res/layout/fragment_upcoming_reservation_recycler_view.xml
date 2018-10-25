@@ -5,8 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".fragments.reservation.UpcomingReservationRecyclerViewFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvFragmentUpcomingReservation"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srUpcomingReservation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvFragmentUpcomingReservation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.constraint.ConstraintLayout>

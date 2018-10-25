@@ -119,12 +119,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
             android:text="@string/btnUpcomingReservationsCheckout"
             android:theme="@style/PrimaryButton"
             app:layout_constraintBottom_toTopOf="@+id/tvUpcomingReservationsInstructions"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="@+id/tvUpcomingReservationsReservationID"
             app:layout_constraintStart_toStartOf="@+id/tvUpcomingReservationsReservationIDLabel"
             app:layout_constraintTop_toBottomOf="@+id/tvVHUpcomingReservationsRoomNumberLabel" />
 

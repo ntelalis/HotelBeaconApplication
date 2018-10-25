@@ -131,7 +131,7 @@ public class SyncServerData implements JsonListener {
         }
     }
 
-    private void getReservations(Customer customer) {
+    public void getReservations(Customer customer) {
         Log.i(TAG, "Get reservations");
         if (customer != null) {
             int customerID = customer.getCustomerId();
@@ -654,7 +654,12 @@ public class SyncServerData implements JsonListener {
                 Log.i(TAG, "BeaconRegionFeature OK!");
 
                 ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
-                syncCallbacks.customerDataSynced();
+                if(syncCallbacks!=null){
+                    syncCallbacks.customerDataSynced();
+                }
+                if (syncCallbacksSwipeRefresh != null) {
+                    syncCallbacksSwipeRefresh.syncingFinished();
+                }
                 break;
         }
     }

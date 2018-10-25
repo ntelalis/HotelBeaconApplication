@@ -58,7 +58,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
             //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
             beaconManager.setBackgroundBetweenScanPeriod((long) 1500);
-            beaconManager.setBackgroundScanPeriod((long) 1001);
+            beaconManager.setBackgroundScanPeriod((long) 1100);
 
             //Also detect iBeacons
             beaconManager.getBeaconParsers().add(new BeaconParser().

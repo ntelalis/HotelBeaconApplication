@@ -75,7 +75,7 @@ public class MyRoomActiveFragment extends Fragment {
         tvRoomNo.setText(String.valueOf(roomNo));
         tvRoomFloor.setText(String.valueOf(floor));
 
-        final Button btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
+        /*final Button btnCheckOut = view.findViewById(R.id.btnCustomerServicesCheckOut);
         btnCheckOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +89,7 @@ public class MyRoomActiveFragment extends Fragment {
                     Snackbar.make(v,"You cannot checkout yet", Snackbar.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
         Button btnRoomService = view.findViewById(R.id.btnCustomerServicesRoomService);
         btnRoomService.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +118,19 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        Button btnRoomControl = view.findViewById(R.id.btnCustomerServicesRoomControl);
+         Button btnRoomControl = view.findViewById(R.id.btnCustomerServicesRoomControl);
         btnRoomControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "This feature is not supported yet", Toast.LENGTH_SHORT).show();
+                Snackbar.make(v, "This feature is not supported yet", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        Button btnBookService = view.findViewById(R.id.btnCustomerServicesBookService);
+        btnBookService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "This feature is not supported yet", Snackbar.LENGTH_SHORT).show();
             }
         });
 
