@@ -41,6 +41,7 @@ public class NotificationCreation {
     public static final String CHECK_IN_NOTIFICATION = "checkInNotification";
     public static final String CHECK_IN_REMINDER = "scheduledNotification";
     public static final String CHECK_IN_BEACON_NOTIFICATION = "beaconNotification";
+    public static final String OFFER_EXCLUSIVE_NOTIFICATION = "offerExclusiveNotification";
 
 
     private NotificationCreation() {
@@ -75,9 +76,12 @@ public class NotificationCreation {
         } else {
             icon = R.drawable.ic_welcome_png;
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(NotificationCreation.OFFER_EXCLUSIVE_NOTIFICATION, NotificationCreation.OFFER_EXCLUSIVE_NOTIFICATION);
         notification(context, Params.NOTIFICATION_CHANNEL_ID, Params.notificationFarewellID,
                 notificationTitle, notificationContent, icon,
-                notificationContent, HomeActivity.class);
+                notificationContent, HomeActivity.class, bundle);
 
     }
 
@@ -92,10 +96,9 @@ public class NotificationCreation {
             String notificationContent = Params.notificationWelcomeGreeting + title + ". " + lastName
                     + Params.notificationWelcomeGreeting3;
             String notificationTitle;
-            if(customer.isOldCustomer()){
+            if (customer.isOldCustomer()) {
                 notificationTitle = Params.notificationWelcomeBackTitle + Params.HotelName;
-            }
-            else{
+            } else {
                 notificationTitle = Params.notificationWelcomeTitle + Params.HotelName;
             }
             /*if (!LocalVariables.readBoolean(context, R.string.is_old_customer)) {
@@ -133,8 +136,8 @@ public class NotificationCreation {
 
         //String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
         //boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
-        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell,false)
-                && LocalVariables.readBoolean(context, R.string.is_checked_out,false)) {
+        if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell, false)
+                && LocalVariables.readBoolean(context, R.string.is_checked_out, false)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
             lastName = customer.getLastName();
             title = customer.getTitle();
@@ -237,7 +240,7 @@ public class NotificationCreation {
         //FIXME DEBUG CODE DELETE THIS
         LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
 
-        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome,false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
+        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome, false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
@@ -296,7 +299,7 @@ public class NotificationCreation {
             long lFormattedDate = formattedDate.getTime();
             long currentTime = Calendar.getInstance().getTime().getTime();
 
-            return !LocalVariables.readBoolean(context, checkerVariable,false) && (lFormattedDate <= currentTime)
+            return !LocalVariables.readBoolean(context, checkerVariable, false) && (lFormattedDate <= currentTime)
                     && (r != null);
 
         } catch (ParseException e) {
@@ -319,7 +322,7 @@ public class NotificationCreation {
                 long lFormattedEndDate = formattedEndDate.getTime();
                 long currentTime = Calendar.getInstance().getTime().getTime();
 
-                return !LocalVariables.readBoolean(context, R.string.is_checked_out,false) && (lFormattedEndDate <= currentTime);
+                return !LocalVariables.readBoolean(context, R.string.is_checked_out, false) && (lFormattedEndDate <= currentTime);
             } catch (ParseException e) {
                 e.printStackTrace();
                 throw new RuntimeException("shouldNotifyCheckout exception");

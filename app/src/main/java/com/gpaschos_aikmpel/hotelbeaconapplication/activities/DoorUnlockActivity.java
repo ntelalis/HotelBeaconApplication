@@ -221,12 +221,12 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     @Override
     public void getSuccessResult(String url, JSONObject json) {
         Snackbar.make(fabDoorUnlock,"Unlocked",Snackbar.LENGTH_LONG).show();
-        //Toast.makeText(this, "Unlocked!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, "Wrong Password", Toast.LENGTH_SHORT).show();
+
+        Snackbar.make(fabDoorUnlock, "There is a problem with your key. Please contact our reception", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

@@ -55,9 +55,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             backgroundPowerSaver = new BackgroundPowerSaver(this);
 
             //Scanning Settings
-            beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
+            //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
             //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
-            //beaconManager.setBackgroundBetweenScanPeriod((long) 150);
+            beaconManager.setBackgroundBetweenScanPeriod((long) 1500);
             beaconManager.setBackgroundScanPeriod((long) 1001);
 
             //Also detect iBeacons
@@ -119,6 +119,8 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         List<BeaconRegionFeature> featureList = featureListMap.get(region.getUniqueId());
 
         //FIXME WHAT CRASHES THINGS HERE??
+        //FIXME BEACON DETECTION AFTER APP IS STARTED WTF
+        //FIXME DOOR BEACON DOESNT GET DETECT FIRST TIME
         for (BeaconRegionFeature feature : featureList) {
             switch (feature.getFeature()) {
                 case Params.WELCOME:

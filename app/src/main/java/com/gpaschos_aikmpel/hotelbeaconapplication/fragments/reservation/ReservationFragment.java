@@ -359,7 +359,8 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
                 try {
                     calendar = Calendar.getInstance();
                     calendar.setTime(localizedFormat.parse(arrivalDateLocal));
-                    calendar.add(Calendar.DAY_OF_MONTH, 1);
+                    //DEBUG CODE
+                    //calendar.add(Calendar.DAY_OF_MONTH, 1);
                     bundle.putLong(DatePickerFragment.minimumDate_KEY, calendar.getTimeInMillis());
                     bundle.putLong(DatePickerFragment.maximumDate_KEY, maxTimeForReservationDeparture);
 

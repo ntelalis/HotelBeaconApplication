@@ -17,6 +17,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 public class OfferFragment extends Fragment {
 
     public static final String TAG = "OfferFragment";
+    private static final String VIEW_KEY = "ViewKey";
     private ViewPager viewPager;
     public static final int OFFER_GENERAL = 0;
     public static final int OFFER_EXCLUSIVE = 1;
@@ -36,6 +37,14 @@ public class OfferFragment extends Fragment {
         return fragment;
     }
 
+    public static OfferFragment newInstance(int view) {
+        OfferFragment fragment = new OfferFragment();
+        Bundle args = new Bundle();
+        args.putInt(VIEW_KEY, view);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -45,6 +54,9 @@ public class OfferFragment extends Fragment {
         TabLayout tabLayout = v.findViewById(R.id.tlOffer);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setAdapter(new OfferPagerAdapter(getFragmentManager()));
+        if (getArguments() != null && getArguments().containsKey(VIEW_KEY)) {
+            viewPager.setCurrentItem(getArguments().getInt(VIEW_KEY));
+        }
         return v;
     }
 

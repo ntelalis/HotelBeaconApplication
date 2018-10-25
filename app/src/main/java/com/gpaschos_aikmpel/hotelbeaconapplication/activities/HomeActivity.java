@@ -235,6 +235,13 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 transaction.replace(R.id.homeScreenContainer, checkInFragment);
                 transaction.commit();
             }
+            else if (bundle.containsKey(NotificationCreation.OFFER_EXCLUSIVE_NOTIFICATION)) {
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationOffers);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                OfferFragment offerFragment = OfferFragment.newInstance(1);
+                transaction.replace(R.id.homeScreenContainer, offerFragment);
+                transaction.commit();
+            }
         }
 
         checkBeaconPermission();
