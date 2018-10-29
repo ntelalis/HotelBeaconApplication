@@ -326,7 +326,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         if(fragmentLimitedUniqueQueue.size()>1){
             fragmentLimitedUniqueQueue.removeLast();
             Fragment previousFragment = fragmentLimitedUniqueQueue.getLast();
-            if(previousFragment instanceof UpcomingReservationRecyclerViewFragment){
+            if(previousFragment instanceof UpcomingReservationRecyclerViewFragment || previousFragment instanceof UpcomingReservationNoneFragment){
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
             }
             else if(previousFragment instanceof LoyaltyFragment){
@@ -346,9 +346,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     public void myReservations() {
         List<Reservation> reservationList = RoomDB.getInstance(this).reservationDao().getAllUpcomingReservations();
 
+        Fragment fragment;
+
         if (reservationList.isEmpty()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            UpcomingReservationNoneFragment fragment = UpcomingReservationNoneFragment.newInstance();
+            fragment = UpcomingReservationNoneFragment.newInstance();
             transaction.replace(R.id.homeScreenContainer, fragment);
             transaction.commit();
         } else {
@@ -365,11 +367,11 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
             }
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            UpcomingReservationRecyclerViewFragment fragment = UpcomingReservationRecyclerViewFragment.newInstance(reservationModelList);
+            fragment = UpcomingReservationRecyclerViewFragment.newInstance(reservationModelList);
             transaction.replace(R.id.homeScreenContainer, fragment);
-            fragmentLimitedUniqueQueue.add(fragment);
             transaction.commit();
         }
+        fragmentLimitedUniqueQueue.add(fragment);
     }
 
     @Override
