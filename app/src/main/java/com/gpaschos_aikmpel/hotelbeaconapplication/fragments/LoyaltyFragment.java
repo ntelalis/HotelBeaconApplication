@@ -81,9 +81,9 @@ public class LoyaltyFragment extends Fragment {
         tvLastName = v.findViewById(R.id.tvLoyaltyMemberLastName);
         tvNextTierPoints = v.findViewById(R.id.tvLoyaltyPointsNextTierPoints);
         tvNextTier = v.findViewById(R.id.tvLoyaltyPointsNextTier);
-        tvNextTierUnlockLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierUnlockLabel);
+        //tvNextTierUnlockLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierUnlockLabel);
         tvNextTierAtLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierAtLabel);
-        tvNextTierPointsLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierPointsLabel);
+        //tvNextTierPointsLabel = v.findViewById(R.id.tvLoyaltyPointsNextTierPointsLabel);
         hcpb = v.findViewById(R.id.cpbLoyalty);
         btnRewardsSystem = v.findViewById(R.id.btnLoyaltyRewardsSystem);
         btnRewardsSystem.setOnClickListener(new View.OnClickListener() {

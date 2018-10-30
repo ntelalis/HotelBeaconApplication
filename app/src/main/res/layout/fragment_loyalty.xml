@@ -8,12 +8,26 @@
     tools:context=".fragments.LoyaltyFragment">
 
     <TextView
+        android:id="@+id/tvLoyaltyPointsLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/tv_loyalty_total_points"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsNextTierPoints"
+        app:layout_constraintEnd_toEndOf="@+id/tvLoyaltyPointsNextTierAtLabel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyPointsNextTierPoints" />
+
+    <TextView
         android:id="@+id/tvLoyaltyMemberFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="48dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyMemberLastName"
@@ -21,6 +35,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Cake" />
+
+
+     <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
+        android:id="@+id/cpbLoyalty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:marker_visible="false"
+        app:progress_background_color="@color/colorPrimary"
+        app:progress_color="@color/colorAccent"
+        app:stroke_width="16dp"
+        app:thumb_visible="false" />
+
 
     <TextView
         android:id="@+id/tvLoyaltyMemberLastName"
@@ -38,15 +72,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="@string/tv_loyalty_account_number"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyCustomerID"
-        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyCustomerID" />
+
+        />
+    <!--app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyCustomerID"
+        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyCustomerID"-->
+
 
     <TextView
         android:id="@+id/tvLoyaltyCustomerID"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -56,11 +93,9 @@
         android:id="@+id/tvLoyaltyPointsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/tv_loyalty_total_points"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="@+id/tvLoyaltyPoints"
         app:layout_constraintStart_toStartOf="@+id/tvLoyaltyPoints"
         app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyPoints" />
@@ -69,52 +104,42 @@
         android:id="@+id/tvLoyaltyPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="cursive"
         android:text="@string/loyaltyStartingPoints"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="@+id/cpbLoyalty"
         app:layout_constraintEnd_toEndOf="@+id/cpbLoyalty"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="@+id/cpbLoyalty"
         app:layout_constraintTop_toTopOf="@+id/cpbLoyalty"
-        app:layout_constraintVertical_bias="0.19999999"
+        app:layout_constraintVertical_bias="0.32999998"
         tools:text="1200" />
-
-    <TextView
-        android:id="@+id/tvLoyaltyPointsNextTierUnlockLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/tvLoyaltyPointsNextTierPointsLabel"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPointsNextTier"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="@+id/tvLoyaltyPointsLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyPointsLabel" />
 
     <TextView
         android:id="@+id/tvLoyaltyPointsNextTier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
+        android:layout_marginTop="65dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold|italic"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsNextTierUnlockLabel"
         app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPointsNextTierAtLabel"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyPointsNextTierUnlockLabel"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/tvLoyaltyPointsLabel"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyPointsLabel"
         tools:text="Gold" />
 
     <TextView
         android:id="@+id/tvLoyaltyPointsNextTierAtLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tvLoyaltyPointsNextTierAtLabel"
+        android:layout_marginStart="4dp"
+        android:text="@string/tv_Loyalty_Member"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsNextTier"
         app:layout_constraintEnd_toEndOf="@+id/tvLoyaltyPointsLabel"
@@ -126,27 +151,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPointsNextTierPointsLabel"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyPointsLabel2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cpbLoyalty"
-        app:layout_constraintStart_toStartOf="@+id/tvLoyaltyPointsNextTierUnlockLabel"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyPointsNextTierUnlockLabel"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/tvLoyaltyPointsNextTier"
+        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyPointsNextTier"
         tools:text="2000" />
-
-    <TextView
-        android:id="@+id/tvLoyaltyPointsNextTierPointsLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/tv_loyalty_total_points"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyPointsNextTierPoints"
-        app:layout_constraintEnd_toEndOf="@+id/tvLoyaltyPointsNextTierAtLabel"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyPointsNextTierPoints" />
 
     <TextView
         android:id="@+id/tvLoyaltyRewardsMemberLabel"
@@ -196,26 +210,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:color/darker_gray"
-        />
+        app:srcCompat="@android:color/darker_gray" />
 
-    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
-        android:id="@+id/cpbLoyalty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:marker_visible="false"
-        app:progress_background_color="@color/colorPrimary"
-        app:progress_color="@color/colorAccent"
-        app:stroke_width="16dp"
-        app:thumb_visible="false" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
