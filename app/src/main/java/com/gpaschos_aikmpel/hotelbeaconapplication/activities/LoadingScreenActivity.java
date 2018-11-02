@@ -96,7 +96,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                                     getSupportFragmentManager().beginTransaction().add(dialog,NoInternetDialog.TAG).commitAllowingStateLoss();
                                 }
                             }
-                        }, 15000);
+                        }, 20000);
                     } else {
                         NoInternetDialog dialog = NoInternetDialog.newInstance();
                         getSupportFragmentManager().beginTransaction().add(dialog,NoInternetDialog.TAG).commitAllowingStateLoss();

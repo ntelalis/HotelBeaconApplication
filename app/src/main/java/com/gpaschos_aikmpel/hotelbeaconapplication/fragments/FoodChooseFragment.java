@@ -111,8 +111,8 @@ public class FoodChooseFragment extends DialogFragment {
         });
         tvName.setText(parcelable.getName());
         tvDesc.setText(parcelable.getDescription());
-        tvPrice.setText(String.format(Locale.getDefault(), "%.2f", parcelable.getPrice()));
-        tvTotalPrice.setText(String.format(Locale.getDefault(), "%.2f", parcelable.getPrice()));
+        tvPrice.setText(String.format(Locale.US, "%.2f", parcelable.getPrice()));
+        tvTotalPrice.setText(String.format(Locale.US, "%.2f", parcelable.getPrice()));
 
         return rootView;
     }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -103,6 +104,8 @@ public class LoginFragment extends Fragment implements JsonListener {
                 params.put(POST.loginEmail, email);
                 params.put(POST.loginPassword, pass);
 
+                closeKeyboard();
+
                 VolleyQueue.getInstance(getContext()).jsonRequest(LoginFragment.this, URL.loginUrl, params);
 
             }
@@ -163,7 +166,13 @@ public class LoginFragment extends Fragment implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), "Cannot communicate with server. Please try again later.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Incorrect email and/or password", Toast.LENGTH_SHORT).show();
         setupUIForRequest(false);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
     }
 }

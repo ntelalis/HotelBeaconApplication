@@ -4,14 +4,17 @@ public class URL {
 
     private static final String serverProtocol = "http";
 
-    //private static final String serverHost = "ntelalis.dyndns-home.com";
-    private static final String serverHost = "192.168.102.204";
-    //private static final String serverHost = "https://hotelbeaconapp.000webhostapp.com/";
+    //HOME
+    //private static final String serverHost = "192.168.1.101";
 
-    //private static final String serverPort = "8642";
+    //WORK
+    private static final String serverHost = "192.168.102.95";
+
+    private static final String serverPath = "loyalty";
+
     private static final String serverPort = "80";
 
-    private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/";
+    private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/" + serverPath + "/";
 
     private static final String loginPage = "login.php";
     private static final String forgotPage = "forgot.php";
