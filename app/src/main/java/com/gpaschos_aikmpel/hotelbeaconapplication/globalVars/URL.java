@@ -10,7 +10,7 @@ public class URL {
     //WORK
     private static final String serverHost = "192.168.102.95";
 
-    private static final String serverPath = "loyalty";
+    private static final String serverPath = "phpserver";
 
     private static final String serverPort = "80";
 
