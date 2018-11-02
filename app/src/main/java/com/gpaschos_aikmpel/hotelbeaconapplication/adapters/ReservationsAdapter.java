@@ -97,8 +97,6 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         private TextView tvDeparture;
         private TextView tvAdults;
         private Button btnCheckInCheckOut;
-        private TextView tvCheckedInRoomLabel;
-        private TextView tvCheckedInRoom;
         private TextView tvCheckInCheckOutInstructions;
         private String roomNo;
 
@@ -112,8 +110,6 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
             btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckInCheckOut);
             tvCheckInCheckOutInstructions = itemView.findViewById(R.id.tvUpcomingReservationsInstructions);
-            tvCheckedInRoomLabel = itemView.findViewById(R.id.tvVHUpcomingReservationsRoomNumberLabel);
-            tvCheckedInRoom = itemView.findViewById(R.id.tvViewHUpcomingReservationsRoomNo);
             btnCheckInCheckOut.setOnClickListener(this);
         }
 
@@ -150,42 +146,29 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
-                    tvCheckedInRoom.setVisibility(View.INVISIBLE);
-                    tvCheckedInRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckInCheckOutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(true);
-                    tvCheckedInRoom.setVisibility(View.INVISIBLE);
-                    tvCheckedInRoomLabel.setVisibility(View.INVISIBLE);
                     tvCheckInCheckOutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsTRUE);
                     break;
                 case ReservationModel.CANNOT_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(false);
                     TextViewCompat.setTextAppearance(btnCheckInCheckOut, R.style.PrimaryButtonDisabled);
-                    tvCheckedInRoom.setText(room);
-                    tvCheckedInRoom.setVisibility(View.VISIBLE);
-                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(true);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                    tvCheckedInRoom.setText(room);
-                    tvCheckedInRoom.setVisibility(View.VISIBLE);
-                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
                     break;
                 case ReservationModel.IS_CHECKED_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
                     btnCheckInCheckOut.setEnabled(false);
                     btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
-                    tvCheckedInRoom.setText(room);
-                    tvCheckedInRoom.setVisibility(View.VISIBLE);
-                    tvCheckedInRoomLabel.setVisibility(View.VISIBLE);
                     tvCheckInCheckOutInstructions.setVisibility(View.INVISIBLE);
             }
         }

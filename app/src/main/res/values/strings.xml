@@ -65,10 +65,10 @@
     <string name="tvBottomSheetCurrency">€</string>
     <string name="tvBottomSheetTotalPriceCurrency">€</string>
 
-    <string name="upcomingReservationsReservationID">Reservation ID</string>
+    <string name="upcomingReservationsReservationID">Reservation Number</string>
     <string name="tvUpcomingReservationsAdults">Adults</string>
-    <string name="tvUpcomingReservationsArrival">Arrival Date</string>
-    <string name="tvUpcomingReservationsDeparture">Departure Date</string>
+    <string name="tvUpcomingReservationsArrival">Arrival</string>
+    <string name="tvUpcomingReservationsDeparture">Departure</string>
     <string name="tvUpcomingReservationsRoomTitle">Room Type</string>
     <string name="btn_view_reservations">My Reservations</string>
     <string name="tv_loyalty_account_number">Account Number</string>
@@ -92,7 +92,6 @@
     <string name="tvcheckedinmsg2">Your room number is</string>
     <string name="tvViewHmyReservationsCheckInInstructionsTRUE">You can check in now!</string>
     <string name="tvViewHmyReservationsCheckInInstructionsFALSE">You can\'t Check in yet.</string>
-    <string name="tvVHUpcomingReservationsRoomNumberLabel">Room number</string>
     <string name="btnUpcomingReservationsCheckout">Check out</string>
     <string name="tvUpcomingReservationsInstructionsCheckIn">You can\'t check in yet</string>
     <string name="tvUpcomingReservationsInstructionsCheckOut">You can\'t check out yet</string>
