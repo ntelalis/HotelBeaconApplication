@@ -193,7 +193,7 @@
     <string name="creditCardCVVHint">CVV</string>
     <string name="tvCreditCardTitle">Credit Card Information</string>
     <string name="btnHomeRoomControl">Room Control</string>
-    <string name="tvUsePointsFreeNightText">Points for a FREE Night</string>
+    <string name="tvUsePointsFreeNightText">Points Needed for a FREE Night</string>
     <string name="tvUserPointsCashPointsText"><![CDATA[for a Cash&Points Night]]></string>
     <string name="tvUsePointsSelectedTotalDefaultText">0</string>
     <string name="tvUsePointsSelectedTotalLabel">Points Needed:</string>
@@ -214,6 +214,9 @@
     <string name="etBottomSheetCommentsHint">Comments...</string>
     <string name="btnCustomerServicesBookService">Book a service</string>
     <string name="tvCheckoutCurrency">€</string>
+    <string name="tvUsePointsFREElabel">Free Night</string>
+    <string name="tvUsePointsCash_PointsLabel"><![CDATA[Cash&Points Night]]></string>
+    <string name="tvUsePointsRedeemLabel">Redeem points for</string>
 
 
 </resources>
