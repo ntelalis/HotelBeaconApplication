@@ -8,9 +8,9 @@ public class URL {
     //private static final String serverHost = "192.168.1.101";
 
     //WORK
-    private static final String serverHost = "192.168.102.95";
+    private static final String serverHost = "192.168.102.96";
 
-    private static final String serverPath = "loyalty";
+    private static final String serverPath = "phpserver";
 
     private static final String serverPort = "80";
 
