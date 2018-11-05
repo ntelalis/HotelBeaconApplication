@@ -11,11 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.LocalVariables;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,7 +40,8 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         Context context = parent.getContext();
-        int layoutId = R.layout.viewholder_upcomingreservations;
+        //int layoutId = R.layout.viewholder_upcomingreservations;
+        int layoutId = R.layout.viewholder_upcomingreservations2;
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View view = inflater.inflate(layoutId, parent, false);
@@ -96,6 +99,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         private TextView tvArrival;
         private TextView tvDeparture;
         private TextView tvAdults;
+        private ImageView ivRoomImage;
         private Button btnCheckInCheckOut;
         private TextView tvCheckInCheckOutInstructions;
         private String roomNo;
@@ -105,6 +109,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             super(itemView);
             tvReservationID = itemView.findViewById(R.id.tvUpcomingReservationsReservationID);
             tvRoomTitle = itemView.findViewById(R.id.tvUpcomingReservationsRoomTitle);
+            ivRoomImage = itemView.findViewById(R.id.ivUpcomingReservation);
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
@@ -119,7 +124,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             tvArrival.setText(reservationsList.get(position).arrival);
             tvDeparture.setText(reservationsList.get(position).departure);
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
-
+            ivRoomImage.setImageBitmap(LocalVariables.readImage(itemView.getContext(),reservationsList.get(position).roomImgFile));
             roomNo = String.valueOf(reservationsList.get(position).room);
             buttonAndTextViewsHandler(reservationsList.get(position).reservationStatus, roomNo);
         }
@@ -145,7 +150,6 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
                 case ReservationModel.CANNOT_CHECK_IN:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckin);
                     btnCheckInCheckOut.setEnabled(false);
-                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                     tvCheckInCheckOutInstructions.setText(R.string.tvViewHmyReservationsCheckInInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_IN:
@@ -156,19 +160,16 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
                 case ReservationModel.CANNOT_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(false);
-                    TextViewCompat.setTextAppearance(btnCheckInCheckOut, R.style.PrimaryButtonDisabled);
                     tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsFALSE);
                     break;
                 case ReservationModel.CAN_CHECK_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckout);
                     btnCheckInCheckOut.setEnabled(true);
-                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     tvCheckInCheckOutInstructions.setText(R.string.tvviewHmyReservationsCheckOutInstructionsTRUE);
                     break;
                 case ReservationModel.IS_CHECKED_OUT:
                     btnCheckInCheckOut.setText(R.string.btnUpcomingReservationsCheckedOut);
                     btnCheckInCheckOut.setEnabled(false);
-                    btnCheckInCheckOut.setBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                     tvCheckInCheckOutInstructions.setVisibility(View.INVISIBLE);
             }
         }
@@ -194,16 +195,18 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
 
         public int adults;
         public String roomTitle;
+        public String roomImgFile;
         public int reservationID;
         public String arrival;
         public String departure;
         public int room;
         public int reservationStatus;
 
-        public ReservationModel(int adults, String roomTitle, int reservationID, String arrival,
+        public ReservationModel(int adults, String roomTitle, String roomImgFile, int reservationID, String arrival,
                                 String departure, int reservationStatus, int room) {
             this.adults = adults;
             this.roomTitle = roomTitle;
+            this.roomImgFile = roomImgFile;
             this.reservationID = reservationID;
             this.arrival = arrival;
             this.departure = departure;
@@ -220,6 +223,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(this.adults);
             dest.writeString(this.roomTitle);
+            dest.writeString(this.roomImgFile);
             dest.writeInt(this.reservationID);
             dest.writeString(this.arrival);
             dest.writeString(this.departure);
@@ -230,6 +234,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         ReservationModel(Parcel in) {
             this.adults = in.readInt();
             this.roomTitle = in.readString();
+            this.roomImgFile = in.readString();
             this.reservationID = in.readInt();
             this.arrival = in.readString();
             this.departure = in.readString();

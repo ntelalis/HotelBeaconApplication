@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="AppTheme.NoActionBar" />
 
@@ -37,19 +37,16 @@
         <item name="thumb_visible">true</item>
     </style>
 
-    <style name="PrimaryButton" parent="Theme.AppCompat">
+    <style name="PrimaryButton" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
-    </style>
-
-    <style name="PrimaryButtonDisabled" parent="PrimaryButton">
-        <item name="colorButtonNormal">@color/gray</item>
-        <item name="colorControlHighlight">@color/gray</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
     <style name="PrimaryFlatButton">
         <item name="buttonStyle">@style/Widget.AppCompat.Button.Borderless</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

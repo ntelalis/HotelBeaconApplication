@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".fragments.LoyaltyFragment">
 
+    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
+        android:id="@+id/cpbLoyalty"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        app:marker_visible="false"
+        app:progress_background_color="@color/colorPrimary"
+        app:progress_color="@color/colorAccent"
+        app:stroke_width="16dp"
+        app:thumb_visible="false" />
+
     <TextView
         android:id="@+id/tvLoyaltyMemberFirstName"
         android:layout_width="wrap_content"
@@ -198,24 +216,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:color/darker_gray"
         />
-
-    <com.gpaschos_aikmpel.hotelbeaconapplication.utility.HoloCircularProgressBar
-        android:id="@+id/cpbLoyalty"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline4"
-        app:marker_visible="false"
-        app:progress_background_color="@color/colorPrimary"
-        app:progress_color="@color/colorAccent"
-        app:stroke_width="16dp"
-        app:thumb_visible="false" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"
