@@ -3,7 +3,7 @@
     <color name="colorPrimary">#222222</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorPrimaryDarkTransparent">#80000000</color>
-    <color name="colorPrimaryLight">#888888</color>
+    <color name="colorPrimaryLight">#eeeeee</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
