@@ -141,8 +141,8 @@
     <string name="tvUpcomingReservationNoneFragment">You currently have no reservations. To make one, please see the \'make a reservation\' feature in the main menu.</string>
     <string name="tvUpcomingReservationNoneFragmentNEW">You have no upcoming reservations.</string>
     <string name="tvUsePointsTotalPoints">Total Points</string>
-    <string name="tvUsePointsDays">Days</string>
-    <string name="tvUsePointsPointsDivider"> out of </string>
+    <string name="tvUsePointsDays">Award nights:</string>
+    <string name="tvUsePointsPointsDivider">/</string>
     <string name="tvUsePointsCurrency">€</string>
     <string name="tvUsePointsDaysDivider">/</string>
     <string name="tvCustomerServicesRoomNoLabel">Room</string>
@@ -193,10 +193,10 @@
     <string name="creditCardCVVHint">CVV</string>
     <string name="tvCreditCardTitle">Credit Card Information</string>
     <string name="btnHomeRoomControl">Room Control</string>
-    <string name="tvUsePointsFreeNightText">Points Needed for a FREE Night</string>
-    <string name="tvUserPointsCashPointsText"><![CDATA[for a Cash&Points Night]]></string>
+    <string name="tvUsePointsFreeNightText">Points Needed</string>
+    <string name="tvUserPointsCashPointsText"><![CDATA[Needed]]></string>
     <string name="tvUsePointsSelectedTotalDefaultText">0</string>
-    <string name="tvUsePointsSelectedTotalLabel">Points Needed:</string>
+    <string name="tvUsePointsSelectedTotalLabel">Points to be Redeemed:</string>
     <string name="tvUsePointsSelectedDaysDefault">0</string>
     <string name="tvNavigationDrawerAccountNumberLabel">Account Number:</string>
     <string name="tvUsePointsCashPointsLabel1">Points +</string>
