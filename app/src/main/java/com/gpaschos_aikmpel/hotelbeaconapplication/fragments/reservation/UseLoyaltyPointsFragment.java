@@ -3,10 +3,13 @@ package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -112,8 +115,19 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
             }
         });
 
+        TextView textView = new TextView(getContext());
+        textView.setText("Points for Reward nights");
+        textView.setPadding(0, 30, 0, 30);
+        textView.setTextSize(20F);
+        textView.setTypeface(Typeface.DEFAULT_BOLD,Typeface.BOLD);
+        textView.setGravity(Gravity.CENTER);
+        textView.setBackgroundColor(Color.BLACK);
+        textView.setTextColor(Color.WHITE);
+
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle("Choose your loyalty reward");
+        //dialog.setTitle("Choose your loyalty reward");
+        //dialog.setTitle("Redeem points for Award nights");
+        dialog.setCustomTitle(textView);
         dialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -123,6 +137,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
             }
         });
         dialog.setNegativeButton("cancel", null);
+
         dialog.setView(v);
         return dialog.create();
 
