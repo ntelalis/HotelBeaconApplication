@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
@@ -18,6 +19,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.functions.JSONHelper;
+import com.gpaschos_aikmpel.hotelbeaconapplication.functions.SyncServerData;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
@@ -33,12 +35,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CheckInFragment extends Fragment implements JsonListener {
+public class CheckInFragment extends Fragment implements JsonListener, SyncServerData.SyncCallbacksSwipeRefresh {
 
     public static final String RESERVATION_ID = "RESERVATION_ID";
     public static final String TAG = CheckInFragment.class.getSimpleName();
 
     private NotificationCallbacks listener;
+
+    private ProgressBar progressBar;
 
     private int reservationID;
     private Reservation reservation;
@@ -71,6 +75,7 @@ public class CheckInFragment extends Fragment implements JsonListener {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_check_in, container, false);
+        progressBar = v.findViewById(R.id.pbCheckInReservation);
         Button btnCheckIn = v.findViewById(R.id.btnCheckInCheckIn);
         TextView tvArrivalDate = v.findViewById(R.id.tvCheckInReservationArrival);
         TextView tvDepartureDate = v.findViewById(R.id.tvCheckInReservationDeparture);
@@ -104,6 +109,7 @@ public class CheckInFragment extends Fragment implements JsonListener {
     }
 
     private void checkIn() {
+        progressBar.setVisibility(View.VISIBLE);
         Map<String, String> params = new HashMap<>();
         params.put(POST.checkInReservationID, String.valueOf(reservationID));
         VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.checkInUrl, params);
@@ -141,13 +147,19 @@ public class CheckInFragment extends Fragment implements JsonListener {
             r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, modified);
             RoomDB.getInstance(getContext()).reservationDao().update(r);
             RoomDB.getInstance(getContext()).beaconRegionDao().insertAll(roomRegions);
-
-            listener.checkedIn(reservationID);
+            SyncServerData.getInstance(getContext()).getBeaconRegionFeature();
+            SyncServerData.getInstance(this,getContext()).getBeaconRegionFeature();
         }
     }
 
     @Override
     public void getErrorResult(String url, String error) {
         Log.e(TAG, url + ": " + error);
+    }
+
+    @Override
+    public void syncingFinished() {
+        progressBar.setVisibility(View.INVISIBLE);
+        listener.checkedIn(reservationID);
     }
 }

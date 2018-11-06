@@ -226,7 +226,7 @@ public class SyncServerData implements JsonListener {
 
     }
 
-    private void getBeaconRegionFeature() {
+    public void getBeaconRegionFeature() {
         Log.i(TAG, "Check BeaconRegionFeature");
         Map<String, String> params = new HashMap<>();
 
