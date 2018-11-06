@@ -526,6 +526,7 @@ public class SyncServerData implements JsonListener {
                         String departureDate = JSONHelper.getString(jsonObject, POST.reservationDeparture);
                         String checkIn = JSONHelper.getString(jsonObject, POST.reservationCheckIn);
                         String checkOut = JSONHelper.getString(jsonObject, POST.reservationCheckOut);
+                        boolean reviewed = jsonObject.getBoolean(POST.reservationReviewed);
                         //int roomBeaconID = -1;
                         int roomNumber = -1;
                         int floor = -1;
@@ -540,9 +541,9 @@ public class SyncServerData implements JsonListener {
                         Reservation r = roomDB.reservationDao().getReservationByID(id);
                         //todo: take password issue into consideration
                         if (r != null) {
-                            r.update(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, modified);
+                            r.update(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, reviewed, modified);
                         } else {
-                            r = new Reservation(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, modified);
+                            r = new Reservation(id, roomTypeID, adults, children, bookedDate, arrivalDate, departureDate, checkIn, checkOut, roomNumber, floor, reviewed, modified);
                         }
                         reservationList.add(r);
                     }

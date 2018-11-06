@@ -25,9 +25,10 @@ public class Reservation implements SyncModel {
     private int roomNumber;
     private int roomFloor;
     private String modified;
+    private boolean reviewed;
 
     @Ignore
-    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified) {
+    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, boolean reviewed, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -39,6 +40,7 @@ public class Reservation implements SyncModel {
         this.checkOut = checkOut;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
+        this.reviewed = reviewed;
         this.modified = modified;
     }
 
@@ -66,7 +68,7 @@ public class Reservation implements SyncModel {
         this.modified = modified;
     }
 
-    public void update(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, String modified) {
+    public void update(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, boolean reviewed, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -78,9 +80,17 @@ public class Reservation implements SyncModel {
         this.checkOut = checkOut;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
+        this.reviewed = reviewed;
         this.modified = modified;
     }
 
+    public boolean isReviewed() {
+        return reviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        this.reviewed = reviewed;
+    }
 
     public boolean isCheckedIn() {
         return checkIn != null;

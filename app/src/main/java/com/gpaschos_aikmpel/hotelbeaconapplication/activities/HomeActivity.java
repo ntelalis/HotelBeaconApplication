@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -423,5 +424,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     @Override
     public void fail() {
         Toast.makeText(this, "Not Meow", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //if()
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+
+        return true;
+
     }
 }
