@@ -23,12 +23,13 @@
             android:id="@+id/etLoginEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_account_box_black_png"
+            android:drawablePadding="8dp"
             android:ems="10"
             android:hint="@string/etEmailHint"
             android:inputType="textEmailAddress"
-            android:nextFocusDown="@id/etLoginPassword"/>
+            android:nextFocusDown="@id/etLoginPassword"
+            android:text="kate@gmail.com" />
         <!-- android:text="kate@gmail.com" /> -->
 
     </android.support.design.widget.TextInputLayout>
@@ -48,11 +49,12 @@
             android:id="@+id/etLoginPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_lock_black_png"
+            android:drawablePadding="8dp"
             android:ems="10"
             android:hint="@string/etPasswordHint"
             android:inputType="textPassword"
+            android:text="asdF12!@"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilLoginEmail" />
