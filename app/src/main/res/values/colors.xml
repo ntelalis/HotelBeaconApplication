@@ -3,9 +3,11 @@
     <color name="colorPrimary">#222222</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorPrimaryDarkTransparent">#80000000</color>
-    <color name="colorPrimaryLight">#eeeeee</color>
+    <color name="colorPrimaryLight">#888888</color>
+    <color name="colorPrimarySuperLight">#eeeeee</color>
     <color name="textColorPrimary">#ffffff</color>
     <color name="windowBackground">#FFFFFF</color>
+    <color name="gray2">#585858</color>
     <color name="navigationBarColor">#000000</color>
     <color name="black">#747474</color>
     <color name="colorAccent">#ff6e40</color>
