@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Loyalty;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomType;
@@ -64,10 +65,15 @@ public class BookFragment extends Fragment implements JsonListener {
     private String arrival, departure;
     private int adults, children;
 
+    private String phone, address1, address2, city, postalCode;
+    private TextInputEditText tietPhone, tietAddress1, tietAddress2, tietCity, tietPostalCode;
+    private Customer customer;
     private int days, roomPrice;
 
     private int cashPrice;
     private int freeNights = 0, cashNights = 0;
+
+    private View contactInfoView, creditCardView ;
 
     private Button btnBook;
     private TextView tvTotalPrice, tvPoints;
@@ -102,6 +108,7 @@ public class BookFragment extends Fragment implements JsonListener {
             children = getArguments().getInt(ROOM_CHILDREN_KEY);
         }
 
+        customer = RoomDB.getInstance(getContext()).customerDao().getCustomer();
     }
 
     @Override
@@ -118,7 +125,8 @@ public class BookFragment extends Fragment implements JsonListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_book, container, false);
-
+        contactInfoView = getChildFragmentManager().findFragmentById(R.id.fmBookContactInfo).getView();
+        creditCardView = getChildFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
         TextView tvCheckIn = v.findViewById(R.id.tvBookCheckIn);
         TextView tvCheckOut = v.findViewById(R.id.tvBookCheckOut);
         TextView tvRoomTitle = v.findViewById(R.id.tvBookRoomTitle);
@@ -135,7 +143,7 @@ public class BookFragment extends Fragment implements JsonListener {
         btnLoyalty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int customerID = RoomDB.getInstance(getContext()).customerDao().getCustomer().getCustomerId();
+                int customerID = customer.getCustomerId();
 
                 Map<String, String> params = new HashMap<>();
                 params.put(POST.loyaltyProgramCustomerID, String.valueOf(customerID));
@@ -156,6 +164,12 @@ public class BookFragment extends Fragment implements JsonListener {
                 }
             }
         });
+
+        tietPhone = contactInfoView.findViewById(R.id.tietContactPhone);
+        tietAddress1 = contactInfoView.findViewById(R.id.tietContactAddress1);
+        tietAddress2 = contactInfoView.findViewById(R.id.tietContactAddress2);
+        tietCity = contactInfoView.findViewById(R.id.tietContactCity);
+        tietPostalCode = contactInfoView.findViewById(R.id.tietContactPostal);
 
         RoomType roomType = RoomDB.getInstance(getContext()).roomTypeDao().getRoomTypeById(roomTypeID);
         RoomTypeCash roomTypeCash = RoomDB.getInstance(getContext()).roomTypeCashDao().getRoomTypeCash(roomTypeID, adults, children, 1);
@@ -188,6 +202,18 @@ public class BookFragment extends Fragment implements JsonListener {
         tvCheckOut.setText(departureLocalString);
         ivRoomImage.setImageBitmap(LocalVariables.readImage(getContext(), roomType.getImage()));
 
+        phone = customer.getPhone();
+        address1 = customer.getAddress1();
+        address2 = customer.getAddress2();
+        city = customer.getCity();
+        postalCode = customer.getPostalCode();
+
+        tietPhone.setText(phone);
+        tietAddress1.setText(address1);
+        tietAddress2.setText(address2);
+        tietCity.setText(city);
+        tietPostalCode.setText(postalCode);
+
         return v;
     }
 
@@ -202,6 +228,31 @@ public class BookFragment extends Fragment implements JsonListener {
                 String modified = JSONHelper.getString(json, POST.bookRoomModified);
 
                 RoomDB.getInstance(getContext()).reservationDao().insert(new Reservation(resID, roomTypeID, adults, children, bookedDate, arrival, departure, modified));
+
+                boolean newValue = false;
+                if(!customer.getPhone().equals(phone)){
+                    customer.setPhone(phone);
+                    newValue = true;
+                }
+                if(!customer.getAddress1().equals(address1)){
+                    customer.setAddress1(address1);
+                    newValue = true;
+                }
+                if(!customer.getAddress2().equals(address2)){
+                    customer.setAddress2(address2);
+                    newValue = true;
+                }
+                if(!customer.getCity().equals(city)){
+                    customer.setCity(city);
+                    newValue = true;
+                }
+                if(!customer.getPostalCode().equals(postalCode)){
+                    customer.setPostalCode(postalCode);
+                    newValue = true;
+                }
+                if(newValue){
+                    RoomDB.getInstance(getContext()).customerDao().insert(customer);
+                }
 
                 ScheduleNotifications.checkInNotification(getContext(), resID);
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
@@ -253,26 +304,16 @@ public class BookFragment extends Fragment implements JsonListener {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            View creditCardView = getChildFragmentManager().findFragmentById(R.id.fmBookCreditCard).getView();
-
-            View contactInfoView = getChildFragmentManager().findFragmentById(R.id.fmBookContactInfo).getView();
 
             if (creditCardView == null || contactInfoView == null) {
                 throw new RuntimeException("One of the fragments is not found");
             }
-
 
             EditText etCreditCard = creditCardView.findViewById(R.id.etCreditCardCard);
             EditText etHoldersName = creditCardView.findViewById(R.id.etCreditCardHoldersName);
             EditText etCVV = creditCardView.findViewById(R.id.etCreditCardCVV);
             Spinner spMonth = creditCardView.findViewById(R.id.spCreditCardExpMonth);
             Spinner spYear = creditCardView.findViewById(R.id.spCreditCardExpYear);
-
-            TextInputEditText tietPhone = contactInfoView.findViewById(R.id.tietContactPhone);
-            TextInputEditText tietAddress1 = contactInfoView.findViewById(R.id.tietContactAddress1);
-            TextInputEditText tietAddress2 = contactInfoView.findViewById(R.id.tietContactAddress2);
-            TextInputEditText tietCity = contactInfoView.findViewById(R.id.tietContactCity);
-            TextInputEditText tietPostalCode = contactInfoView.findViewById(R.id.tietContactPostal);
 
             etCreditCard.setError(null);
             etHoldersName.setError(null);
@@ -289,11 +330,11 @@ public class BookFragment extends Fragment implements JsonListener {
             String year = String.valueOf(spYear.getSelectedItem());
             String cvv = etCVV.getText().toString();
 
-            String phone = tietPhone.getText().toString();
-            String address1 = tietAddress1.getText().toString();
-            String address2 = tietAddress2.getText().toString();
-            String city = tietCity.getText().toString();
-            String postalCode = tietPostalCode.getText().toString();
+            phone = tietPhone.getText().toString();
+            address1 = tietAddress1.getText().toString();
+            address2 = tietAddress2.getText().toString();
+            city = tietCity.getText().toString();
+            postalCode = tietPostalCode.getText().toString();
 
             if (!Validation.checkCreditCard(creditCard)) {
                 etCreditCard.setError("Please enter a valid card");
@@ -348,7 +389,7 @@ public class BookFragment extends Fragment implements JsonListener {
             values.put(POST.bookRoomCity, city);
             values.put(POST.bookRoomPostalCode, postalCode);
 
-            int customerID = RoomDB.getInstance(getContext()).customerDao().getCustomer().getCustomerId();
+            int customerID = customer.getCustomerId();
 
             values.put(POST.bookRoomCustomerID, String.valueOf(customerID));
 
