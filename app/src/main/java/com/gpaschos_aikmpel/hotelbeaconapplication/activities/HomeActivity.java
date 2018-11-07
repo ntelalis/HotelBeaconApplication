@@ -429,11 +429,15 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean isCheckedInNotCheckedOut = RoomDB.getInstance(this).reservationDao().getCurrentReservation().isCheckedInNotCheckedOut();
-        boolean hasReviewed = RoomDB.getInstance(this).reservationDao().getCurrentReservation().isReviewed();
+        Reservation currentReservation = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+        if(currentReservation!=null) {
+            boolean isCheckedInNotCheckedOut = currentReservation.isCheckedInNotCheckedOut();
+            boolean hasReviewed = currentReservation.isReviewed();
 
-        if( isCheckedInNotCheckedOut && !hasReviewed){
-            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+            //if (isCheckedInNotCheckedOut && !hasReviewed) {
+            if (isCheckedInNotCheckedOut) {
+                getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+            }
         }
         return true;
 
