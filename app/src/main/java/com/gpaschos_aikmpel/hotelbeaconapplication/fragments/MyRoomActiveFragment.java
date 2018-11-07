@@ -109,14 +109,14 @@ public class MyRoomActiveFragment extends Fragment {
             }
         });
 
-        Button btnReview = view.findViewById(R.id.btnCustomerServicesReview);
+        /*Button btnReview = view.findViewById(R.id.btnCustomerServicesReview);
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ReviewActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
          Button btnRoomControl = view.findViewById(R.id.btnCustomerServicesRoomControl);
         btnRoomControl.setOnClickListener(new View.OnClickListener() {
