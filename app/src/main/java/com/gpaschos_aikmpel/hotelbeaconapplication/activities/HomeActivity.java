@@ -429,10 +429,24 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //if()
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        boolean isCheckedInNotCheckedOut = RoomDB.getInstance(this).reservationDao().getCurrentReservation().isCheckedInNotCheckedOut();
+        boolean hasReviewed = RoomDB.getInstance(this).reservationDao().getCurrentReservation().isReviewed();
 
+        if( isCheckedInNotCheckedOut && !hasReviewed){
+           // Toast.makeText(this, "has left a review: "+hasReviewed, Toast.LENGTH_LONG).show();
+            getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        }
         return true;
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.tbRating:
+                Intent ratingActivity = new Intent(this,ReviewActivity.class);
+                startActivity(ratingActivity);
+        }
+        return true;
     }
 }

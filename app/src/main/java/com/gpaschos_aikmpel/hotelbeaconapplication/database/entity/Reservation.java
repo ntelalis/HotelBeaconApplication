@@ -53,6 +53,7 @@ public class Reservation implements SyncModel {
         this.startDate = startDate;
         this.endDate = endDate;
         this.modified = modified;
+        this.reviewed = false;
     }
 
     public void checkIn(String checkIn, int roomNumber, int roomFloor, String roomPassword, String modified) {
