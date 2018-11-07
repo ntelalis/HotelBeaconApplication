@@ -433,7 +433,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         boolean hasReviewed = RoomDB.getInstance(this).reservationDao().getCurrentReservation().isReviewed();
 
         if( isCheckedInNotCheckedOut && !hasReviewed){
-           // Toast.makeText(this, "has left a review: "+hasReviewed, Toast.LENGTH_LONG).show();
             getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         }
         return true;
