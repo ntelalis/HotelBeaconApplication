@@ -249,7 +249,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
-                            if (distance < 0.5) {
+                            if (distance < 1.2) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -265,7 +265,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                 }
             });
             //TODO Uncomment this?
-            RangedBeacon.setSampleExpirationMilliseconds(5000);
+            RangedBeacon.setSampleExpirationMilliseconds(3000);
             try {
                 beaconManager.startRangingBeaconsInRegion(region);
                 Log.d(TAG, "ranging started");
