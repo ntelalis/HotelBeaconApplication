@@ -264,8 +264,11 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                     }
                 }
             });
+
+            //RangedBeacon.setMaxTrackinAge(1000);
+            //BeaconManager.setRegionExitPeriod(1100);
             //TODO Uncomment this?
-            RangedBeacon.setSampleExpirationMilliseconds(3000);
+            RangedBeacon.setSampleExpirationMilliseconds(1100);
             try {
                 beaconManager.startRangingBeaconsInRegion(region);
                 Log.d(TAG, "ranging started");

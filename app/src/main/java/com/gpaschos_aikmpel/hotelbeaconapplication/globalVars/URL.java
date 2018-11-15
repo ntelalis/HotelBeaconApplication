@@ -8,11 +8,15 @@ public class URL {
     //private static final String serverHost = "192.168.1.101";
 
     //WORK
-    private static final String serverHost = "192.168.102.97";
+    //private static final String serverHost = "192.168.102.97";
+    //private static final String serverHost = "192.168.102.80";
+    //epi--the.static.otenet.gr
+    private static final String serverHost = "83.235.23.44";
 
     private static final String serverPath = "phpserver";
 
-    private static final String serverPort = "8079";
+    //private static final String serverPort = "8079";
+    private static final String serverPort = "18080";
 
     private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/" + serverPath + "/";
 
