@@ -194,7 +194,8 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             @Override
             public void run() {
                 canOpenDoor = false;
-                changeButtonColor(android.R.color.holo_red_dark);
+                //disabled
+                changeButtonColor(R.color.);
             }
         };
 
@@ -294,8 +295,9 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                                     @Override
                                     public void run() {
                                         canOpenDoor = true;
-                                        //changeButtonColor(R.color.buttonActivated);
-                                        changeButtonColor(android.R.color.holo_green_dark);
+                                        //enabled
+                                        changeButtonColor(R.color.buttonActivated);
+                                        //changeButtonColor(android.R.color.holo_green_dark);
                                     }
                                 });
                                 handler.removeCallbacks(runnable);
