@@ -1,6 +1,9 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.Manifest;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -96,6 +99,18 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
         TextView tvRoom = findViewById(R.id.tvDoorUnlockRoom);
         tvRoom.setText(String.valueOf(r.getRoomNumber()));
+
+        TextView tvTouchToUnlock = findViewById(R.id.tvDoorUnlockPrompt);
+
+        final int black = 0xff000000;
+        final int black_transparent = 0x00000000;
+
+        ValueAnimator colorAnim = ObjectAnimator.ofInt(tvTouchToUnlock,"textColor",black,black_transparent);
+        colorAnim.setDuration(3000);
+        colorAnim.setEvaluator(new ArgbEvaluator());
+        colorAnim.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnim.setRepeatMode(ValueAnimator.REVERSE);
+        colorAnim.start();
 
         TextView tvFloor = findViewById(R.id.tvDoorUnlockFloor);
         tvFloor.setText(String.valueOf(r.getRoomFloor()));
