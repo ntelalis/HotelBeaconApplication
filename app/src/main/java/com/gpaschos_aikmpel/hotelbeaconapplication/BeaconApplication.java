@@ -18,6 +18,7 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
+import org.altbeacon.beacon.service.ArmaRssiFilter;
 import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
@@ -52,12 +53,14 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         if (beaconsEnabled) {
             //BeaconManager and BackgroundPowerSaver init
             beaconManager = BeaconManager.getInstanceForApplication(this);
+            //BeaconManager.setRssiFilterImplClass(ArmaRssiFilter.class);
+            //ArmaRssiFilter.setDEFAULT_ARMA_SPEED(0.1);
             backgroundPowerSaver = new BackgroundPowerSaver(this);
 
             //Scanning Settings
             //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
             //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
-            beaconManager.setBackgroundBetweenScanPeriod((long) 1500);
+            beaconManager.setBackgroundBetweenScanPeriod((long) 2000);
             beaconManager.setBackgroundScanPeriod((long) 1100);
 
             //Also detect iBeacons

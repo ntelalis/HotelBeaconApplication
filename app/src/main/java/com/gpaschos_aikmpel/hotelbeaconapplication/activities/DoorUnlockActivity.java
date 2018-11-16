@@ -1,11 +1,9 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -290,7 +288,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                         if (collection.iterator().hasNext()) {
                             double distance = collection.iterator().next().getDistance();
                             Log.d(TAG, "range notifier" + distance);
-                            if (distance < 1.2) {
+                            if (distance < 1.3) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -299,8 +297,13 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                                     }
                                 });
                                 handler.removeCallbacks(runnable);
-                                handler.postDelayed(runnable, 4000);
+                                Log.i(TAG,"in");
+                                handler.postDelayed(runnable, 6200);
                             }
+                            else{
+                                Log.i(TAG,"out");
+                            }
+
                         }
                     }
                 }
@@ -309,8 +312,12 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             //RangedBeacon.setMaxTrackinAge(1000);
             //BeaconManager.setRegionExitPeriod(1100);
             //TODO Uncomment this?
-            RangedBeacon.setSampleExpirationMilliseconds(1100);
+
             try {
+                RangedBeacon.setSampleExpirationMilliseconds(4200);
+                beaconManager.startRangingBeaconsInRegion(region);
+                beaconManager.setForegroundBetweenScanPeriod(0);
+                beaconManager.setForegroundScanPeriod(2000);
                 beaconManager.startRangingBeaconsInRegion(region);
                 Log.d(TAG, "ranging started");
             } catch (RemoteException e) {
