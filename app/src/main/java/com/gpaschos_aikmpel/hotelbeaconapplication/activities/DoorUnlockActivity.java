@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -87,9 +89,11 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_door_unlock);
 
-        Reservation r =RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+        Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
 
         TextView tvRoom = findViewById(R.id.tvDoorUnlockRoom);
         tvRoom.setText(String.valueOf(r.getRoomNumber()));
@@ -129,6 +133,23 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
     }
 
+    //for demonstration purposes
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+        } else {
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void checkBeaconPermission() {
@@ -136,6 +157,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -176,6 +198,25 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                 changeButtonColor(R.color.colorPrimary);
             }
         };
+
+
+        if (!isLocationEnabled(getApplicationContext())) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Location Services");
+            builder.setMessage("You need to enable location services in order for this feature to work");
+            builder.setPositiveButton(android.R.string.ok, null);
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                public void onDismiss(DialogInterface dialog) {
+                    Intent loc = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(loc);
+                }
+            });
+            builder.show();
+
+
+        }
     }
 
     @Override
@@ -205,7 +246,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                     //Toast.makeText(this, "opening door....", Toast.LENGTH_SHORT).show();
                     VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl, params);
                 } else {
-                    Snackbar.make(fabDoorUnlock,"Please get in 1 meter range from your door and wait for the button to become orange",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(fabDoorUnlock, "Please get in 1 meter range from your door and wait for the button to become orange", Snackbar.LENGTH_LONG).show();
                     //Toast.makeText(this, "Please get in 1 meter range from your door and wait for the button to become orange", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -220,7 +261,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
     @Override
     public void getSuccessResult(String url, JSONObject json) {
-        Snackbar.make(fabDoorUnlock,"Unlocked",Snackbar.LENGTH_LONG).show();
+        Snackbar.make(fabDoorUnlock, "Unlocked", Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -280,7 +321,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         }
     }
 
-    private void changeButtonColor(int color){
+    private void changeButtonColor(int color) {
         fabDoorUnlock.setBackgroundTintList(ContextCompat.getColorStateList(this, color));
     }
 }
