@@ -178,7 +178,7 @@
     <string name="bottomNavigationLoyalty">Loyalty Club</string>
     <string name="bottomNavigationOffers">Offers</string>
     <string name="bottomNavigationOffersMyRoom">My Room</string>
-    <string name="doorUnlockUnlockMessage">Place your mobile near the lock and press the key to unlock when the button turns orange</string>
+    <string name="doorUnlockUnlockMessage">Place your mobile near the lock and press the key to unlock when the button turns green</string>
     <string name="registerCountryHint">Country</string>
     <string name="registerTitleHint">Title</string>
     <string name="registerPhoneHint">Phone</string>
@@ -210,7 +210,7 @@
     <string name="tvBottomSheetTotal">Total</string>
     <string name="tvBottomSheetTotalPrice">0</string>
     <string name="tvBottomSheetCount">0</string>
-    <string name="etBottomSheetCommentsHint">Comments...</string>
+    <string name="etBottomSheetCommentsHint">Comments…</string>
     <string name="btnCustomerServicesBookService">Book a service</string>
     <string name="tvCheckoutCurrency">€</string>
     <string name="tvUsePointsFREElabel">Free Night</string>

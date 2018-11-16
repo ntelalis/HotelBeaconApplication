@@ -20,7 +20,7 @@
         android:focusable="true"
         android:onClick="unlockDoor"
         android:scaleType="centerInside"
-        app:backgroundTint="@color/colorPrimary"
+        app:backgroundTint="@color/buttonDeactivated"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"

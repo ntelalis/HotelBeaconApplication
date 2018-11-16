@@ -195,7 +195,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
             public void run() {
                 canOpenDoor = false;
                 //disabled
-                changeButtonColor(R.color.);
+                changeButtonColor(R.color.buttonDeactivated);
             }
         };
 
@@ -246,7 +246,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                     //Toast.makeText(this, "opening door....", Toast.LENGTH_SHORT).show();
                     VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl, params);
                 } else {
-                    Snackbar.make(fabDoorUnlock, "Please get in 1 meter range from your door and wait for the button to become orange", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(fabDoorUnlock, "Please get in 1 meter range from your door and wait for the button to change color", Snackbar.LENGTH_LONG).show();
                     //Toast.makeText(this, "Please get in 1 meter range from your door and wait for the button to become orange", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -297,7 +297,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                                         canOpenDoor = true;
                                         //enabled
                                         changeButtonColor(R.color.buttonActivated);
-                                        //changeButtonColor(android.R.color.holo_green_dark);
                                     }
                                 });
                                 handler.removeCallbacks(runnable);
