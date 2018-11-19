@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,6 +91,10 @@ public class CheckOutFragment extends Fragment implements JsonListener {
     private void fillRecyclerViewAndTextView(List<CheckOutAdapter.ChargeModel> list, double totalPrice) {
         CheckOutAdapter adapter = new CheckOutAdapter(list);
         recyclerView.setAdapter(adapter);
+        //fixing decimal digits
+        DecimalFormat df = new DecimalFormat("#.##");
+        totalPrice = Double.valueOf(df.format(totalPrice));
+        //
         this.totalPrice.setText(String.valueOf(totalPrice));
         if (RoomDB.getInstance(getActivity()).reservationDao().getCurrentReservation().getCheckIn() != null) {
             btnConfirmCheckout.setEnabled(true);
