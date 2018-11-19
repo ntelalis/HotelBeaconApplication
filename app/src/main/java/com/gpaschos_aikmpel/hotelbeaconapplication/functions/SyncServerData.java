@@ -145,6 +145,16 @@ public class SyncServerData implements JsonListener {
     }
 
 
+    public void deleteReservations() {
+        Log.i(TAG, "Delete Reservations");
+        Map<String, String> params = new HashMap<>();
+        int customerID = roomDB.customerDao().getCustomer().getCustomerId();
+        params.put(POST.loginCustomerID,String.valueOf(customerID));
+        volleyQueue.jsonRequest(this,URL.deleteUrl,params);
+    }
+
+
+
     private void getRoomTypes() {
         Log.i(TAG, "Check if RoomTypes have Changed");
         Map<String, String> params = new HashMap<>();
@@ -660,6 +670,11 @@ public class SyncServerData implements JsonListener {
                 }
                 if (syncCallbacksSwipeRefresh != null) {
                     syncCallbacksSwipeRefresh.syncingFinished();
+                }
+                break;
+            case URL.deleteUrl:
+                if(couponCallbacks!=null){
+                    couponCallbacks.couponCreated(null);
                 }
                 break;
         }

@@ -61,7 +61,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
             //beaconManager.setBackgroundBetweenScanPeriod((long) 150000);
             //beaconManager.setBackgroundBetweenScanPeriod((long) 15000);
             beaconManager.setBackgroundBetweenScanPeriod((long) 2000);
-            beaconManager.setBackgroundScanPeriod((long) 1100);
+            beaconManager.setBackgroundScanPeriod((long) 1500);
 
             //Also detect iBeacons
             beaconManager.getBeaconParsers().add(new BeaconParser()
@@ -72,7 +72,7 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
 
 
     public void registerBeaconRegion() {
-        if(beaconsEnabled){
+        if (beaconsEnabled) {
             //regionList is synced, proceeding with regions creation
 
             List<BeaconRegion> beaconRegionList = RoomDB.getInstance(this).beaconRegionDao().getBackgroundScanningRegions();
@@ -143,6 +143,9 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         List<OfferBeaconRegion> offerBeaconRegionList = RoomDB.getInstance(this).offerBeaconRegionDao().getOfferBeaconRegionByUniqueID(regionUniqueID);
         List<ExclusiveOffer> specialOfferList = new ArrayList<>();
         List<ExclusiveOffer> exclusiveOfferList = new ArrayList<>();
+        //DEMO Code Start
+        List<ExclusiveOffer> alreadySentOfferList = new ArrayList<>();
+        //DEMO Code End
         ExclusiveOffer selectedExclusiveOffer = null;
 
         for (OfferBeaconRegion offerBeaconRegion : offerBeaconRegionList) {
@@ -151,6 +154,11 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
                 specialOfferList.add(exclusiveOffer);
                 continue;
             }
+            //DEMO Code Start
+            if (exclusiveOffer.isSpecial() && exclusiveOffer.getCode() != null) {
+                alreadySentOfferList.add(exclusiveOffer);
+            }
+            //DEMO Code End
             if (exclusiveOffer.getCode() == null) {
                 exclusiveOfferList.add(exclusiveOffer);
             }
@@ -161,9 +169,15 @@ public class BeaconApplication extends Application implements BootstrapNotifier,
         } else if (exclusiveOfferList.size() > 0) {
             selectedExclusiveOffer = exclusiveOfferList.get(new Random().nextInt(exclusiveOfferList.size()));
         }
+        //DEMO Code Start
+        else if (alreadySentOfferList.size() > 0) {
+            NotificationCreation.notifyOffer(this, alreadySentOfferList.get(new Random().nextInt(alreadySentOfferList.size())));
+        }
+        //DEMO Code End
 
         if (selectedExclusiveOffer != null) {
             SyncServerData.getInstance(this).getCoupon(selectedExclusiveOffer.getId());
+
         }
     }
 

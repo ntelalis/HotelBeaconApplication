@@ -28,5 +28,9 @@
             android:id="@+id/navigationDrawerLogout"
             android:icon="@drawable/ic_logout_black_png"
             android:title="@string/btnHomeLogout" />
+
+        <item
+            android:id="@+id/navigationDeleteReservations"
+            android:title="@string/navigationdeletereservations" />
     </group>
 </menu>

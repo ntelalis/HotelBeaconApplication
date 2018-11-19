@@ -106,7 +106,9 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 case R.id.navigationDrawerHome:
                     drawerLayout.closeDrawers();
                     break;
-
+                case R.id.navigationDeleteReservations:
+                    SyncServerData.getInstance(HomeActivity.this).deleteReservations();
+                    break;
             }
             return true;
         }
@@ -235,8 +237,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 CheckInFragment checkInFragment = CheckInFragment.newInstance(reservationID);
                 transaction.replace(R.id.homeScreenContainer, checkInFragment);
                 transaction.commit();
-            }
-            else if (bundle.containsKey(NotificationCreation.OFFER_EXCLUSIVE_NOTIFICATION)) {
+            } else if (bundle.containsKey(NotificationCreation.OFFER_EXCLUSIVE_NOTIFICATION)) {
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationOffers);
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 OfferFragment offerFragment = OfferFragment.newInstance(1);
@@ -324,23 +325,19 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public void onBackPressed() {
-        if(fragmentLimitedUniqueQueue.size()>1){
+        if (fragmentLimitedUniqueQueue.size() > 1) {
             fragmentLimitedUniqueQueue.removeLast();
             Fragment previousFragment = fragmentLimitedUniqueQueue.getLast();
-            if(previousFragment instanceof UpcomingReservationRecyclerViewFragment || previousFragment instanceof UpcomingReservationNoneFragment){
+            if (previousFragment instanceof UpcomingReservationRecyclerViewFragment || previousFragment instanceof UpcomingReservationNoneFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationReservations);
-            }
-            else if(previousFragment instanceof LoyaltyFragment){
+            } else if (previousFragment instanceof LoyaltyFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationRewardsProgram);
-            }
-            else if(previousFragment instanceof OfferFragment){
+            } else if (previousFragment instanceof OfferFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationOffers);
-            }
-            else if(previousFragment instanceof MyRoomActiveFragment || previousFragment instanceof MyRoomInactiveFragment){
+            } else if (previousFragment instanceof MyRoomActiveFragment || previousFragment instanceof MyRoomInactiveFragment) {
                 bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMyRoom);
             }
-        }
-        else
+        } else
             super.onBackPressed();
     }
 
@@ -400,14 +397,18 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     @Override
     public void couponCreated(ExclusiveOffer exclusiveOffer) {
 
-        OfferFragment offerFragment = (OfferFragment) getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
-        if (offerFragment != null) {
-            ViewPager viewPager = offerFragment.getViewpager();
-            PagerAdapter pagerAdapter = viewPager.getAdapter();
-            if (pagerAdapter != null) {
-                OfferExclusiveFragment offerExclusiveFragment = (OfferExclusiveFragment) pagerAdapter.instantiateItem(viewPager, OfferFragment.OFFER_EXCLUSIVE);
-                offerExclusiveFragment.refreshData();
+        if (exclusiveOffer != null) {
+            OfferFragment offerFragment = (OfferFragment) getSupportFragmentManager().findFragmentByTag(OfferFragment.TAG);
+            if (offerFragment != null) {
+                ViewPager viewPager = offerFragment.getViewpager();
+                PagerAdapter pagerAdapter = viewPager.getAdapter();
+                if (pagerAdapter != null) {
+                    OfferExclusiveFragment offerExclusiveFragment = (OfferExclusiveFragment) pagerAdapter.instantiateItem(viewPager, OfferFragment.OFFER_EXCLUSIVE);
+                    offerExclusiveFragment.refreshData();
+                }
             }
+        } else {
+            finishAffinity();
         }
     }
 
@@ -430,7 +431,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Reservation currentReservation = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
-        if(currentReservation!=null) {
+        if (currentReservation != null) {
             boolean isCheckedInNotCheckedOut = currentReservation.isCheckedInNotCheckedOut();
             boolean hasReviewed = currentReservation.isReviewed();
 
@@ -445,9 +446,9 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.tbRating:
-                Intent ratingActivity = new Intent(this,ReviewActivity.class);
+                Intent ratingActivity = new Intent(this, ReviewActivity.class);
                 startActivity(ratingActivity);
         }
         return true;

@@ -42,7 +42,7 @@ public class URL {
     private static final String welcomeNotificationPage = "welcomenotification.php";
     private static final String checkInNotificationPage = "checkinnotification.php";
     private static final String roomTypesPage = "roomtypes.php";
-    private static final String deletePage = "delete.php";
+    private static final String deletePage = "deletereservations.php";
     private static final String doorUnlockPage = "doorunlock.php";
     private static final String countriesPage = "countries.php";
     private static final String totalPointsPage = "totalpoints.php";
