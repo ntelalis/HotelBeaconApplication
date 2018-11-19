@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.reservation.UpcomingReservationRecyclerViewFragment"
-    android:background="@color/background_colour">
+    android:background="@color/backgroundColorActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srUpcomingReservation"

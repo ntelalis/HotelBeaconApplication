@@ -4,6 +4,7 @@
     android:id="@+id/flCheckOutContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.CheckOutActivity">
+    tools:context=".activities.CheckOutActivity"
+    android:background="@color/backgroundColorActivity">
 
 </FrameLayout>

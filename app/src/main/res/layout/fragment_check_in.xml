@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.reservation.CheckInFragment">
+    tools:context=".fragments.reservation.CheckInFragment"
+    android:background="@color/backgroundColorActivity">
 
     <Button
         android:id="@+id/btnCheckInCheckIn"

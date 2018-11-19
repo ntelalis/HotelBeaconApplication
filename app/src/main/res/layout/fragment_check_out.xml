@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.reservation.CheckOutFragment">
+    tools:context=".fragments.reservation.CheckOutFragment"
+    android:background="@color/backgroundColorActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCheckout"

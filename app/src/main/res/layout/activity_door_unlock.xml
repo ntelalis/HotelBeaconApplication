@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.DoorUnlockActivity"
-    android:background="#ebe3d5">
+    android:background="@color/backgroundColorActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabDoorUnlock"

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReviewActivity">
+    tools:context=".activities.ReviewActivity"
+    android:background="#ebe3d5">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/aplDoorUnlock"
         android:layout_width="match_parent"
@@ -32,14 +33,14 @@
         android:id="@+id/tvReviewThanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/reviewRating"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/aplDoorUnlock" />
 
     <TextView
         android:id="@+id/tvReviewPrompt"
@@ -72,10 +73,12 @@
         android:id="@+id/btnReviewSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/btnReviewSubmit"
+        android:theme="@style/PrimaryButton"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etReviewComments" />
@@ -88,7 +91,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/background_rectangle_black"
+        android:background="@drawable/background_rectangle_black_no_transparency"
         android:ems="10"
         android:gravity="top|start"
         android:hint="@string/etReviewComments"
