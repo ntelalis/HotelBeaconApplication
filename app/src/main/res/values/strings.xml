@@ -77,7 +77,7 @@
     <string name="btnLoyaltyRewardsSystem">ABOUT THE REWARDS SYSTEM</string>
     <string name="title_activity_cccccccccccccccccc">cccccccccccccccccc</string>
     <string name="roomServiceConfirmationOrder">Your order is sent!</string>
-    <string name="reviewRating">We hope you enjoyed your stay!</string>
+    <string name="reviewRating">We hope you\'re enjoying your stay!</string>
     <string name="reviewRatingPrompt">Please spare a moment to rate our services</string>
     <string name="btnReviewSubmit">Submit</string>
     <string name="tvReviewComments">Comments (Optional)</string>

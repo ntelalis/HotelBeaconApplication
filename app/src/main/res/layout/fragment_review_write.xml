@@ -4,70 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReviewActivity"
-    android:background="#ebe3d5">
+    android:background="#ebe3d5"
+    tools:context=".activities.ReviewActivity">
+<!--
+    <ImageView
+        android:id="@+id/ivBackgroundColor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@color/doorUnlockBg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+-->
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/aplDoorUnlock"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <android.support.v7.widget.Toolbar
+        android:id="@+id/ablReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|snap"
-        app:title="@string/app_name"
-        app:titleTextColor="@color/textColorPrimary" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tbReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|snap"
+            app:title="@string/app_name"
+            app:titleTextColor="@color/textColorPrimary" />
     </android.support.design.widget.AppBarLayout>
-    <RatingBar
-        android:id="@+id/rbReview"
-        android:layout_width="wrap_content"
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="64dp"
+        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardCornerRadius="35dp"
+        app:elevation="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReviewPrompt" />
+        app:layout_constraintTop_toBottomOf="@+id/tvReviewPrompt">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RatingBar
+                android:id="@+id/rbReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/tvReviewThanking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:text="@string/reviewRating"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aplDoorUnlock" />
-
-    <TextView
-        android:id="@+id/tvReviewPrompt"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/reviewRatingPrompt"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReviewThanking" />
+        app:layout_constraintTop_toBottomOf="@id/ablReview" />
 
     <TextView
         android:id="@+id/tvReviewRatingName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintEnd_toEndOf="@+id/rbReview"
-        app:layout_constraintStart_toStartOf="@+id/rbReview"
-        app:layout_constraintTop_toBottomOf="@+id/rbReview"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView4"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4"
         tools:text="Excellent" />
+
+    <TextView
+        android:id="@+id/tvReviewPrompt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/reviewRatingPrompt"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvReviewThanking" />
 
     <Button
         android:id="@+id/btnReviewSubmit"
@@ -77,39 +118,53 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/btnReviewSubmit"
-        android:theme="@style/PrimaryButton"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etReviewComments" />
+        app:layout_constraintTop_toBottomOf="@+id/cvReviewComments" />
 
-    <EditText
-        android:id="@+id/etReviewComments"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cvReviewComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/background_rectangle_black_no_transparency"
-        android:ems="10"
-        android:gravity="top|start"
-        android:hint="@string/etReviewComments"
-        android:inputType="textMultiLine"
-        android:padding="8dp"
-        android:singleLine="false"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="7dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etReviewCommentsLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/etReviewCommentsLabel">
+
+        <EditText
+            android:id="@+id/etReviewComments"
+            style="@style/Widget.AppCompat.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:gravity="top|start"
+            android:hint="@string/etReviewComments"
+            android:inputType="textMultiLine"
+            android:padding="8dp"
+            android:singleLine="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etReviewCommentsLabel"
+            tools:text="lalala" />
+    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/etReviewCommentsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="90dp"
         android:text="@string/tvReviewComments"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvReviewRatingName" />
+        app:layout_constraintStart_toStartOf="@+id/cvReviewComments"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
 </android.support.constraint.ConstraintLayout>

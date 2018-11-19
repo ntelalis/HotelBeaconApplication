@@ -21,5 +21,6 @@
     <color name="green">#33ff33</color>
     <color name="newAccent">#d5957f</color>
     <color name="gray">#999999</color>
+    <color name="doorUnlockBg">#ebe3d5</color>
     <color name="background_colour">#e5e5e5</color>
 </resources>

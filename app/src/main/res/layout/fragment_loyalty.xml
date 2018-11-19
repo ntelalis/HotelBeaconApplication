@@ -27,7 +27,7 @@
         app:thumb_visible="false" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/ivTopGradient"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
@@ -44,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@color/colorPrimarySuperLight"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintBottom_toTopOf="@+id/ivTopGradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
