@@ -113,7 +113,9 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
             finishedSyncing = true;
 
-            Log.d("WTF","WTF!");
+            RoomDB roomDB = RoomDB.getInstance(this);
+            Customer c = roomDB.customerDao().getCustomer();
+
             try {
                 int customerId = json.getInt(POST.loginCustomerID);
                 String title = JSONHelper.getString(json,POST.loginTitle);
@@ -129,23 +131,14 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
                 boolean oldCustomer = json.getBoolean(POST.loginOldCustomer);
                 String modified = JSONHelper.getString(json,POST.loginModified);
 
-                Log.d("WTF",address1);
-                RoomDB roomDB = RoomDB.getInstance(this);
-                Customer c = roomDB.customerDao().getCustomer();
                 c.update(customerId,title,firstName,lastName,birthDate,country,phone,address1,address2,city,postalCode,oldCustomer,modified);
-                Log.d("WTF",c.getAddress1());
                 roomDB.customerDao().insert(c);
-                Log.d("WTF",RoomDB.getInstance(this).customerDao().getCustomer().getAddress1());
 
             } catch (JSONException e) {
-                Log.e("WTF", e.toString());
+                Log.d(TAG, e.toString());
             }
 
-
-            Intent intent = new Intent(this, HomeActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            SyncServerData.getInstance(LoadingScreenActivity.this).getCustomerDataFromServer(c);
 
         }
 
@@ -153,7 +146,7 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(this, url + ": " + error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, url + ": " + error, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -161,7 +154,13 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
         customer = RoomDB.getInstance(this).customerDao().getCustomer();
 
         if (customer != null) {
-            SyncServerData.getInstance(LoadingScreenActivity.this).getCustomerDataFromServer(customer);
+            Map<String, String> params = new HashMap<>();
+
+            params.put(POST.loginEmail, customer.getEmail());
+            params.put(POST.loginPassword, customer.getPassword());
+            params.put(POST.loginModified, customer.getModified());
+
+            VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -172,14 +171,11 @@ public class LoadingScreenActivity extends AppCompatActivity implements JsonList
 
     @Override
     public void customerDataSynced() {
-        Map<String, String> params = new HashMap<>();
 
-        params.put(POST.loginEmail, customer.getEmail());
-        params.put(POST.loginPassword, customer.getPassword());
-        Log.d("WTF!!", customer.getModified());
-        params.put(POST.loginModified, customer.getModified());
-
-        VolleyQueue.getInstance(this).jsonRequest(this, URL.loginUrl, params);
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
