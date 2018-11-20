@@ -27,46 +27,49 @@
         app:thumb_visible="false" />
 
     <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@color/colorPrimarySuperLight"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTopGradient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivTopGradient"
+        app:srcCompat="@color/cardview_light_background" />
+
+    <ImageView
         android:id="@+id/ivTopGradient"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        android:src="@drawable/gradient"
-        app:layout_constraintBottom_toBottomOf="@+id/tvLoyaltyRewardsMember"
+        android:src="@drawable/gradient3"
+        app:layout_constraintBottom_toTopOf="@+id/tvLoyaltyRewardsMember"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:src="@color/colorPrimarySuperLight"
-        app:layout_constraintBottom_toTopOf="@+id/ivTopGradient"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/backgroundColorActivity" />
-
     <TextView
         android:id="@+id/tvLoyaltyMemberFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyMemberLastName"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="serif"
         android:shadowColor="#E3E3E3"
         android:shadowDx="-3"
         android:shadowDy="1"
         android:shadowRadius="2"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="22sp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/ivTopGradient"
+        app:layout_constraintEnd_toStartOf="@+id/tvLoyaltyMemberLastName"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ivTopGradient"
         tools:text="Cake" />
 
     <TextView
@@ -74,14 +77,17 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyMemberFirstName"
-        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyMemberFirstName"
-        tools:text="Walker"
+        android:fontFamily="serif"
         android:shadowColor="#E3E3E3"
         android:shadowDx="-3"
         android:shadowDy="1"
-        android:shadowRadius="2"/>
+        android:shadowRadius="2"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="22sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyMemberFirstName"
+        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyMemberFirstName"
+        tools:text="Walker" />
 
     <TextView
         android:id="@+id/tvLoyaltyCustomerIDLabel"
@@ -234,24 +240,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/tvLoyalty_rewards_member_label"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyRewardsMember"
-        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyRewardsMember"
         android:shadowColor="#E3E3E3"
         android:shadowDx="-3"
         android:shadowDy="1"
-        android:shadowRadius="2"/>
+        android:shadowRadius="2"
+        android:text="@string/tvLoyalty_rewards_member_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:textColor="@color/circular_progress_default_background"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tvLoyaltyRewardsMember"
+        app:layout_constraintStart_toEndOf="@+id/tvLoyaltyRewardsMember" />
 
     <TextView
         android:id="@+id/tvLoyaltyRewardsMember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/tvLoyaltyRewardsMemberDefault"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:textColor="@color/circular_progress_default_background"
+        app:layout_constraintBottom_toTopOf="@+id/cpbLoyalty"
         app:layout_constraintStart_toStartOf="@+id/tvLoyaltyMemberFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyMemberLastName" />
+        app:layout_constraintTop_toBottomOf="@+id/tvLoyaltyMemberLastName"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnLoyaltyRewardsSystem"
@@ -259,6 +270,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/btnLoyaltyRewardsSystem"
+        android:textAppearance="@android:style/TextAppearance.Material.Widget.Button.Borderless.Colored"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -277,7 +289,6 @@
         android:id="@+id/ivLoyaltyBorder2"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
