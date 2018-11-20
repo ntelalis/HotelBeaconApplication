@@ -106,7 +106,7 @@ public class POST {
     public static final String availabilityAdults = "adults";
     public static final String availabilityChildren = "children";
     //RCV
-    public static final String availabilityResultsArray = "results";
+    public static final String availabilityRoomTypeArray = "roomTypeArray";
     public static final String availabilityRoomTypeID = "roomTypeID";
     public static final String availabilityRoomTitle = "title";
     public static final String availabilityRoomDescription = "description";

@@ -202,11 +202,10 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
 
                 List<RoomAdapter.ModelRoomView> roomList = new ArrayList<>();
 
-                JSONArray availabilityResults = json.getJSONArray(POST.availabilityResultsArray);
-                for (int i = 0; i < availabilityResults.length(); i++) {
-                    JSONObject room = availabilityResults.getJSONObject(i);
+                JSONArray availabilityRoomTypeArray = json.getJSONArray(POST.availabilityRoomTypeArray);
+                for (int i = 0; i < availabilityRoomTypeArray.length(); i++) {
 
-                    int roomTypeID = room.getInt(POST.availabilityRoomTypeID);
+                    int roomTypeID = availabilityRoomTypeArray.getInt(i);
                     int adults = pnAdults.getValue();
                     int children = pnChildren.getValue();
                     RoomDB roomDB = RoomDB.getInstance(getContext());
