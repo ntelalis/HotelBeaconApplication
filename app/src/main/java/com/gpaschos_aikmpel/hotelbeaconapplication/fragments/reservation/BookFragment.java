@@ -76,8 +76,8 @@ public class BookFragment extends Fragment implements JsonListener {
     private View contactInfoView, creditCardView ;
 
     private Button btnBook;
-    private TextView tvTotalPrice, tvPoints;
-    private Group group;
+    private TextView tvTotalPrice, tvPoints, tvPlus;
+    private Group groupPoints, groupCash;
 
     private ReservationCallbacks listener;
 
@@ -136,6 +136,7 @@ public class BookFragment extends Fragment implements JsonListener {
         TextView tvDays = v.findViewById(R.id.tvBookDays);
         tvPoints = v.findViewById(R.id.tvBookPoints);
         tvTotalPrice = v.findViewById(R.id.tvBookTotalPrice);
+        tvPlus = v.findViewById(R.id.tvBookPointsLabel);
         ImageView ivRoomImage = v.findViewById(R.id.ivBookRoomImage);
         btnBook = v.findViewById(R.id.btnBookConfirm);
         btnBook.setOnClickListener(clickListener);
@@ -151,7 +152,8 @@ public class BookFragment extends Fragment implements JsonListener {
             }
         });
         CheckBox cbTerms = v.findViewById(R.id.cbBookTerms);
-        group = v.findViewById(R.id.groupBookPoints);
+        groupPoints = v.findViewById(R.id.groupBookPoints);
+        groupCash = v.findViewById(R.id.groupBookCash);
 
         cbTerms.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
 
@@ -294,11 +296,28 @@ public class BookFragment extends Fragment implements JsonListener {
         int price = roomPrice * days - roomPrice * freeNights + cashNights * (cashPrice - roomPrice);
         tvTotalPrice.setText(String.valueOf(price));
         tvPoints.setText(String.valueOf(totalPoints));
-        if (totalPoints > 0) {
-            group.setVisibility(View.VISIBLE);
-        } else {
-            group.setVisibility(View.GONE);
+
+        if(price==0 && totalPoints>0){
+            groupCash.setVisibility(View.GONE);
+            groupPoints.setVisibility(View.VISIBLE);
         }
+        else if(price>0 && totalPoints==0){
+            groupCash.setVisibility(View.VISIBLE);
+            groupPoints.setVisibility(View.GONE);
+        }
+        else{
+            tvPlus.setVisibility(View.VISIBLE);
+            groupCash.setVisibility(View.VISIBLE);
+            groupPoints.setVisibility(View.VISIBLE);
+        }
+        /*
+        tvPoints.setText(String.valueOf(totalPoints));
+        if (totalPoints > 0) {
+            groupPoints.setVisibility(View.VISIBLE);
+        } else {
+            groupPoints.setVisibility(View.GONE);
+        }
+        */
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {

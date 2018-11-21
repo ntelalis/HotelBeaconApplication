@@ -125,7 +125,7 @@
     <string name="tvCreditCardYear">Exp. Year</string>
     <string name="tvCreditCardMonth">Exp. Month</string>
     <string name="tvCreditCardDivider">/</string>
-    <string name="tvBookTotalPriceLabel">Total Price:</string>
+    <string name="tvBookTotalPriceLabel">Total Amount:</string>
     <string name="tvRoomPriceLabel">Per Night</string>
     <string name="tvRoomPriceTotalLabel">Total</string>
     <string name="tvRoomDaysLabel">Days</string>
@@ -151,8 +151,7 @@
     <string name="btnCustomerServicesFloorLabel">Floor</string>
     <string name="btnCustomerServicesUnlockDoor">Unlock door</string>
     <string name="btnBookLoyalty">Redeem your Points</string>
-    <string name="tvBookPointsLabel">Points</string>
-    <string name="tvBookPointsPlus">+</string>
+    <string name="tvBookPointsLabel">" +"</string>
     <string name="tvBookRoomPriceLabel">Room Price</string>
     <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
     <string name="etReviewAlreadyComments" />
@@ -217,6 +216,7 @@
     <string name="tvUsePointsCash_PointsLabel"><![CDATA[Cash&Points Night]]></string>
     <string name="tvUsePointsRedeemLabel">Redeem points for</string>
     <string name="navigationdeletereservations">Demo: Remove Reservations</string>
+    <string name="tvBookPointsPlus">points</string>
 
 
 </resources>
