@@ -272,8 +272,8 @@ public class BookFragment extends Fragment implements JsonListener {
                 int cashPoints = roomTypePointsAndCash.getPoints();
 
                 cashPrice = roomTypePointsAndCash.getCash();
-
-                DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPoints, freeNightPoints, cashPoints, cashPrice, this.days);
+                int totalPrice = Integer.parseInt(tvTotalPrice.getText().toString());
+                DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPrice, totalPoints, freeNightPoints, cashPoints, cashPrice, this.days);
                 dialogFragment.setTargetFragment(this, LOYALTY_FRAGMENT);
                 if (getFragmentManager() != null) {
                     dialogFragment.show(getFragmentManager(), UseLoyaltyPointsFragment.TAG);
