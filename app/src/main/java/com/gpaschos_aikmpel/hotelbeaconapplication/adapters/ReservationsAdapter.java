@@ -99,6 +99,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         private TextView tvArrival;
         private TextView tvDeparture;
         private TextView tvAdults;
+        private TextView tvChildren;
         private ImageView ivRoomImage;
         private Button btnCheckInCheckOut;
         private TextView tvCheckInCheckOutInstructions;
@@ -111,6 +112,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             tvRoomTitle = itemView.findViewById(R.id.tvUpcomingReservationsRoomTitle);
             ivRoomImage = itemView.findViewById(R.id.ivUpcomingReservation);
             tvAdults = itemView.findViewById(R.id.tvUpcomingReservationsAdults);
+            tvChildren = itemView.findViewById(R.id.tvUpcomingReservationsChildren);
             tvArrival = itemView.findViewById(R.id.tvUpcomingReservationsArrival);
             tvDeparture = itemView.findViewById(R.id.tvUpcomingReservationsDeparture);
             btnCheckInCheckOut = itemView.findViewById(R.id.btnUpcomingReservationsCheckInCheckOut);
@@ -124,6 +126,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
             tvArrival.setText(reservationsList.get(position).arrival);
             tvDeparture.setText(reservationsList.get(position).departure);
             tvAdults.setText(String.valueOf(reservationsList.get(position).adults));
+            tvChildren.setText(String.valueOf(reservationsList.get(position).children));
             ivRoomImage.setImageBitmap(LocalVariables.readImage(itemView.getContext(),reservationsList.get(position).roomImgFile));
             roomNo = String.valueOf(reservationsList.get(position).room);
             buttonAndTextViewsHandler(reservationsList.get(position).reservationStatus, roomNo);
@@ -194,6 +197,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
 
 
         public int adults;
+        public int children;
         public String roomTitle;
         public String roomImgFile;
         public int reservationID;
@@ -202,9 +206,10 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         public int room;
         public int reservationStatus;
 
-        public ReservationModel(int adults, String roomTitle, String roomImgFile, int reservationID, String arrival,
+        public ReservationModel(int adults, int children, String roomTitle, String roomImgFile, int reservationID, String arrival,
                                 String departure, int reservationStatus, int room) {
             this.adults = adults;
+            this.children = children;
             this.roomTitle = roomTitle;
             this.roomImgFile = roomImgFile;
             this.reservationID = reservationID;
@@ -222,6 +227,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(this.adults);
+            dest.writeInt(this.children);
             dest.writeString(this.roomTitle);
             dest.writeString(this.roomImgFile);
             dest.writeInt(this.reservationID);
@@ -233,6 +239,7 @@ public class ReservationsAdapter extends RecyclerView.Adapter<ReservationsAdapte
 
         ReservationModel(Parcel in) {
             this.adults = in.readInt();
+            this.children = in.readInt();
             this.roomTitle = in.readString();
             this.roomImgFile = in.readString();
             this.reservationID = in.readInt();
