@@ -7,19 +7,25 @@ public class URL {
     //HOME
     //private static final String serverHost = "192.168.1.101";
 
-    //WORK-mine
-    private static final String serverHost = "192.168.102.96";
-    //LEnovo
-    // private static final String serverHost = "192.168.102.97";
-    //private static final String serverHost = "192.168.102.80";
-    //epi--the.static.otenet.gr
-   // private static final String serverHost = "83.235.23.44";
+    //WORK-Kate
+    //private static final String serverHost = "192.168.102.96";
+
+    //WORK-Lenovo
+    private static final String serverHost = "192.168.102.97";
+
+    //WORK-Dimitris
+    //private static final String serverHost = "83.235.23.44";
 
     private static final String serverPath = "phpserver";
 
-    //private static final String serverPort = "8079";
-    private static final String serverPort = "80";
-   // private static final String serverPort = "18080";
+    //WORK-Lenovo
+    private static final String serverPort = "8079";
+
+    //HOME & WORK-Kate
+    //private static final String serverPort = "80";
+
+    //WORK-Dimitris
+    //private static final String serverPort = "18080";
 
     private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/" + serverPath + "/";
 
