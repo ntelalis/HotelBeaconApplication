@@ -217,6 +217,7 @@
     <string name="tvUsePointsCash_PointsLabel"><![CDATA[Cash&Points Night]]></string>
     <string name="tvUsePointsRedeemLabel">Redeem points for</string>
     <string name="navigationdeletereservations">Demo: Remove Reservations</string>
+    <string name="etCommentsAlready">Comments</string>
 
 
 </resources>
