@@ -82,7 +82,7 @@
     <string name="btnReviewSubmit">Submit</string>
     <string name="tvReviewComments">Comments (Optional)</string>
     <string name="ratingConfirmation">Thank you for sharing your experience with us!</string>
-    <string name="reviewAlreadyMessage">You have already left feedback for you stay!</string>
+    <string name="reviewAlreadyMessage">Thank you for your feedback!</string>
     <string name="reviewCheckErrorMessage">Sorry something went wrong please try again later</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -155,7 +155,7 @@
     <string name="tvBookPointsPlus">+</string>
     <string name="tvBookRoomPriceLabel">Room Price</string>
     <string name="tvCustomerServicesNoReservation">You don\'t have an active reservation.</string>
-    <string name="etReviewAlreadyComments" />
+    <string name="etReviewAlreadyComments">Thank you for your feedback!</string>
     <string name="etReviewComments" />
     <string name="tvForgotPrompt">Having trouble signing in?</string>
     <string name="tvForgotVerifyPrompt">Check your email</string>
