@@ -300,10 +300,12 @@ public class BookFragment extends Fragment implements JsonListener {
         if(price==0 && totalPoints>0){
             groupCash.setVisibility(View.GONE);
             groupPoints.setVisibility(View.VISIBLE);
+            tvPlus.setVisibility(View.GONE);
         }
         else if(price>0 && totalPoints==0){
             groupCash.setVisibility(View.VISIBLE);
             groupPoints.setVisibility(View.GONE);
+            tvPlus.setVisibility(View.GONE);
         }
         else{
             tvPlus.setVisibility(View.VISIBLE);
