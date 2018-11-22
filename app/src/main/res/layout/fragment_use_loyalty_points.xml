@@ -71,7 +71,7 @@
         android:textColor="@color/gray2"
         app:layout_constraintBottom_toBottomOf="@+id/tvUsePointsSelectedPointsLabel"
         app:layout_constraintEnd_toStartOf="@+id/tvUsePointsPointsDivider"
-        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/tvUsePointsSelectedPointsLabel"
         app:layout_constraintTop_toTopOf="@+id/tvUsePointsSelectedPointsLabel"
