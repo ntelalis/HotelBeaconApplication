@@ -99,6 +99,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
         if (RoomDB.getInstance(getActivity()).reservationDao().getCurrentReservation().getCheckIn() != null) {
             btnConfirmCheckout.setEnabled(true);
         }
+        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override
