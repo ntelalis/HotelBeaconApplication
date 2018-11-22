@@ -32,7 +32,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
 
     private TextView tvSelectedDays;
     private TextView tvSelectedPointsTotal;
-    private TextView tvSelectedPriceTotal;
+    //private TextView tvSelectedPriceTotal;
 
     private int totalPoints;
     private int freePoints, cashPoints;
@@ -97,8 +97,8 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
 
         tvSelectedDays = v.findViewById(R.id.tvUsePointsSelectedDays);
         tvSelectedPointsTotal = v.findViewById(R.id.tvUsePointsSelectedPoints);
-        tvSelectedPriceTotal = v.findViewById(R.id.tvUsePointsSelectedPrice);
-        tvSelectedPriceTotal.setText(String.valueOf(totalCash));
+        //tvSelectedPriceTotal = v.findViewById(R.id.tvUsePointsSelectedPrice);
+        //tvSelectedPriceTotal.setText(String.valueOf(totalCash));
 
         pnFreeValue = v.findViewById(R.id.pnUsePointsFreeNight);
         pnCashValue = v.findViewById(R.id.pnUsePointsCashAndPoints);
@@ -168,7 +168,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         pnCashValue.setMaxValue(maxCashNights < cashSelectedDays ? maxCashNights : cashSelectedDays);
 
         tvSelectedPointsTotal.setText(String.valueOf(freeTotal + cashTotal));
-        tvSelectedPriceTotal.setText(String.valueOf(priceToPay));
+        //tvSelectedPriceTotal.setText(String.valueOf(priceToPay));
     }
 
 }
