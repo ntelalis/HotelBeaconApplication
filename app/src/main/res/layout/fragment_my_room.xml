@@ -11,7 +11,7 @@
         android:id="@+id/ivCustomerServiceTop"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@color/colorPrimarySuperLight"
+        android:src="@color/backgroundColorActivity"
         app:layout_constraintBottom_toTopOf="@+id/ivCustomerServices"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

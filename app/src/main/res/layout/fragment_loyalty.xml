@@ -89,6 +89,19 @@
         app:layout_constraintStart_toEndOf="@+id/tvLoyaltyMemberFirstName"
         tools:text="Walker" />
 
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
+        android:src="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLoyaltyBorder2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnLoyaltyRewardsSystem" />
+
     <TextView
         android:id="@+id/tvLoyaltyCustomerIDLabel"
         android:layout_width="0dp"
@@ -270,7 +283,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/btnLoyaltyRewardsSystem"
-        android:textAppearance="@android:style/TextAppearance.Material.Widget.Button.Borderless.Colored"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -280,6 +293,8 @@
         android:id="@+id/ivLoyaltyBorder"
         android:layout_width="0dp"
         android:layout_height="1dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLoyaltyRewardsSystem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
