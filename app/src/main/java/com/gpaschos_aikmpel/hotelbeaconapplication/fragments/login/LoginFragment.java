@@ -166,7 +166,7 @@ public class LoginFragment extends Fragment implements JsonListener {
 
     @Override
     public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), "Incorrect email and/or password", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
         setupUIForRequest(false);
     }
 

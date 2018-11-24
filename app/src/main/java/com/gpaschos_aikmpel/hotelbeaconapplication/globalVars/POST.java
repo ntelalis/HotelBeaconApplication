@@ -18,7 +18,7 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~titles.php~~~~~~~~~~~~~~~~~~
     //RCV
-    public static final String titlesTitleList = "titleList";
+    public static final String titlesTitleList = "titleArray";
     public static final String titlesID = "id";
     public static final String titlesTitle = "title";
 

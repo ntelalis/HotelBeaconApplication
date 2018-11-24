@@ -227,7 +227,7 @@ public class RegisterActivity extends AppCompatActivity implements JsonListener 
     public void getSuccessResult(String url, JSONObject json) {
         switch (url) {
             case URL.registerUrl:
-                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Account created successfully. Please verify your email", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
