@@ -6,32 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    card_view:cardCornerRadius="5dp">
+    card_view:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/clVHFoodOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilCreditCardHoldersName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/tilCreditCardCard"
-        app:layout_constraintStart_toStartOf="@+id/tilCreditCardCard"
-        app:layout_constraintTop_toBottomOf="@+id/tilCreditCardCard">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/etCreditCardHoldersName"
-            android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilCreditCardHoldersName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawablePadding="8dp"
-            android:drawableStart="@drawable/ic_person_black_png"
-            android:hint="@string/creditCardNameHint"
-            android:inputType="textCapCharacters"
-            android:text="Alexis Johnson" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/tilCreditCardCard"
+            app:layout_constraintStart_toStartOf="@+id/tilCreditCardCard"
+            app:layout_constraintTop_toBottomOf="@+id/tilCreditCardCard">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etCreditCardHoldersName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_person_black_png"
+                android:drawablePadding="8dp"
+                android:hint="@string/creditCardNameHint"
+                android:inputType="textCapCharacters"
+                android:text="Alexis Johnson" />
+        </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/tilCreditCardCard"
@@ -108,15 +109,15 @@
         app:layout_constraintStart_toStartOf="@+id/tilCreditCardCard"
         app:layout_constraintTop_toBottomOf="@+id/tvCreditCardDate" />
 
-    <TextView
-        android:id="@+id/tvCreditCardDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/tvCreditCardDate"
-        app:layout_constraintStart_toStartOf="@+id/tilCreditCardCard"
-        app:layout_constraintTop_toBottomOf="@+id/tilCreditCardHoldersName" />
+        <TextView
+            android:id="@+id/tvCreditCardDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tvCreditCardDate"
+            app:layout_constraintStart_toStartOf="@+id/tilCreditCardCard"
+            app:layout_constraintTop_toBottomOf="@+id/tilCreditCardHoldersName" />
 
     <TextView
         android:id="@+id/tvCreditCardTitle"

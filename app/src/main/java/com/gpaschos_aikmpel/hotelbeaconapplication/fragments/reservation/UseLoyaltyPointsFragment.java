@@ -18,6 +18,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.utility.PickNumber;
 
 public class UseLoyaltyPointsFragment extends DialogFragment {
 
+    private static final String TOTAL_CASH = "total_cash";
     private static final String TOTAL_POINTS = "total_points";
     private static final String TOTAL_DAYS = "total_days";
     private static final String POINTS_FREE = "free_night_points";
@@ -30,19 +31,22 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
     private PickNumber pnFreeValue, pnCashValue;
 
     private TextView tvSelectedDays;
-    private TextView tvSelectedTotal;
+    private TextView tvSelectedPointsTotal;
+    //private TextView tvSelectedPriceTotal;
 
     private int totalPoints;
     private int freePoints, cashPoints;
     private int totalDays;
     private int cashPrice;
+    private int totalCash;
 
     public UseLoyaltyPointsFragment() {
         // Required empty public constructor
     }
 
-    public static UseLoyaltyPointsFragment newInstance(int totalPoints, int freeNightPoints, int cashPoints, int cashPrice, int days) {
+    public static UseLoyaltyPointsFragment newInstance(int totalCash, int totalPoints, int freeNightPoints, int cashPoints, int cashPrice, int days) {
         Bundle args = new Bundle();
+        args.putInt(TOTAL_CASH, totalCash);
         args.putInt(TOTAL_POINTS, totalPoints);
         args.putInt(POINTS_FREE, freeNightPoints);
         args.putInt(POINTS_CASH, cashPoints);
@@ -57,6 +61,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            totalCash = getArguments().getInt(TOTAL_CASH);
             totalPoints = getArguments().getInt(TOTAL_POINTS);
             freePoints = getArguments().getInt(POINTS_FREE);
             cashPoints = getArguments().getInt(POINTS_CASH);
@@ -89,8 +94,11 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         TextView tvCashPrice = v.findViewById(R.id.tvUsePointsCashPointsPrice);
         tvCashPrice.setText(String.valueOf(cashPrice));
 
+
         tvSelectedDays = v.findViewById(R.id.tvUsePointsSelectedDays);
-        tvSelectedTotal = v.findViewById(R.id.tvUsePointsSelectedTotal);
+        tvSelectedPointsTotal = v.findViewById(R.id.tvUsePointsSelectedPoints);
+        //tvSelectedPriceTotal = v.findViewById(R.id.tvUsePointsSelectedPrice);
+        //tvSelectedPriceTotal.setText(String.valueOf(totalCash));
 
         pnFreeValue = v.findViewById(R.id.pnUsePointsFreeNight);
         pnCashValue = v.findViewById(R.id.pnUsePointsCashAndPoints);
@@ -132,7 +140,7 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (getTargetFragment() != null) {
-                    ((BookFragment) getTargetFragment()).onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedTotal.getText().toString()));
+                    ((BookFragment) getTargetFragment()).onLoyaltyPicked(pnFreeValue.getValue(), pnCashValue.getValue(), Integer.parseInt(tvSelectedPointsTotal.getText().toString()));
                 }
             }
         });
@@ -149,6 +157,8 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
 
         int freeTotal = freeValue * freePoints;
         int cashTotal = cashValue * cashPoints;
+        int pricePerDay = totalCash/totalDays;
+        int priceToPay = totalCash - (pricePerDay*freeValue) - (cashValue*cashPrice);
 
         int maxFreeNights = (totalPoints - cashTotal) / freePoints;
         int freeSelectedDays = totalDays - cashValue;
@@ -157,7 +167,8 @@ public class UseLoyaltyPointsFragment extends DialogFragment {
         int cashSelectedDays = totalDays - freeValue;
         pnCashValue.setMaxValue(maxCashNights < cashSelectedDays ? maxCashNights : cashSelectedDays);
 
-        tvSelectedTotal.setText(String.valueOf(freeTotal + cashTotal));
+        tvSelectedPointsTotal.setText(String.valueOf(freeTotal + cashTotal));
+        //tvSelectedPriceTotal.setText(String.valueOf(priceToPay));
     }
 
 }

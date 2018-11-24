@@ -102,8 +102,8 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
             int reservationStatus = ReservationsAdapter.getReservationStatus(r);
 
             reservationModelList.add(new ReservationsAdapter.ReservationModel(r.getAdults(),
-                    rt.getName(), rt.getImage(), r.getId(), r.getStartDate(), r.getEndDate(),
-                    reservationStatus, r.getRoomNumber()));
+                    r.getChildren(), rt.getName(), rt.getImage(), r.getId(), r.getStartDate(),
+                    r.getEndDate(), reservationStatus, r.getRoomNumber()));
             recyclerView.setAdapter(new ReservationsAdapter(this, reservationModelList));
             recyclerView.getAdapter().notifyDataSetChanged();
         }

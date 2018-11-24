@@ -360,8 +360,8 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 int reservationStatus = ReservationsAdapter.getReservationStatus(r);
 
                 reservationModelList.add(new ReservationsAdapter.ReservationModel(r.getAdults(),
-                        rt.getName(), rt.getImage(), r.getId(), r.getStartDate(), r.getEndDate(),
-                        reservationStatus, r.getRoomNumber()));
+                        r.getChildren(), rt.getName(), rt.getImage(), r.getId(), r.getStartDate(),
+                        r.getEndDate(), reservationStatus, r.getRoomNumber()));
             }
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
