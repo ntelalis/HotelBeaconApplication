@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
+import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
 import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
 import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
@@ -24,7 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReviewCheckFragment extends Fragment implements JsonListener {
+public class ReviewCheckFragment extends Fragment {
 
     private ProgressBar pbReviewCheck;
     private TextView tvReviewCheckMessage;
@@ -63,10 +65,21 @@ public class ReviewCheckFragment extends Fragment implements JsonListener {
         pbReviewCheck = view.findViewById(R.id.pbReviewCheck);
         tvReviewCheckMessage = view.findViewById(R.id.tvReviewCheckMessage);
 
-        Map<String, String> params = new HashMap<>();
-        params.put(POST.reviewCheckReservationID, String.valueOf(reservationID));
-        VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.checkReviewURL, params);
+        Reservation r = RoomDB.getInstance(getContext()).reservationDao().getCurrentReservation();
+        if(r.isReviewed()){
+            pbReviewCheck.setVisibility(View.INVISIBLE);
+            tvReviewCheckMessage.setVisibility(View.VISIBLE);
 
+            double rating = r.getRating();
+            String comments = r.getRatingComments();
+
+            listener.checkReview(rating, comments);
+            pbReviewCheck.setVisibility(View.VISIBLE);
+            tvReviewCheckMessage.setVisibility(View.INVISIBLE);
+        }
+        else{
+            listener.writeReview();
+        }
         return view;
     }
 
@@ -79,31 +92,6 @@ public class ReviewCheckFragment extends Fragment implements JsonListener {
             throw new ClassCastException(context.toString() + " must implement OnReviewInteraction");
         }
 
-    }
-
-    @Override
-    public void getSuccessResult(String url, JSONObject json) throws JSONException {
-        if (json.getBoolean(POST.reviewCheckExists)) {
-            pbReviewCheck.setVisibility(View.INVISIBLE);
-            tvReviewCheckMessage.setVisibility(View.VISIBLE);
-
-            double rating = json.getDouble(POST.reviewCheckRating);
-            String comments = json.getString(POST.reviewCheckComments);
-
-            listener.checkReview(rating, comments);
-            pbReviewCheck.setVisibility(View.VISIBLE);
-            tvReviewCheckMessage.setVisibility(View.INVISIBLE);
-
-        } else {
-            listener.writeReview();
-        }
-    }
-
-    @Override
-    public void getErrorResult(String url, String error) {
-        Toast.makeText(getContext(), url + ": " + error, Toast.LENGTH_SHORT).show();
-        tvReviewCheckMessage.setVisibility(View.VISIBLE);
-        pbReviewCheck.setVisibility(View.INVISIBLE);
     }
 
 }

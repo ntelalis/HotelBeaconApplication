@@ -25,10 +25,11 @@ public class Reservation implements SyncModel {
     private int roomNumber;
     private int roomFloor;
     private String modified;
-    private boolean reviewed;
+    private double rating;
+    private String ratingComments;
 
     @Ignore
-    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, boolean reviewed, String modified) {
+    public Reservation(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, double rating, String ratingComments, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -40,7 +41,8 @@ public class Reservation implements SyncModel {
         this.checkOut = checkOut;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
-        this.reviewed = reviewed;
+        this.rating = rating;
+        this.ratingComments = ratingComments;
         this.modified = modified;
     }
 
@@ -53,7 +55,6 @@ public class Reservation implements SyncModel {
         this.startDate = startDate;
         this.endDate = endDate;
         this.modified = modified;
-        this.reviewed = false;
     }
 
     public void checkIn(String checkIn, int roomNumber, int roomFloor, String roomPassword, String modified) {
@@ -69,7 +70,7 @@ public class Reservation implements SyncModel {
         this.modified = modified;
     }
 
-    public void update(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, boolean reviewed, String modified) {
+    public void update(int id, int roomTypeID, int adults, int children, String bookDate, String startDate, String endDate, String checkIn, String checkOut, int roomNumber, int roomFloor, double rating, String ratingComments, String modified) {
         this.id = id;
         this.roomTypeID = roomTypeID;
         this.adults = adults;
@@ -81,16 +82,13 @@ public class Reservation implements SyncModel {
         this.checkOut = checkOut;
         this.roomNumber = roomNumber;
         this.roomFloor = roomFloor;
-        this.reviewed = reviewed;
+        this.rating = rating;
+        this.ratingComments = ratingComments;
         this.modified = modified;
     }
 
     public boolean isReviewed() {
-        return reviewed;
-    }
-
-    public void setReviewed(boolean reviewed) {
-        this.reviewed = reviewed;
+        return rating!=0.0f;
     }
 
     public boolean isCheckedIn() {
@@ -213,5 +211,19 @@ public class Reservation implements SyncModel {
         this.modified = modified;
     }
 
+    public double getRating() {
+        return rating;
+    }
 
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public String getRatingComments() {
+        return ratingComments;
+    }
+
+    public void setRatingComments(String ratingComments) {
+        this.ratingComments = ratingComments;
+    }
 }

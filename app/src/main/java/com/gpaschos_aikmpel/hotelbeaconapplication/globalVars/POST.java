@@ -1,5 +1,7 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.globalVars;
 
+import org.json.JSONObject;
+
 public class POST {
 
     //~~~~~~~~~~~~~~~~~~register.php~~~~~~~~~~~~~~~~~~
@@ -167,10 +169,10 @@ public class POST {
     public static final String reservationDeparture = "endDate";
     public static final String reservationCheckIn = "checkIn";
     public static final String reservationCheckOut = "checkOut";
-    public static final String reservationRoomBeaconID = "roomBeaconRegionID";
     public static final String reservationRoomNumber = "roomNumber";
     public static final String reservationRoomFloor = "roomFloor";
-    public static final String reservationReviewed = "reviewed";
+    public static final String reservationRating = "rating";
+    public static final String reservationRatingComments = "ratingComments";
     public static final String reservationModified = "modified";
 
     //~~~~~~~~~~~~~~~~~~orderroomservice.php~~~~~~~~~~~~~~~~~~
@@ -381,6 +383,4 @@ public class POST {
     public static final String bookRoomAddress2 = "address2";
     public static final String bookRoomCity = "city";
     public static final String bookRoomPostalCode = "postalCode";
-
-
 }

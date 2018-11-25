@@ -24,14 +24,17 @@ public class URL {
     //private static final String serverPath = "phpserver";
     //private static final String serverPort = "18080";
 
-    private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/" + (serverPath.isEmpty()?"":serverPath+"/");
 
+    private static final String serverAddress = serverProtocol + "://" + serverHost + ":" + serverPort + "/" + serverPath + "/";
+
+    private static final String registerPage = "register.php";
     private static final String loginPage = "login.php";
     private static final String forgotPage = "forgot.php";
-    private static final String registerPage = "register.php";
-    private static final String titlesPage = "titles.php";
     private static final String forgotVerifyPage = "forgotverify.php";
     private static final String forgotNewPassPage = "forgotnewpass.php";
+
+    private static final String titlesPage = "titles.php";
+
     private static final String availabilityPage = "availability.php";
     private static final String bookPage = "book.php";
     private static final String roomServiceCategoriesPage = "roomservicecategories.php";
