@@ -1,7 +1,6 @@
 package com.gpaschos_aikmpel.hotelbeaconapplication.fragments.reservation;
 
 
-import android.arch.persistence.room.util.StringUtil;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -144,11 +143,23 @@ public class BookFragment extends Fragment implements JsonListener {
         btnLoyalty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int customerID = customer.getCustomerId();
+                Loyalty loyalty = RoomDB.getInstance(getContext()).loyaltyDao().getLoyalty();
+                int totalPoints = loyalty.getCurrentPoints();
 
-                Map<String, String> params = new HashMap<>();
-                params.put(POST.loyaltyProgramCustomerID, String.valueOf(customerID));
-                VolleyQueue.getInstance(getContext()).jsonRequest(BookFragment.this, URL.totalPointsUrl, params);
+                RoomDB roomDB = RoomDB.getInstance(getContext());
+                RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, adults);
+                int freeNightPoints = roomTypeFreeNightsPoints.getSpendingPoints();
+
+                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults, 1);
+                int cashPoints = roomTypePointsAndCash.getPoints();
+
+                cashPrice = roomTypePointsAndCash.getCash();
+                int totalPrice = Integer.parseInt(tvTotalPrice.getText().toString());
+                DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPrice, totalPoints, freeNightPoints, cashPoints, cashPrice, days);
+                dialogFragment.setTargetFragment(BookFragment.this, LOYALTY_FRAGMENT);
+                if (getFragmentManager() != null) {
+                    dialogFragment.show(getFragmentManager(), UseLoyaltyPointsFragment.TAG);
+                }
             }
         });
         CheckBox cbTerms = v.findViewById(R.id.cbBookTerms);
@@ -260,26 +271,6 @@ public class BookFragment extends Fragment implements JsonListener {
                 ScheduleNotifications.checkoutNotification(getContext(), departure);
 
                 listener.showBooked(resID);
-                break;
-            case URL.totalPointsUrl:
-
-                Loyalty loyalty = RoomDB.getInstance(getContext()).loyaltyDao().getLoyalty();
-                int totalPoints = loyalty.getCurrentPoints();
-
-                RoomDB roomDB = RoomDB.getInstance(getContext());
-                RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, adults);
-                int freeNightPoints = roomTypeFreeNightsPoints.getSpendingPoints();
-
-                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults, 1);
-                int cashPoints = roomTypePointsAndCash.getPoints();
-
-                cashPrice = roomTypePointsAndCash.getCash();
-                int totalPrice = Integer.parseInt(tvTotalPrice.getText().toString());
-                DialogFragment dialogFragment = UseLoyaltyPointsFragment.newInstance(totalPrice, totalPoints, freeNightPoints, cashPoints, cashPrice, this.days);
-                dialogFragment.setTargetFragment(this, LOYALTY_FRAGMENT);
-                if (getFragmentManager() != null) {
-                    dialogFragment.show(getFragmentManager(), UseLoyaltyPointsFragment.TAG);
-                }
                 break;
         }
     }
