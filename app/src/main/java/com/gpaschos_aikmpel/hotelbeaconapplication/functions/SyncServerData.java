@@ -536,8 +536,6 @@ public class SyncServerData implements JsonListener {
                         String departureDate = JSONHelper.getString(jsonObject, POST.reservationDeparture);
                         String checkIn = JSONHelper.getString(jsonObject, POST.reservationCheckIn);
                         String checkOut = JSONHelper.getString(jsonObject, POST.reservationCheckOut);
-                        double rating = jsonObject.getDouble(POST.reservationRating);
-                        String ratingComments = JSONHelper.getString(jsonObject, POST.reservationRatingComments);
 
                         //int roomBeaconID = -1;
                         int roomNumber = -1;
@@ -548,6 +546,15 @@ public class SyncServerData implements JsonListener {
                             floor = jsonObject.getInt(POST.reservationRoomFloor);
                         } catch (JSONException e) {
                             Log.d(TAG, "Not checked IN");
+                        }
+                        double rating =0.0d;
+                        String ratingComments =null;
+                        try{
+                            rating = jsonObject.getDouble(POST.reservationRating);
+                            ratingComments = JSONHelper.getString(jsonObject, POST.reservationRatingComments);
+                        }
+                        catch (JSONException e){
+                            Log.d(TAG, "Not rating yet");
                         }
 
                         Reservation r = roomDB.reservationDao().getReservationByID(id);

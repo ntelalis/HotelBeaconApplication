@@ -108,6 +108,8 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
     public void getSuccessResult(String url, JSONObject json) {
         switch (url) {
             case URL.reviewURL:
+                double rating = ratingBar.getRating();
+                String comments = etRatingComment.getText().toString();
                 listener.completeReview();
         }
     }

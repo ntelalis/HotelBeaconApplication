@@ -87,8 +87,13 @@ public class Reservation implements SyncModel {
         this.modified = modified;
     }
 
+    public void setRating(double rating, String ratingComments){
+        this.rating = rating;
+        this.ratingComments = ratingComments;
+    }
+
     public boolean isReviewed() {
-        return rating!=0.0f;
+        return rating!=0.0d;
     }
 
     public boolean isCheckedIn() {
