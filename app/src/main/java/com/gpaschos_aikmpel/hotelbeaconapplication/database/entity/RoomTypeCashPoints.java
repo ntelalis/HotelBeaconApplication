@@ -4,28 +4,22 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 
-@Entity(primaryKeys = {"roomTypeID", "adults", "children", "currencyID"},
-        indices = {@Index(value = "currencyID")},
+@Entity(primaryKeys = {"roomTypeID", "adults", "children"},
         foreignKeys = {@ForeignKey(entity = RoomType.class,
                 parentColumns = "id",
-                childColumns = "roomTypeID"),
-                @ForeignKey(entity = Currency.class,
-                        parentColumns = "id",
-                        childColumns = "currencyID")})
+                childColumns = "roomTypeID")})
 public class RoomTypeCashPoints {
 
     private int roomTypeID;
     private int adults;
     private int children;
-    private int currencyID;
     private int cash;
     private int points;
 
-    public RoomTypeCashPoints(int roomTypeID, int adults, int children, int currencyID, int cash, int points) {
+    public RoomTypeCashPoints(int roomTypeID, int adults, int children, int cash, int points) {
         this.roomTypeID = roomTypeID;
         this.adults = adults;
         this.children = children;
-        this.currencyID = currencyID;
         this.cash = cash;
         this.points = points;
     }
@@ -52,14 +46,6 @@ public class RoomTypeCashPoints {
 
     public void setChildren(int children) {
         this.children = children;
-    }
-
-    public int getCurrencyID() {
-        return currencyID;
-    }
-
-    public void setCurrencyID(int currencyID) {
-        this.currencyID = currencyID;
     }
 
     public int getCash() {

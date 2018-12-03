@@ -56,12 +56,8 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.reworkRequest.RequestCallback
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.LimitedUniqueQueue;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, RequestCallback, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks, CheckedInFragment.Callbacks {
 
@@ -342,7 +338,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     }
 
     public void myReservations() {
-        List<Reservation> reservationList = RoomDB.getInstance(this).reservationDao().getAllUpcomingReservations();
+        List<Reservation> reservationList = RoomDB.getInstance(this).reservationDao().getReservations();
 
         Fragment fragment;
 
@@ -433,7 +429,7 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
         Reservation currentReservation = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
         if (currentReservation != null) {
             boolean isCheckedInNotCheckedOut = currentReservation.isCheckedInNotCheckedOut();
-            boolean hasReviewed = currentReservation.isReviewed();
+            boolean hasReviewed = currentReservation.isRated();
 
             //if (isCheckedInNotCheckedOut && !hasReviewed) {
             if (isCheckedInNotCheckedOut) {

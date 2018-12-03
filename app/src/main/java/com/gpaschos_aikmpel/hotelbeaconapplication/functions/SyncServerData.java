@@ -9,7 +9,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.GeneralOffer;
@@ -48,9 +47,9 @@ public class SyncServerData implements JsonListener {
     private RoomDB roomDB;
     private VolleyQueue volleyQueue;
 
-    private SyncServerData(Fragment fragment, Context context){
+    private SyncServerData(Fragment fragment, Context context) {
         this(context);
-        if (fragment instanceof SyncCallbacksSwipeRefresh){
+        if (fragment instanceof SyncCallbacksSwipeRefresh) {
             syncCallbacksSwipeRefresh = (SyncCallbacksSwipeRefresh) fragment;
         }
     }
@@ -80,7 +79,6 @@ public class SyncServerData implements JsonListener {
         getBeaconRegion();
         getTitles();
         getCountries();
-        getCurrencies();
         getGeneralOffers();
         getRoomTypes();
     }
@@ -117,18 +115,17 @@ public class SyncServerData implements JsonListener {
 
     private void getCountries() {
         Log.i(TAG, "Check countries");
-        if (roomDB.countryDao().getCountries().isEmpty()) {
-            Log.i(TAG, "Get Countries");
-            volleyQueue.jsonRequest(this, URL.countriesUrl, null);
-        }
-    }
 
-    private void getCurrencies() {
-        Log.i(TAG, "Check currencies");
-        if (roomDB.currencyDao().getCurrencies().isEmpty()) {
-            Log.i(TAG, "Get currencies");
-            volleyQueue.jsonRequest(this, URL.currenciesUrl, null);
+        String modified = roomDB.countryDao().getModified();
+
+        Map<String, String> params = null;
+        if (modified != null) {
+            Log.d("AF",modified);
+            params = new HashMap<>();
+            params.put(POST.countryModified, modified);
         }
+        volleyQueue.jsonRequest(this, URL.countriesUrl, params);
+
     }
 
     public void getReservations(Customer customer) {
@@ -149,10 +146,9 @@ public class SyncServerData implements JsonListener {
         Log.i(TAG, "Delete Reservations");
         Map<String, String> params = new HashMap<>();
         int customerID = roomDB.customerDao().getCustomer().getCustomerId();
-        params.put(POST.loginCustomerID,String.valueOf(customerID));
-        volleyQueue.jsonRequest(this,URL.deleteUrl,params);
+        params.put(POST.loginCustomerID, String.valueOf(customerID));
+        volleyQueue.jsonRequest(this, URL.deleteUrl, params);
     }
-
 
 
     private void getRoomTypes() {
@@ -365,7 +361,8 @@ public class SyncServerData implements JsonListener {
                         JSONObject jsonObject = jsonArrayCountries.getJSONObject(i);
                         int id = jsonObject.getInt(POST.countryID);
                         String name = JSONHelper.getString(jsonObject, POST.countryName);
-                        countryList.add(new Country(id, name));
+                        String modified = JSONHelper.getString(jsonObject, POST.countryModified);
+                        countryList.add(new Country(id, name, modified));
                     }
 
                     roomDB.countryDao().insertAll(countryList);
@@ -386,30 +383,11 @@ public class SyncServerData implements JsonListener {
                         String modified = JSONHelper.getString(json, POST.loyaltyProgramModified);
                         roomDB.loyaltyDao().insert(new Loyalty(customerID, points, tierName, tierPoints, nextTierName, nextTierPoints, modified));
                     }
-                    break;
-                } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
-                }
-            case URL.currenciesUrl:
-                try {
-                    JSONArray jsonArrayCurrency = json.getJSONArray(POST.currencyArray);
-                    List<Currency> currencyList = new ArrayList<>();
-                    for (int i = 0; i < jsonArrayCurrency.length(); i++) {
-                        JSONObject jsonObject = jsonArrayCurrency.getJSONObject(i);
-                        int id = jsonObject.getInt(POST.currencyID);
-                        String name = JSONHelper.getString(jsonObject, POST.currencyName);
-                        String code = JSONHelper.getString(jsonObject, POST.currencyCode);
-                        String symbol = JSONHelper.getString(jsonObject, POST.currencySymbol);
-                        currencyList.add(new Currency(id, name, code, symbol));
-                    }
-                    roomDB.currencyDao().insertAll(currencyList);
-                    Log.i(TAG, "Currencies results OK!");
-                } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
-                }
 
+                } catch (JSONException e) {
+                    Log.e(TAG, e.toString());
+                }
                 break;
-
             case URL.beaconRegionsUrl:
                 Log.i(TAG, "Check BeaconRegions");
                 resolveBeaconRegionReply(json, URL.beaconRegionsUrl);
@@ -467,9 +445,8 @@ public class SyncServerData implements JsonListener {
                         int roomTypeID = jsonObject.getInt(POST.roomTypeCashID);
                         int adults = jsonObject.getInt(POST.roomTypeCashAdults);
                         int children = jsonObject.getInt(POST.roomTypeCashChildren);
-                        int currencyID = jsonObject.getInt(POST.roomTypeCashCurrencyID);
                         int price = jsonObject.getInt(POST.roomTypeCashCash);
-                        roomTypeCashList.add(new RoomTypeCash(roomTypeID, adults, children, currencyID, price));
+                        roomTypeCashList.add(new RoomTypeCash(roomTypeID, adults, children, price));
                     }
                     roomDB.roomTypeCashDao().insertAll(roomTypeCashList);
                     Log.i(TAG, "RoomTypeCash results OK!");
@@ -495,10 +472,9 @@ public class SyncServerData implements JsonListener {
                         int roomTypeID = jsonObject.getInt(POST.roomTypeCashPointsRoomTypeID);
                         int adults = jsonObject.getInt(POST.roomTypeCashPointsAdults);
                         int children = jsonObject.getInt(POST.roomTypeCashPointsChildren);
-                        int currencyID = jsonObject.getInt(POST.roomTypeCashPointsCurrencyID);
                         int cash = jsonObject.getInt(POST.roomTypeCashPointsCash);
                         int points = jsonObject.getInt(POST.roomTypeCashPointsPoints);
-                        roomTypeCashPointsList.add(new RoomTypeCashPoints(roomTypeID, adults, children, currencyID, cash, points));
+                        roomTypeCashPointsList.add(new RoomTypeCashPoints(roomTypeID, adults, children, cash, points));
                     }
                     roomDB.roomTypeCashPointsDao().insertAll(roomTypeCashPointsList);
 
@@ -547,13 +523,12 @@ public class SyncServerData implements JsonListener {
                         } catch (JSONException e) {
                             Log.d(TAG, "Not checked IN");
                         }
-                        double rating =0.0d;
-                        String ratingComments =null;
-                        try{
+                        double rating = 0.0d;
+                        String ratingComments = null;
+                        try {
                             rating = jsonObject.getDouble(POST.reservationRating);
                             ratingComments = JSONHelper.getString(jsonObject, POST.reservationRatingComments);
-                        }
-                        catch (JSONException e){
+                        } catch (JSONException e) {
                             Log.d(TAG, "Not rating yet");
                         }
 
@@ -674,7 +649,7 @@ public class SyncServerData implements JsonListener {
                 Log.i(TAG, "BeaconRegionFeature OK!");
 
                 ((BeaconApplication) context.getApplicationContext()).registerBeaconRegion();
-                if(syncCallbacks!=null){
+                if (syncCallbacks != null) {
                     syncCallbacks.customerDataSynced();
                 }
                 if (syncCallbacksSwipeRefresh != null) {
@@ -682,7 +657,7 @@ public class SyncServerData implements JsonListener {
                 }
                 break;
             case URL.deleteUrl:
-                if(couponCallbacks!=null){
+                if (couponCallbacks != null) {
                     couponCallbacks.couponCreated(null);
                 }
                 break;

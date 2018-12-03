@@ -8,7 +8,6 @@ import android.content.Context;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.BeaconRegionDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.BeaconRegionFeatureDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CountryDao;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CurrencyDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.CustomerDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.ExclusiveOfferDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.GeneralOfferDao;
@@ -23,7 +22,6 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.dao.TitleDao;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegion;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.BeaconRegionFeature;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Country;
-import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Currency;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Customer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.ExclusiveOffer;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.GeneralOffer;
@@ -36,7 +34,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypeCashP
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.RoomTypePoints;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Title;
 
-@Database(entities = {Customer.class, Reservation.class, RoomType.class, Country.class, Loyalty.class, RoomTypeCash.class, RoomTypePoints.class, RoomTypeCashPoints.class, Currency.class, Title.class, BeaconRegion.class, BeaconRegionFeature.class, GeneralOffer.class, ExclusiveOffer.class, OfferBeaconRegion.class}, version = 1, exportSchema = false)
+@Database(entities = {Customer.class, Reservation.class, RoomType.class, Country.class, Loyalty.class, RoomTypeCash.class, RoomTypePoints.class, RoomTypeCashPoints.class, Title.class, BeaconRegion.class, BeaconRegionFeature.class, GeneralOffer.class, ExclusiveOffer.class, OfferBeaconRegion.class}, version = 1, exportSchema = false)
 public abstract class RoomDB extends RoomDatabase {
 
     private static final String DB_NAME = "HotelDatabase";
@@ -65,8 +63,6 @@ public abstract class RoomDB extends RoomDatabase {
     public abstract RoomTypePointsDao roomTypePointsDao();
 
     public abstract RoomTypeCashPointsDao roomTypeCashPointsDao();
-
-    public abstract CurrencyDao currencyDao();
 
     public abstract TitleDao titleDao();
 

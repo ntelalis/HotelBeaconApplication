@@ -150,7 +150,7 @@ public class BookFragment extends Fragment implements JsonListener {
                 RoomTypePoints roomTypeFreeNightsPoints = roomDB.roomTypePointsDao().getRoomTypePoints(roomTypeID, adults);
                 int freeNightPoints = roomTypeFreeNightsPoints.getSpendingPoints();
 
-                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults, 1);
+                RoomTypeCashPoints roomTypePointsAndCash = roomDB.roomTypeCashPointsDao().getRoomTypeCashPoints(roomTypeID, adults);
                 int cashPoints = roomTypePointsAndCash.getPoints();
 
                 cashPrice = roomTypePointsAndCash.getCash();
@@ -185,7 +185,7 @@ public class BookFragment extends Fragment implements JsonListener {
         tietPostalCode = contactInfoView.findViewById(R.id.tietContactPostal);
 
         RoomType roomType = RoomDB.getInstance(getContext()).roomTypeDao().getRoomTypeById(roomTypeID);
-        RoomTypeCash roomTypeCash = RoomDB.getInstance(getContext()).roomTypeCashDao().getRoomTypeCash(roomTypeID, adults, children, 1);
+        RoomTypeCash roomTypeCash = RoomDB.getInstance(getContext()).roomTypeCashDao().getRoomTypeCash(roomTypeID, adults, children);
 
         SimpleDateFormat localizedFormat = (SimpleDateFormat) SimpleDateFormat.getDateInstance();
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);

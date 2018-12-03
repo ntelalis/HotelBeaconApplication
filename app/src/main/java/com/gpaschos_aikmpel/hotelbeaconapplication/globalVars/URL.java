@@ -41,7 +41,6 @@ public class URL {
     private static final String roomServiceFoodPage = "roomservicefood.php";
     private static final String orderPage = "orderroomservice.php";
     private static final String reviewPage = "rating.php";
-    private static final String checkReviewPage = "ratingcheck.php";
     private static final String loyaltyPointsPage = "loyaltypoints.php";
     private static final String checkInPage = "checkin.php";
     private static final String checkoutPage = "checkout.php";
@@ -50,7 +49,6 @@ public class URL {
     private static final String deletePage = "deletereservations.php";
     private static final String doorUnlockPage = "doorunlock.php";
     private static final String countriesPage = "countries.php";
-    private static final String currenciesPage = "currency.php";
     private static final String reservationsPage = "reservations.php";
     private static final String beaconRegionsPage = "beaconregions.php";
     private static final String roomBeaconRegionsPage = "roombeaconregion.php";
@@ -72,7 +70,6 @@ public class URL {
     public static final String roomServiceFoodUrl = serverAddress + roomServiceFoodPage;
     public static final String orderUrl = serverAddress + orderPage;
     public static final String reviewURL = serverAddress + reviewPage;
-    public static final String checkReviewURL = serverAddress + checkReviewPage;
     public static final String loyaltyPointsURL = serverAddress + loyaltyPointsPage;
     public static final String checkInUrl = serverAddress + checkInPage;
     public static final String checkoutUrl = serverAddress + checkoutPage;
@@ -81,7 +78,6 @@ public class URL {
     public static final String deleteUrl = serverAddress + deletePage;
     public static final String doorUnlockUrl = serverAddress + doorUnlockPage;
     public static final String countriesUrl = serverAddress + countriesPage;
-    public static final String currenciesUrl = serverAddress + currenciesPage;
     public static final String reservationsUrl = serverAddress + reservationsPage;
     public static final String beaconRegionsUrl = serverAddress + beaconRegionsPage;
     public static final String roomBeaconRegionsUrl = serverAddress + roomBeaconRegionsPage;

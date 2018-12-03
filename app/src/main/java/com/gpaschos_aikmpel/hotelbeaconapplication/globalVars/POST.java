@@ -52,13 +52,13 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~forgotverify.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String forgotVerifyEmail = "email";
-    public static final String forgotVerifyVerification = "verification";
+    public static final String forgotVerifyVerification = "verCode";
 
     //~~~~~~~~~~~~~~~~~~forgotnewpass.php~~~~~~~~~~~~~~~~~~
     //SND
     public static final String forgotNewPassEmail = "email";
     public static final String forgotNewPassPassword = "pass";
-    public static final String forgotNewPassVerification = "code";
+    public static final String forgotNewPassVerification = "verCode";
 
 
     //~~~~~~~~~~~~~~~~~~checkin.php~~~~~~~~~~~~~~~~~~
@@ -114,10 +114,6 @@ public class POST {
     public static final String availabilityRoomDescription = "description";
     public static final String availabilityRoomPrice = "price";
     public static final String availabilityRoomImage = "img";
-
-    //~~~~~~~~~~~~~~~~~~persons.php~~~~~~~~~~~~~~~~~~
-    //RCV
-    public static final String personsMaxCapacity = "capacity";
 
     //~~~~~~~~~~~~~~~~~~book.php~~~~~~~~~~~~~~~~~~
     //SND
@@ -237,13 +233,15 @@ public class POST {
     public static final String countryID = "id";
     public static final String countryName = "name";
 
+    //SND RCV
+    public static final String countryModified = "modified";
+
     //~~~~~~~~~~~~~~~~~~roomtypecash.php~~~~~~~~~~~~~~~~~~
     //RCV
     public static final String roomTypeCashArray = "roomTypeCashArray";
     public static final String roomTypeCashID = "roomTypeID";
     public static final String roomTypeCashAdults = "adults";
     public static final String roomTypeCashChildren = "children";
-    public static final String roomTypeCashCurrencyID = "currencyID";
     public static final String roomTypeCashCash = "cash";
 
     //~~~~~~~~~~~~~~~~~~roomtypepoints.php~~~~~~~~~~~~~~~~~~
@@ -261,23 +259,8 @@ public class POST {
     public static final String roomTypeCashPointsRoomTypeID = "roomTypeID";
     public static final String roomTypeCashPointsAdults = "adults";
     public static final String roomTypeCashPointsChildren = "children";
-    public static final String roomTypeCashPointsCurrencyID = "currencyID";
     public static final String roomTypeCashPointsCash = "cash";
     public static final String roomTypeCashPointsPoints = "points";
-
-    //~~~~~~~~~~~~~~~~~~currency.php~~~~~~~~~~~~~~~~~~
-    //RCV
-    public static final String currencyArray = "currencyArray";
-    public static final String currencyID = "id";
-    public static final String currencyName = "name";
-    public static final String currencyCode = "code";
-    public static final String currencySymbol = "symbol";
-
-
-    //~~~~~~~~~~~~~~~~~~totalpoints.php~~~~~~~~~~~~~~~~~~
-    //RCV
-    public static final String totalPoints = "points";
-
 
     //Sync anything
     public static final String syncId = "id";
@@ -383,4 +366,5 @@ public class POST {
     public static final String bookRoomAddress2 = "address2";
     public static final String bookRoomCity = "city";
     public static final String bookRoomPostalCode = "postalCode";
+
 }

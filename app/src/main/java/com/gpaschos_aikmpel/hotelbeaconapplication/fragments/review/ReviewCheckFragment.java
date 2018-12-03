@@ -10,21 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.entity.Reservation;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.POST;
-import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.URL;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.JsonListener;
-import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReviewCheckFragment extends Fragment {
 
@@ -66,7 +55,7 @@ public class ReviewCheckFragment extends Fragment {
         tvReviewCheckMessage = view.findViewById(R.id.tvReviewCheckMessage);
 
         Reservation r = RoomDB.getInstance(getContext()).reservationDao().getCurrentReservation();
-        if(r.isReviewed()){
+        if(r.isRated()){
             pbReviewCheck.setVisibility(View.INVISIBLE);
             tvReviewCheckMessage.setVisibility(View.VISIBLE);
 

@@ -213,7 +213,7 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
 
                     RoomType rt = roomDB.roomTypeDao().getRoomTypeById(roomTypeID);
 
-                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), adults,children, 1);
+                    RoomTypeCash rtc = roomDB.roomTypeCashDao().getRoomTypeCash(rt.getId(), adults,children);
 
                     String description = rt.getDescription();
                     String title = rt.getName();

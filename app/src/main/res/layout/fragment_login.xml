@@ -29,7 +29,7 @@
             android:hint="@string/etEmailHint"
             android:inputType="textEmailAddress"
             android:nextFocusDown="@id/etLoginPassword"
-            android:text="tm@epi.com.gr" />
+            android:text="kate@gmail.com" />
         <!-- android:text="kate@gmail.com" /> -->
 
     </android.support.design.widget.TextInputLayout>

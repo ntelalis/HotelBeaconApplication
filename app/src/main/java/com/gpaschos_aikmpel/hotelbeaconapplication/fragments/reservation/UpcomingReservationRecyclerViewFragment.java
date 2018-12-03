@@ -93,7 +93,7 @@ public class UpcomingReservationRecyclerViewFragment extends Fragment implements
     }
 
     public void refreshData() {
-        List<Reservation> reservationList = RoomDB.getInstance(getContext()).reservationDao().getAllUpcomingReservations();
+        List<Reservation> reservationList = RoomDB.getInstance(getContext()).reservationDao().getReservations();
         List<ReservationsAdapter.ReservationModel> reservationModelList = new ArrayList<>();
         for (Reservation r : reservationList) {
 
