@@ -118,12 +118,10 @@ public class CheckInFragment extends Fragment implements JsonListener, SyncServe
     @Override
     public void getSuccessResult(String url, JSONObject json) throws JSONException {
         if (url.equals(URL.checkInUrl)) {
-            int reservationID = json.getInt(POST.checkInReservationID);
             int roomNumber = json.getInt(POST.checkInRoomNumber);
             String checkInDate = json.getString(POST.checkInDate);
             int roomFloor = json.getInt(POST.checkInRoomFloor);
             String roomPassword = json.getString(POST.checkInRoomPassword);
-            String modified = json.getString(POST.checkInModified);
             //update Room with the checked-in information
             JSONArray roomRegionArray = json.getJSONArray(POST.checkInRoomBeaconRegionArray);
             List<BeaconRegion> roomRegions = new ArrayList<>();
@@ -144,7 +142,7 @@ public class CheckInFragment extends Fragment implements JsonListener, SyncServe
             }
 
             Reservation r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(reservationID);
-            r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, modified);
+            r.checkIn(checkInDate, roomNumber, roomFloor, roomPassword, checkInDate);
             RoomDB.getInstance(getContext()).reservationDao().update(r);
             RoomDB.getInstance(getContext()).beaconRegionDao().insertAll(roomRegions);
             SyncServerData.getInstance(getContext()).getBeaconRegionFeature();
