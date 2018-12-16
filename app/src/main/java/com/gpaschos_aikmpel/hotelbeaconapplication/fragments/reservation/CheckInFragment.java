@@ -132,12 +132,11 @@ public class CheckInFragment extends Fragment implements JsonListener, SyncServe
                 String roomBeaconRegionUUID = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionUUID);
                 String roomBeaconRegionMajor = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionMajor);
                 String roomBeaconRegionMinor = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionMinor);
-                boolean roomBeaconRegionExclusive = roomRegionObject.getBoolean(POST.checkInRoomBeaconRegionExclusive);
                 boolean roomBeaconRegionBackground = roomRegionObject.getBoolean(POST.checkInRoomBeaconRegionBackground);
                 String roomBeaconRegionModified = JSONHelper.getString(roomRegionObject, POST.checkInRoomBeaconRegionModified);
 
                 roomRegions.add(new BeaconRegion(roomBeaconRegionID, roomBeaconRegionUniqueID, roomBeaconRegionUUID,
-                        roomBeaconRegionMajor, roomBeaconRegionMinor, roomBeaconRegionExclusive, roomBeaconRegionBackground,
+                        roomBeaconRegionMajor, roomBeaconRegionMinor, roomBeaconRegionBackground,
                         "room", roomBeaconRegionModified));
             }
 

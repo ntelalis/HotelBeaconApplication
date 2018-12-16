@@ -120,7 +120,7 @@ public class SyncServerData implements JsonListener {
 
         Map<String, String> params = null;
         if (modified != null) {
-            Log.d("AF",modified);
+            Log.d("AF", modified);
             params = new HashMap<>();
             params.put(POST.countryModified, modified);
         }
@@ -201,11 +201,13 @@ public class SyncServerData implements JsonListener {
     }
 
     public void getLoyalty(Customer customer) {
+        Log.i(TAG, "Check Loyalty");
         Map<String, String> params = new HashMap<>();
         params.put(POST.loyaltyProgramCustomerID, String.valueOf(customer.getCustomerId()));
         Loyalty loyalty = roomDB.loyaltyDao().getLoyalty();
         if (loyalty != null) {
             params.put(POST.loyaltyProgramModified, loyalty.getModified());
+            Log.i(TAG, "Loyalty data for check" + loyalty.getModified());
         }
         volleyQueue.jsonRequest(this, URL.loyaltyPointsURL, params);
 
@@ -291,13 +293,12 @@ public class SyncServerData implements JsonListener {
                 String uuid = JSONHelper.getString(jsonObject, POST.beaconRegionUUID);
                 String major = JSONHelper.getString(jsonObject, POST.beaconRegionMajor);
                 String minor = JSONHelper.getString(jsonObject, POST.beaconRegionMinor);
-                boolean exclusive = jsonObject.getBoolean(POST.beaconRegionExclusive);
                 boolean background = jsonObject.getBoolean(POST.beaconRegionBackground);
                 String type = null;
                 if (url.equalsIgnoreCase(URL.roomBeaconRegionsUrl)) {
                     type = "room";
                 }
-                beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, exclusive, background, type, modified));
+                beaconRegionList.add(new BeaconRegion(id, uniqueID, uuid, major, minor, background, type, modified));
             }
             roomDB.beaconRegionDao().insertAll(beaconRegionList);
 
@@ -368,22 +369,20 @@ public class SyncServerData implements JsonListener {
                     roomDB.countryDao().insertAll(countryList);
                     Log.i(TAG, "Country results OK!");
                 } catch (JSONException e) {
-                    Log.e(TAG, e.toString());
+                    Log.d(TAG, e.toString());
                 }
                 break;
             case URL.loyaltyPointsURL:
+                Log.i(TAG, "Loyalty response");
                 try {
-                    if (json.has(POST.loyaltyProgramCustomerID)) {
-                        int customerID = json.getInt(POST.loyaltyProgramCustomerID);
-                        int points = json.getInt(POST.loyaltyProgramPoints);
-                        String tierName = JSONHelper.getString(json, POST.loyaltyProgramTierName);
-                        int tierPoints = json.getInt(POST.loyaltyProgramTierPoints);
-                        String nextTierName = JSONHelper.getString(json, POST.loyaltyProgramNextTierName);
-                        int nextTierPoints = json.getInt(POST.loyaltyProgramNextTierPoints);
-                        String modified = JSONHelper.getString(json, POST.loyaltyProgramModified);
-                        roomDB.loyaltyDao().insert(new Loyalty(customerID, points, tierName, tierPoints, nextTierName, nextTierPoints, modified));
-                    }
-
+                    int points = json.getInt(POST.loyaltyProgramPoints);
+                    String tierName = JSONHelper.getString(json, POST.loyaltyProgramTierName);
+                    int tierPoints = json.getInt(POST.loyaltyProgramTierPoints);
+                    String nextTierName = JSONHelper.getString(json, POST.loyaltyProgramNextTierName);
+                    int nextTierPoints = json.getInt(POST.loyaltyProgramNextTierPoints);
+                    String modified = JSONHelper.getString(json, POST.loyaltyProgramModified);
+                    roomDB.loyaltyDao().insert(new Loyalty(points, tierName, tierPoints, nextTierName, nextTierPoints, modified));
+                    Log.i(TAG, "Loyalty updated");
                 } catch (JSONException e) {
                     Log.e(TAG, e.toString());
                 }

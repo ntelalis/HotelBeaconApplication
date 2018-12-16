@@ -14,18 +14,16 @@ public class BeaconRegion implements SyncModel {
     private String UUID;
     private String major;
     private String minor;
-    private boolean exclusive;
     private boolean background;
     private String type;
     private String modified;
 
-    public BeaconRegion(int id, String uniqueID, String UUID, String major, String minor, boolean exclusive, boolean background, String type, String modified) {
+    public BeaconRegion(int id, String uniqueID, String UUID, String major, String minor, boolean background, String type, String modified) {
         this.id = id;
         this.uniqueID = uniqueID;
         this.UUID = UUID;
         this.major = major;
         this.minor = minor;
-        this.exclusive = exclusive;
         this.background = background;
         this.type = type;
         this.modified = modified;
@@ -70,14 +68,6 @@ public class BeaconRegion implements SyncModel {
 
     public void setMinor(String minor) {
         this.minor = minor;
-    }
-
-    public boolean isExclusive() {
-        return exclusive;
-    }
-
-    public void setExclusive(boolean exclusive) {
-        this.exclusive = exclusive;
     }
 
     public boolean isBackground() {

@@ -89,13 +89,11 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
     public void makeOrder(View view) {
         if (recyclerAdapter.getItemCount() > 0) {
             List<FoodAdapter.FoodOrderView> foodList = recyclerAdapter.getFoodList();
-            JSONObject json = new JSONObject();
             JSONArray jsonArray = new JSONArray();
             for (FoodAdapter.FoodOrderView foodOrderView : foodList) {
                 JSONObject obj = new JSONObject();
                 try {
                     obj.put(POST.roomServiceOrderID, String.valueOf(foodOrderView.id));
-                    obj.put(POST.roomServiceOrderPrice, String.valueOf(foodOrderView.price));
                     obj.put(POST.roomServiceOrderQuantity, String.valueOf(foodOrderView.quantity));
                     jsonArray.put(obj);
                 } catch (JSONException e) {
@@ -103,17 +101,12 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 }
 
             }
-            try {
-                json.put(POST.roomServiceOrderArray, jsonArray);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
 
             Map<String, String> params = new HashMap<>();
 
             int resID = RoomDB.getInstance(this).reservationDao().getCurrentReservation().getId();
             params.put(POST.roomServiceOrderReservationID, String.valueOf(resID));
-            params.put(POST.roomServiceOrderJson, json.toString());
+            params.put(POST.roomServiceOrderJson, jsonArray.toString());
             params.put(POST.roomServiceOrderComments, etComments.getText().toString());
             VolleyQueue.getInstance(this).jsonRequest(this, URL.orderUrl, params);
         } else {

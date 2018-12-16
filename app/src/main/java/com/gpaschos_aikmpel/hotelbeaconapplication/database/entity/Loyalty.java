@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 public class Loyalty {
 
     @PrimaryKey
-    private int customerID;
+    private int id;
     private int currentPoints;
     private String currentTierName;
     private int currentTierPoints;
@@ -15,8 +15,8 @@ public class Loyalty {
     private int nextTierPoints;
     private String modified;
 
-    public Loyalty(int customerID, int currentPoints, String currentTierName, int currentTierPoints, String nextTierName, int nextTierPoints, String modified) {
-        this.customerID = customerID;
+    public Loyalty(int currentPoints, String currentTierName, int currentTierPoints, String nextTierName, int nextTierPoints, String modified) {
+        this.id = 1;
         this.currentPoints = currentPoints;
         this.currentTierName = currentTierName;
         this.currentTierPoints = currentTierPoints;
@@ -25,12 +25,12 @@ public class Loyalty {
         this.modified = modified;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public int getId() {
+        return id;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getCurrentPoints() {

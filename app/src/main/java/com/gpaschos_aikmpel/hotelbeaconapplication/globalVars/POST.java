@@ -77,7 +77,6 @@ public class POST {
     public static final String checkInRoomBeaconRegionUniqueID = "uniqueID";
     public static final String checkInRoomBeaconRegionMajor = "major";
     public static final String checkInRoomBeaconRegionMinor = "minor";
-    public static final String checkInRoomBeaconRegionExclusive = "exclusive";
     public static final String checkInRoomBeaconRegionBackground = "background";
     public static final String checkInRoomBeaconRegionRegionType = "regionType";
     public static final String checkInRoomBeaconRegionModified = "modified";
@@ -144,8 +143,8 @@ public class POST {
     public static final String roomServiceCategoriesName = "name";
     public static final String roomServiceCategoriesFrom = "from";
     public static final String roomServiceCategoriesTo = "to";
-    public static final String roomServiceTimeCategory = "timeCategory";
-    public static final String roomServiceTypeCategory = "typeCategory";
+    public static final String roomServiceTimeCategory = "menuTimeArray";
+    public static final String roomServiceTypeCategory = "categoryArray";
     public static final String roomServiceFoodID = "id";
     public static final String roomServiceFoodName = "name";
     public static final String roomServiceFoodDesc = "desc";
@@ -155,8 +154,8 @@ public class POST {
     //SND
     public static final String reservationCustomerID = "customerID";
     //RCV
-    public static final String reservationArray = "upcomingReservationsArray";
-    public static final String reservationReservationID = "reservationID";
+    public static final String reservationArray = "reservationArray";
+    public static final String reservationReservationID = "reservationId";
     public static final String reservationRoomTypeID = "roomTypeID";
     public static final String reservationAdults = "adults";
     public static final String reservationChildren = "children";
@@ -290,7 +289,7 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~beaconregionfeature.php~~~~~~~~~~~~~~~~~
     //SND
-    public static final String beaconRegionIDFeatureArray = "beaconRegionIDJsonArray";
+    public static final String beaconRegionIDFeatureArray = "beaconRegionArray";
     public static final String beaconRegionFeatureCheck = "check";
 
     //RCV
@@ -352,10 +351,10 @@ public class POST {
 
     //~~~~~~~~~~~~~~~~~~~offerbeaconregion.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
-    public static final String offerBeaconRegionOfferIDArray = "offerIDJsonArray";
+    public static final String offerBeaconRegionOfferIDArray = "offerArray";
     public static final String offerBeaconRegionCheck = "check";
     //RCV
-    public static final String offerBeaconRegionArray = "offerBeaconRegionArray";
+    public static final String offerBeaconRegionArray = "beaconRegionOfferArray";
     public static final String offerBeaconRegionID = "id";
     public static final String offerBeaconRegionRegionID = "regionID";
     public static final String offerBeaconRegionOfferID = "offerID";
