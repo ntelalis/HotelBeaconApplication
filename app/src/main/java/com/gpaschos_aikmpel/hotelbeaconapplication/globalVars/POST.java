@@ -313,10 +313,11 @@ public class POST {
     //~~~~~~~~~~~~~~~~~~~offercoupons.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
     public static final String offerCouponsCustomerID = "customerID";
-    public static final String offerCouponsOfferID = "offerID";
     //RCV
     public static final String offerCouponsCode = "code";
     public static final String offerCouponsCodeCreated = "codeCreated";
+    //SND&RCV
+    public static final String offerCouponsOfferID = "offerID";
 
     //~~~~~~~~~~~~~~~~~~~offerbeaconregion.php~~~~~~~~~~~~~~~~~~~~~~~
     //SND
