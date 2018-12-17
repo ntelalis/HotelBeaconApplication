@@ -108,7 +108,7 @@ public class CheckOutFragment extends Fragment implements JsonListener {
         switch (url) {
             case URL.checkoutUrl:
                 double totalPrice = json.getDouble(POST.checkoutTotalPrice);
-                response = json.getJSONArray(POST.checkoutChargeDetails);
+                response = json.getJSONArray(POST.checkoutChargeArray);
 
                 List<CheckOutAdapter.ChargeModel> charges = new ArrayList<>();
 
@@ -121,11 +121,10 @@ public class CheckOutFragment extends Fragment implements JsonListener {
                 fillRecyclerViewAndTextView(charges, totalPrice);
                 break;
             case URL.checkoutConfirmationUrl:
-                String checkoutDate = json.getString(POST.checkoutConfirmDate);
-                String modified = json.getString(POST.checkoutConfirmModified);
+                String checkoutDate = json.getString(POST.checkoutCheckedOutDate);
                 //update Room with the checked-out information
                 Reservation r = RoomDB.getInstance(getContext()).reservationDao().getReservationByID(reservationID);
-                r.checkOut(checkoutDate, modified);
+                r.checkOut(checkoutDate, checkoutDate);
                 RoomDB.getInstance(getContext()).reservationDao().update(r);
 
                 ((CheckOutActivity) Objects.requireNonNull(getActivity())).checkedOutConfirmation();

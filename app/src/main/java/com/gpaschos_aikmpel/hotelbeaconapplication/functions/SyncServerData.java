@@ -225,7 +225,7 @@ public class SyncServerData implements JsonListener {
             params.put(POST.roomBeaconRegionReservationID, String.valueOf(current.getId()));
             if (!roomRegionList.isEmpty()) {
                 String beaconRegionCheckJSON = sync(roomRegionList);
-                params.put(POST.beaconRegionCheck, beaconRegionCheckJSON);
+                params.put(POST.roomBeaconRegionCheck, beaconRegionCheckJSON);
             }
             volleyQueue.jsonRequest(this, URL.roomBeaconRegionsUrl, params);
         } else {
@@ -244,7 +244,7 @@ public class SyncServerData implements JsonListener {
             jsonArray.put(beaconRegion.getId());
         }
         Log.d(TAG, jsonArray.toString());
-        params.put(POST.beaconRegionIDFeatureArray, jsonArray.toString());
+        params.put(POST.beaconRegionFeatureRegionArray, jsonArray.toString());
 
         List<BeaconRegionFeature> regionFeatureList = roomDB.beaconRegionFeatureDao().getRegionFeatureList();
         if (!regionFeatureList.isEmpty()) {
@@ -326,11 +326,10 @@ public class SyncServerData implements JsonListener {
                 try {
                     String couponCode = JSONHelper.getString(json, POST.offerCouponsCode);
                     String codeCreated = JSONHelper.getString(json, POST.offerCouponsCodeCreated);
-                    boolean codeUsed = json.getBoolean(POST.offerCouponsCodeUsed);
                     int offerID = json.getInt(POST.offerCouponsOfferID);
 
                     ExclusiveOffer offer = roomDB.exclusiveOfferDao().getOfferByID(offerID);
-                    offer.updateCoupon(couponCode, codeUsed, codeCreated);
+                    offer.updateCoupon(couponCode, false, codeCreated);
                     roomDB.exclusiveOfferDao().insert(offer);
                     Log.i(TAG, "offer obj. updated!");
                     couponCallbacks.couponCreated(offer);
@@ -341,11 +340,11 @@ public class SyncServerData implements JsonListener {
             case URL.titlesUrl:
                 List<Title> titleList = new ArrayList<>();
                 try {
-                    JSONArray jsonArrayTitle = json.getJSONArray(POST.titlesTitleList);
+                    JSONArray jsonArrayTitle = json.getJSONArray(POST.titlesArray);
                     for (int i = 0; i < jsonArrayTitle.length(); i++) {
                         JSONObject jsonObject = jsonArrayTitle.getJSONObject(i);
-                        int id = jsonObject.getInt(POST.titlesID);
-                        String title = JSONHelper.getString(jsonObject, POST.titlesTitle);
+                        int id = jsonObject.getInt(POST.titleId);
+                        String title = JSONHelper.getString(jsonObject, POST.titleTitle);
                         titleList.add(new Title(id, title));
                     }
                     roomDB.titleDao().insertAll(titleList);

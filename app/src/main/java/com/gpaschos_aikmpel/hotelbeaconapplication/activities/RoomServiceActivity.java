@@ -82,7 +82,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
 
     private void getFood(String timeType) {
         Map<String, String> params = new HashMap<>();
-        params.put(POST.roomServiceTimeType, timeType);
+        params.put(POST.roomServiceFoodMenuTime, timeType);
         VolleyQueue.getInstance(this).jsonRequest(this, URL.roomServiceFoodUrl, params);
     }
 
@@ -123,14 +123,14 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 finish();
                 break;
             case URL.roomServiceTimeCategoriesUrl:
-                JSONArray jsonArray = json.getJSONArray(POST.roomServiceTimeCategory);
+                JSONArray jsonArray = json.getJSONArray(POST.roomServiceCategoryArray);
                 List<Categories> categoriesList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    int id = jsonObject.getInt(POST.roomServiceCategoriesID);
-                    String name = jsonObject.getString(POST.roomServiceCategoriesName);
-                    String from = jsonObject.getString(POST.roomServiceCategoriesFrom);
-                    String to = jsonObject.getString(POST.roomServiceCategoriesTo);
+                    int id = jsonObject.getInt(POST.roomServiceCategoryID);
+                    String name = jsonObject.getString(POST.roomServiceCategoryName);
+                    String from = jsonObject.getString(POST.roomServiceCategoryFrom);
+                    String to = jsonObject.getString(POST.roomServiceCategoryTo);
                     categoriesList.add(new Categories(id, name, from, to));
                 }
 
@@ -164,7 +164,7 @@ public class RoomServiceActivity extends AppCompatActivity implements JsonListen
                 break;
 
             case URL.roomServiceFoodUrl:
-                JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceTypeCategory);
+                JSONArray jsonArrayTypes = json.getJSONArray(POST.roomServiceFoodCategoryArray);
 
                 List<RoomServiceModel> roomServiceModelList = new ArrayList<>();
 

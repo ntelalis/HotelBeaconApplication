@@ -32,11 +32,11 @@ public enum Request implements JsonListener {
         public boolean receiveRequest(Context ctx, JSONObject json) {
             List<Title> titleList = new ArrayList<>();
             try {
-                JSONArray jsonArrayTitle = json.getJSONArray(POST.titlesTitleList);
+                JSONArray jsonArrayTitle = json.getJSONArray(POST.titlesArray);
                 for (int i = 0; i < jsonArrayTitle.length(); i++) {
                     JSONObject jsonObject = jsonArrayTitle.getJSONObject(i);
-                    int id = jsonObject.getInt(POST.titlesID);
-                    String title = JSONHelper.getString(jsonObject, POST.titlesTitle);
+                    int id = jsonObject.getInt(POST.titleId);
+                    String title = JSONHelper.getString(jsonObject, POST.titleTitle);
                     titleList.add(new Title(id, title));
                 }
                 RoomDB.getInstance(ctx).titleDao().insertAll(titleList);

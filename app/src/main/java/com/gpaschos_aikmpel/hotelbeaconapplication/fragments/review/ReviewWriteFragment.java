@@ -85,9 +85,9 @@ public class ReviewWriteFragment extends Fragment implements JsonListener {
             public void onClick(View v) {
                 if (!tvRatingName.getText().toString().equals("")) {
                     Map<String, String> params = new HashMap<>();
-                    params.put(POST.reviewRating, String.valueOf(ratingBar.getRating()));
-                    params.put(POST.reviewRatingComments, etRatingComment.getText().toString());
-                    params.put(POST.reviewReservationID, String.valueOf(reservationID));
+                    params.put(POST.ratingRating, String.valueOf(ratingBar.getRating()));
+                    params.put(POST.ratingRatingComments, etRatingComment.getText().toString());
+                    params.put(POST.ratingReservationID, String.valueOf(reservationID));
                     VolleyQueue.getInstance(getContext()).jsonRequest(ReviewWriteFragment.this, URL.reviewURL, params);
                 } else {
                     Toast.makeText(getActivity(), "Please choose a rating!", Toast.LENGTH_SHORT).show();
