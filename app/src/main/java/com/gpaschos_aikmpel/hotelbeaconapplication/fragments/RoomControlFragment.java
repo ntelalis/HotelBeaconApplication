@@ -1,4 +1,4 @@
-package com.gpaschos_aikmpel.hotelbeaconapplication.activities;
+package com.gpaschos_aikmpel.hotelbeaconapplication.fragments;
 
 
 import android.os.Bundle;

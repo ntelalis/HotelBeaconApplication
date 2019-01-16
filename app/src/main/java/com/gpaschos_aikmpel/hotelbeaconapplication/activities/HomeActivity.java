@@ -52,14 +52,13 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
-import com.gpaschos_aikmpel.hotelbeaconapplication.reworkRequest.RequestCallback;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.LimitedUniqueQueue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, RequestCallback, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks, CheckedInFragment.Callbacks {
+public class HomeActivity extends AppCompatActivity implements DatePickerFragment.DateSelected, NotificationCallbacks, OfferExclusiveFragment.FragmentCallbacks, SyncServerData.CouponCallbacks, CheckedInFragment.Callbacks {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -101,9 +100,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                     break;
                 case R.id.navigationDrawerHome:
                     drawerLayout.closeDrawers();
-                    break;
-                case R.id.navigationDeleteReservations:
-                    SyncServerData.getInstance(HomeActivity.this).deleteReservations();
                     break;
             }
             return true;
@@ -412,17 +408,6 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
     public void openMyRoom() {
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMyRoom);
     }
-
-    @Override
-    public void success() {
-        Toast.makeText(this, "Meow", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void fail() {
-        Toast.makeText(this, "Not Meow", Toast.LENGTH_SHORT).show();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
