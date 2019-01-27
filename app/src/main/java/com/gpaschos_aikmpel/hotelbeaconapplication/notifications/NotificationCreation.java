@@ -135,11 +135,18 @@ public class NotificationCreation {
     public static void notifyFarewell(Context context) {
 
         //String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
-        //boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
 
         //FIXME DEBUG CODE DELETE
+
         LocalVariables.storeBoolean(context, R.string.is_notified_Farewell,false);
-        LocalVariables.storeBoolean(context, R.string.is_checked_out,true);
+
+        Reservation r = RoomDB.getInstance(context).reservationDao().getCurrentReservation();
+        if(r!=null){
+            boolean isCheckedOut = r.isCheckedOut();
+            if(isCheckedOut){
+                LocalVariables.storeBoolean(context, R.string.is_checked_out,true);
+            }
+        }
 
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell, false)
                 && LocalVariables.readBoolean(context, R.string.is_checked_out, false)) {
@@ -243,11 +250,10 @@ public class NotificationCreation {
 
         //FIXME DEBUG CODE DELETE THIS
         LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
-        //LocalVariables.storeLong(context, R.string.saved_farewell_time, currentTime - (6*60*60*1000));
-
         long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
 
-        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome, false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
+        //return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome, false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
+        return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome, false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 1000);
     }
 
     //check if is_checked_in is false, and if there is a reservation with a startDate<=currentDate
