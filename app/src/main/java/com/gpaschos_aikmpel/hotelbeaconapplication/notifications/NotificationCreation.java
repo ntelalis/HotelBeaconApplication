@@ -136,6 +136,11 @@ public class NotificationCreation {
 
         //String checkout = RoomDB.getInstance(context).reservationDao().getCurrentReservation().getCheckOut();
         //boolean isCheckedOut = RoomDB.getInstance(context).reservationDao().getCurrentReservation().isCheckedOut();
+
+        //FIXME DEBUG CODE DELETE
+        LocalVariables.storeBoolean(context, R.string.is_notified_Farewell,false);
+        LocalVariables.storeBoolean(context, R.string.is_checked_out,true);
+
         if (!LocalVariables.readBoolean(context, R.string.is_notified_Farewell, false)
                 && LocalVariables.readBoolean(context, R.string.is_checked_out, false)) {
             Customer customer = RoomDB.getInstance(context).customerDao().getCustomer();
@@ -234,11 +239,13 @@ public class NotificationCreation {
     // farewellNotification reception check if 5 hours have past ever since.
     private static boolean shouldNotifyWelcome(Context context) {
 
-        long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
         long currentTime = System.currentTimeMillis();
 
         //FIXME DEBUG CODE DELETE THIS
         LocalVariables.storeBoolean(context, R.string.is_notified_Welcome, false);
+        //LocalVariables.storeLong(context, R.string.saved_farewell_time, currentTime - (6*60*60*1000));
+
+        long farewellTime = LocalVariables.readLong(context, R.string.saved_farewell_time);
 
         return !LocalVariables.readBoolean(context, R.string.is_notified_Welcome, false) && (farewellTime == 0 || currentTime >= farewellTime + 5 * 60 * 60 * 1000);
     }
@@ -321,7 +328,7 @@ public class NotificationCreation {
                 Date formattedEndDate = mySQLFormat.parse(reservationEndDate);
                 long lFormattedEndDate = formattedEndDate.getTime();
                 long currentTime = Calendar.getInstance().getTime().getTime();
-
+                //return r.isCheckedOut() && lFormattedEndDate<= currentTime;
                 return !LocalVariables.readBoolean(context, R.string.is_checked_out, false) && (lFormattedEndDate <= currentTime);
             } catch (ParseException e) {
                 e.printStackTrace();

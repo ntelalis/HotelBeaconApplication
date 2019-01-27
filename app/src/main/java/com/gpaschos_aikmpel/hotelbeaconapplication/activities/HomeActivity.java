@@ -52,6 +52,7 @@ import com.gpaschos_aikmpel.hotelbeaconapplication.globalVars.Params;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCallbacks;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.NotificationCreation;
 import com.gpaschos_aikmpel.hotelbeaconapplication.notifications.ScheduleNotifications;
+import com.gpaschos_aikmpel.hotelbeaconapplication.requestVolley.VolleyQueue;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.BottomNavigationViewHelper;
 import com.gpaschos_aikmpel.hotelbeaconapplication.utility.LimitedUniqueQueue;
 
@@ -101,6 +102,8 @@ public class HomeActivity extends AppCompatActivity implements DatePickerFragmen
                 case R.id.navigationDrawerHome:
                     drawerLayout.closeDrawers();
                     break;
+                case R.id.navigationDeleteReservations:
+                    SyncServerData.getInstance(HomeActivity.this).deleteReservations();
             }
             return true;
         }

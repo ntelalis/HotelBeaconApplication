@@ -21,6 +21,8 @@ class CustomRequest extends Request<JSONObject> {
         super(Method.POST, url, errorListener);
         this.params = params;
         this.listener = listener;
+        //needed because 3g return wrong/old responses due to volley caching. TODO fix this appropriately
+        super.setShouldCache(false);
     }
 
     @Override

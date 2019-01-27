@@ -27,7 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.gpaschos_aikmpel.hotelbeaconapplication.R;
 import com.gpaschos_aikmpel.hotelbeaconapplication.database.RoomDB;
@@ -45,7 +45,6 @@ import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.Identifier;
-import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.service.RangedBeacon;
@@ -66,6 +65,14 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     private Runnable runnable;
     private FloatingActionButton fabDoorUnlock;
 
+    private Reservation reservation;
+
+    private boolean canOpenDoor;
+    private boolean canUseBeacons;
+
+    //Our door region
+    private Region region;
+
     private BroadcastReceiver bluetoothBroadcastReceiver = new BroadcastReceiver() {
 
         @Override
@@ -85,9 +92,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         }
     };
 
-    private boolean canOpenDoor;
-    private boolean canUseBeacons;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,17 +99,17 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
 
         setContentView(R.layout.activity_door_unlock);
 
-        Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+        reservation = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
 
         TextView tvRoom = findViewById(R.id.tvDoorUnlockRoom);
-        tvRoom.setText(String.valueOf(r.getRoomNumber()));
+        tvRoom.setText(String.valueOf(reservation.getRoomNumber()));
 
         TextView tvTouchToUnlock = findViewById(R.id.tvDoorUnlockPrompt);
 
         final int black = 0xff000000;
         final int black_transparent = 0x00000000;
 
-        ValueAnimator colorAnim = ObjectAnimator.ofInt(tvTouchToUnlock,"textColor",black,black_transparent);
+        ValueAnimator colorAnim = ObjectAnimator.ofInt(tvTouchToUnlock, "textColor", black, black_transparent);
         colorAnim.setDuration(3000);
         colorAnim.setEvaluator(new ArgbEvaluator());
         colorAnim.setRepeatCount(ValueAnimator.INFINITE);
@@ -113,7 +117,7 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         colorAnim.start();
 
         TextView tvFloor = findViewById(R.id.tvDoorUnlockFloor);
-        tvFloor.setText(String.valueOf(r.getRoomFloor()));
+        tvFloor.setText(String.valueOf(reservation.getRoomFloor()));
 
         canUseBeacons = LocalVariables.readBoolean(this, R.string.beaconsEnabled, true);
 
@@ -121,9 +125,13 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         //Also detect iBeacons
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+
         beaconManager.bind(this);
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         fabDoorUnlock = findViewById(R.id.fabDoorUnlock);
+
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         if (bluetoothAdapter == null) {
             throw new RuntimeException("Cannot Find Bluetooth");
         } else {
@@ -135,19 +143,18 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(bluetoothBroadcastReceiver, filter);
 
+        //If Marshmallow and above we need extra permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkBeaconPermission();
-        } else {
-            initActivity();
         }
+
+        //Get the BeaconRegion for this room door beacon
+        BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionFeatureDao().getRegionByFeature(Params.DOOR_UNLOCK);
+        //Create the new region in order to track it
+        region = new Region(beaconRegion.getUniqueID(), Identifier.parse(beaconRegion.getUUID()), Identifier.parse(beaconRegion.getMajor()), Identifier.parse(beaconRegion.getMinor()));
     }
 
-    private void initActivity() {
-
-
-    }
-
-    //for demonstration purposes
+    //Check locationEnabled
     public static boolean isLocationEnabled(Context context) {
         int locationMode = 0;
         String locationProviders;
@@ -178,7 +185,6 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
         switch (requestCode) {
             case PERMISSION_REQUEST_COARSE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    initActivity();
                 } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION)) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setTitle("Functionality limited");
@@ -203,18 +209,21 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
     @Override
     protected void onResume() {
         super.onResume();
+        //We cannot open the door until door beacon is found
         canOpenDoor = false;
+
+        //Create a new handler which run the runnable below to disable button after X time
         handler = new Handler();
         runnable = new Runnable() {
             @Override
             public void run() {
+                //Disable button
                 canOpenDoor = false;
-                //disabled
                 changeButtonColor(R.color.buttonDeactivated);
             }
         };
 
-
+        //Check if Location is enabled
         if (!isLocationEnabled(getApplicationContext())) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Location Services");
@@ -229,123 +238,109 @@ public class DoorUnlockActivity extends AppCompatActivity implements JsonListene
                 }
             });
             builder.show();
-
-
         }
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        beaconManager.removeAllRangeNotifiers();
+        //Unregister beaconmanager
         if (beaconManager != null) {
             beaconManager.unbind(this);
-            unregisterReceiver(bluetoothBroadcastReceiver);
         }
+        //Remove Bluetooth broadcast receiver
+        unregisterReceiver(bluetoothBroadcastReceiver);
     }
 
 
+    //Send unlock command to server
     public void unlockDoor(View view) {
-        Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
         if (canUseBeacons) {
-            if (r != null && r.isCheckedInNotCheckedOut()) {
-                int reservationId = r.getId();
-                String roomPass = r.getRoomPassword();
-                Log.d(TAG, reservationId + " " + roomPass);
+            int reservationId = reservation.getId();
+            String roomPass = reservation.getRoomPassword();
+            Log.d(TAG, reservationId + " " + roomPass);
 
-                Map<String, String> params = new HashMap<>();
-                params.put(POST.doorUnlockReservationID, String.valueOf(reservationId));
-                params.put(POST.doorUnlockRoomPassword, roomPass);
+            Map<String, String> params = new HashMap<>();
+            params.put(POST.doorUnlockReservationID, String.valueOf(reservationId));
+            params.put(POST.doorUnlockRoomPassword, roomPass);
 
-                if (canOpenDoor) {
-                    //Snackbar.make(fabDoorUnlock,"Opening door. Please wait",Snackbar.LENGTH_LONG).show();
-                    //Toast.makeText(this, "opening door....", Toast.LENGTH_SHORT).show();
-                    VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl, params);
-                } else {
-                    Snackbar.make(fabDoorUnlock, "Please get in 1 meter range from your door and wait for the button to change color", Snackbar.LENGTH_LONG).show();
-                    //Toast.makeText(this, "Please get in 1 meter range from your door and wait for the button to become orange", Toast.LENGTH_SHORT).show();
-                }
+            if (canOpenDoor) {
+                VolleyQueue.getInstance(this).jsonRequest(this, URL.doorUnlockUrl, params);
             } else {
-                Toast.makeText(this, "No active reservation found!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(fabDoorUnlock, "Please get in 1 meter range from your door and wait for the button to change color", Snackbar.LENGTH_LONG).show();
             }
         } else {
             Snackbar snackbar = Snackbar.make(findViewById(R.id.fabDoorUnlock), "Feature Disabled", Snackbar.LENGTH_LONG);
             snackbar.show();
-
         }
     }
 
     @Override
     public void getSuccessResult(String url, JSONObject json) {
+        //Door was unlocked
         Snackbar.make(fabDoorUnlock, "Unlocked", Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void getErrorResult(String url, String error) {
-
+        //Door unlock was denied
         Snackbar.make(fabDoorUnlock, "There is a problem with your key. Please contact our reception", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void onBeaconServiceConnect() {
+        Log.d(TAG,"Beacon connect");
 
-        Reservation r = RoomDB.getInstance(this).reservationDao().getCurrentReservation();
+        //register a rangeNotifier to see how far are we from the door
+        beaconManager.addRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
 
-        Log.d(TAG, "check if reservation");
-        if (r != null && r.isCheckedInNotCheckedOut()) {
-            Log.d(TAG, "reservation found");
-            final BeaconRegion beaconRegion = RoomDB.getInstance(this).beaconRegionFeatureDao().getRegionByFeature(Params.DOOR_UNLOCK);
-            Log.d(TAG, "Doorunlock Region from Room " + beaconRegion.getUniqueID() + " " + beaconRegion.getUUID() + " " + beaconRegion.getMajor() + " " + beaconRegion.getMinor());
-            Region region = new Region(beaconRegion.getUniqueID(), Identifier.parse(beaconRegion.getUUID()), Identifier.parse(beaconRegion.getMajor()), Identifier.parse(beaconRegion.getMinor()));
+                //Since we have only one region we don't need to detect which region was found
 
-            beaconManager.addRangeNotifier(new RangeNotifier() {
-                @Override
-                public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
-                    if (region.getUniqueId().equals(beaconRegion.getUniqueID())) {
-                        Log.d(TAG, "Size of detected Beacons: " + collection.size());
-                        if (collection.iterator().hasNext()) {
-                            double distance = collection.iterator().next().getDistance();
-                            Log.d(TAG, "range notifier" + distance);
-                            if (distance < 1.3) {
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        canOpenDoor = true;
-                                        //enabled
-                                        changeButtonColor(R.color.buttonActivated);
-                                    }
-                                });
-                                handler.removeCallbacks(runnable);
-                                Log.i(TAG,"in");
-                                handler.postDelayed(runnable, 6200);
+                //Check if any beacon is detected for our region filter
+                Log.d(TAG, beacons.size() + " Beacons found for " + region.getUniqueId());
+                if (beacons.size() > 0) {
+                    //Get the first and only beacon from our collection
+                    Beacon beacon = beacons.iterator().next();
+                    double distance = beacon.getDistance();
+                    Log.d(TAG, "Door is " + (double) Math.round(distance * 100) / 100 + " meters away.");
+                    if (distance < 1.3) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                canOpenDoor = true;
+                                changeButtonColor(R.color.buttonActivated);
                             }
-                            else{
-                                Log.i(TAG,"out");
-                            }
+                        });
 
-                        }
+                        //Reset disable button runnable
+                        handler.removeCallbacks(runnable);
+                        handler.postDelayed(runnable, 6200);
                     }
                 }
-            });
-
-            //RangedBeacon.setMaxTrackinAge(1000);
-            //BeaconManager.setRegionExitPeriod(1100);
-            //TODO Uncomment this?
-
-            try {
-                RangedBeacon.setSampleExpirationMilliseconds(4200);
-                beaconManager.startRangingBeaconsInRegion(region);
-                beaconManager.setForegroundBetweenScanPeriod(0);
-                beaconManager.setForegroundScanPeriod(2000);
-                beaconManager.startRangingBeaconsInRegion(region);
-                Log.d(TAG, "ranging started");
-            } catch (RemoteException e) {
-                e.printStackTrace();
-                Log.e(TAG, "ranging failed");
             }
+        });
 
+        try {
+            //Set how many ms we want our detections to last for calculating distance
+            RangedBeacon.setSampleExpirationMilliseconds(4200);
+            //Set how much to wait between scans
+            beaconManager.setForegroundBetweenScanPeriod(0);
+            //Set the scanning period
+            beaconManager.setForegroundScanPeriod(2000);
+            //Start ranging for our region
+            beaconManager.startRangingBeaconsInRegion(region);
+            Log.d(TAG, "Ranging started");
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Log.e(TAG, "Ranging failed");
         }
     }
 
+    //Helper function to change button color
     private void changeButtonColor(int color) {
         fabDoorUnlock.setBackgroundTintList(ContextCompat.getColorStateList(this, color));
     }

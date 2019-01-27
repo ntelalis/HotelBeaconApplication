@@ -14,16 +14,14 @@ import org.json.JSONObject;
 import java.util.Map;
 
 public class VolleyQueue {
-
     private static RequestQueue requestQueue;
     private static VolleyQueue instance = null;
 
     private static final String successString = "success";
     private static final String failString = "errorMessage";
-
     private static final String successNotSetString = "Server \"success\" variable is not set";
-    private static final String successInvalidValueString = "Server \"success\" variable is not 0/1";
-    private static final String errorMsgNotSetString = "Server \"errorMessage\" variable is not set";
+    private static final String successWrongValueStr = "Server \"success\" variable is not 0/1";
+    private static final String errorMsgNotSetStr = "Server \"errorMessage\" variable is not set";
 
     private VolleyQueue(Context context) {
         requestQueue = Volley.newRequestQueue(context.getApplicationContext());
@@ -36,7 +34,9 @@ public class VolleyQueue {
         return instance;
     }
 
-    public void jsonRequest(final JsonListener jsonListener, final String url, Map<String, String> params) {
+    public void jsonRequest(final JsonListener jsonListener,
+                            final String url,
+                            Map<String, String> params) {
         CustomRequest request = new CustomRequest(url, params,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -53,15 +53,15 @@ public class VolleyQueue {
                                         String failMsg = response.getString(failString);
                                         jsonListener.getErrorResult(url, failMsg);
                                     } catch (JSONException e) {
-                                        jsonListener.getErrorResult(url, errorMsgNotSetString);
+                                        jsonListener.getErrorResult(url, errorMsgNotSetStr);
                                     }
                                     break;
                                 default:
-                                    jsonListener.getErrorResult(url, successInvalidValueString);
+                                    jsonListener.getErrorResult(url, successWrongValueStr);
                                     break;
                             }
                         } catch (JSONException e) {
-                            jsonListener.getErrorResult(url, e.getLocalizedMessage());
+                            jsonListener.getErrorResult(url, successNotSetString);
                         }
                     }
                 },
@@ -72,7 +72,9 @@ public class VolleyQueue {
 
                     }
                 });
-        request.setRetryPolicy(new DefaultRetryPolicy(25000, 3, 1f));
+
+        request.setRetryPolicy(new DefaultRetryPolicy(25000,
+                                                    3, 1f));
         requestQueue.add(request);
     }
 }

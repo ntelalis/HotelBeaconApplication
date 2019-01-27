@@ -5,7 +5,10 @@ public class URL {
     private static final String serverProtocol = "http";
 
     //HOME
-    private static final String serverHost = "192.168.1.101";
+    private static final String serverHost = "192.168.10.1";
+//    private static final String serverPath = "";
+//    private static final String serverPort = "80";
+//    private static final String serverHost = "ntelalis.dedyn.io";
     private static final String serverPath = "";
     private static final String serverPort = "80";
 

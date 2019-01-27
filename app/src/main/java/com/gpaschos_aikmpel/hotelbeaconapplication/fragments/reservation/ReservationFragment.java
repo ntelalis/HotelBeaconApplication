@@ -182,7 +182,8 @@ public class ReservationFragment extends Fragment implements JsonListener, RoomA
                 params.put(POST.availabilityAdults, adults);
                 params.put(POST.availabilityChildren, children);
 
-                VolleyQueue.getInstance(getContext()).jsonRequest(this, URL.availabilityUrl, params);
+                VolleyQueue.getInstance(getContext())
+                        .jsonRequest(this, URL.availabilityUrl, params);
 
                 pbLoading.setVisibility(View.VISIBLE);
 

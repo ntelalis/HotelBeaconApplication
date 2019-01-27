@@ -48,6 +48,7 @@ public class SyncServerData implements JsonListener {
     private VolleyQueue volleyQueue;
 
     private SyncServerData(Fragment fragment, Context context) {
+
         this(context);
         if (fragment instanceof SyncCallbacksSwipeRefresh) {
             syncCallbacksSwipeRefresh = (SyncCallbacksSwipeRefresh) fragment;
@@ -76,11 +77,11 @@ public class SyncServerData implements JsonListener {
 
     public void getDataFromServer() {
         Log.d(TAG, "GetDataFromServer");
-        getBeaconRegion();
         getTitles();
         getCountries();
-        getGeneralOffers();
         getRoomTypes();
+        getGeneralOffers();
+        getBeaconRegion();
     }
 
     public void getCustomerDataFromServer(Customer customer) {
@@ -88,7 +89,6 @@ public class SyncServerData implements JsonListener {
         getExclusiveOffers(customer);
         getReservations(customer);
         getLoyalty(customer);
-        //getRoomBeaconRegion();
     }
 
 
@@ -495,7 +495,6 @@ public class SyncServerData implements JsonListener {
                         JSONObject jsonObject = jsonArrayReservations.getJSONObject(i);
                         int id = jsonObject.getInt(POST.reservationReservationID);
                         String modified = JSONHelper.getString(jsonObject, POST.reservationModified);
-
                         if (modified == null) {
                             roomDB.reservationDao().delete(id);
                             Log.i(TAG, "Reservation: " + id + " deleted");
@@ -702,5 +701,4 @@ public class SyncServerData implements JsonListener {
         Log.d(TAG, "JSON to server for syncing " + jsonArray.toString());
         return jsonArray.toString();
     }
-
 }
